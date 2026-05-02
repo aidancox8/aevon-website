@@ -14,10 +14,10 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:    #111116;
-      --bg2:   #14192E;
-      --bg3:   #1A2138;
-      --bg4:   #202840;
+      --bg:    #0E0C18;
+      --bg2:   #131128;
+      --bg3:   #1C1A35;
+      --bg4:   #22203E;
       --border:  rgba(99,102,241,0.12);
       --border2: rgba(99,102,241,0.28);
       --accent:  #6366F1;
@@ -39,6 +39,13 @@
       line-height: 1.6;
     }
     ::selection { background: rgba(99,102,241,0.22); }
+    /* Fixed ambient purple glow — shared coordinate space across all sections */
+    section, footer, nav {
+      background-image:
+        radial-gradient(ellipse 110% 55% at 50% 0%, rgba(99,102,241,0.11) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 50% at 95% 100%, rgba(124,58,237,0.07) 0%, transparent 60%);
+      background-attachment: fixed;
+    }
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.25); border-radius: 2px; }
@@ -1503,9 +1510,9 @@ function App() {
     document.documentElement.style.setProperty('--border', tweaks.accentColor + '1e');
     document.documentElement.style.setProperty('--border2', tweaks.accentColor + '47');
     if (tweaks.bgTone === 'navy') {
-      document.documentElement.style.setProperty('--bg', '#111116');
-      document.documentElement.style.setProperty('--bg2', '#14192E');
-      document.documentElement.style.setProperty('--bg3', '#1A2138');
+      document.documentElement.style.setProperty('--bg', '#0E0C18');
+      document.documentElement.style.setProperty('--bg2', '#131128');
+      document.documentElement.style.setProperty('--bg3', '#1C1A35');
     } else {
       document.documentElement.style.setProperty('--bg', '#0a0a0a');
       document.documentElement.style.setProperty('--bg2', '#111111');
