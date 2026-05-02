@@ -42,8 +42,8 @@
     /* Fixed ambient purple glow — shared coordinate space across all sections */
     section, footer, nav {
       background-image:
-        radial-gradient(ellipse 110% 55% at 50% 0%, rgba(99,102,241,0.11) 0%, transparent 65%),
-        radial-gradient(ellipse 60% 50% at 95% 100%, rgba(124,58,237,0.07) 0%, transparent 60%);
+        radial-gradient(ellipse 120% 70% at 50% -5%, rgba(99,102,241,0.2) 0%, transparent 65%),
+        radial-gradient(ellipse 70% 55% at 95% 105%, rgba(124,58,237,0.12) 0%, transparent 60%);
       background-attachment: fixed;
     }
     ::-webkit-scrollbar { width: 4px; }
@@ -134,14 +134,14 @@
     .hero-mesh {
       position: absolute; inset: 0; pointer-events: none;
       background:
-        radial-gradient(ellipse 55% 55% at 75% 35%, rgba(99,102,241,0.09) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 15% 75%, rgba(124,58,237,0.06) 0%, transparent 70%);
+        radial-gradient(ellipse 80% 70% at 50% -10%, rgba(99,102,241,0.32) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 45% at 90% 80%, rgba(124,58,237,0.14) 0%, transparent 60%);
     }
     .hero-grid {
       position: absolute; inset: 0; pointer-events: none;
       background-image:
-        linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px);
+        linear-gradient(rgba(99,102,241,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,102,241,0.06) 1px, transparent 1px);
       background-size: 72px 72px;
       mask-image: radial-gradient(ellipse 85% 75% at 50% 30%, black 15%, transparent 100%);
     }
@@ -284,7 +284,7 @@
     @keyframes bdot { 0%,80%,100%{opacity:0;transform:scale(0.8)} 40%{opacity:1;transform:scale(1)} }
 
     /* ── SERVICES ── */
-    .services { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .services { background-color: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     .svc-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 15px; }
     .svc-card {
       background: var(--bg); border: 1px solid var(--border);
@@ -329,7 +329,7 @@
     .step-time { display: inline-block; margin-top: 12px; font-size: 11px; font-weight: 600; color: var(--accent); background: var(--adim); border: 1px solid var(--border); padding: 3px 10px; border-radius: 100px; letter-spacing: 0.03em; }
 
     /* ── PRICING ── */
-    .pricing { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .pricing { background-color: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; max-width: 960px; margin: 0 auto; }
     .p-card {
       background: var(--bg); border: 1px solid var(--border);
@@ -1658,7 +1658,7 @@ function App() {
       </section>
 
       {/* ── CONTACT ── */}
-      <section className="contact" style={{padding:'110px 0',background:'var(--bg2)'}} id="contact">
+      <section className="contact" style={{padding:'110px 0',backgroundColor:'var(--bg2)'}} id="contact">
         <div className="container">
           <div className="fi" style={{textAlign:'center',marginBottom:48}}>
             <div className="sec-label center">Get Started</div>
