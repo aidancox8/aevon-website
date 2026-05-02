@@ -14,10 +14,10 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:    #09090B;
-      --bg2:   #0A0F1E;
-      --bg3:   #0F1629;
-      --bg4:   #141d35;
+      --bg:    #111116;
+      --bg2:   #14192E;
+      --bg3:   #1A2138;
+      --bg4:   #202840;
       --border:  rgba(99,102,241,0.12);
       --border2: rgba(99,102,241,0.28);
       --accent:  #6366F1;
@@ -475,7 +475,6 @@
   <ul class="nav-links">
     <li><a href="#problem">Why Aevon</a></li>
     <li><a href="#showcase">App Gallery</a></li>
-    <li><a href="#roi">ROI</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#contact" class="nav-cta">Start Building</a></li>
   </ul>
@@ -1087,7 +1086,7 @@ function AppShowcase() {
                 onMouseEnter={() => setActive(i)}
                 onMouseLeave={() => setActive(null)}
                 style={{
-                  background: isActive ? 'rgba(10,15,30,0.95)' : '#0A0F1E',
+                  background: isActive ? 'rgba(10,15,30,0.95)' : '#14192E',
                   border: `1px solid ${isActive ? 'rgba(99,102,241,0.4)' : 'rgba(99,102,241,0.12)'}`,
                   borderRadius: 14, overflow: 'hidden', cursor: 'default',
                   transition: 'all 0.25s ease',
@@ -1096,7 +1095,7 @@ function AppShowcase() {
                 }}
               >
                 <div style={{
-                  background: '#080C18', borderBottom: '1px solid rgba(99,102,241,0.1)',
+                  background: '#0F1320', borderBottom: '1px solid rgba(99,102,241,0.1)',
                   position: 'relative', overflow: 'hidden',
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
@@ -1223,7 +1222,7 @@ function ROICalculator() {
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'start' }} className="fi" data-delay="100">
           <div style={{
-            background: '#0A0F1E', border: '1px solid rgba(99,102,241,0.15)',
+            background: '#14192E', border: '1px solid rgba(99,102,241,0.15)',
             borderRadius: 16, padding: '36px 36px 28px',
           }}>
             <div style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.09em', color: '#475569', marginBottom: 28 }}>Your Numbers</div>
@@ -1300,7 +1299,6 @@ function ROICalculator() {
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "accentColor": "#6366F1",
   "bgTone": "navy",
-  "showROI": true,
   "heroTagline": "Your business doesn't fit in a box. Stop forcing it to."
 }/*EDITMODE-END*/;
 
@@ -1505,9 +1503,9 @@ function App() {
     document.documentElement.style.setProperty('--border', tweaks.accentColor + '1e');
     document.documentElement.style.setProperty('--border2', tweaks.accentColor + '47');
     if (tweaks.bgTone === 'navy') {
-      document.documentElement.style.setProperty('--bg', '#09090B');
-      document.documentElement.style.setProperty('--bg2', '#0A0F1E');
-      document.documentElement.style.setProperty('--bg3', '#0F1629');
+      document.documentElement.style.setProperty('--bg', '#111116');
+      document.documentElement.style.setProperty('--bg2', '#14192E');
+      document.documentElement.style.setProperty('--bg3', '#1A2138');
     } else {
       document.documentElement.style.setProperty('--bg', '#0a0a0a');
       document.documentElement.style.setProperty('--bg2', '#111111');
@@ -1623,32 +1621,6 @@ function App() {
         </div>
       </section>
 
-      {/* ── ROI CALCULATOR ── */}
-      {tweaks.showROI && <ROICalculator />}
-
-      {/* ── HOW IT WORKS ── */}
-      <section className="how" style={{padding:'110px 0'}} id="how">
-        <div className="container">
-          <div className="fi" style={{textAlign:'center',marginBottom:72}}>
-            <div className="sec-label center">Process</div>
-            <h2 className="sec-title">From idea to shipped in weeks.</h2>
-            <p className="sec-sub" style={{maxWidth:460,margin:'0 auto'}}>A lightweight, transparent process. You stay in control without drowning in meetings.</p>
-          </div>
-          <div className="how-steps">
-            {steps.map((s,i) => (
-              <div className="how-step fi" key={s.n} data-delay={i*90}>
-                <div className="step-ring"><span>{s.n}</span></div>
-                <h3>{s.title}</h3>
-                <p>{s.body}</p>
-                <div className="step-time">{s.time}</div>
-              </div>
-            ))}
-          </div>
-          <p className="fi" style={{textAlign:'center',marginTop:48,fontSize:13.5,color:'var(--text3)'}}>
-            Most projects go from discovery call to live app in <strong style={{color:'var(--text2)'}}>4 to 8 weeks</strong>, depending on scope.
-          </p>
-        </div>
-      </section>
 
       {/* ── PRICING ── */}
       <section className="pricing" style={{padding:'110px 0'}} id="pricing">
@@ -1725,7 +1697,6 @@ function App() {
           <TweakRadio label="Background" id="bgTone" options={['navy','charcoal']} value={tweaks.bgTone} onChange={v=>setTweak('bgTone',v)} />
         </TweakSection>
         <TweakSection label="Sections">
-          <TweakToggle label="ROI Calculator" id="showROI" value={tweaks.showROI} onChange={v=>setTweak('showROI',v)} />
         </TweakSection>
         <TweakSection label="Copy">
           <TweakText label="Hero Tagline" id="heroTagline" value={tweaks.heroTagline} onChange={v=>setTweak('heroTagline',v)} />
