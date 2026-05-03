@@ -335,48 +335,6 @@
     .how-step p { font-size: 13px; color: var(--text2); line-height: 1.65; }
     .step-time { display: inline-block; margin-top: 12px; font-size: 11px; font-weight: 600; color: var(--accent); background: var(--adim); border: 1px solid var(--border); padding: 3px 10px; border-radius: 100px; letter-spacing: 0.03em; }
 
-    /* ── PRICING ── */
-    .pricing { background-color: var(--bg); }
-    .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; max-width: 960px; margin: 0 auto; }
-    .p-card {
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: 14px; padding: 34px 30px; position: relative;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .p-card:hover { border-color: var(--border2); }
-    .p-card.feat {
-      border-color: rgba(99,102,241,0.4);
-      background: linear-gradient(160deg, var(--bg), rgba(99,102,241,0.06));
-      box-shadow: 0 0 0 1px rgba(99,102,241,0.15), 0 24px 60px rgba(0,0,0,0.4);
-    }
-    .p-pill {
-      position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
-      background: var(--accent); color: #fff; font-size: 10px; font-weight: 700;
-      letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 14px;
-      border-radius: 0 0 8px 8px;
-    }
-    .p-tier { font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; }
-    .p-price { font-size: 40px; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 6px; line-height: 1; }
-    .p-price sup { font-size: 17px; font-weight: 600; color: var(--text2); vertical-align: super; }
-    .p-price-suffix { font-size: 18px; font-weight: 500; color: var(--text3); letter-spacing: -0.01em; margin-left: 2px; }
-    .p-desc { font-size: 13px; color: var(--text2); margin-bottom: 24px; line-height: 1.6; }
-    .p-hr { border: none; border-top: 1px solid var(--border); margin-bottom: 20px; }
-    .p-feats { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px; }
-    .p-feats li { font-size: 13px; color: var(--text2); display: flex; gap: 9px; }
-    .p-feats li::before { content: '↗'; color: var(--accent); font-size: 11px; font-weight: 700; flex-shrink: 0; padding-top: 2px; }
-    .p-btn {
-      width: 100%; padding: 13px; border-radius: 8px;
-      font-size: 14px; font-weight: 600; font-family: 'Inter',sans-serif;
-      letter-spacing: -0.01em; cursor: pointer; transition: all 0.2s;
-      border: 1px solid rgba(255,255,255,0.1); background: transparent; color: var(--text);
-    }
-    .p-btn:hover { background: rgba(255,255,255,0.05); }
-    .p-btn.pri {
-      background: var(--accent); border-color: transparent; color: #fff;
-      box-shadow: 0 0 24px rgba(99,102,241,0.38);
-    }
-    .p-btn.pri:hover { opacity: 0.88; box-shadow: 0 4px 32px rgba(99,102,241,0.52); }
-
     /* ── CONTACT ── */
     .contact { border-top: 1px solid var(--border); }
     .contact-inner { max-width: 600px; margin: 0 auto; }
@@ -463,8 +421,7 @@
       .svc-grid { grid-template-columns: 1fr; }
       .how-steps { grid-template-columns: repeat(2,1fr); }
       .how-steps::before { display: none; }
-      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
-      .footer-row { flex-direction: column; gap: 20px; text-align: center; }
+.footer-row { flex-direction: column; gap: 20px; text-align: center; }
       .showcase-grid { grid-template-columns: repeat(2,1fr) !important; }
     }
     @media(max-width:640px){
@@ -490,7 +447,6 @@
   <ul class="nav-links">
     <li><a href="#problem">Why Aevon</a></li>
     <li><a href="#showcase">App Gallery</a></li>
-    <li><a href="#pricing">Pricing</a></li>
     <li><a href="#contact" class="nav-cta">Start Building</a></li>
   </ul>
 </nav>
@@ -1218,13 +1174,7 @@ function ROICalculator() {
   const annualSaaS = saasMonthly * 12;
   const annualTimeWaste = Math.round(hoursWeek * employees * 52 * hourlyWage);
   const totalLoss = annualSaaS + annualTimeWaste;
-  const appCostLow = 1500;
-  const appCostHigh = 4000;
-  const payback = Math.max(1, Math.round(appCostLow / (totalLoss / 12)));
-
   const animatedTotal = useAnimatedNumber(totalLoss, 500);
-
-  const fmt = (n) => '$' + n.toLocaleString();
 
   return (
     <section style={{ padding: '110px 0', borderTop: '1px solid rgba(99,102,241,0.12)' }} id="roi">
@@ -1275,17 +1225,9 @@ function ROICalculator() {
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: 12 }}>
-              <div style={{ flex: 1, background: 'rgba(99,102,241,0.06)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: 10, padding: '16px 18px' }}>
-                <div style={{ fontSize: 10.5, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.09em', color: '#475569', marginBottom: 6 }}>Est. App Investment</div>
-                <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: '-0.04em', color: '#a5b4fc' }}>{fmt(appCostLow)} – {fmt(appCostHigh)}</div>
-                <div style={{ fontSize: 11, color: '#475569', marginTop: 4 }}>One-time. You own it.</div>
-              </div>
-              <div style={{ flex: 1, background: 'rgba(74,222,128,0.05)', border: '1px solid rgba(74,222,128,0.2)', borderRadius: 10, padding: '16px 18px' }}>
-                <div style={{ fontSize: 10.5, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.09em', color: '#475569', marginBottom: 6 }}>Payback Period</div>
-                <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: '-0.04em', color: '#86efac' }}>{payback} month{payback !== 1 ? 's' : ''}</div>
-                <div style={{ fontSize: 11, color: '#475569', marginTop: 4 }}>Then it pays you back.</div>
-              </div>
+            <div style={{ background: 'rgba(99,102,241,0.06)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: 10, padding: '16px 18px', textAlign: 'center' }}>
+              <div style={{ fontSize: 13, color: '#a5b4fc', fontWeight: 600, marginBottom: 4 }}>A custom app pays for itself fast.</div>
+              <div style={{ fontSize: 12, color: '#475569' }}>Book a free call to get a scoped quote for your project.</div>
             </div>
 
             <a href="#contact" style={{
@@ -1549,11 +1491,6 @@ function App() {
     { n:'04', title:'Launch & Own', body:'We deploy, train your team, hand over source code. It\'s yours forever.', time:'1 week' },
   ];
 
-  const plans = [
-    { tier:'Small Scope', price:'1,500', priceSuffix:'– $3,000', desc:'A focused single-workflow app. Great for automating one clear process.', feats:['1 core workflow','Up to 3 user roles','Basic dashboard','30-day support','Full source code'], cta:'Get a Quote', feat:false },
-    { tier:'Medium Scope', price:'3,000', priceSuffix:'– $6,000', desc:'A multi-function tool for your whole team with integrations.', feats:['Multiple workflows','Unlimited users','Advanced analytics','Integrations included','90-day support + training'], cta:'Start Building', feat:true },
-    { tier:'Large Scope', price:'6,000', priceSuffix:'+', desc:'Complex, multi-system apps with AI or enterprise requirements.', feats:['Full custom scope','AI/ML integrations','Enterprise security','Dedicated PM','Ongoing maintenance'], cta:"Let's Talk", feat:false },
-  ];
 
   return (
     <>
@@ -1637,34 +1574,6 @@ function App() {
       </section>
 
 
-      {/* ── PRICING ── */}
-      <section className="pricing" style={{padding:'110px 0'}} id="pricing">
-        <div className="container">
-          <div className="fi" style={{textAlign:'center',marginBottom:64}}>
-            <div className="sec-label center">Pricing</div>
-            <h2 className="sec-title">Priced by effort, not by tier.</h2>
-            <p className="sec-sub" style={{maxWidth:500,margin:'0 auto'}}>Every quote is based on what your project actually needs: no padded packages, no arbitrary plans. Pay once, own it forever.</p>
-          </div>
-          <div className="pricing-grid">
-            {plans.map((p,i) => (
-              <div className={`p-card fi ${p.feat?'feat':''}`} key={p.tier} data-delay={i*90}>
-                {p.feat && <div className="p-pill">Most Popular</div>}
-                <div className="p-tier">{p.tier}</div>
-                <div className="p-price"><sup>$</sup>{p.price}<span className="p-price-suffix">{p.priceSuffix}</span></div>
-                <p className="p-desc">{p.desc}</p>
-                <hr className="p-hr" />
-                <ul className="p-feats">{p.feats.map(f => <li key={f}>{f}</li>)}</ul>
-                <button className={`p-btn ${p.feat?'pri':''}`} onClick={() => document.getElementById('contact').scrollIntoView()}>{p.cta}</button>
-              </div>
-            ))}
-          </div>
-          <p style={{textAlign:'center',marginTop:40,fontSize:13,color:'var(--text3)',lineHeight:1.7}}>
-            All prices are one-time. Optional hosting and maintenance available from $50/mo.
-            <br />Prefer to spread the cost? Ask about our rent-to-own option — 12 monthly payments, then you own it outright.
-          </p>
-        </div>
-      </section>
-
       {/* ── CONTACT ── */}
       <section className="contact" style={{padding:'110px 0'}} id="contact">
         <div className="container">
@@ -1697,7 +1606,6 @@ function App() {
             <p className="fcopy">© 2026 Aevon. Custom software for businesses that move fast.</p>
             <ul className="flinks">
               <li><a href="#problem">Why Aevon</a></li>
-              <li><a href="#pricing">Pricing</a></li>
               <li><a href="#contact">Contact</a></li>
               <li><a href="privacy.html">Privacy Policy</a></li>
             </ul>
