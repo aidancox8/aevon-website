@@ -1485,7 +1485,7 @@ function App() {
   ];
 
   const steps = [
-    { n:'01', title:'Discovery Call', body:'We map your workflow gaps, pain points, and what success looks like for your team.', time:'30 min, free' },
+    { n:'01', title:'Discovery Call', body:'We map your workflow gaps, pain points, and what success looks like for your team.', time:'15-30 min, free' },
     { n:'02', title:'Scoped Proposal', body:'A clear, fixed-price proposal with timeline. No surprises, no scope creep.', time:'2-3 days' },
     { n:'03', title:'Build & Iterate', body:'We build fast with regular previews. You give direct feedback throughout.', time:'3-7 weeks' },
     { n:'04', title:'Launch & Own', body:'We deploy, train your team, hand over source code. It\'s yours forever.', time:'1 week' },
@@ -1573,6 +1573,27 @@ function App() {
         </div>
       </section>
 
+
+      {/* ── HOW IT WORKS ── */}
+      <section className="how" style={{padding:'110px 0'}} id="how">
+        <div className="container">
+          <div className="fi" style={{textAlign:'center',marginBottom:64}}>
+            <div className="sec-label center">How It Works</div>
+            <h2 className="sec-title">From first call to fully yours.</h2>
+            <p className="sec-sub" style={{maxWidth:480,margin:'0 auto'}}>No long discovery phases. No surprise invoices. A clear process from day one.</p>
+          </div>
+          <div className="how-steps">
+            {steps.map((s,i) => (
+              <div className="how-step fi" key={s.n} data-delay={i*80}>
+                <div className="step-ring"><span>{s.n}</span></div>
+                <h3>{s.title}</h3>
+                <p>{s.body}</p>
+                <span className="step-time">{s.time}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ── CONTACT ── */}
       <section className="contact" style={{padding:'110px 0'}} id="contact">
