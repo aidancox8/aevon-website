@@ -1078,16 +1078,18 @@ function AppShowcase() {
                   </div>
                   <card.UI />
                 </div>
-                <div style={{ padding: '16px 18px' }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: '#F8FAFC', letterSpacing: '-0.025em', marginBottom: 5 }}>{card.title}</div>
-                  <div style={{ fontSize: 12.5, color: '#8A9DB5', lineHeight: 1.55 }}>{card.desc}</div>
-                  <div style={{
-                    marginTop: 12, fontSize: 11.5, fontWeight: 600, color: isActive ? card.accent : '#334155',
-                    display: 'flex', alignItems: 'center', gap: 4, transition: 'color 0.2s',
-                    letterSpacing: '-0.01em',
-                  }}>
-                    Build this for me <span style={{ transition: 'transform 0.2s', transform: isActive ? 'translateX(3px)' : 'none', display: 'inline-block' }}>→</span>
+                <div style={{ padding: '14px 18px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 5 }}>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: '#F8FAFC', letterSpacing: '-0.025em' }}>{card.title}</div>
+                    <div style={{
+                      fontSize: 11.5, fontWeight: 600, color: isActive ? card.accent : '#475569',
+                      display: 'flex', alignItems: 'center', gap: 3, transition: 'color 0.2s',
+                      letterSpacing: '-0.01em', flexShrink: 0,
+                    }}>
+                      Build this for me <span style={{ transition: 'transform 0.2s', transform: isActive ? 'translateX(3px)' : 'none', display: 'inline-block' }}>→</span>
+                    </div>
                   </div>
+                  <div style={{ fontSize: 12.5, color: '#8A9DB5', lineHeight: 1.55 }}>{card.desc}</div>
                 </div>
               </div>
             );
