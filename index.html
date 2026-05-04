@@ -817,7 +817,7 @@ function TweakButton({ label, onClick, secondary = false }) {
 // app-showcase.jsx
 function OnboardingUI() {
   return (
-    <div style={{ fontFamily: 'Inter,sans-serif' }}>
+    <div style={{ fontFamily: 'Inter,sans-serif', background: '#fff' }}>
       <div style={{ background: 'linear-gradient(135deg,#4f46e5,#6366F1)', padding: '7px 12px', display: 'flex', alignItems: 'center', gap: 6 }}>
         <span style={{ fontSize: 9, fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>New Employee Onboarding</span>
         <span style={{ marginLeft: 'auto', fontSize: 7.5, background: 'rgba(255,255,255,0.2)', color: '#fff', borderRadius: 10, padding: '1px 6px', fontWeight: 600 }}>62% Done</span>
@@ -829,40 +829,40 @@ function OnboardingUI() {
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
                 <div style={{
                   width: 18, height: 18, borderRadius: '50%', fontSize: 7.5, fontWeight: 800,
-                  background: i < 2 ? '#6366F1' : i === 2 ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.05)',
-                  border: i === 2 ? '1.5px solid #6366F1' : 'none',
-                  color: i < 2 ? '#fff' : i === 2 ? '#818cf8' : '#475569',
+                  background: i < 2 ? '#6366F1' : i === 2 ? '#EEF2FF' : '#F1F5F9',
+                  border: i === 2 ? '1.5px solid #6366F1' : i < 2 ? 'none' : '1.5px solid #E2E8F0',
+                  color: i < 2 ? '#fff' : i === 2 ? '#6366F1' : '#94A3B8',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>{i < 2 ? '✓' : i + 1}</div>
-                <span style={{ fontSize: 6.5, color: i < 3 ? '#64748B' : '#2D3748', whiteSpace: 'nowrap' }}>{s}</span>
+                <span style={{ fontSize: 6.5, color: i < 2 ? '#6366F1' : i === 2 ? '#475569' : '#94A3B8', whiteSpace: 'nowrap' }}>{s}</span>
               </div>
-              {i < 3 && <div style={{ flex: 1, height: 1.5, background: i < 2 ? '#6366F1' : 'rgba(255,255,255,0.07)', margin: '0 3px', marginBottom: 10 }} />}
+              {i < 3 && <div style={{ flex: 1, height: 1.5, background: i < 2 ? '#6366F1' : '#E2E8F0', margin: '0 3px', marginBottom: 10 }} />}
             </React.Fragment>
           ))}
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           {[
-            { done: true, label: 'Upload photo ID', tag: 'Done', tagColor: '#4ade80' },
-            { done: true, label: 'Sign employment contract', tag: 'Done', tagColor: '#4ade80' },
-            { done: false, label: 'Set up 2FA', tag: 'In Progress', tagColor: '#818cf8', active: true },
-            { done: false, label: 'Complete benefits form', tag: 'Pending', tagColor: '#475569' },
+            { done: true, label: 'Upload photo ID', tag: 'Done', tagColor: '#16a34a', tagBg: '#f0fdf4' },
+            { done: true, label: 'Sign employment contract', tag: 'Done', tagColor: '#16a34a', tagBg: '#f0fdf4' },
+            { done: false, label: 'Set up 2FA', tag: 'In Progress', tagColor: '#6366F1', tagBg: '#EEF2FF', active: true },
+            { done: false, label: 'Complete benefits form', tag: 'Pending', tagColor: '#94A3B8', tagBg: '#F8FAFC' },
           ].map(t => (
             <div key={t.label} style={{
               display: 'flex', alignItems: 'center', gap: 7, padding: '5px 7px',
-              background: t.active ? 'rgba(99,102,241,0.07)' : 'rgba(255,255,255,0.025)',
-              border: `1px solid ${t.active ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.04)'}`,
+              background: t.active ? '#EEF2FF' : '#F8FAFC',
+              border: `1px solid ${t.active ? '#C7D2FE' : '#E2E8F0'}`,
               borderRadius: 5,
             }}>
               <div style={{
                 width: 11, height: 11, borderRadius: 3, flexShrink: 0,
                 background: t.done ? '#6366F1' : 'transparent',
-                border: `1.5px solid ${t.done ? '#6366F1' : t.active ? '#6366F1' : '#2D3748'}`,
+                border: `1.5px solid ${t.done ? '#6366F1' : t.active ? '#6366F1' : '#CBD5E1'}`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
                 {t.done && <span style={{ color: '#fff', fontSize: 7, fontWeight: 800, lineHeight: 1 }}>✓</span>}
               </div>
-              <span style={{ flex: 1, fontSize: 8.5, color: t.done ? '#475569' : '#8A9DB5', textDecoration: t.done ? 'line-through' : 'none' }}>{t.label}</span>
-              <span style={{ fontSize: 7, fontWeight: 700, color: t.tagColor, letterSpacing: '0.03em' }}>{t.tag}</span>
+              <span style={{ flex: 1, fontSize: 8.5, color: t.done ? '#94A3B8' : '#475569', textDecoration: t.done ? 'line-through' : 'none' }}>{t.label}</span>
+              <span style={{ fontSize: 7, fontWeight: 700, color: t.tagColor, background: t.tagBg, padding: '1px 5px', borderRadius: 8 }}>{t.tag}</span>
             </div>
           ))}
         </div>
@@ -873,12 +873,12 @@ function OnboardingUI() {
 
 function RequestTrackerUI() {
   const cols = [
-    { label: 'New', color: '#a5b4fc', cards: ['Website redesign', 'API integration'] },
-    { label: 'In Progress', color: '#c4b5fd', active: true, cards: ['Mobile app spec', 'CRM migration'] },
-    { label: 'Done', color: '#4ade80', cards: ['Onboarding portal'] },
+    { label: 'New', color: '#6366F1', cards: ['Website redesign', 'API integration'] },
+    { label: 'In Progress', color: '#f59e0b', active: true, cards: ['Mobile app spec', 'CRM migration'] },
+    { label: 'Done', color: '#16a34a', cards: ['Onboarding portal'] },
   ];
   return (
-    <div style={{ fontFamily: 'Inter,sans-serif' }}>
+    <div style={{ fontFamily: 'Inter,sans-serif', background: '#F8FAFC' }}>
       <div style={{ background: 'linear-gradient(135deg,#6d28d9,#7C3AED)', padding: '7px 12px', display: 'flex', alignItems: 'center', gap: 6 }}>
         <span style={{ fontSize: 9, fontWeight: 700, color: '#fff' }}>Client Requests</span>
         <span style={{ marginLeft: 'auto', fontSize: 7.5, background: 'rgba(255,255,255,0.2)', color: '#fff', borderRadius: 10, padding: '1px 6px', fontWeight: 600 }}>5 open</span>
@@ -886,17 +886,17 @@ function RequestTrackerUI() {
       <div style={{ padding: '10px 12px', display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 6 }}>
         {cols.map(col => (
           <div key={col.label} style={{
-            background: col.active ? 'rgba(124,58,237,0.06)' : 'rgba(255,255,255,0.02)',
-            border: `1px solid ${col.active ? 'rgba(124,58,237,0.25)' : 'rgba(255,255,255,0.05)'}`,
+            background: col.active ? '#FEFCE8' : '#fff',
+            border: `1px solid ${col.active ? '#FDE68A' : '#E2E8F0'}`,
             borderRadius: 6, overflow: 'hidden',
           }}>
-            <div style={{ padding: '5px 7px', borderBottom: `1px solid ${col.active ? 'rgba(124,58,237,0.2)' : 'rgba(255,255,255,0.04)'}`, display: 'flex', alignItems: 'center', gap: 4 }}>
+            <div style={{ padding: '5px 7px', borderBottom: `1px solid ${col.active ? '#FDE68A' : '#E2E8F0'}`, display: 'flex', alignItems: 'center', gap: 4 }}>
               <div style={{ width: 5, height: 5, borderRadius: '50%', background: col.color }} />
-              <span style={{ fontSize: 7.5, fontWeight: 700, color: col.active ? '#c4b5fd' : '#64748B', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{col.label}</span>
+              <span style={{ fontSize: 7.5, fontWeight: 700, color: '#475569', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{col.label}</span>
             </div>
             <div style={{ padding: '5px 6px', display: 'flex', flexDirection: 'column', gap: 4 }}>
               {col.cards.map(c => (
-                <div key={c} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 4, padding: '5px 6px', fontSize: 7.5, color: '#8A9DB5', lineHeight: 1.4 }}>{c}</div>
+                <div key={c} style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: 4, padding: '5px 6px', fontSize: 7.5, color: '#475569', lineHeight: 1.4 }}>{c}</div>
               ))}
             </div>
           </div>
@@ -908,22 +908,22 @@ function RequestTrackerUI() {
 
 function DocSigningUI() {
   return (
-    <div style={{ fontFamily: 'Inter,sans-serif' }}>
+    <div style={{ fontFamily: 'Inter,sans-serif', background: '#fff' }}>
       <div style={{ background: 'linear-gradient(135deg,#6366F1,#818cf8)', padding: '7px 12px', display: 'flex', alignItems: 'center', gap: 6 }}>
         <span style={{ fontSize: 9, fontWeight: 700, color: '#fff' }}>Document Signing</span>
         <span style={{ marginLeft: 'auto', fontSize: 7.5, background: 'rgba(255,255,255,0.2)', color: '#fff', borderRadius: 10, padding: '1px 6px', fontWeight: 600 }}>1 of 2 signed</span>
       </div>
       <div style={{ padding: '10px 12px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 8, padding: '6px 8px', background: 'rgba(129,140,248,0.07)', border: '1px solid rgba(129,140,248,0.18)', borderRadius: 6 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 8, padding: '6px 8px', background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: 6 }}>
           <span style={{ fontSize: 13 }}>📄</span>
           <div>
-            <div style={{ fontSize: 8.5, fontWeight: 600, color: '#c4b5fd' }}>SERVICE_AGREEMENT_2026.pdf</div>
-            <div style={{ fontSize: 7, color: '#475569', marginTop: 1 }}>Sent for review · 2 signatories</div>
+            <div style={{ fontSize: 8.5, fontWeight: 600, color: '#1E293B' }}>SERVICE_AGREEMENT_2026.pdf</div>
+            <div style={{ fontSize: 7, color: '#94A3B8', marginTop: 1 }}>Sent for review · 2 signatories</div>
           </div>
-          <span style={{ marginLeft: 'auto', fontSize: 7, fontWeight: 700, color: '#fbbf24', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.2)', padding: '2px 6px', borderRadius: 8 }}>PENDING</span>
+          <span style={{ marginLeft: 'auto', fontSize: 7, fontWeight: 700, color: '#d97706', background: '#FFFBEB', border: '1px solid #FDE68A', padding: '2px 6px', borderRadius: 8 }}>PENDING</span>
         </div>
         {[95, 82, 90, 68].map((w, i) => (
-          <div key={i} style={{ height: 4.5, background: 'rgba(255,255,255,0.04)', borderRadius: 2, marginBottom: 4, width: w + '%' }} />
+          <div key={i} style={{ height: 4.5, background: '#F1F5F9', borderRadius: 2, marginBottom: 4, width: w + '%' }} />
         ))}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 7, marginTop: 9 }}>
           {[
@@ -931,13 +931,13 @@ function DocSigningUI() {
             { label: 'Provider', name: 'Awaiting...', signed: false },
           ].map(s => (
             <div key={s.label} style={{
-              border: `1px ${s.signed ? 'solid' : 'dashed'} ${s.signed ? 'rgba(74,222,128,0.3)' : 'rgba(129,140,248,0.3)'}`,
-              background: s.signed ? 'rgba(74,222,128,0.04)' : 'rgba(129,140,248,0.04)',
+              border: `1px ${s.signed ? 'solid' : 'dashed'} ${s.signed ? '#86EFAC' : '#C7D2FE'}`,
+              background: s.signed ? '#F0FDF4' : '#EEF2FF',
               borderRadius: 5, padding: '7px 8px',
             }}>
-              <div style={{ fontSize: 7, color: '#475569', marginBottom: 3, textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>{s.label}</div>
-              <div style={{ fontSize: 9, color: s.signed ? '#4ade80' : '#64748B', fontStyle: s.signed ? 'italic' : 'normal' }}>{s.name}</div>
-              {s.signed && <div style={{ fontSize: 6.5, color: '#4ade80', marginTop: 2, fontWeight: 600 }}>✓ Signed</div>}
+              <div style={{ fontSize: 7, color: '#94A3B8', marginBottom: 3, textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>{s.label}</div>
+              <div style={{ fontSize: 9, color: s.signed ? '#16a34a' : '#6366F1', fontStyle: s.signed ? 'italic' : 'normal' }}>{s.name}</div>
+              {s.signed && <div style={{ fontSize: 6.5, color: '#16a34a', marginTop: 2, fontWeight: 600 }}>✓ Signed</div>}
             </div>
           ))}
         </div>
@@ -948,36 +948,36 @@ function DocSigningUI() {
 
 function ITTicketUI() {
   const tickets = [
-    { id: '#248', title: 'VPN connection failing', pri: 'High', priColor: '#f87171', status: 'Open', statusColor: '#f87171' },
-    { id: '#247', title: 'Printer offline – Floor 2', pri: 'Med', priColor: '#fbbf24', status: 'Active', statusColor: '#fbbf24' },
-    { id: '#246', title: 'Password reset request', pri: 'Low', priColor: '#4ade80', status: 'Done', statusColor: '#4ade80' },
-    { id: '#245', title: 'Slack SSO config', pri: 'Low', priColor: '#4ade80', status: 'Done', statusColor: '#4ade80' },
+    { id: '#248', title: 'VPN connection failing', pri: 'High', priColor: '#dc2626', status: 'Open', statusColor: '#dc2626', statusBg: '#FEF2F2' },
+    { id: '#247', title: 'Printer offline – Floor 2', pri: 'Med', priColor: '#d97706', status: 'Active', statusColor: '#d97706', statusBg: '#FFFBEB' },
+    { id: '#246', title: 'Password reset request', pri: 'Low', priColor: '#16a34a', status: 'Done', statusColor: '#16a34a', statusBg: '#F0FDF4' },
+    { id: '#245', title: 'Slack SSO config', pri: 'Low', priColor: '#16a34a', status: 'Done', statusColor: '#16a34a', statusBg: '#F0FDF4' },
   ];
   return (
-    <div style={{ fontFamily: 'Inter,sans-serif' }}>
+    <div style={{ fontFamily: 'Inter,sans-serif', background: '#fff' }}>
       <div style={{ background: 'linear-gradient(135deg,#4338ca,#6366F1)', padding: '7px 12px', display: 'flex', alignItems: 'center', gap: 6 }}>
         <span style={{ fontSize: 9, fontWeight: 700, color: '#fff' }}>IT Help Desk</span>
-        <span style={{ marginLeft: 'auto', fontSize: 7.5, background: 'rgba(248,113,113,0.25)', color: '#fca5a5', borderRadius: 10, padding: '1px 6px', fontWeight: 700 }}>1 urgent</span>
+        <span style={{ marginLeft: 'auto', fontSize: 7.5, background: 'rgba(220,38,38,0.25)', color: '#fca5a5', borderRadius: 10, padding: '1px 6px', fontWeight: 700 }}>1 urgent</span>
       </div>
       <div style={{ padding: '8px 12px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '26px 1fr 42px 32px', gap: 4, padding: '0 0 5px', borderBottom: '1px solid rgba(255,255,255,0.04)', marginBottom: 3 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '26px 1fr 42px 32px', gap: 4, padding: '0 0 5px', borderBottom: '1px solid #E2E8F0', marginBottom: 3 }}>
           {['#', 'Title', 'Status', 'Pri'].map(h => (
-            <div key={h} style={{ fontSize: 6.5, fontWeight: 700, color: '#334155', letterSpacing: '0.07em', textTransform: 'uppercase' }}>{h}</div>
+            <div key={h} style={{ fontSize: 6.5, fontWeight: 700, color: '#94A3B8', letterSpacing: '0.07em', textTransform: 'uppercase' }}>{h}</div>
           ))}
         </div>
         {tickets.map(t => (
-          <div key={t.id} style={{ display: 'grid', gridTemplateColumns: '26px 1fr 42px 32px', gap: 4, padding: '5px 0', borderBottom: '1px solid rgba(255,255,255,0.03)', alignItems: 'center' }}>
-            <div style={{ fontSize: 7.5, color: '#475569' }}>{t.id}</div>
-            <div style={{ fontSize: 8.5, color: '#8A9DB5', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{t.title}</div>
-            <div style={{ fontSize: 7, fontWeight: 700, color: t.statusColor, background: `${t.statusColor}18`, border: `1px solid ${t.statusColor}30`, borderRadius: 8, padding: '1px 5px', textAlign: 'center' }}>{t.status}</div>
+          <div key={t.id} style={{ display: 'grid', gridTemplateColumns: '26px 1fr 42px 32px', gap: 4, padding: '5px 0', borderBottom: '1px solid #F1F5F9', alignItems: 'center' }}>
+            <div style={{ fontSize: 7.5, color: '#94A3B8' }}>{t.id}</div>
+            <div style={{ fontSize: 8.5, color: '#334155', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{t.title}</div>
+            <div style={{ fontSize: 7, fontWeight: 700, color: t.statusColor, background: t.statusBg, borderRadius: 8, padding: '1px 5px', textAlign: 'center' }}>{t.status}</div>
             <div style={{ fontSize: 7, fontWeight: 700, color: t.priColor }}>{t.pri}</div>
           </div>
         ))}
         <div style={{ display: 'flex', gap: 6, marginTop: 8 }}>
-          {[{l:'Open',n:1,c:'#f87171'},{l:'Active',n:1,c:'#fbbf24'},{l:'Done',n:2,c:'#4ade80'}].map(s => (
-            <div key={s.l} style={{ flex:1, textAlign:'center', background:'rgba(255,255,255,0.025)', border:'1px solid rgba(255,255,255,0.05)', borderRadius:5, padding:'5px 0' }}>
+          {[{l:'Open',n:1,c:'#dc2626',bg:'#FEF2F2'},{l:'Active',n:1,c:'#d97706',bg:'#FFFBEB'},{l:'Done',n:2,c:'#16a34a',bg:'#F0FDF4'}].map(s => (
+            <div key={s.l} style={{ flex:1, textAlign:'center', background: s.bg, border:`1px solid ${s.c}30`, borderRadius:5, padding:'5px 0' }}>
               <div style={{ fontSize: 13, fontWeight: 800, color: s.c, letterSpacing: '-0.03em' }}>{s.n}</div>
-              <div style={{ fontSize: 6.5, color: '#475569', letterSpacing: '0.03em', marginTop: 1 }}>{s.l}</div>
+              <div style={{ fontSize: 6.5, color: '#94A3B8', letterSpacing: '0.03em', marginTop: 1 }}>{s.l}</div>
             </div>
           ))}
         </div>
@@ -994,28 +994,28 @@ function InventoryUI() {
     { label: 'Power Module', stock: 201, max: 300, warn: false },
   ];
   return (
-    <div style={{ fontFamily: 'Inter,sans-serif' }}>
+    <div style={{ fontFamily: 'Inter,sans-serif', background: '#fff' }}>
       <div style={{ background: 'linear-gradient(135deg,#6d28d9,#7C3AED)', padding: '7px 12px', display: 'flex', alignItems: 'center', gap: 6 }}>
         <span style={{ fontSize: 9, fontWeight: 700, color: '#fff' }}>Inventory Dashboard</span>
-        <span style={{ marginLeft: 'auto', fontSize: 7.5, background: 'rgba(248,113,113,0.3)', color: '#fca5a5', borderRadius: 10, padding: '1px 6px', fontWeight: 700 }}>⚠ 1 low</span>
+        <span style={{ marginLeft: 'auto', fontSize: 7.5, background: 'rgba(220,38,38,0.25)', color: '#fca5a5', borderRadius: 10, padding: '1px 6px', fontWeight: 700 }}>⚠ 1 low</span>
       </div>
       <div style={{ padding: '10px 12px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 6, marginBottom: 10 }}>
-          {[{l:'Total SKUs',v:'618',c:'#e2e8f0'},{l:'In Stock',v:'97%',c:'#4ade80'},{l:'Locations',v:'3',c:'#c4b5fd'}].map(m => (
-            <div key={m.l} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 6, padding: '6px 8px', textAlign: 'center' }}>
+          {[{l:'Total SKUs',v:'618',c:'#1E293B'},{l:'In Stock',v:'97%',c:'#16a34a'},{l:'Locations',v:'3',c:'#7C3AED'}].map(m => (
+            <div key={m.l} style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: 6, padding: '6px 8px', textAlign: 'center' }}>
               <div style={{ fontSize: 16, fontWeight: 800, color: m.c, letterSpacing: '-0.04em', lineHeight: 1 }}>{m.v}</div>
-              <div style={{ fontSize: 6.5, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: 3 }}>{m.l}</div>
+              <div style={{ fontSize: 6.5, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: 3 }}>{m.l}</div>
             </div>
           ))}
         </div>
         {items.map(item => (
           <div key={item.label} style={{ marginBottom: 6 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
-              <span style={{ fontSize: 8.5, color: '#8A9DB5' }}>{item.label}</span>
-              <span style={{ fontSize: 8, fontWeight: item.warn ? 700 : 500, color: item.warn ? '#f87171' : '#64748B' }}>{item.stock}{item.warn ? ' ⚠' : ''}</span>
+              <span style={{ fontSize: 8.5, color: '#475569' }}>{item.label}</span>
+              <span style={{ fontSize: 8, fontWeight: item.warn ? 700 : 500, color: item.warn ? '#dc2626' : '#94A3B8' }}>{item.stock}{item.warn ? ' ⚠' : ''}</span>
             </div>
-            <div style={{ height: 5, background: 'rgba(255,255,255,0.05)', borderRadius: 3, overflow: 'hidden' }}>
-              <div style={{ width: (item.stock/item.max*100)+'%', height:'100%', borderRadius: 3, background: item.warn ? 'linear-gradient(90deg,#f87171,#fb923c)' : 'linear-gradient(90deg,#7C3AED,#a78bfa)' }} />
+            <div style={{ height: 5, background: '#F1F5F9', borderRadius: 3, overflow: 'hidden' }}>
+              <div style={{ width: (item.stock/item.max*100)+'%', height:'100%', borderRadius: 3, background: item.warn ? 'linear-gradient(90deg,#ef4444,#f97316)' : 'linear-gradient(90deg,#7C3AED,#a78bfa)' }} />
             </div>
           </div>
         ))}
@@ -1026,7 +1026,7 @@ function InventoryUI() {
 
 function AIKnowledgeUI() {
   return (
-    <div style={{ fontFamily: 'Inter,sans-serif' }}>
+    <div style={{ fontFamily: 'Inter,sans-serif', background: '#F8FAFC' }}>
       <div style={{ background: 'linear-gradient(135deg,#5b21b6,#818cf8)', padding: '7px 12px', display: 'flex', alignItems: 'center', gap: 6 }}>
         <span style={{ fontSize: 9, fontWeight: 700, color: '#fff' }}>AI Knowledge Base</span>
         <span style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -1035,22 +1035,22 @@ function AIKnowledgeUI() {
         </span>
       </div>
       <div style={{ padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: 7 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(129,140,248,0.2)', borderRadius: 6, padding: '5px 9px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: '#fff', border: '1px solid #E2E8F0', borderRadius: 6, padding: '5px 9px' }}>
           <span style={{ fontSize: 11, color: '#818cf8' }}>⌕</span>
-          <span style={{ fontSize: 8.5, color: '#475569' }}>Ask anything about your company...</span>
-          <span style={{ marginLeft: 'auto', fontSize: 7, fontWeight: 700, color: '#818cf8', background: 'rgba(129,140,248,0.12)', padding: '1px 5px', borderRadius: 4 }}>AI</span>
+          <span style={{ fontSize: 8.5, color: '#94A3B8' }}>Ask anything about your company...</span>
+          <span style={{ marginLeft: 'auto', fontSize: 7, fontWeight: 700, color: '#818cf8', background: '#EEF2FF', padding: '1px 5px', borderRadius: 4 }}>AI</span>
         </div>
-        <div style={{ fontSize: 8.5, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '6px 6px 6px 2px', padding: '6px 9px', color: '#8A9DB5', maxWidth: '80%' }}>
+        <div style={{ fontSize: 8.5, background: '#fff', border: '1px solid #E2E8F0', borderRadius: '6px 6px 6px 2px', padding: '6px 9px', color: '#475569', maxWidth: '80%' }}>
           How do I submit an expense report?
         </div>
-        <div style={{ fontSize: 8.5, background: 'rgba(129,140,248,0.09)', border: '1px solid rgba(129,140,248,0.2)', borderRadius: '6px 6px 2px 6px', padding: '7px 9px', color: '#c4b5fd', maxWidth: '90%', alignSelf: 'flex-end', lineHeight: 1.55 }}>
-          Go to <span style={{ color: '#a5b4fc', fontWeight: 700 }}>Finance → Expenses</span>. Fill the form, attach receipts. Your manager is auto-notified.
+        <div style={{ fontSize: 8.5, background: '#EEF2FF', border: '1px solid #C7D2FE', borderRadius: '6px 6px 2px 6px', padding: '7px 9px', color: '#4338ca', maxWidth: '90%', alignSelf: 'flex-end', lineHeight: 1.55 }}>
+          Go to <span style={{ color: '#6366F1', fontWeight: 700 }}>Finance → Expenses</span>. Fill the form, attach receipts. Your manager is auto-notified.
         </div>
         <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
           {[0, 0.15, 0.3].map((delay, i) => (
             <div key={i} style={{ width: 5, height: 5, borderRadius: '50%', background: '#818cf8', animation: `bdot 1s ${delay}s infinite` }} />
           ))}
-          <span style={{ fontSize: 7, color: '#334155', marginLeft: 3 }}>AI is thinking...</span>
+          <span style={{ fontSize: 7, color: '#94A3B8', marginLeft: 3 }}>AI is thinking...</span>
         </div>
       </div>
     </div>
@@ -1097,7 +1097,7 @@ function AppShowcase() {
                 }}
               >
                 <div style={{
-                  background: '#0F1320', borderBottom: '1px solid rgba(99,102,241,0.1)',
+                  background: '#F1F5F9', borderBottom: '1px solid rgba(99,102,241,0.1)',
                   position: 'relative', overflow: 'hidden', height: 190,
                 }}>
                   <card.UI />
