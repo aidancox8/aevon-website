@@ -419,6 +419,39 @@
     .flinks a { font-size: 12.5px; color: var(--text3); text-decoration: none; transition: color 0.2s; }
     .flinks a:hover { color: var(--text2); }
 
+    /* ── MOBILE NAV ── */
+    #mob-btn {
+      display: none; flex-direction: column; justify-content: center; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px; z-index: 201;
+    }
+    #mob-btn span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text2); border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.2s ease, background 0.2s;
+    }
+    #mob-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); background: var(--text); }
+    #mob-btn.open span:nth-child(2) { opacity: 0; }
+    #mob-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); background: var(--text); }
+    #mob-menu {
+      position: fixed; top: 60px; left: 0; right: 0; z-index: 198;
+      background: rgba(9,9,11,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex; flex-direction: column; padding: 8px 24px 24px;
+      transform: translateY(-110%); opacity: 0;
+      transition: transform 0.28s ease, opacity 0.22s ease;
+      pointer-events: none;
+    }
+    #mob-menu.open { transform: translateY(0); opacity: 1; pointer-events: all; }
+    #mob-menu a {
+      color: var(--text2); text-decoration: none; font-size: 15px; font-weight: 500;
+      padding: 14px 0; border-bottom: 1px solid var(--border);
+      font-family: 'Inter', sans-serif; letter-spacing: -0.01em; transition: color 0.2s;
+    }
+    #mob-menu a:hover { color: var(--text); }
+    #mob-menu a:last-child { border-bottom: none; padding-top: 20px; }
+    #mob-menu .mob-cta { color: var(--accent) !important; font-weight: 600; }
+    @media(max-width:640px) { #mob-btn { display: flex; } }
+
     /* ── RESPONSIVE ── */
     .showcase-grid { grid-template-columns: repeat(3,1fr); }
     @media(max-width:1024px){
@@ -456,7 +489,15 @@
     <li><a href="#showcase">App Gallery</a></li>
     <li><a href="#contact" class="nav-cta">Book a Free Call</a></li>
   </ul>
+  <button id="mob-btn" aria-label="Toggle menu" onclick="toggleMobMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div id="mob-menu">
+  <a href="#problem" onclick="closeMobMenu()">Why Aevon</a>
+  <a href="#showcase" onclick="closeMobMenu()">App Gallery</a>
+  <a href="#contact" onclick="closeMobMenu()" class="mob-cta">Book a Free Call →</a>
+</div>
 
 <div id="root"></div>
 
@@ -1673,6 +1714,17 @@ function App() {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+<script>
+function toggleMobMenu() {
+  document.getElementById('mob-btn').classList.toggle('open');
+  document.getElementById('mob-menu').classList.toggle('open');
+}
+function closeMobMenu() {
+  document.getElementById('mob-btn').classList.remove('open');
+  document.getElementById('mob-menu').classList.remove('open');
+}
+window.addEventListener('scroll', function() { if (window.scrollY > 80) closeMobMenu(); });
 </script>
 </body>
 </html>
