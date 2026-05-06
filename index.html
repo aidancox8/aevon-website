@@ -294,6 +294,7 @@
     @keyframes liveSlide { 0%{opacity:0;transform:translateY(4px)} 100%{opacity:1;transform:none} }
     @keyframes liveCaret { 0%,100%{opacity:1} 50%{opacity:0} }
     @keyframes livePop { 0%{transform:scale(0.85);opacity:0} 60%{transform:scale(1.05);opacity:1} 100%{transform:scale(1);opacity:1} }
+    @keyframes liveToast { 0%{transform:translateX(-50%) scale(0.85);opacity:0} 60%{transform:translateX(-50%) scale(1.05);opacity:1} 100%{transform:translateX(-50%) scale(1);opacity:1} }
     @keyframes liveCheckPop { 0%{transform:scale(0)} 70%{transform:scale(1.3)} 100%{transform:scale(1)} }
     @keyframes liveRipple { 0%{transform:scale(0.4);opacity:0.55} 100%{transform:scale(2.4);opacity:0} }
     .live-cursor { position: absolute; width: 14px; height: 18px; pointer-events: none; z-index: 50; transition: left 0.7s cubic-bezier(0.4,0,0.2,1), top 0.7s cubic-bezier(0.4,0,0.2,1); filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25)); }
@@ -1244,7 +1245,7 @@ function DocSigningUI() {
       </div>
       {/* Sent toast */}
       {(phase === 'sent' || phase === 'done') && (
-        <div style={{ position: 'absolute', bottom: 8, left: '50%', transform: 'translateX(-50%)', background: '#1E293B', color: '#fff', padding: '4px 10px', borderRadius: 14, fontSize: 7, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 5, animation: 'livePop 0.4s ease-out', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>
+        <div style={{ position: 'absolute', bottom: 8, left: '50%', transform: 'translateX(-50%)', background: '#1E293B', color: '#fff', padding: '4px 10px', borderRadius: 14, fontSize: 7, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 5, animation: 'liveToast 0.4s ease-out', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>
           <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#22c55e' }} />
           Sealed PDF sent to all parties
         </div>
