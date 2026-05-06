@@ -1245,9 +1245,11 @@ function DocSigningUI() {
       </div>
       {/* Sent toast */}
       {(phase === 'sent' || phase === 'done') && (
-        <div style={{ position: 'absolute', bottom: 8, left: '50%', transform: 'translateX(-50%)', background: '#1E293B', color: '#fff', padding: '4px 10px', borderRadius: 14, fontSize: 7, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 5, animation: 'liveToast 0.4s ease-out', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>
-          <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#22c55e' }} />
-          Sealed PDF sent to all parties
+        <div style={{ position: 'absolute', bottom: 8, left: 0, right: 0, display: 'flex', justifyContent: 'center', pointerEvents: 'none' }}>
+          <div style={{ background: '#1E293B', color: '#fff', padding: '4px 10px', borderRadius: 14, fontSize: 7, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 5, animation: 'livePop 0.4s ease-out', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>
+            <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#22c55e' }} />
+            Sealed PDF sent to all parties
+          </div>
         </div>
       )}
     </div>
