@@ -346,6 +346,23 @@
     .how-step p { font-size: 13px; color: var(--text2); line-height: 1.65; }
     .step-time { display: inline-block; margin-top: 12px; font-size: 11px; font-weight: 600; color: var(--accent); background: var(--adim); border: 1px solid var(--border); padding: 3px 10px; border-radius: 100px; letter-spacing: 0.03em; }
 
+    /* ── FAQ ── */
+    .faq { border-top: 1px solid var(--border); }
+    .faq-list { max-width: 720px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-q {
+      width: 100%; background: none; border: none; color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600;
+      letter-spacing: -0.02em; text-align: left; padding: 22px 0;
+      cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      transition: color 0.15s;
+    }
+    .faq-q:hover { color: var(--accent); }
+    .faq-chevron { flex-shrink: 0; transition: transform 0.25s ease; color: var(--text3); }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); color: var(--accent); }
+    .faq-a { font-size: 14px; color: var(--text2); line-height: 1.75; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; padding: 0; }
+    .faq-item.open .faq-a { max-height: 300px; padding-bottom: 22px; }
+
     /* ── CONTACT ── */
     .contact { border-top: 1px solid var(--border); }
     .contact-inner { max-width: 600px; margin: 0 auto; }
@@ -496,6 +513,7 @@
     <li><a href="#problem">Why Aevon</a></li>
     <li><a href="#showcase">App Gallery</a></li>
     <li><a href="#work">Our Work</a></li>
+    <li><a href="#faq">FAQ</a></li>
     <li><a href="#contact" class="nav-cta">Book a Free Call</a></li>
   </ul>
   <button id="mob-btn" aria-label="Toggle menu" onclick="toggleMobMenu()">
@@ -506,6 +524,7 @@
   <a href="#problem" onclick="closeMobMenu()">Why Aevon</a>
   <a href="#showcase" onclick="closeMobMenu()">App Gallery</a>
   <a href="#work" onclick="closeMobMenu()">Our Work</a>
+  <a href="#faq" onclick="closeMobMenu()">FAQ</a>
   <a href="#contact" onclick="closeMobMenu()" class="mob-cta">Book a Free Call →</a>
 </div>
 
@@ -2039,6 +2058,52 @@ function App() {
                 <h3>{s.title}</h3>
                 <p>{s.body}</p>
                 <span className="step-time">{s.time}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ── */}
+      <section className="faq" style={{padding:'110px 0'}} id="faq">
+        <div className="container">
+          <div className="fi" style={{textAlign:'center', marginBottom:64}}>
+            <div className="sec-label center">FAQ</div>
+            <h2 className="sec-title">Common questions.</h2>
+          </div>
+          <div className="faq-list">
+            {[
+              {
+                q: 'How long does a build take?',
+                a: 'Most projects are live in 3 to 7 weeks. Simpler tools can be done in 2. Scope is locked before we start, so there are no surprises mid-build.',
+              },
+              {
+                q: 'What if I need changes after launch?',
+                a: 'You own the code, so you can take it anywhere. We also offer ongoing support and can scope any changes as a separate fixed-price project. Nothing is locked in.',
+              },
+              {
+                q: 'Do I need to know anything about tech?',
+                a: 'No. You describe the problem in plain language — how your team works, what takes too long, what keeps falling through the cracks. We handle everything technical.',
+              },
+              {
+                q: 'What kind of businesses do you work with?',
+                a: 'Typically 10 to 50 employees in the Lower Mainland. Professional services, property management, logistics, insurance, construction — any business where the team has outgrown their current tools.',
+              },
+              {
+                q: 'How is this different from hiring a freelancer?',
+                a: "A freelancer gives you code. We give you a working product, tested with your team, deployed, and documented. We're also accountable to outcomes, not hours.",
+              },
+              {
+                q: 'What happens if something breaks?',
+                a: "We stand behind what we build. Critical bugs are fixed at no charge. For ongoing peace of mind, we offer an optional hosting and maintenance plan that covers updates, monitoring, and support.",
+              },
+            ].map((item, i) => (
+              <div className="faq-item fi" key={i} data-delay={i * 50}>
+                <button className="faq-q" onClick={e => e.currentTarget.closest('.faq-item').classList.toggle('open')}>
+                  {item.q}
+                  <svg className="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div className="faq-a">{item.a}</div>
               </div>
             ))}
           </div>
