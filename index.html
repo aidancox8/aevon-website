@@ -1757,10 +1757,16 @@ function ContactForm() {
     const e = validate(); setErrors(e);
     if (Object.keys(e).length) return;
     setStatus('loading');
-    fetch('https://formspree.io/f/REPLACE_WITH_FORM_ID', {
+    const notes = [fields.need, fields.message].filter(Boolean).join('\n\n');
+    fetch('https://qzxtfgzpyptvriorfhxw.supabase.co/rest/v1/leads', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(fields),
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': 'sb_publishable_yeGHZBOyEf0wPb-YSCivPg_jA2dB5Kg',
+        'Authorization': 'Bearer sb_publishable_yeGHZBOyEf0wPb-YSCivPg_jA2dB5Kg',
+        'Prefer': 'return=minimal',
+      },
+      body: JSON.stringify({ business_name: fields.name, email: fields.email, status: 'website_lead', source: 'website', notes }),
     })
       .then(r => r.ok ? setStatus('success') : setStatus('error'))
       .catch(() => setStatus('error'));
