@@ -98,6 +98,41 @@
             "@type": "Question",
             "name": "What happens if something breaks after launch?",
             "acceptedAnswer": { "@type": "Answer", "text": "We stand behind what we build. Critical bugs are fixed at no charge. For ongoing peace of mind, we offer an optional hosting and maintenance plan that covers updates, monitoring, and support." }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does a custom business app cost?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Every project is scoped before it is priced. After a free discovery call, you get a fixed-price quote with no hourly rates and no surprise change orders. The number depends on what you need, but the price is agreed in writing before any work starts." }
+          },
+          {
+            "@type": "Question",
+            "name": "Who owns the code when the project is done?",
+            "acceptedAnswer": { "@type": "Answer", "text": "You do. Completely. We hand over the full source code. You can host it anywhere, have any developer work on it, or walk away entirely. No licensing fees, no lock-in, no dependency on us." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can Aevon integrate with tools we already use like QuickBooks or Microsoft 365?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Usually yes. Most business software including QuickBooks, Microsoft 365, Xero, Stripe, and Google Workspace exposes an API we can connect to. If a tool you rely on does not support integrations, we will tell you upfront before any commitment." }
+          },
+          {
+            "@type": "Question",
+            "name": "What if we want to add features after the app is built?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Since you own the code, you can bring in any developer or come back to us. We scope additions as separate fixed-price projects with no ambiguity. We write clean, documented code specifically so future work is easy." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I know the app will actually work for my team?",
+            "acceptedAnswer": { "@type": "Answer", "text": "We build real-workflow testing into the process. Before launch, we walk through the app with you and your team using actual scenarios, not just a polished demo. If something does not fit how your people work, we fix it before it goes live." }
+          },
+          {
+            "@type": "Question",
+            "name": "What if the project goes over budget?",
+            "acceptedAnswer": { "@type": "Answer", "text": "It cannot because of fixed-price quoting. Scope and price are locked in writing before we start. If you want something new added mid-project, we scope and price it separately. Nothing gets added silently." }
+          },
+          {
+            "@type": "Question",
+            "name": "Has Aevon built something like this before?",
+            "acceptedAnswer": { "@type": "Answer", "text": "We are building our track record in the Lower Mainland and are upfront about that. The tech stack we use is proven, our process is structured, and bug fixes are included. The free call is a no-obligation way to see if we are the right fit for your business." }
           }
         ]
       }
@@ -2226,6 +2261,34 @@ function App() {
               {
                 q: 'What happens if something breaks?',
                 a: "We stand behind what we build. Critical bugs are fixed at no charge. For ongoing peace of mind, we offer an optional hosting and maintenance plan that covers updates, monitoring, and support.",
+              },
+              {
+                q: 'How much does a custom app cost?',
+                a: "Every project is scoped before it's priced. After a free discovery call, you get a fixed-price quote — no hourly rates, no surprise change orders. The number depends on what you need, but the price is agreed in writing before any work starts.",
+              },
+              {
+                q: 'Who owns the code when the project is done?',
+                a: "You do. Completely. We hand over the full source code. You can host it anywhere, have any developer work on it, or walk away entirely. No licensing fees, no lock-in, no dependency on us.",
+              },
+              {
+                q: 'Can you integrate with tools we already use?',
+                a: "Usually yes. Most business software — QuickBooks, Microsoft 365, Xero, Stripe, Google Workspace — exposes an API we can connect to. If a tool you rely on doesn't support integrations, we'll tell you upfront before any commitment.",
+              },
+              {
+                q: 'What if we want to add features down the road?',
+                a: "Straightforward. Since you own the code, you can bring in any developer or come back to us. We scope additions as separate fixed-price projects — nothing ambiguous. We also write clean, documented code specifically so future work is easy.",
+              },
+              {
+                q: 'How do I know the app will actually work for my team?',
+                a: "We build real-workflow testing into the process. Before launch, we walk through the app with you and your team using actual scenarios, not just a polished demo. If something doesn't fit how your people work, we fix it before it goes live.",
+              },
+              {
+                q: 'What if the project goes over budget?',
+                a: "It can't — that's the point of fixed-price quoting. Scope and price are locked in writing before we start. If you want something new added mid-project, we scope and price it separately. Nothing gets added silently.",
+              },
+              {
+                q: 'Have you done this before?',
+                a: "We're building our track record in the Lower Mainland, and we're upfront about that. What we can tell you: the stack we use is proven, the process is structured, and bug fixes are included. The free call is a no-obligation way to see if we're the right fit.",
               },
             ].map((item, i) => (
               <div className="faq-item fi" key={i} data-delay={i * 50}>
