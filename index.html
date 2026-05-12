@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aevon | Custom Business Apps for Lower Mainland SMBs</title>
-  <meta name="description" content="Aevon builds custom software for small and mid-sized businesses in the Lower Mainland. No subscriptions, no workarounds — software built exactly for how your team works." />
+  <title>Aevon | Custom Apps & AI Agents for Lower Mainland Businesses</title>
+  <meta name="description" content="Aevon builds custom software and AI agents for businesses in the Lower Mainland. Replace manual workflows with tools built exactly for how your team works — no subscriptions, no lock-in." />
   <link rel="canonical" href="https://aevon.ca/" />
   <meta name="robots" content="index, follow" />
 
@@ -18,14 +18,14 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://aevon.ca/" />
   <meta property="og:site_name" content="Aevon" />
-  <meta property="og:title" content="Aevon | Custom Business Apps for Lower Mainland SMBs" />
-  <meta property="og:description" content="Aevon builds custom software for small and mid-sized businesses in the Lower Mainland. No subscriptions, no workarounds — software built exactly for how your team works." />
+  <meta property="og:title" content="Aevon | Custom Apps & AI Agents for Lower Mainland Businesses" />
+  <meta property="og:description" content="Aevon builds custom software and AI agents for businesses in the Lower Mainland. Replace manual workflows with tools built exactly for how your team works — no subscriptions, no lock-in." />
   <meta property="og:locale" content="en_CA" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Aevon | Custom Business Apps for Lower Mainland SMBs" />
-  <meta name="twitter:description" content="Aevon builds custom software for small and mid-sized businesses in the Lower Mainland. No subscriptions, no workarounds — software built exactly for how your team works." />
+  <meta name="twitter:title" content="Aevon | Custom Apps & AI Agents for Lower Mainland Businesses" />
+  <meta name="twitter:description" content="Aevon builds custom software and AI agents for businesses in the Lower Mainland. Replace manual workflows with tools built exactly for how your team works — no subscriptions, no lock-in." />
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -36,7 +36,7 @@
         "@type": "LocalBusiness",
         "@id": "https://aevon.ca/#business",
         "name": "Aevon",
-        "description": "Custom business app development for small and mid-sized businesses in the Lower Mainland, BC. We build internal tools, document workflows, scheduling systems, and AI-powered applications.",
+        "description": "Custom apps and AI agents for businesses in the Lower Mainland, BC. We build internal tools, document workflows, scheduling systems, outreach automation, and AI-powered applications.",
         "url": "https://aevon.ca",
         "email": "hello@aevon.ca",
         "address": {
@@ -53,17 +53,19 @@
           "Business App Development",
           "Internal Tool Development",
           "Workflow Automation",
-          "AI Application Development"
+          "AI Application Development",
+          "AI Agent Development",
+          "Outreach Automation"
         ],
         "priceRange": "$$",
-        "knowsAbout": ["Custom Software", "Business Automation", "Internal Tools", "SMB Software"]
+        "knowsAbout": ["Custom Software", "Business Automation", "Internal Tools", "SMB Software", "AI Agents", "Workflow Automation"]
       },
       {
         "@type": "WebSite",
         "@id": "https://aevon.ca/#website",
         "url": "https://aevon.ca",
         "name": "Aevon",
-        "description": "Custom business app development for Lower Mainland SMBs",
+        "description": "Custom apps and AI agents for Lower Mainland businesses",
         "publisher": { "@id": "https://aevon.ca/#business" }
       },
       {
@@ -666,8 +668,8 @@
 <div id="root">
   <!-- Pre-render fallback for crawlers — replaced by React on load -->
   <main style="max-width:1120px;margin:0 auto;padding:40px;font-family:sans-serif;color:#F8FAFC;background:#0E0C18">
-    <h1>Custom Business Apps for Lower Mainland SMBs</h1>
-    <p>Aevon builds custom software for small and mid-sized businesses in Vancouver, Burnaby, Surrey, Richmond, Langley, Coquitlam, Abbotsford, North Vancouver, and New Westminster. No subscriptions, no workarounds — software built exactly for how your team works.</p>
+    <h1>Custom Apps & AI Agents for Lower Mainland Businesses</h1>
+    <p>Aevon builds custom software and AI agents for businesses in Vancouver, Burnaby, Surrey, Richmond, Langley, Coquitlam, Abbotsford, North Vancouver, and New Westminster. Replace manual workflows with tools built exactly for how your team works — no subscriptions, no lock-in.</p>
     <h2>Why Custom Software?</h2>
     <p>Generic SaaS tools are built for every business, which means they are perfect for none. Your team ends up duct-taping three tools together, paying monthly for features you never use, and copying data between systems that refuse to talk to each other.</p>
     <h2>Selected Work</h2>
@@ -1982,6 +1984,7 @@ function ContactForm() {
           <option>Internal Tool / Dashboard</option>
           <option>Document Workflow &amp; E-signing</option>
           <option>Booking &amp; Scheduling System</option>
+          <option>AI Agent / Automation Workflow</option>
           <option>AI-Powered Application</option>
           <option>Something custom</option>
         </select>
@@ -2074,6 +2077,14 @@ function App() {
       problem: 'IT requests came in via Slack, email, and text. Nothing was tracked. Urgent issues got buried and the IT lead had no visibility into what was pending.',
       built: 'Custom help desk with priority tiers, ticket routing, and a real-time status board. Staff submit via a simple form. IT sees everything in one view.',
     },
+    {
+      tag: 'Outreach AI Agent',
+      industry: 'Staffing Agency · 19 employees',
+      stat: '3.1×',
+      statLabel: 'more booked meetings per week',
+      problem: 'The BD team was manually researching prospects, writing cold emails one by one, and tracking follow-ups in a shared spreadsheet that was always out of date.',
+      built: 'An AI agent that finds target businesses, reads their websites, writes a personalized outreach email for each, and sequences follow-ups automatically. The team reviews flagged replies — the rest runs itself.',
+    },
   ];
 
   const steps = [
@@ -2094,7 +2105,7 @@ function App() {
           <div>
             <div className="hero-badge fi vis">
               <div className="badge-pulse"></div>
-              Custom App Development for SMBs
+              Custom Apps & AI Agents
             </div>
             <h1 className="fi vis" style={{transitionDelay:'0.06s'}}>{tweaks.heroTagline.split('. ').map((line, i, arr) => {
               const isLast = i === arr.length - 1;
@@ -2108,7 +2119,7 @@ function App() {
               );
             })}</h1>
             <p className="hero-sub fi vis" style={{transitionDelay:'0.12s'}}>
-              Generic SaaS tools are built for every business, which means they're perfect for none. We build software that fits exactly how your team works.
+              Generic SaaS tools are built for every business, which means they're perfect for none. We build custom apps and AI agents that fit exactly how your team works.
             </p>
             <div className="hero-ctas fi vis" style={{transitionDelay:'0.17s'}}>
               <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" className="btn-pri">Book a Free Call →</a>
@@ -2150,9 +2161,9 @@ function App() {
           <div className="fi" style={{marginBottom:64}}>
             <div className="sec-label">Selected Work</div>
             <h2 className="sec-title">Real problems. Real outcomes.</h2>
-            <p className="sec-sub" style={{maxWidth:480}}>Every project below replaced a patchwork of SaaS tools and manual steps with one app built for how that business actually works.</p>
+            <p className="sec-sub" style={{maxWidth:520}}>Every project below replaced a patchwork of SaaS tools and manual steps with a custom app or AI agent built for how that business actually works.</p>
           </div>
-          <div style={{display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:16}} className="work-grid">
+          <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:16}} className="work-grid">
             {caseStudies.map((c,i) => (
               <div key={c.tag} className="fi" data-delay={i*80} style={{
                 background:'#14192E', border:'1px solid rgba(99,102,241,0.14)',
