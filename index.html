@@ -73,6 +73,11 @@
         "mainEntity": [
           {
             "@type": "Question",
+            "name": "What is the difference between a custom app and an AI agent?",
+            "acceptedAnswer": { "@type": "Answer", "text": "A custom app gives your team a better tool — a dashboard, a portal, a workflow. An AI agent does work on its own — researching, writing, routing, following up — without someone driving it. Both are custom-built for your business. Some projects are one or the other; some combine both." }
+          },
+          {
+            "@type": "Question",
             "name": "How long does a custom business app build take?",
             "acceptedAnswer": { "@type": "Answer", "text": "Most projects are live in 3 to 7 weeks. Simpler tools can be done in 2. Scope is locked before we start, so there are no surprises mid-build." }
           },
@@ -648,7 +653,7 @@
   </a>
   <ul class="nav-links">
     <li><a href="#problem">Why Aevon</a></li>
-    <li><a href="#showcase">App Gallery</a></li>
+    <li><a href="#showcase">What We Build</a></li>
     <li><a href="#work">Our Work</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" class="nav-cta">Book a Free Call</a></li>
@@ -659,7 +664,7 @@
 </nav>
 <div id="mob-menu">
   <a href="#problem" onclick="closeMobMenu()">Why Aevon</a>
-  <a href="#showcase" onclick="closeMobMenu()">App Gallery</a>
+  <a href="#showcase" onclick="closeMobMenu()">What We Build</a>
   <a href="#work" onclick="closeMobMenu()">Our Work</a>
   <a href="#faq" onclick="closeMobMenu()">FAQ</a>
   <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" class="mob-cta">Book a Free Call →</a>
@@ -1737,9 +1742,9 @@ function AppShowcase() {
     <section style={{ padding: '110px 0', borderTop: '1px solid rgba(99,102,241,0.12)' }} id="showcase">
       <div className="container">
         <div className="fi" style={{ textAlign: 'center', marginBottom: 64 }}>
-          <div className="sec-label" style={{ justifyContent: 'center' }}><span style={{ display: 'none' }}></span>App Gallery</div>
+          <div className="sec-label" style={{ justifyContent: 'center' }}><span style={{ display: 'none' }}></span>What We Build</div>
           <h2 className="sec-title">"I want that for my business."</h2>
-          <p className="sec-sub" style={{ maxWidth: 500, margin: '0 auto' }}>Real apps we've built, or can build for you. Each one replaces a mess of spreadsheets and manual steps.</p>
+          <p className="sec-sub" style={{ maxWidth: 520, margin: '0 auto' }}>Custom apps and AI agents we've built, or can build for you. Each one replaces a patchwork of manual steps with something that actually runs.</p>
         </div>
         <div className="showcase-grid" style={{ display: 'grid', gap: 16 }}>
           {appCards.map((card, i) => {
@@ -2090,7 +2095,7 @@ function App() {
   const steps = [
     { n:'01', title:'Discovery Call', body:'We map your workflow gaps, pain points, and what success looks like for your team.', time:'15-30 min, free' },
     { n:'02', title:'Scoped Proposal', body:'A clear, fixed-price proposal with timeline. No surprises, no scope creep.', time:'2-3 days' },
-    { n:'03', title:'Build & Iterate', body:'We build fast with regular previews. You give direct feedback throughout.', time:'3-7 weeks' },
+    { n:'03', title:'Build & Iterate', body:'We build fast — app or agent — with regular previews. You give direct feedback throughout.', time:'3-7 weeks' },
     { n:'04', title:'Launch & Own', body:'We deploy, train your team, hand over source code. It\'s yours forever.', time:'1 week' },
   ];
 
@@ -2203,12 +2208,12 @@ function App() {
           <div className="fi" style={{display:'flex', alignItems:'center', justifyContent:'center', gap:48, flexWrap:'wrap', textAlign:'center'}}>
             <div>
               <div style={{fontSize:13, fontWeight:700, color:'var(--text)', marginBottom:4}}>Built around your workflow.</div>
-              <div style={{fontSize:12.5, color:'var(--text3)'}}>Not the other way around. Every screen, every step.</div>
+              <div style={{fontSize:12.5, color:'var(--text3)'}}>Not the other way around — every screen, every step, every agent.</div>
             </div>
             <div style={{width:1, height:32, background:'var(--border)', flexShrink:0}}></div>
             <div>
-              <div style={{fontSize:13, fontWeight:700, color:'var(--text)', marginBottom:4}}>No compromises.</div>
-              <div style={{fontSize:12.5, color:'var(--text3)'}}>If a SaaS tool almost fits, we build one that does.</div>
+              <div style={{fontSize:13, fontWeight:700, color:'var(--text)', marginBottom:4}}>App or agent — whatever fits.</div>
+              <div style={{fontSize:12.5, color:'var(--text3)'}}>Some problems need a tool. Others need something that runs on its own.</div>
             </div>
             <div style={{width:1, height:32, background:'var(--border)', flexShrink:0}}></div>
             <div>
@@ -2249,6 +2254,10 @@ function App() {
           </div>
           <div className="faq-list">
             {[
+              {
+                q: "What's the difference between a custom app and an AI agent?",
+                a: "A custom app gives your team a better tool — a dashboard, a portal, a workflow. An AI agent does work on its own — researching, writing, routing, following up — without someone driving it. Both are custom-built for your business. Some projects are one or the other; some combine both.",
+              },
               {
                 q: 'How long does a build take?',
                 a: 'Most projects are live in 3 to 7 weeks. Simpler tools can be done in 2. Scope is locked before we start, so there are no surprises mid-build.',
@@ -2355,7 +2364,7 @@ function App() {
               </svg>
               Aevon
             </div>
-            <p className="fcopy">© 2026 Aevon. Custom software for businesses that move fast.</p>
+            <p className="fcopy">© 2026 Aevon. Custom apps and AI agents for Lower Mainland businesses.</p>
             <ul className="flinks">
               <li><a href="#problem">Why Aevon</a></li>
               <li><a href="#contact">Contact</a></li>
