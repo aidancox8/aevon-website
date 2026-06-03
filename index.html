@@ -2390,6 +2390,22 @@ function closeMobMenu() {
   document.getElementById('mob-menu').classList.remove('open');
 }
 window.addEventListener('scroll', function() { if (window.scrollY > 80) closeMobMenu(); });
+
+// Outreach visit tracking: if arriving from a tagged email link (?ref=<leadId>),
+// quietly tell the CRM this lead visited the site. Fire-and-forget, never blocks
+// the page, and the URL is cleaned up so visitors never see the tag.
+(function () {
+  try {
+    var ref = new URLSearchParams(window.location.search).get('ref');
+    if (!ref || !/^[0-9a-f-]{36}$/i.test(ref)) return;
+    var url = 'https://qzxtfgzpyptvriorfhxw.supabase.co/functions/v1/track-visit?ref=' + encodeURIComponent(ref);
+    if (navigator.sendBeacon) navigator.sendBeacon(url);
+    else fetch(url, { mode: 'no-cors', keepalive: true });
+    // Strip ?ref from the address bar without reloading.
+    var clean = window.location.pathname + window.location.hash;
+    window.history.replaceState({}, document.title, clean);
+  } catch (e) { /* tracking must never break the page */ }
+})();
 </script>
 
 <script src="live-dashboard.js"></script>
