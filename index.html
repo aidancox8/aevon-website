@@ -202,6 +202,20 @@
     }
     ::selection { background: rgba(99,102,241,0.22); }
 
+    /* Boot splash — covers the unstyled pre-render while Babel compiles + React
+       mounts, so first-time visitors (e.g. from outreach links) never see a
+       flash of raw HTML. Removed by JS once the app is ready. */
+    #boot-splash {
+      position: fixed; inset: 0; z-index: 100000;
+      background: #0E0C18;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.35s ease;
+    }
+    #boot-splash.hide { opacity: 0; pointer-events: none; }
+    #boot-splash img { width: 54px; height: 54px; border-radius: 12px;
+      animation: bootpulse 1.2s ease-in-out infinite; }
+    @keyframes bootpulse { 0%,100%{opacity:0.45;transform:scale(0.96)} 50%{opacity:1;transform:scale(1)} }
+
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.25); border-radius: 2px; }
@@ -669,6 +683,12 @@
   <a href="#faq" onclick="closeMobMenu()">FAQ</a>
   <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" class="mob-cta">Book a Free Call →</a>
 </div>
+
+<div id="boot-splash"><img src="logo.svg" alt="Aevon"></div>
+<script>
+  // Failsafe: never let the splash trap the page if React/Babel fails to load.
+  setTimeout(function(){ var s=document.getElementById('boot-splash'); if(s){ s.classList.add('hide'); setTimeout(function(){ if(s) s.remove(); }, 400); } }, 6000);
+</script>
 
 <div id="root">
   <!-- Pre-render fallback for crawlers — replaced by React on load -->
@@ -2379,6 +2399,12 @@ function App() {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+
+// Dismiss the boot splash once React has mounted (next frame after render).
+requestAnimationFrame(() => requestAnimationFrame(() => {
+  const s = document.getElementById('boot-splash');
+  if (s) { s.classList.add('hide'); setTimeout(() => s.remove(), 400); }
+}));
 </script>
 <script>
 function toggleMobMenu() {

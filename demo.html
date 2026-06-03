@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>See It Work — Aevon</title>
+  <meta name="description" content="Interactive demos of the kind of AI tools Aevon builds for Lower Mainland businesses: inquiry triage and automated reporting. Try them yourself." />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0E0C18; --surface: #16131F; --surface2: #1C1830;
+      --border: rgba(99,102,241,0.16); --accent: #6366F1; --accent2: #7C3AED;
+      --text: #F8FAFC; --text2: #B4C2D0; --text3: #8A9DB5;
+      --green: #22C55E; --amber: #FB923C;
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 0 22px; }
+
+    header { padding: 22px 0; border-bottom: 1px solid var(--border); }
+    .nav { display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; }
+    .brand img { width: 30px; height: 30px; border-radius: 7px; }
+    .cta { background: var(--accent); color: #fff; padding: 9px 16px; border-radius: 9px; font-size: 13px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+    .cta:hover { background: #5254cc; }
+
+    .hero { text-align: center; padding: 60px 0 30px; }
+    .hero h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+    .hero h1 span { background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { color: var(--text2); font-size: 17px; max-width: 600px; margin: 16px auto 0; }
+
+    .demo { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 26px; margin: 30px 0; }
+    .demo-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); }
+    .demo h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin: 8px 0 4px; }
+    .demo .lede { color: var(--text2); font-size: 14.5px; margin-bottom: 20px; }
+
+    /* Inquiry triage demo */
+    .inbox { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .msg { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+    .msg-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+    .msg-from { font-weight: 600; font-size: 13.5px; }
+    .msg-body { color: var(--text2); font-size: 13px; }
+    .pill { font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0; transition: opacity 0.4s; }
+    .pill.show { opacity: 1; }
+    .pill.hot { background: rgba(34,197,94,0.16); color: var(--green); }
+    .pill.warm { background: rgba(251,146,60,0.16); color: var(--amber); }
+    .pill.spam { background: rgba(148,163,184,0.14); color: var(--text3); }
+    .draft { margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 10px; font-size: 12.5px; color: var(--text2); max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
+    .draft.show { max-height: 200px; }
+    .draft b { color: var(--text); font-weight: 600; }
+
+    /* Report demo */
+    .report-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+    .field { flex: 1; min-width: 150px; }
+    .field label { display: block; font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
+    .field input, .field select { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 9px; padding: 10px 12px; color: var(--text); font-size: 14px; font-family: inherit; }
+    .out { margin-top: 18px; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 0; overflow: hidden; max-height: 0; transition: max-height 0.5s ease; }
+    .out.show { max-height: 480px; padding: 18px; }
+    .out h3 { font-size: 15px; margin-bottom: 4px; }
+    .out .sub { font-size: 12px; color: var(--text3); margin-bottom: 14px; }
+    .bar { height: 9px; border-radius: 5px; background: linear-gradient(90deg, var(--accent), var(--accent2)); margin: 7px 0; }
+    .bar-row { display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: var(--text2); margin-bottom: 4px; }
+    .bar-row .lbl { width: 130px; flex-shrink: 0; }
+    .bar-wrap { flex: 1; background: rgba(148,163,184,0.1); border-radius: 5px; }
+
+    .btn { background: var(--accent); color: #fff; border: none; padding: 11px 20px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.15s; }
+    .btn:hover { background: #5254cc; }
+    .btn:disabled { opacity: 0.6; cursor: default; }
+    .btn-row { margin-top: 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .note { font-size: 12px; color: var(--text3); }
+
+    .closer { text-align: center; padding: 50px 0 70px; }
+    .closer h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+    .closer p { color: var(--text2); margin: 12px auto 22px; max-width: 520px; }
+    footer { border-top: 1px solid var(--border); padding: 26px 0; text-align: center; color: var(--text3); font-size: 13px; }
+    footer a { color: var(--text2); text-decoration: none; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a href="/" class="brand" style="text-decoration:none"><img src="logo.svg" alt="Aevon"> Aevon</a>
+    <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" class="cta">Book a free call</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <h1>This is the kind of thing <span>I'd build you</span></h1>
+    <p>Two quick demos of tools that take repetitive work off a team's plate. They're simplified, but the idea is real. Try them.</p>
+  </div>
+
+  <!-- DEMO 1: Inquiry triage -->
+  <div class="demo">
+    <div class="demo-tag">Demo 1 — Inquiry triage agent</div>
+    <h2>New inquiries, sorted and drafted for you</h2>
+    <p class="lede">Every lead that hits your inbox, read instantly: ranked by how serious they are, with a reply already drafted in your voice. You just approve. Hit the button to watch it run.</p>
+    <div class="inbox" id="inbox">
+      <div class="msg" data-tier="hot" data-draft="<b>Suggested reply:</b> Hi Marcus, the Burnaby warehouse is still available at $4.2M. I can send the full package and book a viewing this week — does Thursday or Friday work better?">
+        <div class="msg-top"><span class="msg-from">Marcus T.</span><span class="pill hot">Hot lead</span></div>
+        <div class="msg-body">"Is the Burnaby industrial property still on the market? Ready to move quickly if the numbers work."</div>
+        <div class="draft"></div>
+      </div>
+      <div class="msg" data-tier="warm" data-draft="<b>Suggested reply:</b> Hi Dana, happy to help. A few quick questions to point you to the right listings: what's your budget range and preferred area? I'll put together a shortlist.">
+        <div class="msg-top"><span class="msg-from">Dana P.</span><span class="pill warm">Worth a follow-up</span></div>
+        <div class="msg-body">"Just browsing for now but might be looking for retail space in the next few months."</div>
+        <div class="draft"></div>
+      </div>
+      <div class="msg" data-tier="spam" data-draft="<b>Action:</b> Filed as no-action. You never have to see it.">
+        <div class="msg-top"><span class="msg-from">SEO Services Intl.</span><span class="pill spam">No action</span></div>
+        <div class="msg-body">"Boost your real estate website ranking! Limited time offer..."</div>
+        <div class="draft"></div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn" id="triage-btn" onclick="runTriage()">Run the agent</button>
+      <span class="note" id="triage-note"></span>
+    </div>
+  </div>
+
+  <!-- DEMO 2: Report generator -->
+  <div class="demo">
+    <div class="demo-tag">Demo 2 — Automated reporting</div>
+    <h2>The report your team rebuilds by hand every week</h2>
+    <p class="lede">Pick a client and period — the kind of recurring report that eats hours of formatting gets generated in seconds. Real version pulls from your actual data.</p>
+    <div class="report-row">
+      <div class="field">
+        <label>Client</label>
+        <select id="r-client"><option>Northshore Holdings</option><option>Pacific Trade Co.</option><option>Delta Logistics</option></select>
+      </div>
+      <div class="field">
+        <label>Period</label>
+        <select id="r-period"><option>This month</option><option>Last quarter</option><option>Year to date</option></select>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn" id="rep-btn" onclick="runReport()">Generate report</button>
+      <span class="note" id="rep-note"></span>
+    </div>
+    <div class="out" id="rep-out">
+      <h3 id="rep-title"></h3>
+      <div class="sub" id="rep-sub"></div>
+      <div id="rep-bars"></div>
+    </div>
+  </div>
+
+  <div class="closer">
+    <h2>Want to see this for your business?</h2>
+    <p>These are mockups. The real version is built around your actual workflow, your data, your brand. Pay once, own it.</p>
+    <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" class="cta" style="font-size:15px;padding:13px 26px">Book a free 15-minute call</a>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">Aevon — custom apps &amp; AI agents for Lower Mainland businesses · <a href="mailto:aidan@aevon.ca">aidan@aevon.ca</a></div>
+</footer>
+
+<script>
+  // Re-attribute the visit if someone landed here via a tagged outreach link.
+  (function () {
+    try {
+      var ref = new URLSearchParams(location.search).get('ref');
+      if (ref && /^[0-9a-f-]{36}$/i.test(ref)) {
+        var u = 'https://qzxtfgzpyptvriorfhxw.supabase.co/functions/v1/track-visit?ref=' + encodeURIComponent(ref);
+        if (navigator.sendBeacon) navigator.sendBeacon(u); else fetch(u, { mode: 'no-cors', keepalive: true });
+        history.replaceState({}, document.title, location.pathname + location.hash);
+      }
+    } catch (e) {}
+  })();
+
+  function runTriage() {
+    var btn = document.getElementById('triage-btn');
+    btn.disabled = true;
+    document.getElementById('triage-note').textContent = 'Reading inquiries...';
+    var msgs = [].slice.call(document.querySelectorAll('#inbox .msg'));
+    msgs.forEach(function (m, i) {
+      setTimeout(function () {
+        m.querySelector('.pill').classList.add('show');
+        var d = m.querySelector('.draft');
+        d.innerHTML = m.getAttribute('data-draft');
+        d.classList.add('show');
+        if (i === msgs.length - 1) {
+          document.getElementById('triage-note').textContent = '3 inquiries handled in ' + (msgs.length * 0.6).toFixed(1) + 's. You just approve.';
+          btn.disabled = false; btn.textContent = 'Run it again';
+        }
+      }, 500 + i * 700);
+    });
+  }
+
+  function runReport() {
+    var btn = document.getElementById('rep-btn');
+    var out = document.getElementById('rep-out');
+    var client = document.getElementById('r-client').value;
+    var period = document.getElementById('r-period').value;
+    btn.disabled = true;
+    document.getElementById('rep-note').textContent = 'Compiling...';
+    out.classList.remove('show');
+    setTimeout(function () {
+      var seed = (client.length + period.length);
+      var rows = [
+        { lbl: 'Revenue', v: 60 + (seed * 7) % 40 },
+        { lbl: 'Active accounts', v: 45 + (seed * 11) % 50 },
+        { lbl: 'Avg. response time', v: 30 + (seed * 5) % 45 },
+        { lbl: 'On-time delivery', v: 70 + (seed * 3) % 28 }
+      ];
+      document.getElementById('rep-title').textContent = client + ' — ' + period;
+      document.getElementById('rep-sub').textContent = 'Generated in 1.2s · normally ~2 hours of manual formatting';
+      document.getElementById('rep-bars').innerHTML = rows.map(function (r) {
+        return '<div class="bar-row"><span class="lbl">' + r.lbl + '</span>' +
+          '<span class="bar-wrap"><span class="bar" style="width:' + r.v + '%"></span></span>' +
+          '<span>' + r.v + '%</span></div>';
+      }).join('');
+      out.classList.add('show');
+      document.getElementById('rep-note').textContent = '';
+      btn.disabled = false; btn.textContent = 'Generate again';
+    }, 900);
+  }
+</script>
+</body>
+</html>
