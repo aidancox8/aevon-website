@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Tools for Insurance Brokerages — Aevon</title>
+  <meta name="description" content="Aevon builds custom software and AI agents for Lower Mainland insurance brokerages. Cut the quote-intake re-keying, speed renewals, and stop chasing missing client info. You own it, no subscriptions." />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <meta name="robots" content="index, follow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0A0813; --bg2: #0E0C18; --surface: #15121F; --surface2: #1C1830;
+      --border: rgba(99,102,241,0.16); --border2: rgba(99,102,241,0.32);
+      --accent: #6366F1; --accent2: #7C3AED; --accent3: #A855F7;
+      --text: #F8FAFC; --text2: #B8C2D0; --text3: #8A93A8; --text4: #5E6480;
+      --green: #22C55E; --amber: #FB923C; --cyan: #22D3EE; --red: #F87171;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 22px; }
+    ::selection { background: rgba(124,58,237,0.35); }
+    body::before { content:''; position: fixed; top: -28%; left: 50%; transform: translateX(-50%); width: 1100px; height: 760px; background: radial-gradient(ellipse, rgba(124,58,237,0.17), transparent 62%); pointer-events: none; z-index: 0; }
+
+    header { position: relative; z-index: 5; padding: 20px 0; border-bottom: 1px solid var(--border); }
+    .nav { display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; text-decoration: none; }
+    .brand img { width: 30px; height: 30px; border-radius: 7px; }
+    .cta { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: 600; text-decoration: none; white-space: nowrap; box-shadow: 0 4px 20px rgba(99,102,241,0.35); transition: transform .15s, box-shadow .15s; }
+    .cta:hover { transform: translateY(-1px); box-shadow: 0 6px 26px rgba(99,102,241,0.5); }
+
+    .hero { position: relative; z-index: 5; text-align: center; padding: 70px 0 30px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; color: var(--text2); background: var(--surface); border: 1px solid var(--border); padding: 6px 13px; border-radius: 30px; margin-bottom: 22px; }
+    .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+    h1 { font-size: clamp(30px, 5.2vw, 48px); font-weight: 800; letter-spacing: -0.035em; line-height: 1.06; }
+    h1 span { background: linear-gradient(110deg, var(--accent2), var(--accent3), var(--cyan)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { color: var(--text2); font-size: 18px; max-width: 600px; margin: 18px auto 28px; }
+    .hero .btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-ghost { border: 1px solid var(--border2); color: var(--text); padding: 13px 24px; border-radius: 11px; font-size: 14px; font-weight: 600; text-decoration: none; }
+    .btn-ghost:hover { background: var(--surface); }
+    .btn-pri { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; padding: 14px 26px; border-radius: 11px; font-size: 14px; font-weight: 600; text-decoration: none; box-shadow: 0 6px 24px rgba(99,102,241,0.4); }
+    .btn-pri:hover { transform: translateY(-1px); }
+
+    section { position: relative; z-index: 5; padding: 44px 0; }
+    .sec-tag { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); text-align: center; }
+    h2 { font-size: clamp(24px, 4vw, 34px); font-weight: 800; letter-spacing: -0.025em; text-align: center; margin: 8px 0 8px; }
+    .sub { color: var(--text2); text-align: center; max-width: 620px; margin: 0 auto 30px; font-size: 16px; }
+
+    /* pain grid */
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    @media (max-width: 760px){ .grid { grid-template-columns: 1fr; } }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px; }
+    .card .ic { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(124,58,237,0.2)); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+    .card .ic svg { width: 19px; height: 19px; stroke: var(--accent3); }
+    .card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .card p { font-size: 13.5px; color: var(--text2); }
+
+    /* before/after */
+    .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: stretch; }
+    @media (max-width: 760px){ .ba { grid-template-columns: 1fr; } }
+    .ba-col { border-radius: 16px; padding: 22px; border: 1px solid var(--border); }
+    .ba-col.before { background: var(--surface); }
+    .ba-col.after { background: linear-gradient(180deg, rgba(34,197,94,0.06), var(--surface)); border-color: rgba(34,197,94,0.25); }
+    .ba-col h4 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 14px; }
+    .ba-col.before h4 { color: var(--red); }
+    .ba-col.after h4 { color: var(--green); }
+    .step { display: flex; gap: 11px; font-size: 13.5px; color: var(--text2); padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .step:last-child { border-bottom: none; }
+    .step .n { color: var(--text4); font-family: var(--mono); font-size: 12px; flex-shrink: 0; width: 16px; }
+    .ba-col.after .step .n { color: var(--green); }
+
+    .demo-cta { background: var(--surface); border: 1px solid var(--border2); border-radius: 18px; padding: 30px; text-align: center; }
+    .demo-cta h3 { font-size: 20px; font-weight: 700; }
+    .demo-cta p { color: var(--text2); margin: 8px auto 18px; max-width: 460px; font-size: 14.5px; }
+
+    .own { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    @media (max-width: 760px){ .own { grid-template-columns: 1fr; } }
+    .own .card { text-align: center; }
+    .own .big { font-size: 22px; font-weight: 800; letter-spacing: -.02em; margin-bottom: 4px; }
+
+    .closer { text-align: center; padding: 56px 0 76px; }
+    footer { position: relative; z-index: 5; border-top: 1px solid var(--border); padding: 26px 0; text-align: center; color: var(--text3); font-size: 13px; }
+    footer a { color: var(--text2); text-decoration: none; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a href="/" class="brand"><img src="logo.svg" alt="Aevon"> Aevon</a>
+    <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" class="cta">Book a free call</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow"><span class="dot"></span> For Lower Mainland insurance brokerages</div>
+    <h1>Your brokers should be <span>selling policies</span>, not re-typing them</h1>
+    <p>Aevon builds custom tools that take the quote-intake grind off your team: reading inbound requests, pulling the client details, and routing them to the right insurer. Built for your brokerage. You own it. No subscriptions.</p>
+    <div class="btns">
+      <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" class="btn-pri">Book a free 15-min call</a>
+      <a href="demo.html" class="btn-ghost">See it work →</a>
+    </div>
+  </div>
+
+  <section>
+    <div class="sec-tag">Where the hours go</div>
+    <h2>The work between the quote and the bind</h2>
+    <p class="sub">Most brokerages lose a chunk of every day to the same manual loop. Sound familiar?</p>
+    <div class="grid">
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
+        <h3>Quote intake re-keying</h3>
+        <p>A request lands by email. Someone copies the client's details into your BMS or a quote template by hand, every time.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M12 7v5l3 2"/></svg></div>
+        <h3>Renewal chasing</h3>
+        <p>Tracking which policies expire when, then chasing clients for updated info before anything can be re-quoted.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 4h16v12H5.2L4 18z"/></svg></div>
+        <h3>Missing-info back-and-forth</h3>
+        <p>The email tag with the client for the one field you need, then re-routing the file to the right underwriter.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-tag">Before / after</div>
+    <h2>Same request, half the handling</h2>
+    <div class="ba">
+      <div class="ba-col before">
+        <h4>Today, by hand</h4>
+        <div class="step"><span class="n">1</span><span>Quote request arrives in a shared inbox</span></div>
+        <div class="step"><span class="n">2</span><span>Staff read it, copy details into the BMS or template</span></div>
+        <div class="step"><span class="n">3</span><span>Notice a field is missing, email the client back</span></div>
+        <div class="step"><span class="n">4</span><span>Wait, then forward the file to the right insurer</span></div>
+        <div class="step"><span class="n">5</span><span>Repeat, dozens of times a week</span></div>
+      </div>
+      <div class="ba-col after">
+        <h4>With a tool built for you</h4>
+        <div class="step"><span class="n">✓</span><span>Agent reads the request the moment it lands</span></div>
+        <div class="step"><span class="n">✓</span><span>Pulls the client details into your system automatically</span></div>
+        <div class="step"><span class="n">✓</span><span>Flags missing fields and drafts the follow-up for you</span></div>
+        <div class="step"><span class="n">✓</span><span>Routes it to the right underwriter, ready to bind</span></div>
+        <div class="step"><span class="n">✓</span><span>Your team approves and moves on</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="demo-cta">
+      <h3>See a working version, no call required</h3>
+      <p>I built interactive demos of the kind of tool this would be. Click through them, then decide if it's worth a conversation.</p>
+      <a href="demo.html" class="btn-pri">Try the live demos →</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-tag">How Aevon is different</div>
+    <h2>You own it. No per-seat fees.</h2>
+    <p class="sub">This isn't another SaaS subscription bolted onto your stack. It's built around how your brokerage actually works, and it's yours.</p>
+    <div class="own">
+      <div class="card"><div class="big">Built for you</div><p>Designed around your workflow, your BMS, your lines of business. Not a generic template.</p></div>
+      <div class="card"><div class="big">Pay once, own it</div><p>A fixed-price build, then it's yours. No monthly per-seat creep that grows as you hire.</p></div>
+      <div class="card"><div class="big">Local &amp; hands-on</div><p>Based in the Lower Mainland. You work directly with the person building it.</p></div>
+    </div>
+  </section>
+
+  <div class="closer">
+    <h2>Worth a 15-minute look?</h2>
+    <p class="sub">No pitch deck. I'll ask how your quote and renewal flow works today, and show you what I'd build to take the manual part off your team.</p>
+    <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" class="btn-pri">Book a free call</a>
+  </div>
+</div>
+
+<footer><div class="wrap">Aevon — custom apps &amp; AI agents for Lower Mainland businesses · <a href="mailto:aidan@aevon.ca">aidan@aevon.ca</a></div></footer>
+
+<script>
+  // Visit attribution from tagged outreach links (same as the rest of the site).
+  (function () {
+    try {
+      var ref = new URLSearchParams(location.search).get('ref');
+      if (ref && /^[0-9a-f-]{36}$/i.test(ref)) {
+        var u = 'https://qzxtfgzpyptvriorfhxw.supabase.co/functions/v1/track-visit?ref=' + encodeURIComponent(ref);
+        if (navigator.sendBeacon) navigator.sendBeacon(u); else fetch(u, { mode: 'no-cors', keepalive: true });
+        history.replaceState({}, document.title, location.pathname + location.hash);
+      }
+    } catch (e) {}
+  })();
+</script>
+</body>
+</html>
