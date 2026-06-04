@@ -152,6 +152,31 @@
     @media (max-width:760px){ .charts { grid-template-columns: 1fr; } }
     .chart-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 13px; padding: 16px; }
     .chart-card h5 { font-size: 12px; color: var(--text3); font-weight: 600; margin-bottom: 14px; text-transform: uppercase; letter-spacing: .05em; }
+    .kpi.accent-red .num { color: var(--red); }
+    .tt-grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: 14px; }
+    @media (max-width:760px){ .tt-grid { grid-template-columns: 1fr; } }
+    /* turnover board */
+    .turn-board { display: flex; flex-direction: column; gap: 9px; }
+    .unit { background: var(--surface); border: 1px solid var(--border); border-radius: 11px; padding: 11px 13px; transition: border-color .3s, transform .3s; }
+    .unit.moving { border-color: var(--cyan); transform: translateX(3px); }
+    .unit-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 9px; }
+    .unit-id { font-weight: 700; font-size: 13px; }
+    .unit-id .addr { font-weight: 400; color: var(--text3); font-size: 11.5px; margin-left: 6px; }
+    .unit-days { font-size: 11px; font-family: var(--mono); padding: 2px 8px; border-radius: 20px; background: rgba(248,113,113,0.14); color: var(--red); white-space: nowrap; }
+    .unit-days.ok { background: rgba(34,197,94,0.14); color: var(--green); }
+    /* stage track */
+    .track { display: flex; align-items: center; gap: 0; }
+    .stp { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; }
+    .stp .ring { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border2); background: var(--bg2); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text4); z-index: 2; transition: all .35s; }
+    .stp.done .ring { background: var(--green); border-color: var(--green); color: #06240f; }
+    .stp.cur .ring { background: linear-gradient(135deg,var(--accent),var(--accent2)); border-color: transparent; color:#fff; box-shadow: 0 0 0 4px rgba(99,102,241,0.25); }
+    .stp .nm { font-size: 9.5px; color: var(--text4); margin-top: 5px; text-align: center; }
+    .stp.done .nm, .stp.cur .nm { color: var(--text2); }
+    .stp .line { position: absolute; top: 9px; left: 50%; width: 100%; height: 2px; background: var(--border2); z-index: 1; }
+    .stp .line.fill { background: var(--green); }
+    .stp:last-child .line { display: none; }
+    .proj { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text2); }
+    .proj b { color: var(--green); }
     .bars { display: flex; align-items: flex-end; gap: 8px; height: 150px; }
     .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 6px; }
     .bar-col .v { font-size: 10px; color: var(--text3); opacity: 0; transition: opacity .3s .4s; }
@@ -167,8 +192,12 @@
     .req.placed { opacity: 1; }
     .req-top { display: flex; justify-content: space-between; align-items: center; }
     .req b { font-size: 13.5px; } .req .meta { font-size: 11.5px; color: var(--text3); }
-    .req .slot { font-size: 12px; color: var(--cyan); font-family: var(--mono); margin-top: 6px; opacity: 0; height: 0; overflow: hidden; transition: all .4s; }
-    .req.placed .slot { opacity: 1; height: auto; color: var(--green); }
+    .req .slot { font-size: 12px; color: var(--cyan); font-family: var(--mono); margin-top: 6px; opacity: 0; height: 0; overflow: hidden; transition: opacity .4s; }
+    .req.placed .slot { color: var(--green); }
+    .req .slot .why { display: block; font-family: 'Inter'; color: var(--text3); font-size: 11px; margin-top: 2px; }
+    .sched-util { margin-top: 12px; padding-top: 11px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text2); min-height: 18px; }
+    .sched-util b { color: var(--green); }
+    .ev.ghost { background: rgba(248,113,113,0.25) !important; color: var(--red) !important; outline: 1px dashed var(--red); }
     .cal { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 14px; }
     .cal-head { display: grid; grid-template-columns: 54px repeat(3,1fr); gap: 6px; font-size: 10.5px; color: var(--text4); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 8px; }
     .cal-row { display: grid; grid-template-columns: 54px repeat(3,1fr); gap: 6px; margin-bottom: 6px; align-items: stretch; }
@@ -219,27 +248,37 @@
   <div class="tabs" id="tabs"></div>
 
   <div class="stage">
-    <!-- ===== APP: Live Ops Dashboard ===== -->
+    <!-- ===== APP: TurnTracker (vacancy-loss PMS) ===== -->
     <div class="panel" id="panel-dash" data-cat="apps">
       <div class="app">
         <div class="app-bar"><span class="dots"><i></i><i></i><i></i></span>
-          <span class="app-title"><b>OpsBoard</b> · this week</span>
-          <span class="app-live"><span class="dot"></span> updating live</span>
+          <span class="app-title"><b>TurnTracker</b> · vacancy &amp; make-ready</span>
+          <span class="app-live"><span class="dot"></span> live</span>
         </div>
         <div class="app-body">
           <div class="dash-grid" id="kpis">
-            <div class="kpi"><div class="lbl">Jobs in progress</div><div class="num" data-to="34">34</div><div class="delta up">▲ 12% vs last wk</div></div>
-            <div class="kpi"><div class="lbl">Avg turnaround</div><div class="num" data-to="2.4" data-suffix="d">2.4d</div><div class="delta up">▼ 0.6d faster</div></div>
-            <div class="kpi"><div class="lbl">Hours saved / wk</div><div class="num" data-to="18" data-suffix="h">18h</div><div class="delta up">▲ automated</div></div>
-            <div class="kpi"><div class="lbl">Overdue</div><div class="num" data-to="2">2</div><div class="delta warn">needs review</div></div>
+            <div class="kpi accent-red"><div class="lbl">Rent lost / day vacant</div><div class="num" data-to="487" data-prefix="$">$487</div><div class="delta warn">6 units empty now</div></div>
+            <div class="kpi"><div class="lbl">Avg days to turn</div><div class="num" data-to="11" data-suffix="d">11d</div><div class="delta up">▼ 4d vs industry</div></div>
+            <div class="kpi"><div class="lbl">Occupancy</div><div class="num" data-to="94" data-suffix="%">94%</div><div class="delta up">▲ 2.1% this qtr</div></div>
+            <div class="kpi"><div class="lbl">Renewals due (60d)</div><div class="num" data-to="9">9</div><div class="delta flat">3 unconfirmed</div></div>
           </div>
-          <div class="charts">
-            <div class="chart-card"><h5>Throughput · last 7 days</h5><div id="bars" class="bars"></div></div>
-            <div class="chart-card"><h5>Work mix</h5><svg id="donut" viewBox="0 0 170 170" style="width:100%;max-width:200px;margin:0 auto;display:block"></svg><div id="legend" style="margin-top:10px"></div></div>
+
+          <div class="tt-grid">
+            <div class="chart-card">
+              <h5>Turnover board · units between tenants</h5>
+              <div class="turn-board" id="turn-board"></div>
+            </div>
+            <div class="chart-card">
+              <h5>Portfolio occupancy</h5>
+              <svg id="donut" viewBox="0 0 170 170" style="width:100%;max-width:180px;margin:2px auto 0;display:block"></svg>
+              <div id="legend" style="margin-top:10px"></div>
+              <div class="proj" id="proj"></div>
+            </div>
           </div>
+
           <div class="runbar">
-            <button class="btn" id="b-btn" onclick="runDash()">▶ Refresh board</button>
-            <span class="hint">A live view of operations that builds itself from your data — no spreadsheets.</span>
+            <button class="btn" id="b-btn" onclick="runDash()">▶ Advance make-ready</button>
+            <span class="hint">Every empty unit is lost rent. This tracks turns stage-by-stage so nothing stalls — generic PMS just list units.</span>
           </div>
         </div>
       </div>
@@ -264,11 +303,12 @@
                 <div class="cal-head"><span></span><span>Tue</span><span>Wed</span><span>Thu</span></div>
                 <div id="cal-grid"></div>
               </div>
+              <div class="sched-util" id="sched-util"></div>
             </div>
           </div>
           <div class="runbar">
             <button class="btn" id="s-btn" onclick="runSched()">▶ Auto-schedule</button>
-            <span class="hint">Slots every job by location, crew, and availability — the Tetris you do by hand.</span>
+            <span class="hint">Slots each turn job by crew skill, location and drive time — and reroutes itself around conflicts. The dispatch Tetris you do by hand.</span>
           </div>
         </div>
       </div>
@@ -381,8 +421,8 @@
   /* ---- category + tabs ---- */
   var TABS = {
     apps: [
-      { id: 'dash',  label: 'Live Ops Dashboard', icon: '<path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/>' },
-      { id: 'sched', label: 'Smart Scheduler',     icon: '<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>' }
+      { id: 'dash',  label: 'Property Turn Tracker', icon: '<path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/>' },
+      { id: 'sched', label: 'Make-Ready Scheduler', icon: '<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>' }
     ],
     agents: [
       { id: 'triage', label: 'Inquiry Triage Agent', icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>' },
@@ -411,7 +451,7 @@
   function switchTab(id) {
     document.querySelectorAll('.tab').forEach(function (t) { t.classList.toggle('active', t.dataset.tab === id); });
     document.querySelectorAll('.panel').forEach(function (p) { p.classList.toggle('active', p.id === 'panel-' + id); });
-    if (id === 'dash') { drawBars(); drawDonut(); setKpiFinal(); }
+    if (id === 'dash') { buildBoard(); drawDonut(); setKpiFinal(); }
     if (id === 'sched') buildSched();
     if (id === 'triage') buildTriage();
   }
@@ -500,57 +540,63 @@
     btn.disabled = false; btn.innerHTML = '▶ Process again'; docRunning = false;
   }
 
-  /* ---- Dashboard ---- */
-  var BAR_DATA = [12, 18, 9, 22, 16, 27, 21];
-  var DAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-  function drawBars() {
-    var max = Math.max.apply(null, BAR_DATA) + 4;
-    var html = BAR_DATA.map(function (v, i) {
-      return '<div class="bar-col" id="bc' + i + '"><span class="v">' + v + '</span>' +
-        '<span class="bar" id="bar' + i + '"></span><span class="d">' + DAYS[i] + '</span></div>';
+  /* ---- TurnTracker (vacancy-loss PMS) ---- */
+  var STAGES = ['Notice', 'Inspect', 'Clean', 'Repair', 'List', 'Leased'];
+  // each unit: current stage index, days vacant, rent/day
+  var UNITS = [
+    { id: 'Unit 204', addr: 'Maple Court', stage: 3, days: 14, rent: 78 },
+    { id: 'Unit 112', addr: 'Cedar Lane', stage: 1, days: 6, rent: 71 },
+    { id: 'Unit 7B', addr: 'Oak Residences', stage: 4, days: 19, rent: 95 },
+    { id: 'Unit 309', addr: 'Maple Court', stage: 2, days: 9, rent: 82 }
+  ];
+  function trackHtml(stage) {
+    return '<div class="track">' + STAGES.map(function (nm, i) {
+      var cls = i < stage ? 'done' : (i === stage ? 'cur' : '');
+      var lineFill = i < stage ? 'fill' : '';
+      var mark = i < stage ? '✓' : (i + 1);
+      return '<div class="stp ' + cls + '"><div class="line ' + lineFill + '"></div><div class="ring">' + mark + '</div><div class="nm">' + nm + '</div></div>';
+    }).join('') + '</div>';
+  }
+  function buildBoard() {
+    document.getElementById('turn-board').innerHTML = UNITS.map(function (u, i) {
+      var leased = u.stage >= STAGES.length - 1;
+      return '<div class="unit" id="u' + i + '">' +
+        '<div class="unit-top"><span class="unit-id">' + u.id + '<span class="addr">' + u.addr + '</span></span>' +
+        '<span class="unit-days ' + (leased ? 'ok' : '') + '" id="ud' + i + '">' + (leased ? 'leased' : u.days + 'd · $' + (u.days * u.rent)) + '</span></div>' +
+        '<div id="ut' + i + '">' + trackHtml(u.stage) + '</div></div>';
     }).join('');
-    var el = document.getElementById('bars');
-    el.innerHTML = html;
-    // Set heights next frame so the CSS height transition animates from 0.
-    requestAnimationFrame(function () { requestAnimationFrame(function () {
-      BAR_DATA.forEach(function (v, i) {
-        var pct = Math.max(5, Math.round(v / max * 100));
-        var bar = document.getElementById('bar' + i);
-        if (bar) { bar.style.transitionDelay = (i * 0.05) + 's'; bar.style.height = pct + '%'; }
-        var col = document.getElementById('bc' + i); if (col) col.classList.add('grown');
-      });
-    }); });
   }
   function drawDonut() {
-    var segs = [{ l: 'Active', v: 58, c: '#6366F1' }, { l: 'In review', v: 24, c: '#A855F7' }, { l: 'Done', v: 18, c: '#22D3EE' }];
+    var segs = [{ l: 'Occupied', v: 94, c: '#22C55E' }, { l: 'Vacant', v: 6, c: '#F87171' }];
     var r = 60, cx = 85, cy = 85, circ = 2 * Math.PI * r, off = 0, svg = '';
     svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="rgba(148,163,184,0.1)" stroke-width="20"/>';
     segs.forEach(function (s, i) {
       var frac = s.v / 100, len = frac * circ;
-      svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="' + s.c + '" stroke-width="20" stroke-linecap="round" stroke-dasharray="' + len + ' ' + (circ - len) + '" stroke-dashoffset="' + (-off * circ) + '" transform="rotate(-90 ' + cx + ' ' + cy + ')" style="opacity:0;animation:fadein .5s ' + (i * 0.15 + 0.1) + 's forwards"/>';
+      svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="' + s.c + '" stroke-width="20" stroke-linecap="round" stroke-dasharray="' + len + ' ' + (circ - len) + '" stroke-dashoffset="' + (-off * circ) + '" transform="rotate(-90 ' + cx + ' ' + cy + ')" style="opacity:0;animation:fadein .5s ' + (i * 0.18 + 0.1) + 's forwards"/>';
       off += frac;
     });
-    svg += '<text x="' + cx + '" y="' + (cy - 2) + '" text-anchor="middle" fill="#F8FAFC" font-size="24" font-weight="800" font-family="Inter">34</text><text x="' + cx + '" y="' + (cy + 16) + '" text-anchor="middle" fill="#8A93A8" font-size="10" font-family="Inter">jobs</text>';
+    svg += '<text x="' + cx + '" y="' + (cy - 1) + '" text-anchor="middle" fill="#F8FAFC" font-size="25" font-weight="800" font-family="Inter">94%</text><text x="' + cx + '" y="' + (cy + 16) + '" text-anchor="middle" fill="#8A93A8" font-size="10" font-family="Inter">142 units</text>';
     document.getElementById('donut').innerHTML = svg;
     document.getElementById('legend').innerHTML = segs.map(function (s) { return '<div style="display:flex;align-items:center;gap:7px;font-size:12px;color:#B8C2D0;margin-bottom:5px"><span style="width:9px;height:9px;border-radius:3px;background:' + s.c + '"></span>' + s.l + '<b style="margin-left:auto;color:#fff">' + s.v + '%</b></div>'; }).join('');
+    document.getElementById('proj').innerHTML = 'At this turn speed, the 6 vacant units re-lease ~<b>9 days sooner</b> than portfolio average — about <b>$26k</b> of recovered rent this year.';
   }
   function setKpiFinal() {
     document.querySelectorAll('#kpis .num').forEach(function (el) {
-      var to = parseFloat(el.dataset.to), suf = el.dataset.suffix || '';
-      el.textContent = (to % 1 !== 0 ? to.toFixed(1) : to) + suf;
+      var to = parseFloat(el.dataset.to), suf = el.dataset.suffix || '', pre = el.dataset.prefix || '';
+      el.textContent = pre + (to % 1 !== 0 ? to.toFixed(1) : to) + suf;
     });
   }
   var countToken = 0;
   function countUp() {
     var my = ++countToken;
     document.querySelectorAll('#kpis .num').forEach(function (el) {
-      var to = parseFloat(el.dataset.to), suf = el.dataset.suffix || '', dec = to % 1 !== 0, t0 = null, dur = 850;
+      var to = parseFloat(el.dataset.to), suf = el.dataset.suffix || '', pre = el.dataset.prefix || '', dec = to % 1 !== 0, t0 = null, dur = 850;
       function step(t) {
         if (my !== countToken) return;
         if (t0 === null) t0 = t;
         var p = Math.min(1, (t - t0) / dur), v = to * (1 - Math.pow(1 - p, 3));
-        el.textContent = (dec ? v.toFixed(1) : Math.round(v)) + suf;
-        if (p < 1) requestAnimationFrame(step); else el.textContent = (dec ? to.toFixed(1) : to) + suf;
+        el.textContent = pre + (dec ? v.toFixed(1) : Math.round(v)) + suf;
+        if (p < 1) requestAnimationFrame(step); else el.textContent = pre + (dec ? to.toFixed(1) : to) + suf;
       }
       requestAnimationFrame(step);
     });
@@ -558,23 +604,41 @@
   var dashRunning = false;
   async function runDash() {
     if (dashRunning) return; dashRunning = true;
-    var btn = document.getElementById('b-btn'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Loading';
-    BAR_DATA = BAR_DATA.map(function () { return 8 + Math.floor(Math.random() * 22); });
-    drawBars(); drawDonut(); countUp();
-    await sleep(950);
-    btn.disabled = false; btn.innerHTML = '▶ Refresh board'; dashRunning = false;
+    var btn = document.getElementById('b-btn'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Advancing';
+    // advance each not-yet-leased unit one stage, with a visible move
+    for (var i = 0; i < UNITS.length; i++) {
+      var u = UNITS[i];
+      if (u.stage >= STAGES.length - 1) continue;
+      var card = document.getElementById('u' + i); card.classList.add('moving');
+      await sleep(550);
+      u.stage++;
+      document.getElementById('ut' + i).innerHTML = trackHtml(u.stage);
+      var leased = u.stage >= STAGES.length - 1;
+      var badge = document.getElementById('ud' + i);
+      if (leased) { badge.textContent = 'leased ✓'; badge.classList.add('ok'); }
+      else { badge.textContent = u.days + 'd · $' + (u.days * u.rent); }
+      card.classList.remove('moving');
+      await sleep(250);
+    }
+    btn.disabled = false; btn.innerHTML = '▶ Advance make-ready'; dashRunning = false;
   }
 
   /* ---- Scheduler ---- */
+  // Each job resolves to a slot the engine "chose" for a stated reason. One job
+  // (idx 2) wants a slot that's already taken, so it gets rerouted live.
   var REQS = [
-    { who: 'HVAC service · Richmond', meta: 'Mike\'s crew · 2h', day: 1, time: 0, color: 'c1', slot: 'Tue 9:00 AM · Mike' },
-    { who: 'Install · Burnaby', meta: 'Dlux crew · 3h', day: 2, time: 1, color: 'c2', slot: 'Wed 11:00 AM · Dlux' },
-    { who: 'Inspection · Surrey', meta: 'Any crew · 1h', day: 0, time: 2, color: 'c3', slot: 'Tue 2:00 PM · Sam' }
+    { who: 'Turn clean · Unit 204', meta: 'Maple Court · 2h · any cleaner', day: 1, time: 0, color: 'c1', label: 'Clean 204', crew: 'Ana',
+      slot: 'Tue 9:00 · Ana', why: 'closest cleaner, no drive-time clash' },
+    { who: 'Carpet repair · Unit 7B', meta: 'Oak Residences · 3h · contractor', day: 2, time: 1, color: 'c2', label: 'Carpet 7B', crew: 'Dlux',
+      slot: 'Wed 11:00 · Dlux', why: 'only crew certified for flooring' },
+    { who: 'Final inspection · Unit 309', meta: 'Maple Court · 1h · any', day: 0, time: 0, color: 'c3', label: 'Inspect 309', crew: 'Sam',
+      conflict: { day: 1, time: 0 }, slot: 'Tue 2:00 · Sam', why: 'first choice taken → bundled w/ 204 (same building)' }
   ];
   var TIMES = ['9 AM', '11 AM', '2 PM'];
   function buildSched() {
     document.getElementById('reqs').innerHTML = REQS.map(function (r, i) {
-      return '<div class="req" id="r' + i + '"><div class="req-top"><b>' + r.who + '</b></div><div class="meta">' + r.meta + '</div><div class="slot" id="rs' + i + '">→ ' + r.slot + '</div></div>';
+      return '<div class="req" id="r' + i + '"><div class="req-top"><b>' + r.who + '</b></div><div class="meta">' + r.meta + '</div>' +
+        '<div class="slot" id="rs' + i + '"></div></div>';
     }).join('');
     var grid = '';
     for (var t = 0; t < TIMES.length; t++) {
@@ -583,6 +647,14 @@
       grid += '</div>';
     }
     document.getElementById('cal-grid').innerHTML = grid;
+    var u = document.getElementById('sched-util'); if (u) u.textContent = '';
+  }
+  function placeEv(day, time, color, label, ghost) {
+    var cell = document.getElementById('c-' + day + '-' + time);
+    cell.innerHTML = '<div class="ev ' + color + (ghost ? ' ghost' : '') + '">' + label + '</div>';
+    var ev = cell.querySelector('.ev');
+    requestAnimationFrame(function () { ev.classList.add('show'); });
+    return ev;
   }
   var schedRunning = false;
   async function runSched() {
@@ -591,15 +663,25 @@
     buildSched();
     await sleep(400);
     for (var i = 0; i < REQS.length; i++) {
-      var r = REQS[i], req = document.getElementById('r' + i);
+      var r = REQS[i], req = document.getElementById('r' + i), slotEl = document.getElementById('rs' + i);
       req.classList.add('placing');
-      await sleep(800);
-      var cell = document.getElementById('c-' + r.day + '-' + r.time);
-      cell.innerHTML = '<div class="ev ' + r.color + '">' + r.who.split(' · ')[0] + '</div>';
-      requestAnimationFrame(function (el) { return function () { el.querySelector('.ev').classList.add('show'); }; }(cell));
+      slotEl.style.opacity = 1; slotEl.style.height = 'auto'; slotEl.style.color = 'var(--cyan)';
+      slotEl.textContent = 'checking crews + locations...';
+      await sleep(850);
+      // Conflict path: try first choice, find it taken, reroute.
+      if (r.conflict) {
+        var ghost = placeEv(r.conflict.day, r.conflict.time, r.color, r.label, true);
+        slotEl.textContent = '⚠ Tue 9:00 taken — finding next best...';
+        await sleep(900);
+        ghost.parentElement.innerHTML = ''; // remove the rejected attempt
+      }
+      placeEv(r.day, r.time, r.color, r.label, false);
+      slotEl.innerHTML = '→ ' + r.slot + '<span class="why">' + r.why + '</span>';
       req.classList.remove('placing'); req.classList.add('placed');
       await sleep(450);
     }
+    var u = document.getElementById('sched-util');
+    if (u) u.innerHTML = '<b>3 jobs placed</b> across 3 crews · 0 conflicts · ~40 min of dispatching done in one click.';
     btn.disabled = false; btn.innerHTML = '▶ Schedule again'; schedRunning = false;
   }
 
