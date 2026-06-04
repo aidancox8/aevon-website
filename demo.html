@@ -277,8 +277,8 @@
           </div>
 
           <div class="runbar">
-            <button class="btn" id="b-btn" onclick="runDash()">▶ Advance make-ready</button>
-            <span class="hint">Every empty unit is lost rent. This tracks turns stage-by-stage so nothing stalls — generic PMS just list units.</span>
+            <button class="btn" id="b-btn" onclick="runDash()">↻ Sync latest updates</button>
+            <span class="hint">Every empty unit is lost rent. Crews update each step from their phones; this rolls it up so nothing stalls — generic PMS just list units.</span>
           </div>
         </div>
       </div>
@@ -308,7 +308,7 @@
           </div>
           <div class="runbar">
             <button class="btn" id="s-btn" onclick="runSched()">▶ Auto-schedule</button>
-            <span class="hint">Slots each turn job by crew skill, location and drive time — and reroutes itself around conflicts. The dispatch Tetris you do by hand.</span>
+            <span class="hint">Matches each turn job to the right crew by skill, location and availability — the dispatch Tetris you do by hand.</span>
           </div>
         </div>
       </div>
@@ -502,7 +502,7 @@
       await sleep(950);
       document.getElementById('mt' + i).style.width = m.conf + '%';
       document.getElementById('b' + i).classList.add('show');
-      logLine('classified <span class="hl">' + m.label + '</span> · confidence ' + m.conf + '%');
+      logLine('classified as <span class="hl">' + m.label + '</span>');
       await sleep(350);
       if (m.tier !== 'spam') { logLine('drafting reply in brand voice...'); await typeInto('d' + i, m.draft); }
       else { document.getElementById('d' + i).innerHTML = '<span class="lbl">action › </span>' + m.draft; }
@@ -620,7 +620,7 @@
       card.classList.remove('moving');
       await sleep(250);
     }
-    btn.disabled = false; btn.innerHTML = '▶ Advance make-ready'; dashRunning = false;
+    btn.disabled = false; btn.innerHTML = '↻ Sync latest updates'; dashRunning = false;
   }
 
   /* ---- Scheduler ---- */
@@ -631,8 +631,8 @@
       slot: 'Tue 9:00 · Ana', why: 'closest cleaner, no drive-time clash' },
     { who: 'Carpet repair · Unit 7B', meta: 'Oak Residences · 3h · contractor', day: 2, time: 1, color: 'c2', label: 'Carpet 7B', crew: 'Dlux',
       slot: 'Wed 11:00 · Dlux', why: 'only crew certified for flooring' },
-    { who: 'Final inspection · Unit 309', meta: 'Maple Court · 1h · any', day: 0, time: 0, color: 'c3', label: 'Inspect 309', crew: 'Sam',
-      conflict: { day: 1, time: 0 }, slot: 'Tue 2:00 · Sam', why: 'first choice taken → bundled w/ 204 (same building)' }
+    { who: 'Final inspection · Unit 309', meta: 'Maple Court · 1h · any', day: 0, time: 2, color: 'c3', label: 'Inspect 309', crew: 'Sam',
+      slot: 'Tue 2:00 · Sam', why: 'bundled with 204 — same building, no extra trip' }
   ];
   var TIMES = ['9 AM', '11 AM', '2 PM'];
   function buildSched() {
@@ -649,9 +649,9 @@
     document.getElementById('cal-grid').innerHTML = grid;
     var u = document.getElementById('sched-util'); if (u) u.textContent = '';
   }
-  function placeEv(day, time, color, label, ghost) {
+  function placeEv(day, time, color, label) {
     var cell = document.getElementById('c-' + day + '-' + time);
-    cell.innerHTML = '<div class="ev ' + color + (ghost ? ' ghost' : '') + '">' + label + '</div>';
+    cell.innerHTML = '<div class="ev ' + color + '">' + label + '</div>';
     var ev = cell.querySelector('.ev');
     requestAnimationFrame(function () { ev.classList.add('show'); });
     return ev;
@@ -666,22 +666,15 @@
       var r = REQS[i], req = document.getElementById('r' + i), slotEl = document.getElementById('rs' + i);
       req.classList.add('placing');
       slotEl.style.opacity = 1; slotEl.style.height = 'auto'; slotEl.style.color = 'var(--cyan)';
-      slotEl.textContent = 'checking crews + locations...';
-      await sleep(850);
-      // Conflict path: try first choice, find it taken, reroute.
-      if (r.conflict) {
-        var ghost = placeEv(r.conflict.day, r.conflict.time, r.color, r.label, true);
-        slotEl.textContent = '⚠ Tue 9:00 taken — finding next best...';
-        await sleep(900);
-        ghost.parentElement.innerHTML = ''; // remove the rejected attempt
-      }
-      placeEv(r.day, r.time, r.color, r.label, false);
+      slotEl.textContent = 'matching crew + location...';
+      await sleep(700);
+      placeEv(r.day, r.time, r.color, r.label);
       slotEl.innerHTML = '→ ' + r.slot + '<span class="why">' + r.why + '</span>';
       req.classList.remove('placing'); req.classList.add('placed');
-      await sleep(450);
+      await sleep(400);
     }
     var u = document.getElementById('sched-util');
-    if (u) u.innerHTML = '<b>3 jobs placed</b> across 3 crews · 0 conflicts · ~40 min of dispatching done in one click.';
+    if (u) u.innerHTML = '<b>3 jobs scheduled</b> across 3 crews — matched by skill, location and availability, with no double-bookings.';
     btn.disabled = false; btn.innerHTML = '▶ Schedule again'; schedRunning = false;
   }
 
