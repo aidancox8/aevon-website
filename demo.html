@@ -209,6 +209,52 @@
     .ev.c2 { background: linear-gradient(135deg, rgba(34,211,238,0.85), rgba(99,102,241,0.85)); color:#fff; }
     .ev.c3 { background: linear-gradient(135deg, rgba(168,85,247,0.9), rgba(236,72,153,0.85)); color:#fff; }
 
+    /* ===== Lead Command Center ===== */
+    .lead-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px; }
+    @media (max-width:760px){ .lead-grid { grid-template-columns: 1fr; } }
+    .feed { display: flex; flex-direction: column; gap: 9px; }
+    .lead { background: var(--surface); border: 1px solid var(--border); border-radius: 11px; padding: 11px 13px; opacity: 0; transform: translateY(-10px); transition: opacity .4s, transform .4s cubic-bezier(.2,1,.3,1); }
+    .lead.in { opacity: 1; transform: none; }
+    .lead-top { display: flex; align-items: center; gap: 9px; margin-bottom: 6px; }
+    .lead-src { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--text3); background: var(--bg2); border: 1px solid var(--border); padding: 2px 7px; border-radius: 6px; white-space: nowrap; }
+    .lead-name { font-weight: 700; font-size: 13px; }
+    .lead-score { margin-left: auto; font-family: var(--mono); font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; opacity: 0; transform: scale(.5); transition: all .35s cubic-bezier(.2,1.4,.4,1); }
+    .lead-score.show { opacity: 1; transform: none; }
+    .lead-score.hot { background: rgba(34,197,94,0.16); color: var(--green); }
+    .lead-score.warm { background: rgba(251,146,60,0.16); color: var(--amber); }
+    .lead-score.cold { background: rgba(138,147,168,0.14); color: var(--text3); }
+    .lead-intent { font-size: 12.5px; color: var(--text2); }
+    .lead-act { font-size: 11px; color: var(--cyan); font-family: var(--mono); opacity: 0; max-height: 0; overflow: hidden; transition: opacity .3s, max-height .3s, margin-top .3s; }
+    .lead-act.show { opacity: 1; max-height: 30px; margin-top: 8px; }
+    .lead-act.cold { color: var(--text4); }
+    .funnel { display: flex; flex-direction: column; gap: 11px; }
+    .frow .ft { display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 5px; color: var(--text3); }
+    .frow .ft b { color: var(--text); font-family: var(--mono); }
+    .fbar { height: 14px; border-radius: 7px; background: rgba(148,163,184,0.1); overflow: hidden; }
+    .fbar i { display: block; height: 100%; width: 0; border-radius: 7px; background: linear-gradient(90deg, var(--accent), var(--accent3)); transition: width .8s cubic-bezier(.2,1,.3,1); }
+    .frow.win .fbar i { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+
+    /* ===== Deal Pipeline (kanban) ===== */
+    .kanban { display: grid; grid-template-columns: repeat(5,1fr); gap: 9px; }
+    @media (max-width:760px){ .kanban { display: flex; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; } .kcol { min-width: 158px; flex-shrink: 0; } }
+    .kcol { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 10px 9px; min-height: 140px; }
+    .kcol-h { display: flex; justify-content: space-between; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: var(--text4); font-weight: 700; margin-bottom: 10px; }
+    .kcol-h .ct { color: var(--text3); background: var(--surface2); border-radius: 20px; padding: 0 7px; }
+    .kbody { min-height: 8px; }
+    .kcard { background: var(--surface2); border: 1px solid var(--border); border-radius: 9px; padding: 9px 10px; margin-bottom: 8px; transition: all .4s cubic-bezier(.2,1,.3,1); }
+    .kcard:last-child { margin-bottom: 0; }
+    .kcard .kn { font-size: 12px; font-weight: 600; }
+    .kcard .kv { font-size: 11px; color: var(--text3); font-family: var(--mono); margin-top: 2px; }
+    .kcard.flag-missing { border-color: rgba(251,146,60,0.5); }
+    .kcard.flag-stalled { border-color: rgba(248,113,113,0.5); }
+    .kflag { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; margin-top: 8px; padding-top: 7px; border-top: 1px dashed var(--border); }
+    .kflag.missing { color: var(--amber); }
+    .kflag.stalled { color: var(--red); }
+    .kcard.resolved .kflag { color: var(--green); }
+    .kcard.pulse { animation: cardpulse .9s ease 2; }
+    @keyframes cardpulse { 0%,100%{ box-shadow: 0 0 0 0 transparent; } 50%{ box-shadow: 0 0 0 3px rgba(251,146,60,0.3); } }
+    .kcard.moving { transform: scale(1.05); border-color: var(--cyan); box-shadow: 0 10px 28px rgba(0,0,0,0.45); }
+
     .closer { position: relative; z-index: 5; text-align: center; padding: 60px 0 80px; }
     .closer h2 { font-size: 28px; font-weight: 800; letter-spacing: -.025em; }
     .closer p { color: var(--text2); margin: 14px auto 24px; max-width: 540px; }
@@ -243,72 +289,59 @@
       </button>
     </div>
   </div>
-  <div class="cat-sub" id="cat-sub">Tools your team opens and uses every day — dashboards, schedulers, portals.</div>
+  <div class="cat-sub" id="cat-sub">Tools your team lives in every day — lead pipelines, deal trackers, live dashboards.</div>
 
   <div class="tabs" id="tabs"></div>
 
   <div class="stage">
-    <!-- ===== APP: TurnTracker (vacancy-loss PMS) ===== -->
-    <div class="panel" id="panel-dash" data-cat="apps">
+    <!-- ===== APP: Lead Command Center ===== -->
+    <div class="panel" id="panel-leads" data-cat="apps">
       <div class="app">
         <div class="app-bar"><span class="dots"><i></i><i></i><i></i></span>
-          <span class="app-title"><b>TurnTracker</b> · vacancy &amp; make-ready</span>
+          <span class="app-title"><b>LeadDesk</b> · lead command center</span>
           <span class="app-live"><span class="dot"></span> live</span>
         </div>
         <div class="app-body">
-          <div class="dash-grid" id="kpis">
-            <div class="kpi accent-red"><div class="lbl">Rent lost / day vacant</div><div class="num" data-to="487" data-prefix="$">$487</div><div class="delta warn">6 units empty now</div></div>
-            <div class="kpi"><div class="lbl">Avg days to turn</div><div class="num" data-to="11" data-suffix="d">11d</div><div class="delta up">▼ 4d vs industry</div></div>
-            <div class="kpi"><div class="lbl">Occupancy</div><div class="num" data-to="94" data-suffix="%">94%</div><div class="delta up">▲ 2.1% this qtr</div></div>
-            <div class="kpi"><div class="lbl">Renewals due (60d)</div><div class="num" data-to="9">9</div><div class="delta flat">3 unconfirmed</div></div>
+          <div class="dash-grid">
+            <div class="kpi"><div class="lbl">New leads today</div><div class="num" id="k-new">0</div><div class="delta up">▲ 8 vs daily avg</div></div>
+            <div class="kpi"><div class="lbl">Avg speed to lead</div><div class="num" id="k-speed">—</div><div class="delta up">was 3.5 hrs</div></div>
+            <div class="kpi"><div class="lbl">Leads answered</div><div class="num" id="k-reply">0%</div><div class="delta up">every one, instantly</div></div>
+            <div class="kpi"><div class="lbl">New pipeline today</div><div class="num" id="k-pipe">$0</div><div class="delta up">▲ live</div></div>
           </div>
 
-          <div class="tt-grid">
+          <div class="lead-grid">
             <div class="chart-card">
-              <h5>Turnover board · units between tenants</h5>
-              <div class="turn-board" id="turn-board"></div>
+              <h5>Live lead feed · all sources</h5>
+              <div class="feed" id="lead-feed"></div>
             </div>
             <div class="chart-card">
-              <h5>Portfolio occupancy</h5>
-              <svg id="donut" viewBox="0 0 170 170" style="width:100%;max-width:180px;margin:2px auto 0;display:block"></svg>
-              <div id="legend" style="margin-top:10px"></div>
-              <div class="proj" id="proj"></div>
+              <h5>Conversion funnel · this month</h5>
+              <div class="funnel" id="funnel"></div>
+              <div class="proj" id="lead-proj"></div>
             </div>
           </div>
 
           <div class="runbar">
-            <button class="btn" id="b-btn" onclick="runDash()">↻ Sync latest updates</button>
-            <span class="hint">Every empty unit is lost rent. Crews update each step from their phones; this rolls it up so nothing stalls — generic PMS just list units.</span>
+            <button class="btn" id="l-btn" onclick="runLeads()">▶ Simulate today's leads</button>
+            <span class="hint">Every lead from your site, Google, Facebook and referrals — captured, scored and answered in seconds. Speed to lead is the whole game.</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ===== APP: Smart Scheduler ===== -->
-    <div class="panel" id="panel-sched" data-cat="apps">
+    <!-- ===== APP: Deal / Application Pipeline ===== -->
+    <div class="panel" id="panel-pipeline" data-cat="apps">
       <div class="app">
         <div class="app-bar"><span class="dots"><i></i><i></i><i></i></span>
-          <span class="app-title"><b>SmartSchedule</b> · dispatch</span>
-          <span class="app-live"><span class="dot"></span> ready</span>
+          <span class="app-title"><b>PipeLine</b> · deals &amp; applications</span>
+          <span class="app-live"><span class="dot"></span> live</span>
         </div>
         <div class="app-body">
-          <div class="sched">
-            <div>
-              <div class="col-h">Unscheduled requests</div>
-              <div id="reqs"></div>
-            </div>
-            <div>
-              <div class="col-h">This week</div>
-              <div class="cal">
-                <div class="cal-head"><span></span><span>Tue</span><span>Wed</span><span>Thu</span></div>
-                <div id="cal-grid"></div>
-              </div>
-              <div class="sched-util" id="sched-util"></div>
-            </div>
-          </div>
+          <div class="kanban" id="kanban"></div>
+          <div class="proj" id="pipe-proj" style="margin-top:14px"></div>
           <div class="runbar">
-            <button class="btn" id="s-btn" onclick="runSched()">▶ Auto-schedule</button>
-            <span class="hint">Matches each turn job to the right crew by skill, location and availability — the dispatch Tetris you do by hand.</span>
+            <button class="btn" id="p-btn" onclick="runPipeline()">▶ Scan for risks</button>
+            <span class="hint">Watches every deal in flight — flags missing docs and stalled files before they cost you a commission, then nudges automatically.</span>
           </div>
         </div>
       </div>
@@ -421,8 +454,8 @@
   /* ---- category + tabs ---- */
   var TABS = {
     apps: [
-      { id: 'dash',  label: 'Property Turn Tracker', icon: '<path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/>' },
-      { id: 'sched', label: 'Make-Ready Scheduler', icon: '<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>' }
+      { id: 'leads',    label: 'Lead Command Center', icon: '<path d="M3 12h4l2-6 4 13 2-7h6"/>' },
+      { id: 'pipeline', label: 'Deal Pipeline', icon: '<rect x="3" y="4" width="4.5" height="16" rx="1"/><rect x="9.75" y="4" width="4.5" height="16" rx="1"/><rect x="16.5" y="4" width="4.5" height="16" rx="1"/>' }
     ],
     agents: [
       { id: 'triage', label: 'Inquiry Triage Agent', icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>' },
@@ -430,7 +463,7 @@
     ]
   };
   var SUBS = {
-    apps: 'Tools your team opens and uses every day — dashboards, schedulers, portals.',
+    apps: 'Tools your team lives in every day — lead pipelines, deal trackers, live dashboards.',
     agents: 'Software that does the work on its own — reading, deciding, drafting, routing.'
   };
   var currentCat = 'apps';
@@ -451,8 +484,8 @@
   function switchTab(id) {
     document.querySelectorAll('.tab').forEach(function (t) { t.classList.toggle('active', t.dataset.tab === id); });
     document.querySelectorAll('.panel').forEach(function (p) { p.classList.toggle('active', p.id === 'panel-' + id); });
-    if (id === 'dash') { buildBoard(); drawDonut(); setKpiFinal(); }
-    if (id === 'sched') buildSched();
+    if (id === 'leads') buildLeads();
+    if (id === 'pipeline') buildPipeline();
     if (id === 'triage') buildTriage();
   }
 
@@ -540,147 +573,128 @@
     btn.disabled = false; btn.innerHTML = '▶ Process again'; docRunning = false;
   }
 
-  /* ---- TurnTracker (vacancy-loss PMS) ---- */
-  var STAGES = ['Notice', 'Inspect', 'Clean', 'Repair', 'List', 'Leased'];
-  // each unit: current stage index, days vacant, rent/day
-  var UNITS = [
-    { id: 'Unit 204', addr: 'Maple Court', stage: 3, days: 14, rent: 78 },
-    { id: 'Unit 112', addr: 'Cedar Lane', stage: 1, days: 6, rent: 71 },
-    { id: 'Unit 7B', addr: 'Oak Residences', stage: 4, days: 19, rent: 95 },
-    { id: 'Unit 309', addr: 'Maple Court', stage: 2, days: 9, rent: 82 }
+  /* ---- Lead Command Center ---- */
+  var LEADS = [
+    { name: 'Priya S.',  src: 'Website',  intent: '"Pre-approved and house-hunting in Surrey under $900k."',     score: 92, tier: 'hot',  resp: '31s', val: 18 },
+    { name: 'Devon R.',  src: 'Google',   intent: '"What\'s your current 5-year fixed rate?"',                    score: 74, tier: 'warm', resp: '44s', val: 9 },
+    { name: 'The Kaurs', src: 'Referral', intent: '"A friend used you to sell — we\'re thinking of listing too."', score: 90, tier: 'hot',  resp: '27s', val: 22 },
+    { name: 'Mike L.',   src: 'Facebook', intent: '"Just curious what my condo might be worth these days."',       score: 58, tier: 'warm', resp: '39s', val: 6 },
+    { name: 'RankBoost', src: 'Web form', intent: '"Get your website to #1 on Google!!! Limited time offer."',     score: 5,  tier: 'cold', resp: '—', val: 0 }
   ];
-  function trackHtml(stage) {
-    return '<div class="track">' + STAGES.map(function (nm, i) {
-      var cls = i < stage ? 'done' : (i === stage ? 'cur' : '');
-      var lineFill = i < stage ? 'fill' : '';
-      var mark = i < stage ? '✓' : (i + 1);
-      return '<div class="stp ' + cls + '"><div class="line ' + lineFill + '"></div><div class="ring">' + mark + '</div><div class="nm">' + nm + '</div></div>';
-    }).join('') + '</div>';
-  }
-  function buildBoard() {
-    document.getElementById('turn-board').innerHTML = UNITS.map(function (u, i) {
-      var leased = u.stage >= STAGES.length - 1;
-      return '<div class="unit" id="u' + i + '">' +
-        '<div class="unit-top"><span class="unit-id">' + u.id + '<span class="addr">' + u.addr + '</span></span>' +
-        '<span class="unit-days ' + (leased ? 'ok' : '') + '" id="ud' + i + '">' + (leased ? 'leased' : u.days + 'd · $' + (u.days * u.rent)) + '</span></div>' +
-        '<div id="ut' + i + '">' + trackHtml(u.stage) + '</div></div>';
+  var FUNNEL = [
+    { l: 'Leads in',  pct: 100, n: '148' },
+    { l: 'Contacted', pct: 100, n: '148 · instant' },
+    { l: 'Qualified', pct: 64,  n: '94' },
+    { l: 'Booked',    pct: 38,  n: '56' },
+    { l: 'Won',       pct: 12,  n: '18', win: true }
+  ];
+  function buildLeads() {
+    document.getElementById('lead-feed').innerHTML = '';
+    document.getElementById('funnel').innerHTML = FUNNEL.map(function (f, i) {
+      return '<div class="frow' + (f.win ? ' win' : '') + '"><div class="ft"><span>' + f.l + '</span><b id="fn' + i + '"></b></div><div class="fbar"><i id="fb' + i + '"></i></div></div>';
     }).join('');
+    document.getElementById('lead-proj').innerHTML = '';
+    document.getElementById('k-new').textContent = '0';
+    document.getElementById('k-speed').textContent = '—';
+    document.getElementById('k-reply').textContent = '0%';
+    document.getElementById('k-pipe').textContent = '$0';
   }
-  function drawDonut() {
-    var segs = [{ l: 'Occupied', v: 94, c: '#22C55E' }, { l: 'Vacant', v: 6, c: '#F87171' }];
-    var r = 60, cx = 85, cy = 85, circ = 2 * Math.PI * r, off = 0, svg = '';
-    svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="rgba(148,163,184,0.1)" stroke-width="20"/>';
-    segs.forEach(function (s, i) {
-      var frac = s.v / 100, len = frac * circ;
-      svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="' + s.c + '" stroke-width="20" stroke-linecap="round" stroke-dasharray="' + len + ' ' + (circ - len) + '" stroke-dashoffset="' + (-off * circ) + '" transform="rotate(-90 ' + cx + ' ' + cy + ')" style="opacity:0;animation:fadein .5s ' + (i * 0.18 + 0.1) + 's forwards"/>';
-      off += frac;
-    });
-    svg += '<text x="' + cx + '" y="' + (cy - 1) + '" text-anchor="middle" fill="#F8FAFC" font-size="25" font-weight="800" font-family="Inter">94%</text><text x="' + cx + '" y="' + (cy + 16) + '" text-anchor="middle" fill="#8A93A8" font-size="10" font-family="Inter">142 units</text>';
-    document.getElementById('donut').innerHTML = svg;
-    document.getElementById('legend').innerHTML = segs.map(function (s) { return '<div style="display:flex;align-items:center;gap:7px;font-size:12px;color:#B8C2D0;margin-bottom:5px"><span style="width:9px;height:9px;border-radius:3px;background:' + s.c + '"></span>' + s.l + '<b style="margin-left:auto;color:#fff">' + s.v + '%</b></div>'; }).join('');
-    document.getElementById('proj').innerHTML = 'At this turn speed, the 6 vacant units re-lease ~<b>9 days sooner</b> than portfolio average — about <b>$26k</b> of recovered rent this year.';
-  }
-  function setKpiFinal() {
-    document.querySelectorAll('#kpis .num').forEach(function (el) {
-      var to = parseFloat(el.dataset.to), suf = el.dataset.suffix || '', pre = el.dataset.prefix || '';
-      el.textContent = pre + (to % 1 !== 0 ? to.toFixed(1) : to) + suf;
-    });
-  }
-  var countToken = 0;
-  function countUp() {
-    var my = ++countToken;
-    document.querySelectorAll('#kpis .num').forEach(function (el) {
-      var to = parseFloat(el.dataset.to), suf = el.dataset.suffix || '', pre = el.dataset.prefix || '', dec = to % 1 !== 0, t0 = null, dur = 850;
-      function step(t) {
-        if (my !== countToken) return;
-        if (t0 === null) t0 = t;
-        var p = Math.min(1, (t - t0) / dur), v = to * (1 - Math.pow(1 - p, 3));
-        el.textContent = pre + (dec ? v.toFixed(1) : Math.round(v)) + suf;
-        if (p < 1) requestAnimationFrame(step); else el.textContent = pre + (dec ? to.toFixed(1) : to) + suf;
+  var leadsRunning = false;
+  async function runLeads() {
+    if (leadsRunning) return; leadsRunning = true;
+    var btn = document.getElementById('l-btn'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Capturing';
+    buildLeads();
+    var feed = document.getElementById('lead-feed');
+    var pipe = 0, count = 0;
+    for (var i = 0; i < LEADS.length; i++) {
+      var l = LEADS[i];
+      var el = document.createElement('div'); el.className = 'lead'; el.id = 'ld' + i;
+      el.innerHTML = '<div class="lead-top"><span class="lead-src">' + l.src + '</span><span class="lead-name">' + l.name + '</span>' +
+        '<span class="lead-score ' + l.tier + '" id="ls' + i + '">' + l.score + '</span></div>' +
+        '<div class="lead-intent">' + l.intent + '</div>' +
+        '<div class="lead-act' + (l.tier === 'cold' ? ' cold' : '') + '" id="la' + i + '"></div>';
+      feed.appendChild(el);
+      void el.offsetWidth; el.classList.add('in');
+      await sleep(360);
+      document.getElementById('ls' + i).classList.add('show');
+      await sleep(280);
+      var act = document.getElementById('la' + i);
+      if (l.tier === 'cold') { act.textContent = '✕ filtered as spam — never reaches you'; act.classList.add('show'); }
+      else {
+        act.textContent = '✓ auto-replied in ' + l.resp + ' · added to pipeline';
+        act.classList.add('show');
+        count++; pipe += l.val;
+        document.getElementById('k-new').textContent = count;
+        document.getElementById('k-pipe').textContent = '$' + pipe + 'K';
       }
-      requestAnimationFrame(step);
-    });
-  }
-  var dashRunning = false;
-  async function runDash() {
-    if (dashRunning) return; dashRunning = true;
-    var btn = document.getElementById('b-btn'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Advancing';
-    // advance each not-yet-leased unit one stage, with a visible move
-    for (var i = 0; i < UNITS.length; i++) {
-      var u = UNITS[i];
-      if (u.stage >= STAGES.length - 1) continue;
-      var card = document.getElementById('u' + i); card.classList.add('moving');
-      await sleep(550);
-      u.stage++;
-      document.getElementById('ut' + i).innerHTML = trackHtml(u.stage);
-      var leased = u.stage >= STAGES.length - 1;
-      var badge = document.getElementById('ud' + i);
-      if (leased) { badge.textContent = 'leased ✓'; badge.classList.add('ok'); }
-      else { badge.textContent = u.days + 'd · $' + (u.days * u.rent); }
-      card.classList.remove('moving');
-      await sleep(250);
+      await sleep(340);
     }
-    btn.disabled = false; btn.innerHTML = '↻ Sync latest updates'; dashRunning = false;
+    document.getElementById('k-speed').textContent = '38s';
+    document.getElementById('k-reply').textContent = '100%';
+    for (var f = 0; f < FUNNEL.length; f++) {
+      document.getElementById('fb' + f).style.width = FUNNEL[f].pct + '%';
+      document.getElementById('fn' + f).textContent = FUNNEL[f].n;
+      await sleep(150);
+    }
+    document.getElementById('lead-proj').innerHTML = 'Last month <b style="color:var(--amber)">41% of leads</b> were never contacted in time. Now it\'s <b>0%</b> — every lead gets a real reply in under a minute. That\'s roughly <b>$120k/yr</b> of pipeline that used to quietly leak away.';
+    btn.disabled = false; btn.innerHTML = '↻ Run again'; leadsRunning = false;
   }
 
-  /* ---- Scheduler ---- */
-  // Each job resolves to a slot the engine "chose" for a stated reason. One job
-  // (idx 2) wants a slot that's already taken, so it gets rerouted live.
-  var REQS = [
-    { who: 'Turn clean · Unit 204', meta: 'Maple Court · 2h · any cleaner', day: 1, time: 0, color: 'c1', label: 'Clean 204', crew: 'Ana',
-      slot: 'Tue 9:00 · Ana', why: 'closest cleaner, no drive-time clash' },
-    { who: 'Carpet repair · Unit 7B', meta: 'Oak Residences · 3h · contractor', day: 2, time: 1, color: 'c2', label: 'Carpet 7B', crew: 'Dlux',
-      slot: 'Wed 11:00 · Dlux', why: 'only crew certified for flooring' },
-    { who: 'Final inspection · Unit 309', meta: 'Maple Court · 1h · any', day: 0, time: 2, color: 'c3', label: 'Inspect 309', crew: 'Sam',
-      slot: 'Tue 2:00 · Sam', why: 'bundled with 204 — same building, no extra trip' }
+  /* ---- Deal / Application Pipeline ---- */
+  var KCOLS = ['New', 'Qualifying', 'Docs', 'Closing', 'Won'];
+  var DEALS = [
+    { name: 'Patel · Purchase', val: '$840K', col: 0 },
+    { name: 'Refi · D. Chen',   val: '$520K', col: 0 },
+    { name: 'Wong · Listing',   val: '$1.2M', col: 1 },
+    { name: 'Singh · Purchase', val: '$760K', col: 2, flag: 'missing', flagtx: 'Missing: income verification' },
+    { name: 'Okafor · Refi',    val: '$610K', col: 3, flag: 'stalled', flagtx: 'No movement in 6 days' },
+    { name: 'Brar · Sold',      val: '$980K', col: 4 }
   ];
-  var TIMES = ['9 AM', '11 AM', '2 PM'];
-  function buildSched() {
-    document.getElementById('reqs').innerHTML = REQS.map(function (r, i) {
-      return '<div class="req" id="r' + i + '"><div class="req-top"><b>' + r.who + '</b></div><div class="meta">' + r.meta + '</div>' +
-        '<div class="slot" id="rs' + i + '"></div></div>';
-    }).join('');
-    var grid = '';
-    for (var t = 0; t < TIMES.length; t++) {
-      grid += '<div class="cal-row"><div class="cal-time">' + TIMES[t] + '</div>';
-      for (var d = 0; d < 3; d++) grid += '<div class="cal-cell" id="c-' + d + '-' + t + '"></div>';
-      grid += '</div>';
-    }
-    document.getElementById('cal-grid').innerHTML = grid;
-    var u = document.getElementById('sched-util'); if (u) u.textContent = '';
+  function cardHtml(d, i) {
+    var fl = d.flag ? ' flag-' + d.flag : '';
+    return '<div class="kcard' + fl + '" id="kc' + i + '"><div class="kn">' + d.name + '</div><div class="kv">' + d.val + '</div>' +
+      (d.flag ? '<div class="kflag ' + d.flag + '" id="kf' + i + '"><span>' + (d.flag === 'missing' ? '⚠' : '⏱') + '</span> ' + d.flagtx + '</div>' : '') +
+      '</div>';
   }
-  function placeEv(day, time, color, label) {
-    var cell = document.getElementById('c-' + day + '-' + time);
-    cell.innerHTML = '<div class="ev ' + color + '">' + label + '</div>';
-    var ev = cell.querySelector('.ev');
-    requestAnimationFrame(function () { ev.classList.add('show'); });
-    return ev;
-  }
-  var schedRunning = false;
-  async function runSched() {
-    if (schedRunning) return; schedRunning = true;
-    var btn = document.getElementById('s-btn'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Scheduling';
-    buildSched();
-    await sleep(400);
-    for (var i = 0; i < REQS.length; i++) {
-      var r = REQS[i], req = document.getElementById('r' + i), slotEl = document.getElementById('rs' + i);
-      req.classList.add('placing');
-      slotEl.style.opacity = 1; slotEl.style.height = 'auto'; slotEl.style.color = 'var(--cyan)';
-      slotEl.textContent = 'matching crew + location...';
-      await sleep(700);
-      placeEv(r.day, r.time, r.color, r.label);
-      slotEl.innerHTML = '→ ' + r.slot + '<span class="why">' + r.why + '</span>';
-      req.classList.remove('placing'); req.classList.add('placed');
-      await sleep(400);
+  function buildPipeline() {
+    var html = '';
+    for (var c = 0; c < KCOLS.length; c++) {
+      var cards = DEALS.map(function (d, i) { return d.col === c ? cardHtml(d, i) : ''; }).join('');
+      var n = DEALS.filter(function (d) { return d.col === c; }).length;
+      html += '<div class="kcol" data-col="' + c + '"><div class="kcol-h"><span>' + KCOLS[c] + '</span><span class="ct">' + n + '</span></div><div class="kbody" id="kb' + c + '">' + cards + '</div></div>';
     }
-    var u = document.getElementById('sched-util');
-    if (u) u.innerHTML = '<b>3 jobs scheduled</b> across 3 crews — matched by skill, location and availability, with no double-bookings.';
-    btn.disabled = false; btn.innerHTML = '▶ Schedule again'; schedRunning = false;
+    document.getElementById('kanban').innerHTML = html;
+    document.getElementById('pipe-proj').innerHTML = '';
+  }
+  var pipeRunning = false;
+  async function runPipeline() {
+    if (pipeRunning) return; pipeRunning = true;
+    var btn = document.getElementById('p-btn'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Scanning';
+    buildPipeline();
+    await sleep(500);
+    var singh = document.getElementById('kc3'); singh.classList.add('pulse');
+    await sleep(1050);
+    var okafor = document.getElementById('kc4'); okafor.classList.add('pulse');
+    await sleep(1050);
+    document.getElementById('kf3').innerHTML = '<span>✓</span> doc requested — received & verified';
+    singh.classList.add('resolved'); singh.classList.remove('flag-missing');
+    await sleep(700);
+    singh.classList.add('moving');
+    await sleep(450);
+    document.getElementById('kb3').appendChild(singh);
+    singh.classList.remove('moving');
+    var d2 = document.querySelector('[data-col="2"] .ct'); if (d2) d2.textContent = '0';
+    var d3 = document.querySelector('[data-col="3"] .ct'); if (d3) d3.textContent = '2';
+    document.getElementById('kf4').innerHTML = '<span>✓</span> nudge sent to client + agent';
+    okafor.classList.add('resolved'); okafor.classList.remove('flag-stalled');
+    await sleep(500);
+    document.getElementById('pipe-proj').innerHTML = 'Projected to close this month: <b>$2.4M</b>. 2 deals caught before they slipped — one missing doc chased down, one stalled file nudged. Those are the commissions that usually fall through the cracks.';
+    btn.disabled = false; btn.innerHTML = '↻ Scan again'; pipeRunning = false;
   }
 
   // init
   renderTabs('apps');
-  switchTab('dash');
+  switchTab('leads');
 </script>
 <style>
   @keyframes grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
