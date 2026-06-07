@@ -255,6 +255,20 @@
     @keyframes cardpulse { 0%,100%{ box-shadow: 0 0 0 0 transparent; } 50%{ box-shadow: 0 0 0 3px rgba(251,146,60,0.3); } }
     .kcard.moving { transform: scale(1.05); border-color: var(--cyan); box-shadow: 0 10px 28px rgba(0,0,0,0.45); }
 
+    /* ===== Interest button ===== */
+    #interest-form, #interest-done { display: none; }
+    #interest-btn { font-size: 15px; padding: 14px 28px; border: none; cursor: pointer; }
+    .book-alt { margin-top: 14px; font-size: 13px; color: var(--text3); }
+    .book-alt a { color: var(--text2); }
+    #interest-form { max-width: 460px; margin: 0 auto; }
+    .if-q { color: var(--text2); font-size: 14px; margin-bottom: 10px; }
+    #interest-note { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-family: inherit; font-size: 14px; padding: 12px 14px; resize: vertical; margin-bottom: 14px; }
+    #interest-note:focus { outline: none; border-color: var(--border2); }
+    #interest-done .if-check { width: 52px; height: 52px; margin: 0 auto 14px; border-radius: 50%; background: rgba(34,197,94,0.16); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 26px; }
+    #interest-done h3 { font-size: 20px; font-weight: 800; }
+    #interest-done p { color: var(--text2); margin-top: 8px; }
+    #interest-done a { color: var(--text); }
+
     .closer { position: relative; z-index: 5; text-align: center; padding: 60px 0 80px; }
     .closer h2 { font-size: 28px; font-weight: 800; letter-spacing: -.025em; }
     .closer p { color: var(--text2); margin: 14px auto 24px; max-width: 540px; }
@@ -430,20 +444,39 @@
 
   <div class="closer">
     <h2>Want one of these built around your business?</h2>
-    <p>These are mockups. The real thing runs on your data, your workflow, your brand — and you own it. No subscriptions.</p>
-    <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" class="cta" style="font-size:15px;padding:14px 28px">Book a free 15-minute call →</a>
+    <p>These are mockups. The real thing runs on your data, your workflow, your brand, and you own it. No subscriptions.</p>
+
+    <div id="interest-wrap">
+      <button class="cta" id="interest-btn" onclick="showInterest()">Yes, I'm interested &rarr; have Aidan reach out</button>
+      <div class="book-alt">or <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank">book a quick call yourself</a></div>
+    </div>
+
+    <div id="interest-form">
+      <p class="if-q">Anything specific you'd want to fix or automate? (optional)</p>
+      <textarea id="interest-note" rows="3" placeholder="e.g. qualifying buyer inquiries faster, chasing missing docs..."></textarea>
+      <div><button class="cta" id="interest-send" onclick="sendInterest()">Send &rarr;</button></div>
+    </div>
+
+    <div id="interest-done">
+      <div class="if-check">&#10003;</div>
+      <h3>Got it, thanks.</h3>
+      <p>Aidan will reach out shortly. If it's easier, you can also email <a href="mailto:aidan@aevon.ca">aidan@aevon.ca</a>.</p>
+    </div>
   </div>
 </div>
 
 <footer><div class="wrap">Aevon — custom apps &amp; AI agents for Lower Mainland businesses · <a href="mailto:aidan@aevon.ca">aidan@aevon.ca</a></div></footer>
 
 <script>
+  var TRACK_BASE = 'https://qzxtfgzpyptvriorfhxw.supabase.co/functions/v1/track-visit';
+  var LEAD_REF = null;
   (function () {
     try {
       var ref = new URLSearchParams(location.search).get('ref');
       if (ref && /^[0-9a-f-]{36}$/i.test(ref)) {
-        var u = 'https://qzxtfgzpyptvriorfhxw.supabase.co/functions/v1/track-visit?ref=' + encodeURIComponent(ref);
-        if (navigator.sendBeacon) navigator.sendBeacon(u); else fetch(u, { mode: 'no-cors', keepalive: true });
+        LEAD_REF = ref;
+        if (navigator.sendBeacon) navigator.sendBeacon(TRACK_BASE + '?ref=' + encodeURIComponent(ref));
+        else fetch(TRACK_BASE + '?ref=' + encodeURIComponent(ref), { mode: 'no-cors', keepalive: true });
         history.replaceState({}, document.title, location.pathname + location.hash);
       }
     } catch (e) {}
@@ -690,6 +723,23 @@
     await sleep(500);
     document.getElementById('pipe-proj').innerHTML = 'Projected to close this month: <b>$2.4M</b>. 2 deals caught before they slipped — one missing doc chased down, one stalled file nudged. Those are the commissions that usually fall through the cracks.';
     btn.disabled = false; btn.innerHTML = '↻ Scan again'; pipeRunning = false;
+  }
+
+  // interest button
+  function showInterest() {
+    document.getElementById('interest-wrap').style.display = 'none';
+    document.getElementById('interest-form').style.display = 'block';
+    var n = document.getElementById('interest-note'); if (n) n.focus();
+  }
+  async function sendInterest() {
+    var btn = document.getElementById('interest-send'); if (btn) { btn.disabled = true; btn.innerHTML = 'Sending...'; }
+    var note = (document.getElementById('interest-note').value || '').slice(0, 500);
+    try {
+      var u = TRACK_BASE + '?ref=' + encodeURIComponent(LEAD_REF || '') + '&i=1' + (note ? '&note=' + encodeURIComponent(note) : '');
+      await fetch(u, { method: 'POST', mode: 'no-cors', keepalive: true });
+    } catch (e) {}
+    document.getElementById('interest-form').style.display = 'none';
+    document.getElementById('interest-done').style.display = 'block';
   }
 
   // init
