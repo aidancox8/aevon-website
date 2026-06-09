@@ -70,6 +70,34 @@
     .app-live .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: live 2s infinite; }
     .app-body { padding: 20px; }
 
+    /* ===== enterprise app shell (sidebar + topbar) ===== */
+    .shell { display: grid; grid-template-columns: 196px 1fr; }
+    @media (max-width:820px){ .shell { grid-template-columns: 1fr; } .side { display: none; } }
+    .side { background: #0B0913; border-right: 1px solid var(--border); padding: 15px 11px; display: flex; flex-direction: column; gap: 2px; }
+    .side-brand { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 14px; padding: 3px 7px 13px; }
+    .side-logo { width: 25px; height: 25px; border-radius: 7px; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 13px; color: #fff; font-weight: 800; }
+    .side-ws { margin-left: auto; font-size: 8.5px; color: var(--text4); font-weight: 700; border: 1px solid var(--border); border-radius: 5px; padding: 2px 5px; text-transform: uppercase; letter-spacing: .04em; }
+    .side-sec { font-size: 9px; text-transform: uppercase; letter-spacing: .09em; color: var(--text4); font-weight: 700; padding: 13px 8px 5px; }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 9px; border-radius: 8px; font-size: 12.5px; color: var(--text3); font-weight: 500; }
+    .nav-item svg { width: 15px; height: 15px; flex-shrink: 0; }
+    .nav-item.active { background: rgba(99,102,241,0.18); color: var(--text); box-shadow: inset 2px 0 0 var(--accent3); }
+    .nav-item .nb { margin-left: auto; font-size: 9.5px; background: var(--accent); color: #fff; border-radius: 10px; padding: 1px 6px; font-weight: 700; }
+    .side-user { margin-top: auto; display: flex; align-items: center; gap: 9px; padding: 11px 7px 2px; border-top: 1px solid var(--border); }
+    .side-user .ava { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--accent3), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 10.5px; font-weight: 700; color: #fff; flex-shrink: 0; }
+    .side-user b { font-size: 11.5px; display: block; line-height: 1.3; }
+    .side-user span { font-size: 10px; color: var(--text4); }
+    .main { display: flex; flex-direction: column; min-width: 0; }
+    .topbar { display: flex; align-items: center; gap: 13px; padding: 11px 18px; border-bottom: 1px solid var(--border); background: rgba(14,12,24,0.55); }
+    .tb-title { font-size: 14px; font-weight: 700; white-space: nowrap; }
+    .tb-search { flex: 1; max-width: 280px; display: flex; align-items: center; gap: 8px; background: var(--bg2); border: 1px solid var(--border); border-radius: 9px; padding: 7px 11px; color: var(--text4); font-size: 12px; }
+    .tb-search svg { width: 14px; height: 14px; }
+    .tb-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+    .tb-live { font-size: 11px; color: var(--green); display: flex; align-items: center; gap: 6px; font-weight: 600; }
+    .tb-live .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: live 2s infinite; }
+    .tb-ic { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text3); position: relative; }
+    .tb-ic svg { width: 15px; height: 15px; }
+    .tb-ic .ndot { position: absolute; top: 6px; right: 7px; width: 6px; height: 6px; border-radius: 50%; background: var(--red); border: 1px solid var(--bg2); }
+
     .runbar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 18px; }
     .btn { display: inline-flex; align-items: center; gap: 9px; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; padding: 12px 22px; border-radius: 11px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; transition: transform .15s, box-shadow .15s, opacity .15s; box-shadow: 0 4px 20px rgba(99,102,241,0.3); }
     .btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 26px rgba(99,102,241,0.45); }
@@ -213,10 +241,15 @@
     .lead-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px; }
     @media (max-width:760px){ .lead-grid { grid-template-columns: 1fr; } }
     .feed { display: flex; flex-direction: column; gap: 9px; }
-    .lead { background: var(--surface); border: 1px solid var(--border); border-radius: 11px; padding: 11px 13px; opacity: 0; transform: translateY(-10px); transition: opacity .4s, transform .4s cubic-bezier(.2,1,.3,1); }
+    .lead { background: linear-gradient(180deg, var(--surface), var(--bg2)); border: 1px solid var(--border); border-radius: 11px; padding: 11px 13px; opacity: 0; transform: translateY(-10px); transition: opacity .4s, transform .4s cubic-bezier(.2,1,.3,1); }
     .lead.in { opacity: 1; transform: none; }
-    .lead-top { display: flex; align-items: center; gap: 9px; margin-bottom: 6px; }
+    .lead-top { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+    .lead-av { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+    .lead-av.hot { background: rgba(34,197,94,0.18); color: var(--green); }
+    .lead-av.warm { background: rgba(251,146,60,0.18); color: var(--amber); }
+    .lead-av.cold { background: rgba(138,147,168,0.16); color: var(--text3); }
     .lead-src { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--text3); background: var(--bg2); border: 1px solid var(--border); padding: 2px 7px; border-radius: 6px; white-space: nowrap; }
+    .lead-ago { font-size: 10.5px; color: var(--text4); white-space: nowrap; }
     .lead-name { font-weight: 700; font-size: 13px; }
     .lead-score { margin-left: auto; font-family: var(--mono); font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; opacity: 0; transform: scale(.5); transition: all .35s cubic-bezier(.2,1.4,.4,1); }
     .lead-score.show { opacity: 1; transform: none; }
@@ -241,10 +274,12 @@
     .kcol-h { display: flex; justify-content: space-between; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: var(--text4); font-weight: 700; margin-bottom: 10px; }
     .kcol-h .ct { color: var(--text3); background: var(--surface2); border-radius: 20px; padding: 0 7px; }
     .kbody { min-height: 8px; }
-    .kcard { background: var(--surface2); border: 1px solid var(--border); border-radius: 9px; padding: 9px 10px; margin-bottom: 8px; transition: all .4s cubic-bezier(.2,1,.3,1); }
+    .kcard { background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1px solid var(--border); border-radius: 9px; padding: 10px 11px; margin-bottom: 8px; transition: all .4s cubic-bezier(.2,1,.3,1); box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
     .kcard:last-child { margin-bottom: 0; }
     .kcard .kn { font-size: 12px; font-weight: 600; }
-    .kcard .kv { font-size: 11px; color: var(--text3); font-family: var(--mono); margin-top: 2px; }
+    .kcard .kvrow { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; margin-top: 3px; }
+    .kcard .kv { font-size: 12px; color: var(--text); font-family: var(--mono); font-weight: 600; }
+    .kcard .ksub { font-size: 9.5px; color: var(--text4); white-space: nowrap; }
     .kcard.flag-missing { border-color: rgba(251,146,60,0.5); }
     .kcard.flag-stalled { border-color: rgba(248,113,113,0.5); }
     .kflag { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; margin-top: 8px; padding-top: 7px; border-top: 1px dashed var(--border); }
@@ -288,7 +323,7 @@
   <div class="hero">
     <div class="eyebrow"><span class="dot"></span> Live interactive demos</div>
     <h1>Watch the kind of tools <span>I'd build you</span></h1>
-    <p>Custom apps your team uses, and AI agents that work on their own. These run right here in your browser. Pick one and press play.</p>
+    <p>Custom apps your team uses, and AI agents that work on their own. They run live below, right in your browser. Switch tabs to see each one in action.</p>
   </div>
 
   <div class="cat-wrap">
@@ -311,12 +346,29 @@
     <!-- ===== APP: Lead Command Center ===== -->
     <div class="panel" id="panel-leads" data-cat="apps">
       <div class="app">
-        <div class="app-bar"><span class="dots"><i></i><i></i><i></i></span>
-          <span class="app-title"><b>LeadDesk</b> · lead command center</span>
-          <span class="app-live"><span class="dot"></span> live</span>
-        </div>
-        <div class="app-body">
-          <div class="dash-grid">
+        <div class="shell">
+          <aside class="side">
+            <div class="side-brand"><span class="side-logo">A</span> Aevon <span class="side-ws">Ops</span></div>
+            <div class="side-sec">Workspace</div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</div>
+            <div class="nav-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Leads</div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="4" height="16"/><rect x="10" y="4" width="4" height="16"/><rect x="17" y="4" width="4" height="16"/></svg>Pipeline</div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Inbox<span class="nb">6</span></div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>Documents</div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-5"/></svg>Reports</div>
+            <div class="side-user"><span class="ava">JD</span><div><b>Jordan Diaz</b><span>Operations</span></div></div>
+          </aside>
+          <div class="main">
+            <div class="topbar">
+              <span class="tb-title">Leads</span>
+              <span class="tb-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg> Search leads, sources, status...</span>
+              <span class="tb-actions">
+                <span class="tb-live"><span class="dot"></span> live</span>
+                <span class="tb-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="ndot"></span></span>
+              </span>
+            </div>
+            <div class="app-body">
+              <div class="dash-grid">
             <div class="kpi"><div class="lbl">New leads today</div><div class="num" id="k-new">0</div><div class="delta up">▲ 8 vs daily avg</div></div>
             <div class="kpi"><div class="lbl">Avg speed to lead</div><div class="num" id="k-speed">—</div><div class="delta up">was 3.5 hrs</div></div>
             <div class="kpi"><div class="lbl">Leads answered</div><div class="num" id="k-reply">0%</div><div class="delta up">every one, instantly</div></div>
@@ -339,6 +391,8 @@
             <button class="btn" id="l-btn" onclick="runLeads()">▶ Simulate today's leads</button>
             <span class="hint">Every lead from your site, Google, Facebook and referrals — captured, scored and answered in seconds. Speed to lead is the whole game.</span>
           </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -346,16 +400,41 @@
     <!-- ===== APP: Deal / Application Pipeline ===== -->
     <div class="panel" id="panel-pipeline" data-cat="apps">
       <div class="app">
-        <div class="app-bar"><span class="dots"><i></i><i></i><i></i></span>
-          <span class="app-title"><b>PipeLine</b> · deals &amp; applications</span>
-          <span class="app-live"><span class="dot"></span> live</span>
-        </div>
-        <div class="app-body">
+        <div class="shell">
+          <aside class="side">
+            <div class="side-brand"><span class="side-logo">A</span> Aevon <span class="side-ws">Ops</span></div>
+            <div class="side-sec">Workspace</div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Leads</div>
+            <div class="nav-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="4" height="16"/><rect x="10" y="4" width="4" height="16"/><rect x="17" y="4" width="4" height="16"/></svg>Pipeline</div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Inbox<span class="nb">6</span></div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>Documents</div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-5"/></svg>Reports</div>
+            <div class="side-user"><span class="ava">JD</span><div><b>Jordan Diaz</b><span>Operations</span></div></div>
+          </aside>
+          <div class="main">
+            <div class="topbar">
+              <span class="tb-title">Deal Pipeline</span>
+              <span class="tb-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg> Search deals, clients, stage...</span>
+              <span class="tb-actions">
+                <span class="tb-live"><span class="dot"></span> live</span>
+                <span class="tb-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="ndot"></span></span>
+              </span>
+            </div>
+            <div class="app-body">
+              <div class="dash-grid">
+            <div class="kpi"><div class="lbl">Pipeline value</div><div class="num" id="p-val">$9.2M</div><div class="delta up">9 deals in flight</div></div>
+            <div class="kpi"><div class="lbl">Closing this month</div><div class="num" id="p-close">$2.4M</div><div class="delta up">3 in final stage</div></div>
+            <div class="kpi accent-red"><div class="lbl">At risk</div><div class="num" id="p-risk">0</div><div class="delta warn" id="p-risk-d">scanning…</div></div>
+            <div class="kpi"><div class="lbl">Avg days to close</div><div class="num" id="p-days">28d</div><div class="delta up">▼ 6d vs last qtr</div></div>
+          </div>
           <div class="kanban" id="kanban"></div>
           <div class="proj" id="pipe-proj" style="margin-top:14px"></div>
           <div class="runbar">
             <button class="btn" id="p-btn" onclick="runPipeline()">▶ Scan for risks</button>
             <span class="hint">Watches every deal in flight — flags missing docs and stalled files before they cost you a commission, then nudges automatically.</span>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -364,12 +443,29 @@
     <!-- ===== AGENT: Inquiry Triage ===== -->
     <div class="panel" id="panel-triage" data-cat="agents">
       <div class="app">
-        <div class="app-bar"><span class="dots"><i></i><i></i><i></i></span>
-          <span class="app-title"><b>InboxAgent</b> · inquiries</span>
-          <span class="app-live"><span class="dot"></span> agent ready</span>
-        </div>
-        <div class="app-body">
-          <div class="triage">
+        <div class="shell">
+          <aside class="side">
+            <div class="side-brand"><span class="side-logo">A</span> Aevon <span class="side-ws">Ops</span></div>
+            <div class="side-sec">Workspace</div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Leads</div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="4" height="16"/><rect x="10" y="4" width="4" height="16"/><rect x="17" y="4" width="4" height="16"/></svg>Pipeline</div>
+            <div class="nav-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Inbox<span class="nb">6</span></div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>Documents</div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-5"/></svg>Reports</div>
+            <div class="side-user"><span class="ava">JD</span><div><b>Jordan Diaz</b><span>Operations</span></div></div>
+          </aside>
+          <div class="main">
+            <div class="topbar">
+              <span class="tb-title">Inquiry Inbox</span>
+              <span class="tb-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg> Search inquiries...</span>
+              <span class="tb-actions">
+                <span class="tb-live"><span class="dot"></span> agent on</span>
+                <span class="tb-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="ndot"></span></span>
+              </span>
+            </div>
+            <div class="app-body">
+              <div class="triage">
             <div>
               <div class="col-h">Incoming inquiries</div>
               <div id="msgs"></div>
@@ -389,6 +485,8 @@
             <button class="btn" id="t-btn" onclick="runTriage()">▶ Run agent</button>
             <span class="hint" id="t-hint">Reads every inquiry, ranks intent, drafts a reply in your voice.</span>
           </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -396,12 +494,29 @@
     <!-- ===== AGENT: Document Pipeline ===== -->
     <div class="panel" id="panel-doc" data-cat="agents">
       <div class="app">
-        <div class="app-bar"><span class="dots"><i></i><i></i><i></i></span>
-          <span class="app-title"><b>DocFlow</b> · accounts payable</span>
-          <span class="app-live"><span class="dot"></span> agent ready</span>
-        </div>
-        <div class="app-body">
-          <div class="pipe">
+        <div class="shell">
+          <aside class="side">
+            <div class="side-brand"><span class="side-logo">A</span> Aevon <span class="side-ws">Ops</span></div>
+            <div class="side-sec">Workspace</div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Leads</div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="4" height="16"/><rect x="10" y="4" width="4" height="16"/><rect x="17" y="4" width="4" height="16"/></svg>Pipeline</div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Inbox<span class="nb">6</span></div>
+            <div class="nav-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>Documents</div>
+            <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-5"/></svg>Reports</div>
+            <div class="side-user"><span class="ava">JD</span><div><b>Jordan Diaz</b><span>Operations</span></div></div>
+          </aside>
+          <div class="main">
+            <div class="topbar">
+              <span class="tb-title">Documents</span>
+              <span class="tb-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg> Search documents, vendors...</span>
+              <span class="tb-actions">
+                <span class="tb-live"><span class="dot"></span> agent on</span>
+                <span class="tb-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="ndot"></span></span>
+              </span>
+            </div>
+            <div class="app-body">
+              <div class="pipe">
             <div>
               <div class="col-h">Incoming document</div>
               <div class="doc" id="doc">
@@ -436,6 +551,8 @@
           <div class="runbar">
             <button class="btn" id="d-btn" onclick="runDoc()">▶ Process document</button>
             <span class="hint">Turns a PDF dropped in an inbox into clean, filed, routed data. No typing.</span>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -520,6 +637,14 @@
     if (id === 'leads') buildLeads();
     if (id === 'pipeline') buildPipeline();
     if (id === 'triage') buildTriage();
+    // auto-play the panel so it's alive the moment you land on it
+    clearTimeout(window._autoplay);
+    window._autoplay = setTimeout(function () {
+      if (id === 'leads') runLeads();
+      else if (id === 'pipeline') runPipeline();
+      else if (id === 'triage') runTriage();
+      else if (id === 'doc') runDoc();
+    }, 450);
   }
 
   /* ---- Triage agent ---- */
@@ -608,11 +733,13 @@
 
   /* ---- Lead Command Center ---- */
   var LEADS = [
-    { name: 'Priya S.',  src: 'Website',  intent: '"Pre-approved and house-hunting in Surrey under $900k."',     score: 92, tier: 'hot',  resp: '31s', val: 18 },
-    { name: 'Devon R.',  src: 'Google',   intent: '"What\'s your current 5-year fixed rate?"',                    score: 74, tier: 'warm', resp: '44s', val: 9 },
-    { name: 'The Kaurs', src: 'Referral', intent: '"A friend used you to sell — we\'re thinking of listing too."', score: 90, tier: 'hot',  resp: '27s', val: 22 },
-    { name: 'Mike L.',   src: 'Facebook', intent: '"Just curious what my condo might be worth these days."',       score: 58, tier: 'warm', resp: '39s', val: 6 },
-    { name: 'RankBoost', src: 'Web form', intent: '"Get your website to #1 on Google!!! Limited time offer."',     score: 5,  tier: 'cold', resp: '—', val: 0 }
+    { name: 'Priya Sharma',    init: 'PS', src: 'Website',    intent: '"Pre-approved, house-hunting in Surrey under $900k."',    score: 92, tier: 'hot',  resp: '31s', val: 18, ago: 'just now' },
+    { name: 'Devon Reyes',     init: 'DR', src: 'Google Ads', intent: '"What\'s your current 5-year fixed rate?"',               score: 74, tier: 'warm', resp: '44s', val: 9,  ago: '1m ago' },
+    { name: 'The Kaurs',       init: 'TK', src: 'Referral',   intent: '"A friend used you to sell, we\'re thinking of listing."', score: 90, tier: 'hot',  resp: '27s', val: 22, ago: '3m ago' },
+    { name: 'Sofia Marchetti', init: 'SM', src: 'Website',    intent: '"Need ~3,000 sqft commercial space in Burnaby."',         score: 83, tier: 'hot',  resp: '35s', val: 15, ago: '5m ago' },
+    { name: 'Marcus Lin',      init: 'ML', src: 'Facebook',   intent: '"Curious what my condo is worth these days."',            score: 58, tier: 'warm', resp: '39s', val: 6,  ago: '8m ago' },
+    { name: 'Tariq Aziz',      init: 'TA', src: 'Google Ads', intent: '"Mortgage renewal in August, want to compare rates."',     score: 69, tier: 'warm', resp: '41s', val: 8,  ago: '11m ago' },
+    { name: 'RankBoost SEO',   init: '!',  src: 'Web form',   intent: '"Get your website to #1 on Google!!! Limited offer."',     score: 4,  tier: 'cold', resp: '—', val: 0,  ago: '14m ago' }
   ];
   var FUNNEL = [
     { l: 'Leads in',  pct: 100, n: '148' },
@@ -642,7 +769,11 @@
     for (var i = 0; i < LEADS.length; i++) {
       var l = LEADS[i];
       var el = document.createElement('div'); el.className = 'lead'; el.id = 'ld' + i;
-      el.innerHTML = '<div class="lead-top"><span class="lead-src">' + l.src + '</span><span class="lead-name">' + l.name + '</span>' +
+      el.innerHTML = '<div class="lead-top">' +
+        '<span class="lead-av ' + l.tier + '">' + l.init + '</span>' +
+        '<span class="lead-name">' + l.name + '</span>' +
+        '<span class="lead-src">' + l.src + '</span>' +
+        '<span class="lead-ago">' + l.ago + '</span>' +
         '<span class="lead-score ' + l.tier + '" id="ls' + i + '">' + l.score + '</span></div>' +
         '<div class="lead-intent">' + l.intent + '</div>' +
         '<div class="lead-act' + (l.tier === 'cold' ? ' cold' : '') + '" id="la' + i + '"></div>';
@@ -676,16 +807,23 @@
   /* ---- Deal / Application Pipeline ---- */
   var KCOLS = ['New', 'Qualifying', 'Docs', 'Closing', 'Won'];
   var DEALS = [
-    { name: 'Patel · Purchase', val: '$840K', col: 0 },
-    { name: 'Refi · D. Chen',   val: '$520K', col: 0 },
-    { name: 'Wong · Listing',   val: '$1.2M', col: 1 },
-    { name: 'Singh · Purchase', val: '$760K', col: 2, flag: 'missing', flagtx: 'Missing: income verification' },
-    { name: 'Okafor · Refi',    val: '$610K', col: 3, flag: 'stalled', flagtx: 'No movement in 6 days' },
-    { name: 'Brar · Sold',      val: '$980K', col: 4 }
+    { name: 'Patel · Purchase', val: '$840K', sub: '2 days in stage', col: 0 },
+    { name: 'Refi · D. Chen',   val: '$520K', sub: 'new today',       col: 0 },
+    { name: 'Nguyen · Buy',     val: '$1.05M', sub: 'new today',      col: 0 },
+    { name: 'Wong · Listing',   val: '$1.2M', sub: 'pre-qual sent',   col: 1 },
+    { name: 'Alvarez · Refi',   val: '$430K', sub: 'qualifying',      col: 1 },
+    { name: 'Singh · Purchase', val: '$760K', sub: 'docs in review',  col: 2, flag: 'missing', flagtx: 'Missing: income verification' },
+    { name: 'Bouchard · Buy',   val: '$690K', sub: 'docs complete',   col: 2 },
+    { name: 'Okafor · Refi',    val: '$610K', sub: 'closing prep',    col: 3, flag: 'stalled', flagtx: 'No movement in 6 days' },
+    { name: 'Tan · Purchase',   val: '$1.4M', sub: 'signing Thu',     col: 3 },
+    { name: 'Brar · Sold',      val: '$980K', sub: 'funded',          col: 4 },
+    { name: 'Lee · Sold',       val: '$725K', sub: 'funded',          col: 4 }
   ];
   function cardHtml(d, i) {
     var fl = d.flag ? ' flag-' + d.flag : '';
-    return '<div class="kcard' + fl + '" id="kc' + i + '"><div class="kn">' + d.name + '</div><div class="kv">' + d.val + '</div>' +
+    return '<div class="kcard' + fl + '" id="kc' + i + '"' + (d.flag ? ' data-flag="' + d.flag + '"' : '') + '>' +
+      '<div class="kn">' + d.name + '</div>' +
+      '<div class="kvrow"><span class="kv">' + d.val + '</span><span class="ksub">' + d.sub + '</span></div>' +
       (d.flag ? '<div class="kflag ' + d.flag + '" id="kf' + i + '"><span>' + (d.flag === 'missing' ? '⚠' : '⏱') + '</span> ' + d.flagtx + '</div>' : '') +
       '</div>';
   }
@@ -698,28 +836,40 @@
     }
     document.getElementById('kanban').innerHTML = html;
     document.getElementById('pipe-proj').innerHTML = '';
+    var r = document.getElementById('p-risk'); if (r) r.textContent = '0';
+    var rd = document.getElementById('p-risk-d'); if (rd) rd.textContent = 'scanning…';
   }
   var pipeRunning = false;
   async function runPipeline() {
     if (pipeRunning) return; pipeRunning = true;
     var btn = document.getElementById('p-btn'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Scanning';
     buildPipeline();
-    await sleep(500);
-    var singh = document.getElementById('kc3'); singh.classList.add('pulse');
-    await sleep(1050);
-    var okafor = document.getElementById('kc4'); okafor.classList.add('pulse');
-    await sleep(1050);
-    document.getElementById('kf3').innerHTML = '<span>✓</span> doc requested — received & verified';
-    singh.classList.add('resolved'); singh.classList.remove('flag-missing');
-    await sleep(700);
-    singh.classList.add('moving');
-    await sleep(450);
-    document.getElementById('kb3').appendChild(singh);
-    singh.classList.remove('moving');
-    var d2 = document.querySelector('[data-col="2"] .ct'); if (d2) d2.textContent = '0';
-    var d3 = document.querySelector('[data-col="3"] .ct'); if (d3) d3.textContent = '2';
-    document.getElementById('kf4').innerHTML = '<span>✓</span> nudge sent to client + agent';
-    okafor.classList.add('resolved'); okafor.classList.remove('flag-stalled');
+    var missing = document.querySelector('.kcard[data-flag="missing"]');
+    var stalled = document.querySelector('.kcard[data-flag="stalled"]');
+    await sleep(600);
+    if (missing) missing.classList.add('pulse');
+    await sleep(850);
+    if (stalled) stalled.classList.add('pulse');
+    var pr = document.getElementById('p-risk'); if (pr) pr.textContent = '2';
+    var prd = document.getElementById('p-risk-d'); if (prd) prd.textContent = '1 missing doc · 1 stalled';
+    await sleep(1000);
+    if (missing) {
+      missing.querySelector('.kflag').innerHTML = '<span>✓</span> doc requested — received & verified';
+      missing.classList.add('resolved'); missing.classList.remove('flag-missing');
+      await sleep(750);
+      missing.classList.add('moving');
+      await sleep(450);
+      document.getElementById('kb3').appendChild(missing);
+      missing.classList.remove('moving');
+      var d2 = document.querySelector('[data-col="2"] .ct'); if (d2) d2.textContent = '1';
+      var d3 = document.querySelector('[data-col="3"] .ct'); if (d3) d3.textContent = '3';
+    }
+    if (stalled) {
+      stalled.querySelector('.kflag').innerHTML = '<span>✓</span> nudge sent to client + agent';
+      stalled.classList.add('resolved'); stalled.classList.remove('flag-stalled');
+    }
+    if (pr) pr.textContent = '0';
+    if (prd) prd.textContent = 'all cleared ✓';
     await sleep(500);
     document.getElementById('pipe-proj').innerHTML = 'Projected to close this month: <b>$2.4M</b>. 2 deals caught before they slipped — one missing doc chased down, one stalled file nudged. Those are the commissions that usually fall through the cracks.';
     btn.disabled = false; btn.innerHTML = '↻ Scan again'; pipeRunning = false;
