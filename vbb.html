@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Your inquiry agent — built for Vancouver Business Brokers</title>
-  <meta name="description" content="A walkthrough of the AI inquiry agent Aevon would build for Vancouver Business Brokers: reads each buyer inquiry, routes it to the right brand, qualifies, sends the NDA and package, books the showing." />
+  <meta name="description" content="A walkthrough of the AI agent Aevon would build for Vancouver Business Brokers: inquiries, qualification, NDAs, packages, showings, and listing marketing across every brand." />
   <link rel="icon" type="image/svg+xml" href="logo.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,7 +21,7 @@
     }
     body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
     a { color: inherit; }
-    .wrap { max-width: 1000px; margin: 0 auto; padding: 0 22px; }
+    .wrap { max-width: 1060px; margin: 0 auto; padding: 0 22px; }
     ::selection { background: rgba(124,58,237,0.35); }
     body::before { content:''; position: fixed; top: -28%; left: 50%; transform: translateX(-50%); width: 1100px; height: 760px; background: radial-gradient(ellipse, rgba(124,58,237,0.17), transparent 62%); pointer-events: none; z-index: 0; }
 
@@ -32,85 +32,130 @@
     .cta { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: 600; text-decoration: none; white-space: nowrap; box-shadow: 0 4px 20px rgba(99,102,241,0.35); transition: transform .15s, box-shadow .15s; border: none; cursor: pointer; font-family: inherit; }
     .cta:hover { transform: translateY(-1px); box-shadow: 0 6px 26px rgba(99,102,241,0.5); }
 
-    .hero { position: relative; z-index: 5; text-align: center; padding: 50px 0 6px; }
-    .eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; color: var(--text2); background: var(--surface); border: 1px solid var(--border); padding: 6px 13px; border-radius: 30px; margin-bottom: 20px; }
+    .hero { position: relative; z-index: 5; text-align: center; padding: 46px 0 4px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; color: var(--text2); background: var(--surface); border: 1px solid var(--border); padding: 6px 13px; border-radius: 30px; margin-bottom: 18px; }
     .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: live 2s infinite; }
     @keyframes live { 0%{box-shadow:0 0 0 0 rgba(34,197,94,0.5)} 70%{box-shadow:0 0 0 7px rgba(34,197,94,0)} 100%{box-shadow:0 0 0 0 rgba(34,197,94,0)} }
-    .hero h1 { font-size: clamp(28px, 5vw, 44px); font-weight: 800; letter-spacing: -0.035em; line-height: 1.06; }
+    .hero h1 { font-size: clamp(27px, 4.8vw, 42px); font-weight: 800; letter-spacing: -0.035em; line-height: 1.07; }
     .hero h1 span { background: linear-gradient(110deg, var(--accent2), var(--accent3), var(--cyan)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero p { color: var(--text2); font-size: 16.5px; max-width: 560px; margin: 16px auto 0; }
+    .hero p { color: var(--text2); font-size: 16px; max-width: 600px; margin: 14px auto 0; }
 
-    .player-wrap { position: relative; z-index: 5; margin: 30px 0 0; }
+    /* ===== app frame ===== */
+    .player-wrap { position: relative; z-index: 5; margin: 26px 0 0; }
     .player { background: linear-gradient(180deg, var(--surface), var(--bg2)); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.55); }
-    .pbar { display: flex; align-items: center; gap: 8px; padding: 12px 15px; border-bottom: 1px solid var(--border); background: var(--bg2); }
-    .dots { display: flex; gap: 6px; }
-    .dots i { width: 11px; height: 11px; border-radius: 50%; display: block; }
-    .dots i:nth-child(1){background:#ff5f57} .dots i:nth-child(2){background:#febc2e} .dots i:nth-child(3){background:#28c840}
-    .ptitle { font-size: 12.5px; color: var(--text3); margin-left: 6px; }
-    .ptitle b { color: var(--text2); }
-    .plive { margin-left: auto; font-size: 11px; color: var(--green); display: flex; align-items: center; gap: 6px; font-weight: 600; }
-    .plive .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: live 2s infinite; }
+    .shell { display: grid; grid-template-columns: 208px 1fr; min-height: 470px; }
+    @media (max-width:840px){ .shell { grid-template-columns: 1fr; } .side { display: none; } }
+    .side { background: #0B0913; border-right: 1px solid var(--border); padding: 15px 11px; display: flex; flex-direction: column; gap: 2px; }
+    .side-brand { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 13.5px; padding: 3px 7px 13px; }
+    .side-logo { width: 25px; height: 25px; border-radius: 7px; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 13px; color: #fff; font-weight: 800; flex-shrink: 0; }
+    .side-ws { margin-left: auto; font-size: 8.5px; color: var(--text4); font-weight: 700; border: 1px solid var(--border); border-radius: 5px; padding: 2px 5px; text-transform: uppercase; letter-spacing: .04em; }
+    .side-sec { font-size: 9px; text-transform: uppercase; letter-spacing: .09em; color: var(--text4); font-weight: 700; padding: 12px 8px 5px; }
+    .bnav { display: flex; align-items: center; gap: 9px; padding: 8px 9px; border-radius: 8px; font-size: 12px; color: var(--text3); font-weight: 500; transition: all .3s; }
+    .bnav .bdot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .bnav .bct { margin-left: auto; font-size: 9.5px; color: var(--text4); background: var(--surface2); border-radius: 10px; padding: 1px 7px; font-weight: 700; transition: all .3s; }
+    .bnav.hot { background: rgba(99,102,241,0.16); color: var(--text); box-shadow: inset 2px 0 0 var(--accent3); }
+    .bnav.hot .bct { background: var(--accent); color: #fff; }
+    .agent-side { margin-top: auto; border-top: 1px solid var(--border); padding: 11px 7px 2px; display: flex; align-items: center; gap: 9px; }
+    .orb { width: 28px; height: 28px; border-radius: 8px; background: radial-gradient(circle at 30% 30%, var(--accent3), var(--accent2)); box-shadow: 0 0 16px rgba(124,58,237,0.5); position: relative; flex-shrink: 0; }
+    .orb.think::after { content:''; position: absolute; inset: -4px; border-radius: 11px; border: 2px solid var(--accent3); opacity: .5; animation: ring 1.1s ease-out infinite; }
+    @keyframes ring { from{transform:scale(.85);opacity:.6} to{transform:scale(1.4);opacity:0} }
+    .agent-side b { font-size: 11.5px; display: block; line-height: 1.3; }
+    .agent-side span { font-size: 9.5px; color: var(--text4); display: block; }
+    .main { display: flex; flex-direction: column; min-width: 0; }
+    .topbar { display: flex; align-items: center; gap: 13px; padding: 11px 16px; border-bottom: 1px solid var(--border); background: rgba(14,12,24,0.55); }
+    .tb-title { font-size: 13.5px; font-weight: 700; white-space: nowrap; }
+    .tb-search { flex: 1; max-width: 250px; display: flex; align-items: center; gap: 8px; background: var(--bg2); border: 1px solid var(--border); border-radius: 9px; padding: 6px 11px; color: var(--text4); font-size: 11.5px; }
+    .tb-search svg { width: 13px; height: 13px; }
+    .tb-live { margin-left: auto; font-size: 11px; color: var(--green); display: flex; align-items: center; gap: 6px; font-weight: 600; white-space: nowrap; }
+    .tb-live .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: live 2s infinite; }
+    .body { padding: 15px 16px; display: grid; grid-template-columns: 1fr 1.12fr; gap: 14px; flex: 1; }
+    @media (max-width:840px){ .body { grid-template-columns: 1fr; } }
+    .col-h { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--text4); font-weight: 700; margin-bottom: 10px; }
 
-    /* brand bar */
-    .brandbar { display: flex; flex-wrap: wrap; gap: 7px; padding: 12px 16px; border-bottom: 1px solid var(--border); background: rgba(20,18,31,0.5); }
-    .bpill { font-size: 10.5px; font-weight: 600; color: var(--text3); border: 1px solid var(--border); border-radius: 20px; padding: 3px 10px; display: flex; align-items: center; gap: 6px; transition: all .3s; }
-    .bpill .bd { width: 7px; height: 7px; border-radius: 50%; }
-    .bpill.hot { color: var(--text); border-color: var(--border2); background: var(--surface2); }
-
-    .stage { display: grid; grid-template-columns: 1fr 1.15fr; gap: 0; min-height: 430px; }
-    @media (max-width:780px){ .stage { grid-template-columns: 1fr; } }
-    .col { padding: 16px; }
-    .col.left { border-right: 1px solid var(--border); }
-    @media (max-width:780px){ .col.left { border-right: none; border-bottom: 1px solid var(--border); } }
-    .col-h { font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--text4); font-weight: 700; margin-bottom: 12px; }
-
-    /* inquiry cards */
-    .inq { background: var(--surface); border: 1px solid var(--border); border-radius: 11px; padding: 11px 12px; margin-bottom: 9px; opacity: 0; transform: translateY(-8px); transition: all .45s cubic-bezier(.2,1,.3,1); }
+    /* inquiries */
+    .inq { background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1px solid var(--border); border-radius: 11px; padding: 11px 12px; margin-bottom: 9px; opacity: 0; transform: translateY(-9px); transition: all .45s cubic-bezier(.2,1,.3,1); box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
     .inq.in { opacity: 1; transform: none; }
-    .inq.active { border-color: var(--cyan); box-shadow: 0 0 0 1px var(--cyan); }
-    .inq.handled { opacity: .62; }
+    .inq.active { border-color: var(--cyan); box-shadow: 0 0 0 1px var(--cyan), 0 8px 26px rgba(34,211,238,0.13); }
+    .inq.handled { opacity: .58; }
     .inq-top { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
-    .inq-brand { font-size: 9.5px; font-weight: 700; padding: 2px 7px; border-radius: 6px; white-space: nowrap; }
-    .inq-from { font-size: 12px; font-weight: 600; color: var(--text2); margin-left: auto; }
-    .inq-body { font-size: 12px; color: var(--text2); }
-    .inq-tag { margin-top: 7px; font-size: 10px; font-weight: 700; color: var(--green); opacity: 0; transition: opacity .3s; }
+    .inq-brand { font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 6px; white-space: nowrap; }
+    .inq-from { font-size: 11.5px; font-weight: 600; color: var(--text2); margin-left: auto; white-space: nowrap; }
+    .inq-body { font-size: 11.8px; color: var(--text2); line-height: 1.5; }
+    .inq-tag { margin-top: 7px; font-size: 9.5px; font-weight: 700; color: var(--green); opacity: 0; transition: opacity .35s; }
     .inq.done .inq-tag { opacity: 1; }
 
-    /* agent console */
-    .console { background: #0B0911; border: 1px solid var(--border); border-radius: 12px; padding: 14px; height: 100%; min-height: 300px; font-family: var(--mono); font-size: 11.5px; }
-    .ahead { display: flex; align-items: center; gap: 10px; padding-bottom: 11px; margin-bottom: 11px; border-bottom: 1px solid var(--border); }
-    .orb { width: 30px; height: 30px; border-radius: 9px; background: radial-gradient(circle at 30% 30%, var(--accent3), var(--accent2)); box-shadow: 0 0 18px rgba(124,58,237,0.5); position: relative; flex-shrink: 0; }
-    .orb.think::after { content:''; position: absolute; inset: -4px; border-radius: 12px; border: 2px solid var(--accent3); opacity: .5; animation: ring 1.1s ease-out infinite; }
-    @keyframes ring { from{transform:scale(.85);opacity:.6} to{transform:scale(1.4);opacity:0} }
-    .aname { font-family: 'Inter'; font-weight: 700; font-size: 13px; }
-    .astat { font-family: 'Inter'; font-size: 11px; color: var(--text3); }
+    /* right pane: work area swaps between console / calendar / social */
+    .pane { display: none; }
+    .pane.on { display: block; animation: fadeup .45s ease; }
+    @keyframes fadeup { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+    .console { background: #0B0911; border: 1px solid var(--border); border-radius: 12px; padding: 13px; min-height: 320px; font-family: var(--mono); font-size: 11px; }
     .log { display: flex; flex-direction: column; gap: 7px; }
-    .ll { color: var(--text3); opacity: 0; transform: translateX(-6px); transition: all .3s; display: flex; gap: 7px; }
+    .ll { color: var(--text3); opacity: 0; transform: translateX(-6px); transition: all .3s; }
     .ll.show { opacity: 1; transform: none; }
     .ll .ok { color: var(--green); } .ll .hl { color: var(--cyan); } .ll .am { color: var(--amber); }
     .ll b { color: var(--text); font-family:'Inter'; font-weight:600; }
-    /* qualify chips */
-    .quals { display: flex; flex-wrap: wrap; gap: 6px; margin: 2px 0 2px; }
-    .qchip { font-size: 10px; font-family:'Inter'; font-weight:600; background: var(--surface2); border: 1px solid var(--border); border-radius: 16px; padding: 2px 9px; color: var(--text2); opacity:0; transform:scale(.7); transition: all .3s cubic-bezier(.2,1.4,.4,1); }
+    .quals { display: flex; flex-wrap: wrap; gap: 6px; }
+    .qchip { font-size: 9.5px; font-family:'Inter'; font-weight:600; background: var(--surface2); border: 1px solid var(--border); border-radius: 16px; padding: 2px 9px; color: var(--text2); opacity:0; transform:scale(.7); transition: all .3s cubic-bezier(.2,1.4,.4,1); }
     .qchip.show { opacity:1; transform:none; }
     .qchip b { color: var(--text); }
-    /* draft bubble */
-    .draft { margin-top: 4px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 11px; font-family:'Inter'; font-size: 12px; color: var(--text2); line-height: 1.5; }
-    .draft .dh { font-size: 10px; color: var(--accent3); font-weight: 700; margin-bottom: 5px; text-transform: uppercase; letter-spacing: .04em; }
-    .score { display:inline-flex; align-items:center; gap:6px; font-family:'Inter'; font-weight:700; font-size:11px; color:var(--green); background:rgba(34,197,94,0.14); border-radius:16px; padding:2px 10px; }
+    .score { display:inline-flex; align-items:center; gap:6px; font-family:'Inter'; font-weight:700; font-size:10.5px; color:var(--green); background:rgba(34,197,94,0.14); border-radius:16px; padding:2px 10px; }
+    .draft { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 11px; font-family:'Inter'; font-size: 11.5px; color: var(--text2); line-height: 1.55; }
+    .draft .dh { font-size: 9.5px; color: var(--accent3); font-weight: 700; margin-bottom: 5px; text-transform: uppercase; letter-spacing: .04em; }
+    .files { display: flex; flex-wrap: wrap; gap: 6px; }
+    .fchip { display: inline-flex; align-items: center; gap: 6px; font-family:'Inter'; font-size: 10px; font-weight: 600; color: var(--text2); background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 4px 9px; opacity: 0; transform: translateY(5px); transition: all .35s cubic-bezier(.2,1.2,.4,1); }
+    .fchip.show { opacity: 1; transform: none; }
+    .fchip svg { width: 11px; height: 11px; color: var(--accent3); }
 
-    /* caption / narration */
-    .caption { position: relative; z-index: 5; margin-top: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 13px; min-height: 58px; }
-    .cap-step { font-size: 11px; font-weight: 700; color: var(--accent3); font-family: var(--mono); white-space: nowrap; }
-    .cap-text { font-size: 14px; color: var(--text); }
-    .ctrls { display: flex; align-items: center; gap: 12px; justify-content: center; margin-top: 14px; }
+    /* calendar pane */
+    .calcard { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 13px; }
+    .cal-title { font-size: 11px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 7px; }
+    .cal-title svg { width: 13px; height: 13px; color: var(--accent3); }
+    .cal-head { display: grid; grid-template-columns: 46px repeat(4,1fr); gap: 5px; font-size: 9.5px; color: var(--text4); font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
+    .cal-row { display: grid; grid-template-columns: 46px repeat(4,1fr); gap: 5px; margin-bottom: 5px; }
+    .cal-time { font-size: 10px; color: var(--text3); font-family: var(--mono); display: flex; align-items: center; }
+    .cal-cell { background: var(--bg2); border: 1px solid var(--border); border-radius: 7px; min-height: 33px; position: relative; }
+    .cal-cell .busy { position: absolute; inset: 3px; border-radius: 5px; background: rgba(138,147,168,0.12); border: 1px dashed rgba(138,147,168,0.25); font-size: 8.5px; color: var(--text4); display: flex; align-items: center; padding: 0 6px; }
+    .cal-cell .ev { position: absolute; inset: 3px; border-radius: 5px; font-size: 9px; font-weight: 700; padding: 0 7px; display: flex; align-items: center; background: linear-gradient(135deg, rgba(34,197,94,0.9), rgba(34,211,238,0.85)); color: #052012; transform: scale(.6); opacity: 0; transition: all .45s cubic-bezier(.2,1.4,.4,1); }
+    .cal-cell .ev.show { transform: scale(1); opacity: 1; }
+
+    /* social pane */
+    .socials { display: flex; flex-direction: column; gap: 9px; }
+    .post { background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1px solid var(--border); border-radius: 11px; padding: 11px 12px; opacity: 0; transform: translateY(8px); transition: all .45s cubic-bezier(.2,1,.3,1); }
+    .post.show { opacity: 1; transform: none; }
+    .post-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .post-net { width: 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .post-net svg { width: 12px; height: 12px; color: #fff; }
+    .post-net.ig { background: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF); }
+    .post-net.fb { background: #1877F2; }
+    .post-net.li { background: #0A66C2; }
+    .post-brand { font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 6px; }
+    .post-stat { margin-left: auto; font-size: 9px; font-weight: 700; color: var(--amber); }
+    .post-stat.ok { color: var(--green); }
+    .post-cap { font-size: 11.3px; color: var(--text2); line-height: 1.5; }
+    .post-tags { font-size: 10px; color: var(--cyan); margin-top: 4px; font-family: var(--mono); }
+
+    /* results strip */
+    .results { display: none; grid-template-columns: repeat(4,1fr); gap: 10px; padding: 13px 16px 16px; }
+    .results.on { display: grid; }
+    @media (max-width:840px){ .results.on { grid-template-columns: 1fr 1fr; } }
+    .res { background: var(--surface2); border: 1px solid var(--border); border-radius: 11px; padding: 11px 13px; text-align: center; opacity: 0; transform: translateY(8px); transition: all .4s cubic-bezier(.2,1,.3,1); }
+    .res.show { opacity: 1; transform: none; }
+    .res .rn { font-size: 21px; font-weight: 800; letter-spacing: -.02em; }
+    .res .rl { font-size: 10px; color: var(--text3); font-weight: 600; }
+    .res .rn.g { color: var(--green); }
+
+    /* caption + controls */
+    .caption { position: relative; z-index: 5; margin-top: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 13px 16px; display: flex; align-items: center; gap: 13px; min-height: 56px; }
+    .cap-step { font-size: 10.5px; font-weight: 700; color: var(--accent3); font-family: var(--mono); white-space: nowrap; }
+    .cap-text { font-size: 13.5px; color: var(--text); }
+    .ctrls { display: flex; align-items: center; gap: 12px; justify-content: center; margin-top: 13px; }
     .prog { flex: 1; height: 4px; background: rgba(148,163,184,0.14); border-radius: 3px; overflow: hidden; max-width: 380px; }
-    .prog i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--cyan)); border-radius: 3px; transition: width .5s ease; }
+    .prog i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--cyan)); border-radius: 3px; transition: width .6s ease; }
     .replay { display: inline-flex; align-items: center; gap: 7px; background: var(--surface2); border: 1px solid var(--border2); color: var(--text); padding: 8px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
     .replay:hover { background: var(--surface3); }
 
-    .closer { position: relative; z-index: 5; text-align: center; padding: 54px 0 30px; }
-    .closer h2 { font-size: 25px; font-weight: 800; letter-spacing: -.02em; }
+    .closer { position: relative; z-index: 5; text-align: center; padding: 50px 0 28px; }
+    .closer h2 { font-size: 24px; font-weight: 800; letter-spacing: -.02em; }
     .closer p { color: var(--text2); margin: 12px auto 22px; max-width: 540px; }
     #interest-form, #interest-done { display: none; }
     .book-alt { margin-top: 13px; font-size: 13px; color: var(--text3); }
@@ -123,6 +168,13 @@
     #interest-done h3 { font-size: 19px; font-weight: 800; }
     footer { position: relative; z-index: 5; border-top: 1px solid var(--border); padding: 24px 0; text-align: center; color: var(--text3); font-size: 13px; }
     footer a { color: var(--text2); text-decoration: none; }
+
+    /* End-of-run settled state: pin final visibility without relying on CSS
+       transitions still painting (headless/virtual-time renderers stop
+       compositing late transitions; real browsers are unaffected). */
+    body.settled .inq { opacity: .58; transform: none; transition: none; }
+    body.settled .post, body.settled .res, body.settled .qchip, body.settled .fchip,
+    body.settled .ll, body.settled .ev { opacity: 1; transform: none; transition: none; }
   </style>
 </head>
 <body>
@@ -136,31 +188,53 @@
 <div class="wrap">
   <div class="hero">
     <div class="eyebrow"><span class="dot"></span> Built for Vancouver Business Brokers</div>
-    <h1>Every inquiry, answered in the <span>right brand's voice</span></h1>
-    <p>Hey Jean, here's the inquiry agent I had in mind, running on your setup. It plays through below, no clicking needed. This is a mockup of what I'd build around how you actually work.</p>
+    <h1>One agent across <span>all your brands</span>: inquiries, packages, showings, marketing</h1>
+    <p>Hey Jean, this is the agent I had in mind, running on your setup. Everything you listed: the leads, the inquiries, sending packages, booking showings, and the social posts for every listing. It plays on its own below.</p>
   </div>
 
   <div class="player-wrap">
     <div class="player">
-      <div class="pbar">
-        <span class="dots"><i></i><i></i><i></i></span>
-        <span class="ptitle"><b>Aevon Inquiry Agent</b> &middot; one desk, all your brands</span>
-        <span class="plive"><span class="dot"></span> live</span>
-      </div>
-      <div class="brandbar" id="brandbar"></div>
-      <div class="stage">
-        <div class="col left">
-          <div class="col-h">Incoming inquiries</div>
-          <div id="inbox"></div>
-        </div>
-        <div class="col">
-          <div class="col-h">Agent</div>
-          <div class="console">
-            <div class="ahead">
-              <div class="orb" id="orb"></div>
-              <div><div class="aname">Inquiry Agent</div><div class="astat" id="astat">idle</div></div>
+      <div class="shell">
+        <aside class="side">
+          <div class="side-brand"><span class="side-logo">A</span> Inquiry Desk <span class="side-ws">VBB</span></div>
+          <div class="side-sec">Your brands</div>
+          <div id="brandnav"></div>
+          <div class="agent-side">
+            <div class="orb" id="orb"></div>
+            <div><b>Aevon Agent</b><span id="astat">idle</span></div>
+          </div>
+        </aside>
+        <div class="main">
+          <div class="topbar">
+            <span class="tb-title" id="tb-title">All inquiries</span>
+            <span class="tb-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg> Search buyers, listings, brands...</span>
+            <span class="tb-live"><span class="dot"></span> agent on</span>
+          </div>
+          <div class="body">
+            <div>
+              <div class="col-h">Incoming · all brands</div>
+              <div id="inbox"></div>
             </div>
-            <div class="log" id="log"></div>
+            <div>
+              <div class="col-h" id="work-h">Agent activity</div>
+              <div class="pane on" id="pane-console"><div class="console"><div class="log" id="log"></div></div></div>
+              <div class="pane" id="pane-cal">
+                <div class="calcard">
+                  <div class="cal-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg> Your week · showings</div>
+                  <div class="cal-head"><span></span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span></div>
+                  <div id="calgrid"></div>
+                </div>
+              </div>
+              <div class="pane" id="pane-social">
+                <div class="socials" id="socials"></div>
+              </div>
+            </div>
+          </div>
+          <div class="results" id="results">
+            <div class="res"><div class="rn" id="r1">0</div><div class="rl">inquiries handled</div></div>
+            <div class="res"><div class="rn g" id="r2">0</div><div class="rl">NDA signed &amp; package sent</div></div>
+            <div class="res"><div class="rn g" id="r3">0</div><div class="rl">showing booked</div></div>
+            <div class="res"><div class="rn" id="r4">0</div><div class="rl">social drafts ready</div></div>
           </div>
         </div>
       </div>
@@ -168,7 +242,7 @@
 
     <div class="caption">
       <span class="cap-step" id="cap-step">READY</span>
-      <span class="cap-text" id="cap-text">Press play to watch a buyer inquiry get handled end to end.</span>
+      <span class="cap-text" id="cap-text">Watch a full morning of inquiries get handled across every brand.</span>
     </div>
     <div class="ctrls">
       <div class="prog"><i id="prog"></i></div>
@@ -178,14 +252,14 @@
 
   <div class="closer">
     <h2>Want this running on your inbox, Jean?</h2>
-    <p>This is a mockup, but the real thing would plug into your Gmail and handle inquiries across all your brands. You own it outright, no per-seat fees, no subscription.</p>
+    <p>This is a mockup, but the real thing plugs into your Gmail and runs exactly how you work. You own it outright. No per-seat fees, no subscription.</p>
     <div id="interest-wrap">
       <button class="cta" id="interest-btn" style="font-size:15px;padding:14px 28px" onclick="showInterest()">Yes, let's build it &rarr;</button>
       <div class="book-alt">or <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank">grab 15 minutes on my calendar</a></div>
     </div>
     <div id="interest-form">
-      <p class="if-q">Anything you'd want it to handle first? (optional)</p>
-      <textarea id="interest-note" rows="3" placeholder="e.g. the restaurant inquiries, the NDA back-and-forth, booking showings..."></textarea>
+      <p class="if-q">What problems would you like Aevon to solve? (optional)</p>
+      <textarea id="interest-note" rows="3" placeholder="e.g. the restaurant inquiries, the NDA back-and-forth, the social posts..."></textarea>
       <div><button class="cta" id="interest-send" style="font-size:15px;padding:12px 26px" onclick="sendInterest()">Send &rarr;</button></div>
     </div>
     <div id="interest-done">
@@ -199,7 +273,7 @@
 <footer><div class="wrap">Aevon &middot; custom apps &amp; AI agents for Lower Mainland businesses &middot; <a href="mailto:aidan@aevon.ca">aidan@aevon.ca</a></div></footer>
 
 <script>
-  // ---- visit + interest tracking (ref-tagged) ----
+  // ---- visit + interest tracking ----
   var TRACK_BASE = 'https://qzxtfgzpyptvriorfhxw.supabase.co/functions/v1/track-visit';
   var LEAD_REF = null;
   (function () {
@@ -229,46 +303,85 @@
     document.getElementById('interest-done').style.display = 'block';
   }
 
-  // ---- walkthrough engine ----
+  // ---- data ----
   var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
   var playToken = 0;
-
-  // Jean's real brands + a colour each.
   var BRANDS = [
-    { name: 'Restaurant Business Broker', c: '#FB923C' },
-    { name: 'Vancouver Business Brokers', c: '#6366F1' },
-    { name: 'Vancouver Canada Homes', c: '#22D3EE' },
-    { name: 'Real East Van', c: '#A855F7' }
+    { name: 'Restaurant Business Broker', short: 'Restaurant Broker', c: '#FB923C' },
+    { name: 'Vancouver Business Brokers', short: 'Vancouver Brokers', c: '#6366F1' },
+    { name: 'Vancouver Canada Homes', short: 'Canada Homes', c: '#22D3EE' },
+    { name: 'Real East Van', short: 'Real East Van', c: '#A855F7' }
   ];
-  // Inquiries arriving across the brands. idx 0 is the hero flow handled in full.
   var INQUIRIES = [
-    { brand: 0, from: 'M. Tran', body: '"Is the Gastown restaurant still listed? Pre-approved, can move fast."', tag: 'qualified + NDA sent + showing booked' },
-    { brand: 2, from: 'S. Patel', body: '"Interested in the Burnaby condo, what\'s the asking?"', tag: 'replied + details sent' },
-    { brand: 3, from: 'The Okafors', body: '"Looking for retail space in East Van under $1M."', tag: 'qualified + added to matches' },
-    { brand: 1, from: 'spam', body: '"Grow your brokerage with our SEO package!!!"', tag: 'filtered as spam' }
+    { brand: 0, from: 'M. Tran', body: '"Is the Gastown restaurant still listed? Pre-approved, can move fast."', tag: 'qualified · NDA signed · package sent · showing booked' },
+    { brand: 2, from: 'S. Patel', body: '"Interested in the Burnaby townhouse. Is it still available?"', tag: 'replied · details sent · added to your matches' },
+    { brand: 3, from: 'The Okafors', body: '"Looking for retail space in East Van under $1M."', tag: 'qualified · matched to 2 listings · intro drafted' },
+    { brand: 1, from: 'no-reply@', body: '"Grow your brokerage with our SEO package!!! Limited time."', tag: 'filtered as spam · you never see it' }
+  ];
+  var POSTS = [
+    { net: 'ig', netName: 'Instagram', brand: 0, cap: 'Just listed: turnkey 58-seat restaurant in the heart of Gastown. Full kitchen, liquor license, loyal lunch crowd. Serious buyers only.', tags: '#VancouverRestaurants #BusinessForSale #Gastown' },
+    { net: 'fb', netName: 'Facebook', brand: 1, cap: 'New on market: established commercial property with long-term anchor tenant, Lower Mainland. NDA required for financials. DM or call for the package.', tags: '#CommercialRealEstate #VancouverBC' },
+    { net: 'li', netName: 'LinkedIn', brand: 3, cap: 'East Van retail corner unit now available. 1,400 sqft, high foot traffic, flexible terms. Ideal for a second location.', tags: '#RetailSpace #EastVan #Leasing' }
   ];
 
-  function brandPill(b, hot) {
-    return '<span class="bpill' + (hot ? ' hot' : '') + '" id="bp' + b + '"><span class="bd" style="background:' + BRANDS[b].c + '"></span>' + BRANDS[b].name + '</span>';
-  }
-  function buildBrandbar() {
-    document.getElementById('brandbar').innerHTML = BRANDS.map(function (_, i) { return brandPill(i, false); }).join('');
-  }
-  function buildInbox() {
-    document.getElementById('inbox').innerHTML = INQUIRIES.map(function (q, i) {
-      var isSpam = q.from === 'spam';
-      var bcol = BRANDS[q.brand].c;
-      var label = isSpam ? 'unknown' : BRANDS[q.brand].name;
-      return '<div class="inq" id="inq' + i + '">' +
-        '<div class="inq-top"><span class="inq-brand" style="color:' + bcol + ';background:' + hexA(bcol, 0.14) + '">' + label + '</span>' +
-        '<span class="inq-from">' + (isSpam ? 'no-reply@' : q.from) + '</span></div>' +
-        '<div class="inq-body">' + q.body + '</div>' +
-        '<div class="inq-tag" id="inqt' + i + '">&#10003; ' + q.tag + '</div></div>';
-    }).join('');
-  }
   function hexA(hex, a) {
     var n = parseInt(hex.slice(1), 16);
     return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')';
+  }
+  var NET_ICONS = {
+    ig: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>',
+    fb: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V5h-3c-2.2 0-4 1.8-4 4v2H7v3h3v7h3v-7h3l1-3h-4V9c0-.6.4-1 1-1z"/></svg>',
+    li: '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="9" width="4" height="12"/><circle cx="5" cy="5" r="2"/><path d="M11 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.5c0-1.3 0-3-1.9-3s-2.2 1.4-2.2 2.9V21h-4z"/></svg>'
+  };
+
+  // ---- builders ----
+  function buildBrandNav(counts, hotIdx) {
+    document.getElementById('brandnav').innerHTML = BRANDS.map(function (b, i) {
+      return '<div class="bnav' + (i === hotIdx ? ' hot' : '') + '" id="bn' + i + '">' +
+        '<span class="bdot" style="background:' + b.c + '"></span>' + b.short +
+        '<span class="bct" id="bct' + i + '">' + (counts[i] || 0) + '</span></div>';
+    }).join('');
+  }
+  function buildInbox() {
+    document.getElementById('inbox').innerHTML = INQUIRIES.map(function (q, i) {
+      var bcol = BRANDS[q.brand].c;
+      var isSpam = q.from === 'no-reply@';
+      return '<div class="inq" id="inq' + i + '">' +
+        '<div class="inq-top"><span class="inq-brand" style="color:' + bcol + ';background:' + hexA(bcol, 0.14) + '">' + (isSpam ? 'unrecognized' : BRANDS[q.brand].short) + '</span>' +
+        '<span class="inq-from">' + q.from + '</span></div>' +
+        '<div class="inq-body">' + q.body + '</div>' +
+        '<div class="inq-tag">&#10003; ' + q.tag + '</div></div>';
+    }).join('');
+  }
+  function buildCal() {
+    var times = ['10 AM', '12 PM', '2 PM', '4 PM'];
+    var busy = { '0-1': 'Listing visit', '2-0': 'Sign-back', '1-3': 'Valuation call' };
+    var grid = '';
+    for (var t = 0; t < times.length; t++) {
+      grid += '<div class="cal-row"><div class="cal-time">' + times[t] + '</div>';
+      for (var d = 0; d < 4; d++) {
+        var key = d + '-' + t;
+        grid += '<div class="cal-cell" id="cc-' + key + '">' + (busy[key] ? '<span class="busy">' + busy[key] + '</span>' : '') + '</div>';
+      }
+      grid += '</div>';
+    }
+    document.getElementById('calgrid').innerHTML = grid;
+  }
+  function buildSocial() {
+    document.getElementById('socials').innerHTML = POSTS.map(function (p, i) {
+      var b = BRANDS[p.brand];
+      return '<div class="post" id="post' + i + '">' +
+        '<div class="post-top"><span class="post-net ' + p.net + '">' + NET_ICONS[p.net] + '</span>' +
+        '<span class="post-brand" style="color:' + b.c + ';background:' + hexA(b.c, 0.14) + '">' + b.short + '</span>' +
+        '<span class="post-stat" id="ps' + i + '">drafting...</span></div>' +
+        '<div class="post-cap" id="pc' + i + '"></div>' +
+        '<div class="post-tags" id="pt' + i + '"></div></div>';
+    }).join('');
+  }
+  function showPane(id) {
+    ['pane-console', 'pane-cal', 'pane-social'].forEach(function (p) {
+      document.getElementById(p).classList.toggle('on', p === id);
+    });
   }
   function caption(step, text) {
     document.getElementById('cap-step').textContent = step;
@@ -276,23 +389,32 @@
   }
   function setProg(p) { document.getElementById('prog').style.width = p + '%'; }
   function astat(t) { document.getElementById('astat').textContent = t; }
+  function tbTitle(t) { document.getElementById('tb-title').textContent = t; }
   function logLine(html) {
     var el = document.createElement('div'); el.className = 'll'; el.innerHTML = html;
     document.getElementById('log').appendChild(el);
     requestAnimationFrame(function () { el.classList.add('show'); });
     return el;
   }
-
-  function reset() {
-    buildBrandbar(); buildInbox();
-    document.getElementById('log').innerHTML = '';
-    document.getElementById('orb').classList.remove('think');
-    astat('idle'); setProg(0);
-    caption('READY', 'Press play to watch a buyer inquiry get handled end to end.');
+  async function typeText(el, text, speed) {
+    for (var i = 0; i < text.length; i++) { el.textContent += text[i]; await sleep(speed || 9); }
+  }
+  function countTo(id, n) {
+    var el = document.getElementById(id); if (el) el.textContent = n;
   }
 
-  async function typeDraft(el, text) {
-    for (var i = 0; i < text.length; i++) { el.textContent += text[i]; await sleep(11); }
+  function reset() {
+    document.body.classList.remove('settled');
+    buildBrandNav([0,0,0,0], -1); buildInbox(); buildCal(); buildSocial();
+    document.getElementById('log').innerHTML = '';
+    document.getElementById('orb').classList.remove('think');
+    document.getElementById('results').classList.remove('on');
+    document.querySelectorAll('.res').forEach(function (r) { r.classList.remove('show'); });
+    showPane('pane-console');
+    document.getElementById('work-h').textContent = 'Agent activity';
+    tbTitle('All inquiries');
+    astat('idle'); setProg(0);
+    caption('READY', 'Watch a full morning of inquiries get handled across every brand.');
   }
 
   async function play() {
@@ -302,90 +424,127 @@
     reset();
     var orb = document.getElementById('orb');
     orb.classList.add('think');
-    await sleep(500); if (my !== playToken) return;
+    await sleep(450); if (my !== playToken) return;
 
-    // Scene 1 — inquiries land across brands
-    caption('STEP 1 / 6', 'Four inquiries land across your brands while you\'re out. The agent picks them up instantly.');
-    astat('watching 4 inboxes...');
+    // S1: inquiries arrive, brand counters tick
+    caption('1 / 7', 'Four inquiries land across your brands while you\'re out. The agent picks each one up instantly.');
+    astat('watching 4 inboxes');
+    var counts = [0,0,0,0];
     for (var i = 0; i < INQUIRIES.length; i++) {
       var c = document.getElementById('inq' + i); if (c) { void c.offsetWidth; c.classList.add('in'); }
-      logLine('new inquiry &middot; <b>' + BRANDS[INQUIRIES[i].brand].name + '</b>');
+      var b = INQUIRIES[i].brand;
+      counts[b]++; var ct = document.getElementById('bct' + b); if (ct) ct.textContent = counts[b];
+      logLine('new inquiry &middot; <b>' + BRANDS[b].short + '</b>');
       await sleep(420); if (my !== playToken) return;
     }
-    setProg(16);
-    await sleep(700); if (my !== playToken) return;
+    setProg(13); await sleep(600); if (my !== playToken) return;
 
-    // Scene 2 — route + read the hero inquiry
-    caption('STEP 2 / 6', 'It reads the Gastown restaurant inquiry and routes it to Restaurant Business Broker automatically.');
-    astat('reading M. Tran...');
+    // S2: route hero inquiry
+    caption('2 / 7', 'It reads the Gastown restaurant inquiry and routes it to Restaurant Business Broker automatically.');
+    astat('routing M. Tran');
     document.getElementById('inq0').classList.add('active');
-    document.getElementById('bp0').classList.add('hot');
-    logLine('matched to brand <span class="hl">Restaurant Business Broker</span>');
-    await sleep(900); if (my !== playToken) return;
-    logLine('reading message &middot; extracting intent');
-    await sleep(800); if (my !== playToken) return;
-    setProg(33);
+    document.getElementById('bn0').classList.add('hot');
+    tbTitle('Restaurant Business Broker');
+    logLine('matched to <span class="hl">Restaurant Business Broker</span> &middot; listing #RB-114, Gastown');
+    await sleep(950); if (my !== playToken) return;
+    setProg(26);
 
-    // Scene 3 — qualify
-    caption('STEP 3 / 6', 'It qualifies the buyer against your criteria, so you only spend time on real ones.');
-    astat('qualifying buyer...');
-    var qwrap = logLine('<span class="quals" id="quals"></span>');
+    // S3: qualify
+    caption('3 / 7', 'It qualifies the buyer against your criteria, so you only spend time on the serious ones.');
+    astat('qualifying buyer');
+    logLine('<span class="quals" id="quals"></span>');
     var quals = document.getElementById('quals');
     var chips = ['Budget: <b>$500k</b>', 'Financing: <b>pre-approved</b>', 'Timeline: <b>&lt; 60 days</b>', 'Type: <b>restaurant</b>'];
     for (var k = 0; k < chips.length; k++) {
       var ch = document.createElement('span'); ch.className = 'qchip'; ch.innerHTML = chips[k];
       quals.appendChild(ch); requestAnimationFrame((function (e) { return function () { e.classList.add('show'); }; })(ch));
-      await sleep(360); if (my !== playToken) return;
+      await sleep(340); if (my !== playToken) return;
     }
     logLine('<span class="score">&#9733; Strong buyer &middot; 91/100</span>');
-    await sleep(700); if (my !== playToken) return;
-    setProg(50);
+    await sleep(650); if (my !== playToken) return;
+    setProg(39);
 
-    // Scene 4 — draft in brand voice
-    caption('STEP 4 / 6', 'It drafts the reply in Restaurant Business Broker\'s voice, ready for you to approve.');
-    astat('drafting reply...');
-    var d = logLine('<div class="draft"><div class="dh">Draft &middot; Restaurant Business Broker</div><span id="draftbody"></span></div>');
-    await typeDraft(document.getElementById('draftbody'), 'Hi M. Tran, thanks for reaching out about the Gastown location. It is still available. Before I can share the financials I\'ll need a quick NDA signed, link below. Once that\'s in I\'ll send the full package and we can line up a viewing.');
+    // S4: draft in brand voice
+    caption('4 / 7', 'It drafts the reply in that brand\'s voice. Nothing sends without your approval.');
+    astat('drafting reply');
+    logLine('<div class="draft"><div class="dh">Draft &middot; Restaurant Business Broker</div><span id="draftbody"></span></div>');
+    await typeText(document.getElementById('draftbody'), 'Hi M. Tran, thanks for reaching out about the Gastown location. It is still available. Before I share financials I\'ll need a quick NDA signed, link below. Once that\'s in, the full package is on its way and we can line up a viewing.');
     if (my !== playToken) return;
-    await sleep(500);
-    setProg(66);
+    await sleep(450); setProg(52);
 
-    // Scene 5 — NDA gate (his confidential process)
-    caption('STEP 5 / 6', 'Because the listing is confidential, it sends your NDA first and holds the financials until it\'s signed.');
-    astat('sending NDA...');
+    // S5: NDA gate + package
+    caption('5 / 7', 'Confidentiality handled: NDA goes out first, financials stay locked until it\'s signed.');
+    astat('sending NDA');
     logLine('listing flagged <span class="am">confidential</span> &middot; financials gated');
-    await sleep(800); if (my !== playToken) return;
-    logLine('NDA sent &middot; <span class="hl">awaiting signature</span>');
-    await sleep(900); if (my !== playToken) return;
-    logLine('<span class="ok">&#10003; NDA signed</span> &middot; releasing package (P&amp;L, lease, asking)');
-    await sleep(800); if (my !== playToken) return;
-    setProg(83);
+    await sleep(750); if (my !== playToken) return;
+    logLine('<span class="ok">&#10003; NDA signed</span> &middot; releasing package:');
+    logLine('<span class="files">' +
+      '<span class="fchip" id="f0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>P&amp;L 2023-25</span>' +
+      '<span class="fchip" id="f1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>Lease terms</span>' +
+      '<span class="fchip" id="f2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>Asking + comps</span></span>');
+    for (var f = 0; f < 3; f++) {
+      var fc = document.getElementById('f' + f); if (fc) fc.classList.add('show');
+      await sleep(300); if (my !== playToken) return;
+    }
+    await sleep(500); setProg(65);
 
-    // Scene 6 — book showing + wrap, sweep the rest
-    caption('STEP 6 / 6', 'It books the showing, then clears the other brands\' inquiries the same way. You just review.');
-    astat('booking showing...');
-    logLine('showing booked &middot; <b>Thu 2:00pm</b> &middot; added to your calendar');
-    await sleep(700); if (my !== playToken) return;
+    // S6: book showing on calendar
+    caption('6 / 7', 'Then it books the showing straight into your week. No back-and-forth.');
+    astat('booking showing');
+    document.getElementById('work-h').textContent = 'Your calendar';
+    showPane('pane-cal');
+    await sleep(900); if (my !== playToken) return;
+    var cell = document.getElementById('cc-2-2');
+    if (cell) { cell.innerHTML = '<span class="ev">Showing &middot; M. Tran</span>'; requestAnimationFrame(function(){ cell.querySelector('.ev').classList.add('show'); }); }
+    await sleep(1100); if (my !== playToken) return;
     document.getElementById('inq0').classList.remove('active');
     document.getElementById('inq0').classList.add('done', 'handled');
-    // sweep the others
-    for (var j = 1; j < INQUIRIES.length; j++) {
-      var card = document.getElementById('inq' + j);
-      card.classList.add('done', 'handled');
-      logLine(INQUIRIES[j].from === 'spam'
-        ? 'filtered <b>1 spam</b> &middot; never reached you'
-        : 'handled <b>' + BRANDS[INQUIRIES[j].brand].name + '</b> inquiry');
-      await sleep(500); if (my !== playToken) return;
+    setProg(78);
+
+    // S7: social marketing across brands
+    caption('7 / 7', 'And the part nobody has time for: it drafts the listing posts for each brand\'s channels.');
+    astat('drafting social posts');
+    document.getElementById('work-h').textContent = 'Listing marketing · drafts';
+    showPane('pane-social');
+    await sleep(500); if (my !== playToken) return;
+    for (var p = 0; p < POSTS.length; p++) {
+      var post = document.getElementById('post' + p);
+      post.classList.add('show');
+      await sleep(250); if (my !== playToken) return;
+      await typeText(document.getElementById('pc' + p), POSTS[p].cap, 5);
+      if (my !== playToken) return;
+      document.getElementById('pt' + p).textContent = POSTS[p].tags;
+      var ps = document.getElementById('ps' + p);
+      ps.textContent = 'ready for approval'; ps.classList.add('ok');
+      await sleep(280); if (my !== playToken) return;
     }
+    // sweep remaining inquiries
+    for (var j = 1; j < INQUIRIES.length; j++) {
+      document.getElementById('inq' + j).classList.add('done', 'handled');
+      await sleep(260); if (my !== playToken) return;
+    }
+    setProg(92);
+
+    // results
     orb.classList.remove('think');
-    astat('done &middot; 4 inquiries cleared in seconds');
+    astat('done · everything queued for your approval');
+    var res = document.getElementById('results'); res.classList.add('on');
+    var vals = ['4', '1', '1', '3'];
+    var ids = ['r1', 'r2', 'r3', 'r4'];
+    var cards = document.querySelectorAll('.res');
+    for (var r = 0; r < 4; r++) {
+      cards[r].classList.add('show');
+      countTo(ids[r], vals[r]);
+      await sleep(220); if (my !== playToken) return;
+    }
     setProg(100);
-    caption('DONE', 'Every inquiry answered, NDA handled, package sent, showing booked, across all four brands. You just approve the drafts.');
+    caption('DONE', 'Inquiries answered, NDA handled, package sent, showing booked, posts drafted. Across all four brands, you just approve.');
+    document.body.classList.add('settled');
     btn.innerHTML = '&#8635; Replay';
   }
 
-  // autoplay on load
-  buildBrandbar(); buildInbox();
+  // init + autoplay
+  buildBrandNav([0,0,0,0], -1); buildInbox(); buildCal(); buildSocial();
   window.addEventListener('load', function () { setTimeout(play, 600); });
 </script>
 </body>
