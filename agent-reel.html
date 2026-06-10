@@ -113,6 +113,12 @@
     .cmpbody { padding: 12px 16px; font-size: 14px; line-height: 1.65; color: #202124; min-height: 130px; white-space: pre-wrap; }
     .cmpbody .caret { display: inline-block; width: 1px; height: 16px; background: #202124; vertical-align: -3px; animation: blink 1s steps(1) infinite; }
     @keyframes blink { 50% { opacity: 0; } }
+    .gattach { display: flex; gap: 8px; padding: 4px 16px 8px; flex-wrap: wrap; }
+    .gatt { display: flex; align-items: center; gap: 7px; border: 1px solid #dadce0; border-radius: 8px; padding: 6px 11px; font-size: 12px; color: #3c4043; opacity: 0; transform: translateY(5px); transition: all .3s cubic-bezier(.2,1.2,.4,1); }
+    .gatt.show { opacity: 1; transform: none; }
+    .gatt svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .gatt span { color: #5f6368; font-size: 11px; }
+    .reddraft { color: #d93025; }
     .cmpfoot { display: flex; align-items: center; gap: 14px; padding: 10px 16px 12px; }
     .gsend { background: #0b57d0; color: #fff; font-size: 14px; font-weight: 500; border: none; border-radius: 18px; padding: 9px 22px; }
     .cmpfoot svg { width: 18px; height: 18px; color: #444746; }
@@ -288,6 +294,7 @@
         <div class="cmpagent" id="cmpagent"><span class="morb"></span><span id="cmpagent-t">Aevon Agent is writing this draft for you...</span></div>
         <div class="cmpto" id="cmpto"></div>
         <div class="cmpbody" id="cmpbody"><span class="caret"></span></div>
+        <div class="gattach" id="cmpattach"></div>
         <div class="cmpfoot">
           <button class="gsend">Send</button>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
@@ -312,7 +319,7 @@
   <div class="crmmain">
     <aside class="crail">
       <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</div>
-      <div class="citem sel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Buyers <span class="gct" id="crmbuyers">5</span></div>
+      <div class="citem sel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Buyers <span class="gct" id="crmbuyers">8</span></div>
       <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg>Listings</div>
       <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Showings</div>
       <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>NDAs &amp; Packages</div>
@@ -322,21 +329,27 @@
     <div class="cboard">
       <div class="cb-head"><h1>Buyers</h1><span>all brands &middot; sorted by stage &middot; kept up to date by your agent</span></div>
       <div class="cstats">
-        <div class="cstat"><b id="cs1">3</b>active buyers</div>
+        <div class="cstat"><b id="cs1">8</b>active buyers</div>
         <div class="cstat"><b class="bl" id="cs2">0</b>awaiting your approval</div>
-        <div class="cstat"><b id="cs3">1</b>showing this week</div>
+        <div class="cstat"><b id="cs3">2</b>showings this week</div>
         <div class="cstat"><b class="bl" id="cs4">0</b>new today</div>
       </div>
       <div class="ccols">
-        <div class="ccol"><div class="ccol-h"><span>New</span><span class="cct" id="cc0">1</span></div><div id="cb0">
+        <div class="ccol"><div class="ccol-h"><span>New</span><span class="cct" id="cc0">2</span></div><div id="cb0">
           <div class="ccard"><b>D. &amp; A. Okafor</b><div class="csub">Retail space &middot; Commercial Drive</div><div class="crow"><span class="gchip" style="background:#f3e8fd;color:#7b1fa2">Real East Van</span><span class="gchip" style="background:#fef7e0;color:#b06000">reply pending</span></div></div>
+          <div class="ccard"><b>C. Dubois</b><div class="csub">Liquor store &middot; Burnaby</div><div class="crow"><span class="gchip" style="background:#e8f0fe;color:#1967d2">Vancouver Brokers</span><span class="gchip" style="background:#e8f0fe;color:#1967d2">intro sent</span></div></div>
         </div></div>
-        <div class="ccol"><div class="ccol-h"><span>Qualified</span><span class="cct" id="cc1">0</span></div><div id="cb1"></div></div>
-        <div class="ccol"><div class="ccol-h"><span>Package sent</span><span class="cct" id="cc2">1</span></div><div id="cb2">
+        <div class="ccol"><div class="ccol-h"><span>Qualified</span><span class="cct" id="cc1">2</span></div><div id="cb1">
+          <div class="ccard"><b>T. Nguyen</b><div class="csub">Bakery &middot; Kitsilano</div><div class="crow"><span class="gchip" style="background:#fef3e0;color:#b06000">Restaurant Broker</span><span class="gchip" style="background:#e6f4ea;color:#137333">&#9733; Strong &middot; 82</span></div></div>
+          <div class="ccard"><b>S. Abadi</b><div class="csub">Duplex &middot; New Westminster</div><div class="crow"><span class="gchip" style="background:#e0f7fa;color:#00838f">Canada Homes</span><span class="gchip" style="background:#fef7e0;color:#b06000">docs requested</span></div></div>
+        </div></div>
+        <div class="ccol"><div class="ccol-h"><span>Package sent</span><span class="cct" id="cc2">2</span></div><div id="cb2">
           <div class="ccard"><b>K. Wong</b><div class="csub">Commercial building &middot; $1.2M</div><div class="crow"><span class="gchip" style="background:#e8f0fe;color:#1967d2">Vancouver Brokers</span><span class="gchip" style="background:#e6f4ea;color:#137333">NDA signed &#10003;</span></div></div>
+          <div class="ccard"><b>R. &amp; M. Silva</b><div class="csub">6-unit rental &middot; East Van</div><div class="crow"><span class="gchip" style="background:#f3e8fd;color:#7b1fa2">Real East Van</span><span class="gchip" style="background:#e6f4ea;color:#137333">rent roll sent</span></div></div>
         </div></div>
-        <div class="ccol"><div class="ccol-h"><span>Showing booked</span><span class="cct" id="cc3">1</span></div><div id="cb3">
+        <div class="ccol"><div class="ccol-h"><span>Showing booked</span><span class="cct" id="cc3">2</span></div><div id="cb3">
           <div class="ccard"><b>J. Castillo</b><div class="csub">Cafe &middot; Mount Pleasant</div><div class="crow"><span class="gchip" style="background:#fef3e0;color:#b06000">Restaurant Broker</span><span class="gchip" style="background:#e6f4ea;color:#137333">Fri 11:00 AM</span></div></div>
+          <div class="ccard"><b>A. Petrov</b><div class="csub">Condo &middot; Brentwood</div><div class="crow"><span class="gchip" style="background:#e0f7fa;color:#00838f">Canada Homes</span><span class="gchip" style="background:#e6f4ea;color:#137333">Sat 10:00 AM</span></div></div>
         </div></div>
       </div>
     </div>
@@ -360,9 +373,9 @@
   <div class="end-inner">
     <h2>Inbox cleared. CRM sorted. Zero typing.</h2>
     <div class="end-nums">
-      <div class="en"><div class="n g">2</div><div class="l">buyers qualified &amp; filed</div></div>
-      <div class="en"><div class="n">2</div><div class="l">drafts await your OK</div></div>
-      <div class="en"><div class="n">1</div><div class="l">spam filtered</div></div>
+      <div class="en"><div class="n g">3</div><div class="l">buyers qualified &amp; filed</div></div>
+      <div class="en"><div class="n">4</div><div class="l">drafts await your OK</div></div>
+      <div class="en"><div class="n">1</div><div class="l">listing package attached</div></div>
     </div>
     <p>The agent works inside the Gmail you already use and keeps your buyer desk sorted.<br>You read the drafts, hit send. <b>Nothing ever sends without you.</b></p>
   </div>
@@ -387,18 +400,31 @@
       label: { t: '★ Strong buyer', bg: '#e6f4ea', fg: '#137333' },
       brand: { t: 'Restaurant Broker', bg: '#fef3e0', fg: '#b06000' },
       draft: 'Hi Minh,\n\nThanks for reaching out about the Gastown location. It is still available.\n\nBefore I share financials I’ll need a quick NDA signed, link below. Once that’s in, the full package is on its way and we can line up a viewing.\n\nJean' },
+    { from: 'Daniel Kwon', email: 'dkwon.invest@gmail.com', ava: '#1a73e8', init: 'D',
+      sub: 'Re: Kingsway 12-unit building - package', time: '9:14 AM',
+      body: 'Hi Jean,\n\nWe sent the signed NDA back yesterday for the Kingsway 12-unit building.\n\nCould you send the full package when you have a minute? Our lender wants the rent roll this week.\n\nDaniel',
+      snip: 'We sent the signed NDA back yesterday for the Kingsway 12-unit building. Could',
+      chips: [['NDA on file ✓','g'], ['lender engaged','c'], ['multi-family · 12 units',''], ['★ HOT · ready to move','g']],
+      label: { t: 'Package attached', bg: '#e6f4ea', fg: '#137333' },
+      brand: { t: 'Vancouver Brokers', bg: '#e8f0fe', fg: '#1967d2' },
+      attach: [['Kingsway-12unit_Offering.pdf', '2.4 MB', '#d93025'], ['Rent-roll-2026.xlsx', '88 KB', '#188038'], ['Income-statement.pdf', '1.1 MB', '#d93025']],
+      draft: 'Hi Daniel,\n\nGot it, thanks for the signed NDA. The full Kingsway package is attached: offering summary, current rent roll, and the income statement.\n\nIf your lender needs anything else this week, just say the word.\n\nJean' },
     { from: 'Priya & Dev Sharma', email: 'priya.sharma@outlook.com', ava: '#00ACC1', init: 'P',
-      sub: 'Burnaby townhouse, can we view this week?', time: '9:18 AM',
+      sub: 'Burnaby townhouse, can we view this week?', time: '9:27 AM',
       body: 'Hello,\n\nWe’re interested in the townhouse on Canada Way for my parents. Budget is around $850k.\n\nIs it still available, and could we see it this week?\n\nPriya',
       snip: 'We’re interested in the townhouse on Canada Way for my parents. Budget is',
       chips: [['$850k budget',''], ['viewing this week','c'], ['GOOD FIT · 78/100','c']],
       label: { t: 'Qualified', bg: '#e8f0fe', fg: '#1967d2' },
       brand: { t: 'Canada Homes', bg: '#e0f7fa', fg: '#00838f' },
       draft: 'Hi Priya,\n\nIt is still available. I could show it Wednesday after 3, Thursday morning, or Friday at noon.\n\nWhich works best for you and your parents?\n\nJean' },
-    { from: 'GrowthHack Media', email: 'blast@growthhack.io', ava: '#9e9e9e', init: 'G',
-      sub: 'Triple your listing leads!!! Limited spots', time: '9:31 AM',
-      snip: 'Our PROVEN marketing system gets brokers 3x more leads, guaranteed. Book now',
-      spam: true }
+    { from: 'Jay Rondo', email: 'jayr.deals@gmail.com', ava: '#9e9e9e', init: 'J',
+      sub: 'restaurants for sale?', time: '9:38 AM',
+      body: 'How much are your restaurants? What’s the cheapest one you got?\n\nJay',
+      snip: 'How much are your restaurants? What’s the cheapest one you got?',
+      chips: [['no budget given','a'], ['no timeline','a'], ['WEAK · 35/100','a']],
+      label: { t: 'Needs qualifying', bg: '#fef7e0', fg: '#b06000' },
+      brand: { t: 'Restaurant Broker', bg: '#fef3e0', fg: '#b06000' },
+      draft: 'Hi Jay,\n\nHappy to help. Prices range a lot depending on size, location and revenue.\n\nWhat budget are you working with, and are you set on a restaurant or open to other food businesses? I’ll send the two or three that actually fit.\n\nJean' }
   ];
 
   var inboxCount = 1, draftCount = 1, spamCount = 0;
@@ -479,6 +505,7 @@
     el('cmpto').textContent = m.from + ' (' + m.email + ')';
     var body = el('cmpbody');
     body.innerHTML = '<span class="caret"></span>';
+    el('cmpattach').innerHTML = '';
     var strip = el('cmpagent');
     strip.classList.remove('done');
     el('cmpagent-t').textContent = 'Aevon Agent is writing this draft for you...';
@@ -491,9 +518,23 @@
     var txt = m.draft;
     for (var i = 0; i < txt.length; i++) {
       caret.insertAdjacentText('beforebegin', txt[i]);
-      await sleep(txt[i] === '\n' ? 90 : 26);
+      await sleep(txt[i] === '\n' ? 55 : 15);
     }
-    await sleep(500);
+    // attach the listing package if this buyer is owed one
+    if (m.attach) {
+      hud('attaching the listing package...');
+      await sleep(400);
+      for (var a = 0; a < m.attach.length; a++) {
+        var f = m.attach[a];
+        var chip = document.createElement('span'); chip.className = 'gatt';
+        chip.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="' + f[2] + '" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>' + f[0] + ' <span>' + f[1] + '</span>';
+        el('cmpattach').appendChild(chip);
+        requestAnimationFrame((function (e) { return function () { e.classList.add('show'); }; })(chip));
+        await sleep(550);
+      }
+      await sleep(400);
+    }
+    await sleep(400);
     box.classList.remove('drafting');
     strip.classList.add('done');
     el('cmpagent-t').textContent = '✓ Draft ready · waiting for YOUR approval. The agent never sends.';
@@ -506,6 +547,9 @@
     el(id + '-chips').innerHTML =
       '<span class="gchip" style="background:' + m.brand.bg + ';color:' + m.brand.fg + '">' + m.brand.t + '</span>' +
       '<span class="gchip" style="background:' + m.label.bg + ';color:' + m.label.fg + '">' + m.label.t + '</span>';
+    // Gmail-style red Draft marker on the sender
+    var f = el(id).querySelector('.rfrom');
+    if (f) f.innerHTML = m.from + ',&nbsp;<span class="reddraft">Draft</span>';
   }
 
   // ---------- choreography ----------
@@ -545,31 +589,13 @@
     buildList(); counts();
     await sleep(1800);
 
-    // lead 1
-    await arrive(LEADS[0], 'L0');
-    hud('new inquiry detected');
-    await sleep(1300);
-    await handleLead(LEADS[0], 'L0');
-
-    // lead 2
-    await arrive(LEADS[1], 'L1');
-    hud('new inquiry detected');
-    await sleep(1200);
-    await handleLead(LEADS[1], 'L1');
-
-    // spam
-    await arrive(LEADS[2], 'L2');
-    hud('new message · checking...');
-    hudClear();
-    await sleep(1400);
-    await hudChips([['no listing reference','a'], ['bulk-sender fingerprint','a'], ['SPAM','a']]);
-    await sleep(800);
-    hud('filed to spam · you never see it');
-    var sp = el('L2'); sp.classList.add('leaving');
-    await sleep(650);
-    sp.remove();
-    inboxCount--; spamCount++; counts();
-    await sleep(1400);
+    for (var i = 0; i < LEADS.length; i++) {
+      await arrive(LEADS[i], 'L' + i);
+      hud('new inquiry detected');
+      await sleep(1100);
+      await handleLead(LEADS[i], 'L' + i);
+    }
+    await sleep(600);
 
     // open the CRM tab and file the buyers
     hud('filing buyers into your CRM...');
@@ -591,10 +617,22 @@
       '<span class="gchip" style="background:#e8f0fe;color:#1967d2">draft awaiting your OK</span>' +
       '<span class="gchip" style="background:#e6f4ea;color:#137333">Thu 2:00 PM</span></div>' +
       '<div class="cnew">&#9679; filed by your agent just now</div></div>');
-    el('cc3').textContent = '2';
-    el('cs1').textContent = '4'; el('cs2').textContent = '1'; el('cs3').textContent = '2'; el('cs4').textContent = '1';
-    el('crmbuyers').textContent = '4';
-    await sleep(1000);
+    el('cc3').textContent = '3';
+    el('cs1').textContent = '9'; el('cs2').textContent = '1'; el('cs3').textContent = '3'; el('cs4').textContent = '1';
+    el('crmbuyers').textContent = '9';
+    await sleep(950);
+    // Daniel: package sent
+    el('cb2').insertAdjacentHTML('afterbegin',
+      '<div class="ccard newcard"><b>Daniel Kwon</b><div class="csub">Kingsway 12-unit building &middot; lender engaged</div>' +
+      '<div class="crow"><span class="gchip" style="background:#e8f0fe;color:#1967d2">Vancouver Brokers</span>' +
+      '<span class="gchip" style="background:#e6f4ea;color:#137333">NDA signed &#10003;</span>' +
+      '<span class="gchip" style="background:#e6f4ea;color:#137333">package attached</span>' +
+      '<span class="gchip" style="background:#e8f0fe;color:#1967d2">draft awaiting your OK</span></div>' +
+      '<div class="cnew">&#9679; filed by your agent just now</div></div>');
+    el('cc2').textContent = '3';
+    el('cs1').textContent = '10'; el('cs2').textContent = '2'; el('cs4').textContent = '2';
+    el('crmbuyers').textContent = '10';
+    await sleep(950);
     // Priya: qualified
     el('cb1').insertAdjacentHTML('afterbegin',
       '<div class="ccard newcard"><b>Priya &amp; Dev Sharma</b><div class="csub">Burnaby townhouse &middot; $850k</div>' +
@@ -602,10 +640,10 @@
       '<span class="gchip" style="background:#e8f0fe;color:#1967d2">Good fit &middot; 78</span>' +
       '<span class="gchip" style="background:#e8f0fe;color:#1967d2">draft awaiting your OK</span></div>' +
       '<div class="cnew">&#9679; filed by your agent just now</div></div>');
-    el('cc1').textContent = '1';
-    el('cs1').textContent = '5'; el('cs2').textContent = '2'; el('cs4').textContent = '2';
-    el('crmbuyers').textContent = '5';
-    hud('CRM updated · 2 buyers filed and sorted');
+    el('cc1').textContent = '3';
+    el('cs1').textContent = '11'; el('cs2').textContent = '3'; el('cs4').textContent = '3';
+    el('crmbuyers').textContent = '11';
+    hud('CRM updated · 3 buyers filed and sorted');
     await sleep(2900);
 
     // wrap
