@@ -463,7 +463,9 @@
       label: { t: '★ Strong buyer', bg: '#e6f4ea', fg: '#137333' },
       brand: { t: 'Restaurant Broker', bg: '#fef3e0', fg: '#b06000' },
       book: { title: 'Showing · Minh Tran · Gastown', when: 'Thu, Jun 11 · 2:00 to 2:30 PM' },
-      draft: 'Hi Minh,\n\nThanks for reaching out about the Gastown location. It is still available, and congrats on the Victoria sale.\n\nBefore I share financials I’ll need a quick NDA signed, link below. Once that’s in, the full package is on its way.\n\nThursday afternoon works on my end. I’ve penciled in 2:00 PM and sent a calendar invite, just confirm and we’re set.\n\nJean' },
+      attach: [['NDA-Confidentiality.pdf', '142 KB', '#d93025']],
+      attachMsg: 'attaching the NDA...',
+      draft: 'Hi Minh,\n\nThanks for reaching out about the Gastown location. It is still available, and congrats on the Victoria sale.\n\nBefore I share financials I’ll need a quick NDA signed, attached here. Once that’s back, the full package is on its way.\n\nThursday afternoon works on my end. I’ve penciled in 2:00 PM and sent a calendar invite, just confirm and we’re set.\n\nJean' },
     { from: 'Daniel Kwon', email: 'dkwon.invest@gmail.com', ava: '#1a73e8', init: 'D',
       sub: 'Re: Kingsway 12-unit building - package', time: '9:14 AM',
       body: 'Hi Jean,\n\nGood speaking with you last week. We sent the signed NDA back yesterday afternoon for the Kingsway 12-unit building.\n\nCould you send over the full package when you have a minute? Our lender at the bank is asking for the rent roll and income statement before Friday, and my partner would love to see the floor plans too if you have them handy.\n\nAppreciate it,\nDaniel Kwon',
@@ -588,7 +590,7 @@
     }
     // attach the listing package if this buyer is owed one
     if (m.attach) {
-      hud('attaching the listing package...');
+      hud(m.attachMsg || 'attaching the listing package...');
       await sleep(400);
       for (var a = 0; a < m.attach.length; a++) {
         var f = m.attach[a];
