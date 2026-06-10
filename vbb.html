@@ -242,7 +242,7 @@
   <div class="hero">
     <div class="eyebrow"><span class="dot"></span> Built for Vancouver Business Brokers</div>
     <h1>Your whole brokerage, <span>one desk</span></h1>
-    <p>Hey Jean, this is the system I had in mind for you. Everything you listed lives in the tabs on the left: <b>Inbox</b> (the inquiries), <b>Pipeline</b> (managing the leads), <b>Showings</b> (the bookings), and <b>Marketing</b> (the social posts, for every brand). Click around, it's all live.</p>
+    <p>Hey Jean, this is what I had in mind. The four tabs cover everything you listed. Click around, it's all live.</p>
   </div>
 
   <div class="player-wrap">
@@ -288,7 +288,7 @@
           <!-- INBOX -->
           <div class="view on" id="v-inbox">
             <div class="vnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-              <span>The agent reads every inquiry, figures out <b>which brand</b> it belongs to, qualifies the buyer, and drafts the reply. <b>You just approve.</b> Click an email to see its work.</span></div>
+              <span>Every inquiry answered, right brand, right voice. <b>Click an email.</b></span></div>
             <div class="inbox-grid">
               <div class="mailbox">
                 <div class="mail-head">
@@ -305,7 +305,7 @@
           <!-- PIPELINE -->
           <div class="view" id="v-pipe">
             <div class="vnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-              <span><b>Every buyer, every brand, one board.</b> The agent moves each buyer forward as it works: qualified, package sent, showing booked. Nothing slips.</span></div>
+              <span><b>Every buyer, every brand, one board.</b> Nothing slips.</span></div>
             <div class="pstats">
               <div class="pstat"><div class="pl">Active buyers</div><div class="pnum">5</div><div class="psub">across 4 brands</div></div>
               <div class="pstat"><div class="pl">Packages out</div><div class="pnum">2</div><div class="psub">NDAs signed first</div></div>
@@ -318,7 +318,7 @@
           <!-- SHOWINGS -->
           <div class="view" id="v-show">
             <div class="vnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-              <span>Showings get booked <b>without the back-and-forth</b>. The agent offers times around your week and confirms both sides.</span></div>
+              <span>Booked around your real week, <b>confirmed both sides</b>.</span></div>
             <div class="show-grid">
               <div class="calcard">
                 <div class="cal-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg> Your week</div>
@@ -332,16 +332,16 @@
           <!-- MARKETING -->
           <div class="view" id="v-mkt">
             <div class="vnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-              <span>New listing goes live, and the agent drafts the post <b>for each brand's channels</b>, in that brand's voice. You approve, it queues.</span></div>
+              <span>New listing &rarr; post drafted <b>per brand, per channel</b>. You approve.</span></div>
             <div class="mk-grid" id="mkgrid"></div>
           </div>
 
           <div class="daybar">
-            <span class="db-item"><span class="dn">4</span> inquiries handled</span>
-            <span class="db-item"><span class="dn">1</span> showing booked</span>
-            <span class="db-item"><span class="dn">3</span> posts drafted</span>
-            <span class="db-item"><span class="dn">2</span> packages out, NDAs first</span>
-            <span class="db-save">That's roughly <b>2.5 hours of admin</b>. Your part: about <b>90 seconds</b> of approvals.</span>
+            <span class="db-item"><span class="dn">4</span> inquiries</span>
+            <span class="db-item"><span class="dn">1</span> showing</span>
+            <span class="db-item"><span class="dn">3</span> posts</span>
+            <span class="db-item"><span class="dn">2</span> packages</span>
+            <span class="db-save"><b>~2.5 hrs</b> of admin done. You: <b>90 sec</b> of approvals.</span>
           </div>
         </div>
       </div>
@@ -439,33 +439,32 @@
   var FILE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>';
   var WORK = [
     // Minh (full deep-dive)
-    '<div class="workcard"><div class="wk-head"><span class="worb"></span><b>What the agent did &middot; Minh Tran</b><span>done in 41s</span></div>' +
-    '<div class="wk-row"><span class="wic">&#10003;</span><span>Routed to <b>Restaurant Business Broker</b> &middot; matched listing <b>#RB-114, Gastown</b></span></div>' +
-    '<div class="wk-row"><span class="wic">&#10003;</span><span>Qualified the buyer:</span></div>' +
-    '<div class="quals"><span class="qchip">Budget: <b>$500k</b></span><span class="qchip">Financing: <b>pre-approved</b></span><span class="qchip">Timeline: <b>&lt; 60 days</b></span><span class="score">&#9733; Strong buyer &middot; 91/100</span></div>' +
-    '<div class="wk-row"><span class="wic">&#10003;</span><span>Drafted the reply in the brand\'s voice:</span></div>' +
+    '<div class="workcard"><div class="wk-head"><span class="worb"></span><b>Agent &middot; Minh Tran</b><span>41s</span></div>' +
+    '<div class="wk-row"><span class="wic">&#10003;</span><span><b>Restaurant Business Broker</b> &middot; listing #RB-114</span></div>' +
+    '<div class="wk-row"><span class="wic">&#10003;</span><span>Qualified:</span></div>' +
+    '<div class="quals"><span class="qchip"><b>$500k</b></span><span class="qchip"><b>pre-approved</b></span><span class="qchip"><b>&lt; 60 days</b></span><span class="score">&#9733; 91/100</span></div>' +
     '<div class="draft"><div class="dh">Draft &middot; Restaurant Business Broker</div>Hi Minh, thanks for reaching out about the Gastown location. It is still available. Before I share financials I\'ll need a quick NDA signed, link below. Once that\'s in, the full package is on its way and we can line up a viewing.</div>' +
-    '<div class="wk-row"><span class="wic">&#10003;</span><span><b>NDA signed</b>, then released the package:</span></div>' +
-    '<div class="files"><span class="fchip">' + FILE_SVG + 'P&amp;L 2023-25</span><span class="fchip">' + FILE_SVG + 'Lease terms</span><span class="fchip">' + FILE_SVG + 'Asking + comps</span></div>' +
-    '<div class="wk-row"><span class="wic">&#10003;</span><span>Showing booked: <b>Thu 2:00 PM</b>, confirmed both sides</span></div>' +
+    '<div class="wk-row"><span class="wic">&#10003;</span><span><b>NDA signed</b> &rarr; package released</span></div>' +
+    '<div class="files"><span class="fchip">' + FILE_SVG + 'P&amp;L</span><span class="fchip">' + FILE_SVG + 'Lease</span><span class="fchip">' + FILE_SVG + 'Asking + comps</span></div>' +
+    '<div class="wk-row"><span class="wic">&#10003;</span><span>Showing &middot; <b>Thu 2:00 PM</b> &middot; both sides confirmed</span></div>' +
     '<div class="approve"><button class="ap-btn go">Approved &#10003;</button><button class="ap-btn ghost">Edit</button><span class="ap-note">nothing sends without you</span></div></div>',
     // Sara
-    '<div class="workcard"><div class="wk-head"><span class="worb"></span><b>What the agent did &middot; Sara Patel</b><span>done in 22s</span></div>' +
-    '<div class="wk-row"><span class="wic">&#10003;</span><span>Routed to <b>Vancouver Canada Homes</b> &middot; matched the <b>Canada Way townhouse</b></span></div>' +
-    '<div class="wk-row"><span class="wic">&#10003;</span><span>Drafted a reply with <b>3 viewing windows</b> pulled from your calendar</span></div>' +
+    '<div class="workcard"><div class="wk-head"><span class="worb"></span><b>Agent &middot; Sara Patel</b><span>22s</span></div>' +
+    '<div class="wk-row"><span class="wic">&#10003;</span><span><b>Vancouver Canada Homes</b> &middot; Canada Way townhouse</span></div>' +
+    '<div class="wk-row"><span class="wic">&#10003;</span><span><b>3 viewing windows</b> from your calendar</span></div>' +
     '<div class="draft"><div class="dh">Draft &middot; Vancouver Canada Homes</div>Hi Sara, it is still available. I could show it Wednesday after 3, Thursday morning, or Friday at noon. Which works best for you two?</div>' +
-    '<div class="wk-row"><span class="wic">&#10003;</span><span>Added to the buyer pipeline so the follow-up never slips</span></div>' +
+    '<div class="wk-row"><span class="wic">&#10003;</span><span>Added to pipeline &middot; follow-up never slips</span></div>' +
     '<div class="approve"><button class="ap-btn go">Approved &#10003;</button><button class="ap-btn ghost">Edit</button><span class="ap-note">nothing sends without you</span></div></div>',
     // Okafors
-    '<div class="workcard"><div class="wk-head"><span class="worb"></span><b>What the agent did &middot; D. &amp; A. Okafor</b><span>done in 30s</span></div>' +
-    '<div class="wk-row"><span class="wic">&#10003;</span><span>Routed to <b>Real East Van</b> &middot; understood: <b>retail, under $1M, Commercial Drive</b></span></div>' +
-    '<div class="wk-row"><span class="wic">&#10003;</span><span>Searched your listings: <b>2 matches</b> (corner unit on Commercial, 1,400 sqft + a second off Victoria Dr)</span></div>' +
+    '<div class="workcard"><div class="wk-head"><span class="worb"></span><b>Agent &middot; D. &amp; A. Okafor</b><span>30s</span></div>' +
+    '<div class="wk-row"><span class="wic">&#10003;</span><span><b>Real East Van</b> &middot; retail &middot; under $1M &middot; Commercial Dr</span></div>' +
+    '<div class="wk-row"><span class="wic">&#10003;</span><span><b>2 matches</b> found in your listings</span></div>' +
     '<div class="draft"><div class="dh">Draft &middot; Real East Van</div>Hi both, two spaces fit what you described. The corner unit at Commercial &amp; 3rd is 1,400 sqft with strong foot traffic, and there is a quieter option just off Victoria Drive. Want the details on either?</div>' +
     '<div class="approve"><button class="ap-btn go">Approved &#10003;</button><button class="ap-btn ghost">Edit</button><span class="ap-note">nothing sends without you</span></div></div>',
     // spam
-    '<div class="workcard"><div class="wk-head"><span class="worb"></span><b>What the agent did &middot; RankBoost SEO</b><span>done in 2s</span></div>' +
-    '<div class="wk-row"><span class="wic">&#10005;</span><span>Recognized a <b>cold solicitation</b>, no listing reference, bulk-sender fingerprint</span></div>' +
-    '<div class="wk-row"><span class="wic">&#10003;</span><span>Filed to spam. <b>Your inbox stays clean</b>, no action needed</span></div></div>'
+    '<div class="workcard"><div class="wk-head"><span class="worb"></span><b>Agent &middot; RankBoost SEO</b><span>2s</span></div>' +
+    '<div class="wk-row"><span class="wic">&#10005;</span><span>Cold solicitation &middot; bulk sender</span></div>' +
+    '<div class="wk-row"><span class="wic">&#10003;</span><span>Filed to spam &middot; <b>inbox stays clean</b></span></div></div>'
   ];
   var PSTAGES = ['New', 'Qualified', 'Package sent', 'Showing booked'];
   var PIPE = [
@@ -542,13 +541,12 @@
     }
     document.getElementById('calgrid').innerHTML = grid;
     document.getElementById('upcoming').innerHTML =
-      '<div class="upc agent"><div class="u1"><span class="bdot" style="background:' + BRANDS[0].c + '"></span>Minh Tran &middot; Gastown restaurant<span class="ut">Thu 2:00 PM</span></div>' +
-      '<div class="u2">Booked by the agent today. Buyer confirmed, reminder set for both of you.</div>' +
-      '<div class="u3">&#10003; Confirmed both sides, zero back-and-forth</div></div>' +
-      '<div class="upc"><div class="u1"><span class="bdot" style="background:' + BRANDS[2].c + '"></span>Sara Patel &middot; Burnaby townhouse<span class="ut">awaiting pick</span></div>' +
-      '<div class="u2">3 viewing windows offered from your real availability. Books itself when she picks.</div></div>' +
-      '<div class="upc"><div class="u1"><span class="bdot" style="background:' + BRANDS[1].c + '"></span>K. Wong &middot; commercial walkthrough<span class="ut">Fri 12 PM</span></div>' +
-      '<div class="u2">Existing booking, untouched. The agent schedules around your real calendar.</div></div>';
+      '<div class="upc agent"><div class="u1"><span class="bdot" style="background:' + BRANDS[0].c + '"></span>Minh Tran &middot; Gastown<span class="ut">Thu 2:00 PM</span></div>' +
+      '<div class="u3">&#10003; Booked by agent &middot; both sides confirmed</div></div>' +
+      '<div class="upc"><div class="u1"><span class="bdot" style="background:' + BRANDS[2].c + '"></span>Sara Patel &middot; Burnaby<span class="ut">awaiting pick</span></div>' +
+      '<div class="u2">3 windows offered &middot; books itself when she picks</div></div>' +
+      '<div class="upc"><div class="u1"><span class="bdot" style="background:' + BRANDS[1].c + '"></span>K. Wong &middot; commercial<span class="ut">Fri 12 PM</span></div>' +
+      '<div class="u2">Your existing booking &middot; untouched</div></div>';
   }
   function buildMkt() {
     document.getElementById('mkgrid').innerHTML = POSTS.map(function (p) {
@@ -565,7 +563,7 @@
   var VIEWS = { inbox: 'Inbox', pipe: 'Pipeline', show: 'Showings', mkt: 'Marketing' };
   var tourToken = 0;
   function go(v, manual) {
-    if (manual) { tourToken++; caption('EXPLORE', 'Click any email, card, or tab. Everything here is what the agent handles for you.'); }
+    if (manual) { tourToken++; caption('EXPLORE', 'All yours. Click anything.'); }
     Object.keys(VIEWS).forEach(function (k) {
       document.getElementById('v-' + k).classList.toggle('on', k === v);
     });
@@ -580,11 +578,11 @@
   async function tour() {
     var my = ++tourToken;
     var stops = [
-      ['inbox', '1 / 4', 'INBOX: every inquiry answered in the right brand\'s voice. Click an email to see exactly what the agent did.'],
-      ['pipe',  '2 / 4', 'PIPELINE: managing the leads. Every buyer tracked across all four brands, moved forward automatically.'],
-      ['show',  '3 / 4', 'SHOWINGS: booked straight into your real week, confirmed both sides, no back-and-forth.'],
-      ['mkt',   '4 / 4', 'MARKETING: listing posts drafted per brand, per channel. You approve, they queue.'],
-      ['inbox', 'DONE',  'That\'s the whole desk: inquiries, leads, showings, marketing. Click around, then hit the button below.']
+      ['inbox', '1 / 4', 'Inbox: every inquiry answered, right brand, right voice.'],
+      ['pipe',  '2 / 4', 'Pipeline: every buyer tracked, moved forward automatically.'],
+      ['show',  '3 / 4', 'Showings: booked into your real week, confirmed both sides.'],
+      ['mkt',   '4 / 4', 'Marketing: posts drafted per brand. You approve.'],
+      ['inbox', 'DONE',  'The whole desk. Click around.']
     ];
     for (var i = 0; i < stops.length; i++) {
       if (my !== tourToken) return;
