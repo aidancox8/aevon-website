@@ -15,6 +15,14 @@
     body.rec { cursor: none; }
     button, input { font-family: inherit; }
 
+    /* ===== browser tab strip ===== */
+    .tabstrip { display: flex; align-items: flex-end; gap: 2px; background: #dee1e6; padding: 6px 8px 0; height: 40px; }
+    .ctab { display: flex; align-items: center; gap: 8px; color: #3c4043; font-size: 12px; padding: 0 14px; height: 34px; border-radius: 10px 10px 0 0; white-space: nowrap; overflow: hidden; max-width: 290px; }
+    .ctab.on { background: #f6f8fc; }
+    .ctab .tfav { width: 15px; height: 15px; flex-shrink: 0; }
+    .ctab .afav { width: 15px; height: 15px; border-radius: 4px; background: linear-gradient(135deg, #6366F1, #7C3AED); color: #fff; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ctab .cx { margin-left: 6px; color: #5f6368; font-size: 12px; }
+
     /* ===== top bar ===== */
     .gtop { display: flex; align-items: center; gap: 14px; padding: 8px 16px; height: 64px; }
     .glogo { display: flex; align-items: center; gap: 8px; min-width: 168px; }
@@ -29,7 +37,7 @@
     .gava { width: 34px; height: 34px; border-radius: 50%; background: #1a73e8; color: #fff; font-size: 14px; font-weight: 500; display: flex; align-items: center; justify-content: center; }
 
     /* ===== layout ===== */
-    .gmain { display: flex; height: calc(100vh - 64px); }
+    .gmain { display: flex; height: calc(100vh - 104px); }
     .grail { width: 238px; padding: 6px 8px 0 8px; flex-shrink: 0; }
     .gcompose { display: flex; align-items: center; gap: 12px; background: #c2e7ff; border-radius: 16px; padding: 14px 20px 14px 16px; font-size: 14px; font-weight: 500; color: #001d35; box-shadow: 0 1px 3px rgba(0,0,0,0.15); width: fit-content; margin: 8px 0 14px 4px; }
     .gcompose svg { width: 20px; height: 20px; }
@@ -97,6 +105,10 @@
     .gcomposebox.on { display: flex; animation: rowin .35s ease; }
     .cmphead { background: #f2f6fc; padding: 9px 16px; font-size: 13px; font-weight: 500; color: #202124; display: flex; }
     .cmphead span { margin-left: auto; color: #5f6368; letter-spacing: 1px; }
+    .cmpagent { display: flex; align-items: center; gap: 8px; background: #f3e8ff; color: #6b21a8; font-size: 12px; font-weight: 500; padding: 7px 16px; border-bottom: 1px solid #e9d5ff; }
+    .cmpagent .morb { width: 14px; height: 14px; border-radius: 5px; background: radial-gradient(circle at 30% 30%, #A855F7, #7C3AED); box-shadow: 0 0 8px rgba(124,58,237,0.6); flex-shrink: 0; }
+    .cmpagent.done { background: #e6f4ea; color: #137333; border-color: #ceead6; }
+    .gcomposebox.drafting { box-shadow: 0 0 0 2px #A855F7, 0 4px 22px rgba(124,58,237,0.4); }
     .cmpto { padding: 8px 16px; font-size: 13px; color: #5f6368; border-bottom: 1px solid #f1f3f4; }
     .cmpbody { padding: 12px 16px; font-size: 14px; line-height: 1.65; color: #202124; min-height: 130px; white-space: pre-wrap; }
     .cmpbody .caret { display: inline-block; width: 1px; height: 16px; background: #202124; vertical-align: -3px; animation: blink 1s steps(1) infinite; }
@@ -106,6 +118,38 @@
     .cmpfoot svg { width: 18px; height: 18px; color: #444746; }
     .cmpsaved { margin-left: auto; font-size: 12px; color: #188038; font-weight: 500; opacity: 0; transition: opacity .4s; }
     .cmpsaved.on { opacity: 1; }
+
+    /* ===== CRM (Broker Desk) ===== */
+    #crm { position: fixed; left: 0; right: 0; bottom: 0; top: 40px; background: #f6f8fc; display: none; flex-direction: column; z-index: 5; }
+    #crm.on { display: flex; animation: fade .3s ease; }
+    @keyframes fade { from{opacity:0} to{opacity:1} }
+    .crmtop { display: flex; align-items: center; gap: 14px; padding: 10px 18px; height: 60px; }
+    .crmlogo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; min-width: 168px; }
+    .crmlogo .alogo { width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(135deg, #6366F1, #7C3AED); color: #fff; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; }
+    .crmmain { display: flex; flex: 1; min-height: 0; }
+    .crail { width: 210px; padding: 8px 8px 0; flex-shrink: 0; }
+    .citem { display: flex; align-items: center; gap: 13px; padding: 0 16px; height: 36px; border-radius: 18px; font-size: 13.5px; color: #3c4043; margin-bottom: 2px; }
+    .citem svg { width: 16px; height: 16px; color: #5f6368; flex-shrink: 0; }
+    .citem.sel { background: #d3e3fd; font-weight: 700; }
+    .citem .gct { margin-left: auto; font-size: 11.5px; font-weight: 700; color: #1967d2; }
+    .cboard { flex: 1; background: #fff; border-radius: 16px 0 0 0; padding: 18px 22px; overflow: auto; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .cb-head { display: flex; align-items: baseline; gap: 12px; }
+    .cb-head h1 { font-size: 19px; font-weight: 500; }
+    .cb-head span { font-size: 12.5px; color: #5f6368; }
+    .cstats { display: flex; gap: 10px; margin: 14px 0 16px; flex-wrap: wrap; }
+    .cstat { border: 1px solid #e0e3e7; border-radius: 10px; padding: 8px 16px; font-size: 11.5px; color: #5f6368; }
+    .cstat b { display: block; font-size: 18px; color: #202124; }
+    .cstat b.bl { color: #1967d2; }
+    .ccols { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+    .ccol { background: #f6f8fc; border-radius: 12px; padding: 10px; min-height: 230px; }
+    .ccol-h { font-size: 10.5px; font-weight: 700; color: #5f6368; letter-spacing: .04em; text-transform: uppercase; display: flex; justify-content: space-between; margin-bottom: 9px; padding: 0 3px; }
+    .ccol-h .cct { background: #e0e3e7; border-radius: 10px; padding: 0 8px; color: #3c4043; }
+    .ccard { background: #fff; border: 1px solid #e0e3e7; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .ccard b { font-size: 13px; }
+    .ccard .csub { font-size: 11.5px; color: #5f6368; margin: 2px 0 7px; }
+    .ccard .crow { display: flex; gap: 4px; flex-wrap: wrap; }
+    .ccard.newcard { border-left: 3px solid #1a73e8; animation: rowin .5s cubic-bezier(.2,1,.3,1); }
+    .ccard .cnew { font-size: 10px; color: #1a73e8; font-weight: 700; margin-top: 7px; }
 
     /* ===== agent HUD ===== */
     .hud { position: fixed; right: 26px; bottom: 24px; width: 300px; background: #15121F; color: #F8FAFC; border: 1px solid rgba(99,102,241,0.4); border-radius: 14px; padding: 13px 15px; box-shadow: 0 16px 50px rgba(0,0,0,0.45); z-index: 50; font-family: 'Roboto', Arial, sans-serif; }
@@ -144,6 +188,16 @@
 </head>
 <body>
 
+<div class="tabstrip">
+  <div class="ctab on" id="tab-gmail">
+    <svg class="tfav" viewBox="0 0 52 40"><path fill="#EA4335" d="M3.6 40h8.8V18.6L0 9.2V36.4C0 38.4 1.6 40 3.6 40z"/><path fill="#4285F4" d="M39.6 40h8.8c2 0 3.6-1.6 3.6-3.6V9.2l-12.4 9.4z"/><path fill="#FBBC04" d="M39.6 9.2v9.4L52 9.2V7.4c0-4.5-5.1-7-8.7-4.3z"/><path fill="#C5221F" d="M12.4 18.6L26 28.9l13.6-10.3V9.2L26 19.5 12.4 9.2z"/></svg>
+    <span id="tab-gmail-t">Inbox (1) - jean@vancouvercommercialbro...</span><span class="cx">&#10005;</span>
+  </div>
+  <div class="ctab" id="tab-crm">
+    <span class="afav">A</span>
+    <span>Broker Desk &middot; Buyers</span><span class="cx">&#10005;</span>
+  </div>
+</div>
 <div class="gtop">
   <div class="glogo">
     <span class="menu"><span></span></span>
@@ -231,6 +285,7 @@
       </div>
       <div class="gcomposebox" id="gcompose">
         <div class="cmphead">New message <span>&minus; &#10005;</span></div>
+        <div class="cmpagent" id="cmpagent"><span class="morb"></span><span id="cmpagent-t">Aevon Agent is writing this draft for you...</span></div>
         <div class="cmpto" id="cmpto"></div>
         <div class="cmpbody" id="cmpbody"><span class="caret"></span></div>
         <div class="cmpfoot">
@@ -239,6 +294,50 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21.4 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.2-9.19a4 4 0 0 1 5.65 5.66l-9.2 9.19a2 2 0 0 1-2.82-2.83l8.49-8.48"/></svg>
           <span class="cmpsaved" id="cmpsaved">Draft saved &#10003;</span>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CRM (Broker Desk) -->
+<div id="crm">
+  <div class="crmtop">
+    <span class="crmlogo"><span class="alogo">A</span> Broker Desk</span>
+    <div class="gsearch" style="max-width:560px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      Search buyers, listings, showings
+    </div>
+    <div class="gright"><span class="gava">J</span></div>
+  </div>
+  <div class="crmmain">
+    <aside class="crail">
+      <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</div>
+      <div class="citem sel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Buyers <span class="gct" id="crmbuyers">5</span></div>
+      <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg>Listings</div>
+      <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Showings</div>
+      <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>NDAs &amp; Packages</div>
+      <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-7-7 18-2.5-7.5z"/></svg>Marketing</div>
+      <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-5"/></svg>Reports</div>
+    </aside>
+    <div class="cboard">
+      <div class="cb-head"><h1>Buyers</h1><span>all brands &middot; sorted by stage &middot; kept up to date by your agent</span></div>
+      <div class="cstats">
+        <div class="cstat"><b id="cs1">3</b>active buyers</div>
+        <div class="cstat"><b class="bl" id="cs2">0</b>awaiting your approval</div>
+        <div class="cstat"><b id="cs3">1</b>showing this week</div>
+        <div class="cstat"><b class="bl" id="cs4">0</b>new today</div>
+      </div>
+      <div class="ccols">
+        <div class="ccol"><div class="ccol-h"><span>New</span><span class="cct" id="cc0">1</span></div><div id="cb0">
+          <div class="ccard"><b>D. &amp; A. Okafor</b><div class="csub">Retail space &middot; Commercial Drive</div><div class="crow"><span class="gchip" style="background:#f3e8fd;color:#7b1fa2">Real East Van</span><span class="gchip" style="background:#fef7e0;color:#b06000">reply pending</span></div></div>
+        </div></div>
+        <div class="ccol"><div class="ccol-h"><span>Qualified</span><span class="cct" id="cc1">0</span></div><div id="cb1"></div></div>
+        <div class="ccol"><div class="ccol-h"><span>Package sent</span><span class="cct" id="cc2">1</span></div><div id="cb2">
+          <div class="ccard"><b>K. Wong</b><div class="csub">Commercial building &middot; $1.2M</div><div class="crow"><span class="gchip" style="background:#e8f0fe;color:#1967d2">Vancouver Brokers</span><span class="gchip" style="background:#e6f4ea;color:#137333">NDA signed &#10003;</span></div></div>
+        </div></div>
+        <div class="ccol"><div class="ccol-h"><span>Showing booked</span><span class="cct" id="cc3">1</span></div><div id="cb3">
+          <div class="ccard"><b>J. Castillo</b><div class="csub">Cafe &middot; Mount Pleasant</div><div class="crow"><span class="gchip" style="background:#fef3e0;color:#b06000">Restaurant Broker</span><span class="gchip" style="background:#e6f4ea;color:#137333">Fri 11:00 AM</span></div></div>
+        </div></div>
       </div>
     </div>
   </div>
@@ -259,13 +358,13 @@
 <!-- end overlay -->
 <div class="endcard" id="endcard">
   <div class="end-inner">
-    <h2>Three leads. Zero typing. Your inbox.</h2>
+    <h2>Inbox cleared. CRM sorted. Zero typing.</h2>
     <div class="end-nums">
-      <div class="en"><div class="n g">2</div><div class="l">buyers qualified &amp; drafted</div></div>
-      <div class="en"><div class="n">2</div><div class="l">drafts in your Drafts folder</div></div>
+      <div class="en"><div class="n g">2</div><div class="l">buyers qualified &amp; filed</div></div>
+      <div class="en"><div class="n">2</div><div class="l">drafts await your OK</div></div>
       <div class="en"><div class="n">1</div><div class="l">spam filtered</div></div>
     </div>
-    <p>The agent works inside the Gmail you already use.<br>You read the drafts, hit send. <b>Nothing ever sends without you.</b></p>
+    <p>The agent works inside the Gmail you already use and keeps your buyer desk sorted.<br>You read the drafts, hit send. <b>Nothing ever sends without you.</b></p>
   </div>
 </div>
 
@@ -369,12 +468,25 @@
   }
   function closeThread() { el('gthread').classList.remove('on'); }
 
+  function curPark() {
+    cur.classList.add('fast');
+    cur.style.left = (window.innerWidth - 70) + 'px';
+    cur.style.top = (window.innerHeight * 0.42) + 'px';
+    return sleep(650);
+  }
+
   async function typeDraft(m) {
     el('cmpto').textContent = m.from + ' (' + m.email + ')';
     var body = el('cmpbody');
     body.innerHTML = '<span class="caret"></span>';
-    el('gcompose').classList.add('on');
-    await sleep(700);
+    var strip = el('cmpagent');
+    strip.classList.remove('done');
+    el('cmpagent-t').textContent = 'Aevon Agent is writing this draft for you...';
+    var box = el('gcompose');
+    box.classList.add('on', 'drafting');
+    // park the cursor away from the box so it's clear the agent is typing, not you
+    await curPark();
+    await sleep(300);
     var caret = body.querySelector('.caret');
     var txt = m.draft;
     for (var i = 0; i < txt.length; i++) {
@@ -382,8 +494,12 @@
       await sleep(txt[i] === '\n' ? 90 : 26);
     }
     await sleep(500);
+    box.classList.remove('drafting');
+    strip.classList.add('done');
+    el('cmpagent-t').textContent = '✓ Draft ready · waiting for YOUR approval. The agent never sends.';
     el('cmpsaved').classList.add('on');
     draftCount++; counts();
+    await sleep(900);
   }
 
   function rowChips(id, m) {
@@ -455,11 +571,48 @@
     inboxCount--; spamCount++; counts();
     await sleep(1400);
 
+    // open the CRM tab and file the buyers
+    hud('filing buyers into your CRM...');
+    hudClear();
+    await sleep(900);
+    await curTo(el('tab-crm'), null, null);
+    await click();
+    el('tab-gmail').classList.remove('on');
+    el('tab-crm').classList.add('on');
+    document.title = 'Broker Desk · Buyers';
+    el('crm').classList.add('on');
+    await curPark();
+    await sleep(700);
+    // Minh: showing booked
+    el('cb3').insertAdjacentHTML('afterbegin',
+      '<div class="ccard newcard"><b>Minh Tran</b><div class="csub">Gastown restaurant &middot; $500k &middot; pre-approved</div>' +
+      '<div class="crow"><span class="gchip" style="background:#fef3e0;color:#b06000">Restaurant Broker</span>' +
+      '<span class="gchip" style="background:#e6f4ea;color:#137333">&#9733; Strong &middot; 93</span>' +
+      '<span class="gchip" style="background:#e8f0fe;color:#1967d2">draft awaiting your OK</span>' +
+      '<span class="gchip" style="background:#e6f4ea;color:#137333">Thu 2:00 PM</span></div>' +
+      '<div class="cnew">&#9679; filed by your agent just now</div></div>');
+    el('cc3').textContent = '2';
+    el('cs1').textContent = '4'; el('cs2').textContent = '1'; el('cs3').textContent = '2'; el('cs4').textContent = '1';
+    el('crmbuyers').textContent = '4';
+    await sleep(1000);
+    // Priya: qualified
+    el('cb1').insertAdjacentHTML('afterbegin',
+      '<div class="ccard newcard"><b>Priya &amp; Dev Sharma</b><div class="csub">Burnaby townhouse &middot; $850k</div>' +
+      '<div class="crow"><span class="gchip" style="background:#e0f7fa;color:#00838f">Canada Homes</span>' +
+      '<span class="gchip" style="background:#e8f0fe;color:#1967d2">Good fit &middot; 78</span>' +
+      '<span class="gchip" style="background:#e8f0fe;color:#1967d2">draft awaiting your OK</span></div>' +
+      '<div class="cnew">&#9679; filed by your agent just now</div></div>');
+    el('cc1').textContent = '1';
+    el('cs1').textContent = '5'; el('cs2').textContent = '2'; el('cs4').textContent = '2';
+    el('crmbuyers').textContent = '5';
+    hud('CRM updated · 2 buyers filed and sorted');
+    await sleep(2900);
+
     // wrap
     el('orb').classList.remove('think');
-    hud('done · queue clear');
+    hud('done · inbox clear, CRM sorted');
     hudClear();
-    await sleep(1400);
+    await sleep(1200);
     el('endcard').classList.add('on');
   }
 
