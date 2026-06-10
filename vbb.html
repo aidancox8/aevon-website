@@ -92,6 +92,26 @@
     .ap-btn.ghost { background: transparent; border: 1px solid var(--border2); color: var(--text2); }
     .ap-note { margin-left: auto; font-size: 10px; color: var(--text4); }
 
+    /* ===== embedded recording player ===== */
+    .reelplayer { position: relative; z-index: 5; margin-top: 22px; border: 1px solid var(--border); border-radius: 15px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,0.5); }
+    .rp-bar { display: flex; align-items: center; gap: 10px; padding: 11px 15px; background: var(--bg2); border-bottom: 1px solid var(--border); }
+    .rp-dots { display: flex; gap: 6px; }
+    .rp-dots i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+    .rp-dots i:nth-child(1){background:#ff5f57} .rp-dots i:nth-child(2){background:#febc2e} .rp-dots i:nth-child(3){background:#28c840}
+    .rp-title { font-size: 12px; color: var(--text3); }
+    .rp-rec { margin-left: auto; font-size: 10.5px; font-weight: 800; color: var(--red); letter-spacing: .05em; }
+    .rp-replay { margin-left: auto; font-size: 11.5px; font-weight: 700; color: var(--text2); cursor: pointer; border: 1px solid var(--border2); border-radius: 8px; padding: 3px 11px; }
+    .rp-replay:hover { color: var(--text); background: var(--surface2); }
+    .rp-replay + .rp-rec { margin-left: 12px; }
+    .rp-stage { position: relative; height: 540px; background: var(--bg); }
+    @media (max-width:760px){ .rp-stage { height: 460px; } }
+    .rp-stage iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .rp-poster { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; cursor: pointer; background: radial-gradient(ellipse at 50% 40%, rgba(124,58,237,0.16), transparent 65%), var(--bg2); }
+    .rp-poster b { font-size: 16px; font-weight: 800; }
+    .rp-poster .rp-sub { font-size: 12px; color: var(--text3); }
+    .rp-play { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; font-size: 22px; display: flex; align-items: center; justify-content: center; padding-left: 5px; box-shadow: 0 10px 36px rgba(99,102,241,0.5); transition: transform .15s; }
+    .rp-poster:hover .rp-play { transform: scale(1.07); }
+
     /* ===== "everything you listed" cards ===== */
     .quote { position: relative; z-index: 5; max-width: 640px; margin: 20px auto 0; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent3); border-radius: 12px; padding: 14px 18px; font-size: 14px; color: var(--text2); font-style: italic; }
     .quote .qwho { display: block; font-style: normal; font-size: 11px; color: var(--text4); font-weight: 700; margin-top: 6px; }
@@ -280,6 +300,28 @@
     </div>
   </div>
 
+  <!-- ============ 1b. THE RECORDING ============ -->
+  <div class="kicker">
+    <span class="knum">WATCH IT WORK</span>
+    <h2>The agent, qualifying buyer leads</h2>
+    <div class="ksub">Two minutes. It works a morning's queue on its own, you just watch.</div>
+  </div>
+  <div class="reelplayer">
+    <div class="rp-bar">
+      <span class="rp-dots"><i></i><i></i><i></i></span>
+      <span class="rp-title">agent-qualification &middot; Restaurant Business Broker</span>
+      <span class="rp-replay" id="rp-replay" onclick="playReel()" style="display:none">&#8635; replay</span>
+      <span class="rp-rec" id="rp-rec">&#9679; LIVE</span>
+    </div>
+    <div class="rp-stage" id="rp-stage">
+      <div class="rp-poster" onclick="playReel()">
+        <span class="rp-play">&#9654;</span>
+        <b>Watch the agent work a queue of buyer leads</b>
+        <span class="rp-sub">reads &middot; qualifies &middot; scores &middot; drafts, hands-free</span>
+      </div>
+    </div>
+  </div>
+
   <!-- ============ 2. EVERYTHING YOU LISTED ============ -->
   <div class="kicker">
     <span class="knum">WHAT IT COVERS</span>
@@ -431,6 +473,13 @@
     } catch (e) {}
     document.getElementById('interest-form').style.display = 'none';
     document.getElementById('interest-done').style.display = 'block';
+  }
+
+  function playReel() {
+    var stage = document.getElementById('rp-stage');
+    stage.innerHTML = '<iframe src="agent-reel.html?embed=1" title="Aevon agent qualifying buyer leads" loading="eager"></iframe>';
+    var rp = document.getElementById('rp-replay'); if (rp) rp.style.display = 'inline-block';
+    var rec = document.getElementById('rp-rec'); if (rec) rec.textContent = '● PLAYING';
   }
 
   function approveBtn(el) {
