@@ -35,10 +35,11 @@
     .gm { display: flex; align-items: center; gap: 6px; font-size: 21px; color: #5f6368; }
     .gm svg { width: 30px; height: 24px; }
     .gsearch { flex: 1; max-width: 720px; display: flex; align-items: center; gap: 12px; background: #eaf1fb; border-radius: 24px; padding: 0 16px; height: 48px; color: #5f6368; font-size: 15px; }
-    .gsearch svg { width: 19px; height: 19px; color: #5f6368; }
-    .gright { margin-left: auto; display: flex; align-items: center; gap: 14px; }
-    .gear { width: 22px; height: 22px; color: #5f6368; }
-    .gava { width: 34px; height: 34px; border-radius: 50%; background: #1a73e8; color: #fff; font-size: 14px; font-weight: 500; display: flex; align-items: center; justify-content: center; }
+    .gsearch svg { width: 19px; height: 19px; color: #5f6368; flex-shrink: 0; }
+    .gsearch .tune { margin-left: auto; }
+    .gright { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+    .gico { width: 21px; height: 21px; color: #5f6368; flex-shrink: 0; }
+    .gava { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, #f59e0b, #b45309); color: #fff; font-size: 14px; font-weight: 500; display: flex; align-items: center; justify-content: center; }
 
     /* ===== layout ===== */
     .gmain { display: flex; height: calc(100vh - 104px); }
@@ -63,9 +64,15 @@
     .gtoolbar .cb { width: 18px; height: 18px; border: 2px solid #5f6368; border-radius: 3px; opacity: .7; }
     .gtoolbar svg { width: 18px; height: 18px; }
     .gtabs { display: flex; border-bottom: 1px solid #f1f3f4; }
-    .gtab { display: flex; align-items: center; gap: 12px; padding: 13px 20px; font-size: 14px; color: #5f6368; min-width: 200px; }
+    .gtab { display: flex; align-items: center; gap: 11px; padding: 13px 18px; font-size: 14px; color: #5f6368; min-width: 168px; }
     .gtab.sel { color: #0b57d0; box-shadow: inset 0 -3px 0 #0b57d0; font-weight: 500; }
-    .gtab svg { width: 18px; height: 18px; }
+    .gtab svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .gbadge { font-size: 11px; color: #fff; border-radius: 10px; padding: 1px 8px; font-weight: 500; }
+    .gbadge.gn { background: #188038; }
+    .gbadge.bu { background: #1a73e8; }
+    .gbadge.or { background: #e8710a; }
+    .gtoolbar .pag { margin-left: auto; font-size: 12.5px; color: #5f6368; }
+    .grow .imp { width: 15px; height: 15px; color: #dadce0; flex-shrink: 0; }
 
     .grow { display: flex; align-items: center; gap: 10px; padding: 0 18px; height: 44px; border-bottom: 1px solid #f1f3f4; font-size: 14px; position: relative; background: #fff; }
     .grow:hover { box-shadow: inset 0 -1px 0 rgba(0,0,0,0.08), inset 0 1px 0 rgba(0,0,0,0.08); }
@@ -128,6 +135,27 @@
     .cmpfoot svg { width: 18px; height: 18px; color: #444746; }
     .cmpsaved { margin-left: auto; font-size: 12px; color: #188038; font-weight: 500; opacity: 0; transition: opacity .4s; }
     .cmpsaved.on { opacity: 1; }
+
+    /* ===== Google Calendar ===== */
+    #gcal { position: fixed; left: 0; right: 0; bottom: 0; top: 40px; background: #fff; display: none; flex-direction: column; z-index: 5; }
+    #gcal.on { display: flex; animation: fade .3s ease; }
+    .caltop { display: flex; align-items: center; gap: 14px; padding: 8px 16px; height: 60px; border-bottom: 1px solid #e0e3e7; }
+    .callogo { display: flex; align-items: center; gap: 10px; font-size: 21px; color: #5f6368; min-width: 200px; }
+    .callogo svg { width: 30px; height: 30px; }
+    .ctoday { border: 1px solid #dadce0; border-radius: 6px; padding: 7px 16px; font-size: 13.5px; color: #3c4043; }
+    .calmonth { font-size: 19px; color: #3c4043; }
+    .calhead { display: grid; grid-template-columns: 56px repeat(5,1fr); border-bottom: 1px solid #e0e3e7; }
+    .chd { padding: 8px 0 6px; text-align: center; font-size: 11px; color: #5f6368; font-weight: 500; letter-spacing: .06em; }
+    .chd b { display: block; font-size: 22px; color: #3c4043; font-weight: 400; margin-top: 2px; width: 40px; height: 40px; line-height: 40px; margin: 2px auto 0; border-radius: 50%; }
+    .chd.today { color: #1a73e8; }
+    .chd.today b { background: #1a73e8; color: #fff; }
+    .calbody { flex: 1; display: flex; flex-direction: column; }
+    .crow2 { flex: 1; display: grid; grid-template-columns: 56px repeat(5,1fr); border-bottom: 1px solid #f1f3f4; min-height: 0; }
+    .ctm { font-size: 10px; color: #5f6368; text-align: right; padding-right: 8px; transform: translateY(-6px); }
+    .ccell { border-left: 1px solid #f1f3f4; position: relative; }
+    .cev { position: absolute; inset: 2px 5px; border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 500; color: #fff; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    .cev.new { animation: evpop .55s cubic-bezier(.2,1.4,.4,1); box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(11,128,67,0.45); }
+    @keyframes evpop { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
 
     /* ===== CRM (Broker Desk) ===== */
     #crm { position: fixed; left: 0; right: 0; bottom: 0; top: 40px; background: #f6f8fc; display: none; flex-direction: column; z-index: 5; }
@@ -203,6 +231,10 @@
     <svg class="tfav" viewBox="0 0 52 40"><path fill="#EA4335" d="M3.6 40h8.8V18.6L0 9.2V36.4C0 38.4 1.6 40 3.6 40z"/><path fill="#4285F4" d="M39.6 40h8.8c2 0 3.6-1.6 3.6-3.6V9.2l-12.4 9.4z"/><path fill="#FBBC04" d="M39.6 9.2v9.4L52 9.2V7.4c0-4.5-5.1-7-8.7-4.3z"/><path fill="#C5221F" d="M12.4 18.6L26 28.9l13.6-10.3V9.2L26 19.5 12.4 9.2z"/></svg>
     <span class="ttl" id="tab-gmail-t">Inbox (1) - jean@vancouvercommercialbrokers.ca</span><span class="cx">&#10005;</span>
   </div>
+  <div class="ctab" id="tab-gcal">
+    <svg class="tfav" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="19" rx="4" fill="#1a73e8"/><text x="12" y="17.5" text-anchor="middle" font-size="11" fill="#fff" font-weight="700" font-family="Roboto, Arial">9</text></svg>
+    <span class="ttl">Google Calendar - June 2026</span><span class="cx">&#10005;</span>
+  </div>
   <div class="ctab" id="tab-crm">
     <span class="afav">A</span>
     <span class="ttl">Broker Desk &middot; Buyers</span><span class="cx">&#10005;</span>
@@ -220,9 +252,13 @@
   <div class="gsearch">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
     Search mail
+    <svg class="tune" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><path d="M1 14h6M9 8h6M17 16h6"/></svg>
   </div>
   <div class="gright">
-    <svg class="gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34h0a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55h0a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87v0a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1z"/></svg>
+    <svg class="gico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9.5"/><path d="M9.2 9a2.9 2.9 0 0 1 5.6 1c0 1.8-2.8 2.2-2.8 4"/><circle cx="12" cy="17.6" r=".4" fill="currentColor"/></svg>
+    <svg class="gico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34h0a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55h0a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87v0a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1z"/></svg>
+    <svg class="gico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.7 5.2a6 6 0 0 0 3.8 3.8L22.7 12l-5.2 1.7a6 6 0 0 0-3.8 3.8L12 22.7l-1.7-5.2a6 6 0 0 0-3.8-3.8L1.3 12l5.2-1.7a6 6 0 0 0 3.8-3.8z"/></svg>
+    <svg class="gico" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="5" r="1.8"/><circle cx="12" cy="5" r="1.8"/><circle cx="19" cy="5" r="1.8"/><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/><circle cx="5" cy="19" r="1.8"/><circle cx="12" cy="19" r="1.8"/><circle cx="19" cy="19" r="1.8"/></svg>
     <span class="gava">J</span>
   </div>
 </div>
@@ -230,7 +266,7 @@
 <div class="gmain">
   <aside class="grail">
     <div class="gcompose">
-      <svg viewBox="0 0 24 24"><path fill="#EA4335" d="M13 5h-2v6H5v2h6v6h2v-6h6v-2h-6z" opacity="0"/><path fill="#1a73e8" d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z" opacity="0"/><g><path fill="#4285F4" d="M11 5h2v6h-2z"/><path fill="#34A853" d="M11 13h2v6h-2z"/><path fill="#FBBC04" d="M5 11h6v2H5z"/><path fill="#EA4335" d="M13 11h6v2h-6z"/></g></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#001d35" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
       Compose
     </div>
     <nav class="gnav">
@@ -256,8 +292,12 @@
   <div class="gcontent">
     <div class="gtoolbar">
       <span class="cb"></span>
+      <svg style="width:11px;height:11px;margin-left:-12px" viewBox="0 0 24 24" fill="#5f6368"><path d="M7 10l5 5 5-5z"/></svg>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
+      <span class="pag">1&ndash;7 of 7</span>
+      <svg style="width:15px;height:15px" viewBox="0 0 24 24" fill="none" stroke="#b9bdc1" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      <svg style="width:15px;height:15px" viewBox="0 0 24 24" fill="none" stroke="#5f6368" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
     </div>
     <div class="gtabs">
       <div class="gtab sel">
@@ -265,8 +305,16 @@
         Primary
       </div>
       <div class="gtab">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16.5 9.4L7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.73z"/></svg>
-        Promotions
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0l-7-7A2 2 0 0 1 3 12.2V5a2 2 0 0 1 2-2h7.2a2 2 0 0 1 1.4.6l7 7a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+        Promotions <span class="gbadge gn">2 new</span>
+      </div>
+      <div class="gtab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+        Social <span class="gbadge bu">1 new</span>
+      </div>
+      <div class="gtab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        Updates <span class="gbadge or">4 new</span>
       </div>
     </div>
     <div id="glist"></div>
@@ -309,6 +357,26 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- Google Calendar -->
+<div id="gcal">
+  <div class="caltop">
+    <span class="glogo"><span class="menu"><span></span></span></span>
+    <span class="callogo"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="19" rx="4" fill="#1a73e8"/><text x="12" y="17.5" text-anchor="middle" font-size="11" fill="#fff" font-weight="700" font-family="Roboto, Arial">9</text></svg> Calendar</span>
+    <span class="ctoday">Today</span>
+    <span class="calmonth">June 2026</span>
+    <div class="gright"><span class="gava">J</span></div>
+  </div>
+  <div class="calhead">
+    <span></span>
+    <div class="chd">MON<b>8</b></div>
+    <div class="chd today">TUE<b>9</b></div>
+    <div class="chd">WED<b>10</b></div>
+    <div class="chd">THU<b>11</b></div>
+    <div class="chd">FRI<b>12</b></div>
+  </div>
+  <div class="calbody" id="calbody"></div>
 </div>
 
 <!-- CRM (Broker Desk) -->
@@ -432,6 +500,22 @@
       draft: 'Hi Jay,\n\nHappy to help. Prices range a lot depending on size, location and revenue.\n\nWhat budget are you working with, and are you set on a restaurant or open to other food businesses? I’ll send the two or three that actually fit.\n\nJean' }
   ];
 
+  // ---- google calendar grid ----
+  function buildGCal() {
+    var hours = ['9 AM', '10 AM', '11 AM', '12 PM', '1 PM', '2 PM', '3 PM', '4 PM'];
+    var EV = { '0-1': ['Valuation call', '#7986cb'], '1-3': ['Listing visit', '#33b679'], '2-0': ['Strata AGM', '#8e24aa'], '4-2': ['Showing · J. Castillo', '#039be5'] };
+    var html = '';
+    for (var h = 0; h < hours.length; h++) {
+      html += '<div class="crow2"><span class="ctm">' + hours[h] + '</span>';
+      for (var d = 0; d < 5; d++) {
+        var ev = EV[d + '-' + h];
+        html += '<div class="ccell" id="gc-' + d + '-' + h + '">' + (ev ? '<span class="cev" style="background:' + ev[1] + '">' + ev[0] + '</span>' : '') + '</div>';
+      }
+      html += '</div>';
+    }
+    el('calbody').innerHTML = html;
+  }
+
   var inboxCount = 1, draftCount = 1, spamCount = 0;
   function counts() {
     el('inboxct').textContent = inboxCount;
@@ -445,6 +529,7 @@
     return '<div class="grow ' + (unread ? 'unread' : 'read') + '" id="' + id + '">' +
       '<span class="cb"></span>' +
       '<svg class="star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17.3L6.2 20l1.1-6.4L2.6 9l6.5-.9L12 2l2.9 6.1 6.5.9-4.7 4.6 1.1 6.4z"/></svg>' +
+      '<svg class="imp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h7l6 7-6 7H4l6-7z"/></svg>' +
       '<span class="rfrom">' + m.from + '</span>' +
       '<span class="chiprow" id="' + id + '-chips"></span>' +
       '<span class="rtext"><span class="rsub">' + m.sub + '</span><span class="rsnip">&nbsp;&middot;&nbsp;' + m.snip + '</span></span>' +
@@ -591,8 +676,33 @@
     await sleep(900);
   }
 
+  // After Minh's showing books, hop to the Calendar tab and show the event land.
+  async function calendarBeat() {
+    hud('updating your calendar...');
+    await sleep(700);
+    await curTo(el('tab-gcal'), null, null);
+    await click();
+    el('tab-gmail').classList.remove('on');
+    el('tab-gcal').classList.add('on');
+    document.title = 'Google Calendar - June 2026';
+    el('gcal').classList.add('on');
+    await curPark();
+    await sleep(700);
+    var cell = el('gc-3-5');
+    if (cell) cell.innerHTML = '<span class="cev new" style="background:#0b8043">2:00 · Showing · Minh Tran</span>';
+    hud('showing added · invite sent to both sides');
+    await sleep(2400);
+    await curTo(el('tab-gmail'), null, null, true);
+    await click();
+    el('tab-gcal').classList.remove('on');
+    el('tab-gmail').classList.add('on');
+    el('gcal').classList.remove('on');
+    counts();
+    await sleep(700);
+  }
+
   async function run() {
-    buildList(); counts();
+    buildList(); buildGCal(); counts();
     await sleep(1800);
 
     for (var i = 0; i < LEADS.length; i++) {
@@ -600,6 +710,7 @@
       hud('new inquiry detected');
       await sleep(1100);
       await handleLead(LEADS[i], 'L' + i);
+      if (i === 0) await calendarBeat();
     }
     await sleep(600);
 
