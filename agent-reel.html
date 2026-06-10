@@ -441,10 +441,26 @@
       <div class="en"><div class="n">1</div><div class="l">listing package attached</div></div>
     </div>
     <p>The agent works inside the inbox you already use and keeps your buyer desk sorted.<br>You read the drafts, hit send. <b>Nothing ever sends without you.</b></p>
+    <div style="margin-top:22px;display:flex;gap:12px;justify-content:center;align-items:center">
+      <button onclick="location.reload()" style="background:#241F38;border:1px solid rgba(99,102,241,0.5);color:#F8FAFC;font-family:inherit;font-size:13px;font-weight:500;padding:9px 18px;border-radius:9px;cursor:pointer">&#8635; Watch again</button>
+      <span style="font-size:12.5px;color:#8A93A8">This is a mockup. Want it on your inbox? Just reply to my email.</span>
+    </div>
   </div>
 </div>
 
 <script>
+  // visit attribution from tagged outreach links (?ref=<leadId>)
+  (function () {
+    try {
+      var ref = new URLSearchParams(location.search).get('ref');
+      if (ref && /^[0-9a-f-]{36}$/i.test(ref)) {
+        var u = 'https://qzxtfgzpyptvriorfhxw.supabase.co/functions/v1/track-visit?ref=' + encodeURIComponent(ref);
+        if (navigator.sendBeacon) navigator.sendBeacon(u); else fetch(u, { mode: 'no-cors', keepalive: true });
+        history.replaceState({}, document.title, location.pathname + location.hash);
+      }
+    } catch (e) {}
+  })();
+
   var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
   function el(id) { return document.getElementById(id); }
 
