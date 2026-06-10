@@ -197,6 +197,22 @@
     .post-stat { font-size: 9.5px; font-weight: 700; color: var(--green); }
     .post-go { font-size: 10px; font-weight: 700; color: var(--text2); background: var(--surface3); border: 1px solid var(--border2); border-radius: 7px; padding: 4px 10px; }
 
+    /* ===== TRY IT view ===== */
+    .try-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 13px; }
+    @media (max-width:860px){ .try-grid { grid-template-columns: 1fr; } }
+    .trybox { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 13px; }
+    .trybox textarea { width: 100%; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: inherit; font-size: 12.5px; padding: 11px 12px; resize: vertical; }
+    .trybox textarea:focus { outline: none; border-color: var(--border2); }
+    .try-samples { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+    .tsample { font-size: 10.5px; font-weight: 600; color: var(--text2); background: var(--surface3); border: 1px solid var(--border); border-radius: 16px; padding: 4px 11px; cursor: pointer; transition: all .15s; }
+    .tsample:hover { border-color: var(--border2); color: var(--text); }
+    .try-steps { margin-top: 11px; display: flex; flex-direction: column; gap: 6px; }
+    .tstep { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--text3); font-family: var(--mono); opacity: 0; transform: translateX(-6px); transition: all .3s; }
+    .tstep.show { opacity: 1; transform: none; }
+    .tstep .tic { width: 15px; height: 15px; border-radius: 5px; background: rgba(34,197,94,0.15); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 9px; flex-shrink: 0; }
+    .tstep b { color: var(--text); font-family: 'Inter'; }
+    .try-empty { background: var(--surface2); border: 1px dashed var(--border2); border-radius: 12px; padding: 40px 20px; text-align: center; color: var(--text4); font-size: 12.5px; }
+
     /* always-visible day summary */
     .daybar { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 18px; padding: 11px 16px; border-top: 1px solid var(--border); background: rgba(34,197,94,0.05); }
     .db-item { display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--text2); font-weight: 600; }
@@ -267,6 +283,10 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-7-7 18-2.5-7.5z"/></svg>
             Marketing <span class="tbadge gn">3 drafts</span>
           </div>
+          <div class="tab" data-v="try" onclick="go('try',true)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/></svg>
+            Try it live <span class="tbadge" style="background:linear-gradient(135deg,var(--accent),var(--accent2))">you</span>
+          </div>
           <div class="side-sec">Your brands</div>
           <div class="brandleg" id="brandleg"></div>
           <div class="today">
@@ -334,6 +354,28 @@
             <div class="vnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
               <span>New listing &rarr; post drafted <b>per brand, per channel</b>. You approve.</span></div>
             <div class="mk-grid" id="mkgrid"></div>
+          </div>
+
+          <!-- TRY IT LIVE -->
+          <div class="view" id="v-try">
+            <div class="vnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <span><b>Type any buyer inquiry</b> and watch the agent handle it. Or grab a sample.</span></div>
+            <div class="try-grid">
+              <div>
+                <div class="trybox">
+                  <textarea id="try-input" rows="4" placeholder="e.g. Hi, is the Kitsilano cafe still for sale? We have $400k, financing pre-approved..."></textarea>
+                  <div class="try-samples">
+                    <span class="tsample" onclick="trySample(0)">restaurant buyer</span>
+                    <span class="tsample" onclick="trySample(1)">townhouse inquiry</span>
+                    <span class="tsample" onclick="trySample(2)">retail space</span>
+                    <span class="tsample" onclick="trySample(3)">spam</span>
+                  </div>
+                  <button class="cta" id="try-btn" style="margin-top:11px;width:100%" onclick="runTry()">Run the agent &#9654;</button>
+                </div>
+                <div class="try-steps" id="try-steps"></div>
+              </div>
+              <div id="try-result"><div class="try-empty">The agent's work will appear here.</div></div>
+            </div>
           </div>
 
           <div class="daybar">
@@ -447,20 +489,20 @@
     '<div class="wk-row"><span class="wic">&#10003;</span><span><b>NDA signed</b> &rarr; package released</span></div>' +
     '<div class="files"><span class="fchip">' + FILE_SVG + 'P&amp;L</span><span class="fchip">' + FILE_SVG + 'Lease</span><span class="fchip">' + FILE_SVG + 'Asking + comps</span></div>' +
     '<div class="wk-row"><span class="wic">&#10003;</span><span>Showing &middot; <b>Thu 2:00 PM</b> &middot; both sides confirmed</span></div>' +
-    '<div class="approve"><button class="ap-btn go">Approved &#10003;</button><button class="ap-btn ghost">Edit</button><span class="ap-note">nothing sends without you</span></div></div>',
+    '<div class="approve"><button class="ap-btn go" onclick="approveBtn(this)">Approve &amp; send</button><button class="ap-btn ghost">Edit</button><span class="ap-note">nothing sends without you</span></div></div>',
     // Sara
     '<div class="workcard"><div class="wk-head"><span class="worb"></span><b>Agent &middot; Sara Patel</b><span>22s</span></div>' +
     '<div class="wk-row"><span class="wic">&#10003;</span><span><b>Vancouver Canada Homes</b> &middot; Canada Way townhouse</span></div>' +
     '<div class="wk-row"><span class="wic">&#10003;</span><span><b>3 viewing windows</b> from your calendar</span></div>' +
     '<div class="draft"><div class="dh">Draft &middot; Vancouver Canada Homes</div>Hi Sara, it is still available. I could show it Wednesday after 3, Thursday morning, or Friday at noon. Which works best for you two?</div>' +
     '<div class="wk-row"><span class="wic">&#10003;</span><span>Added to pipeline &middot; follow-up never slips</span></div>' +
-    '<div class="approve"><button class="ap-btn go">Approved &#10003;</button><button class="ap-btn ghost">Edit</button><span class="ap-note">nothing sends without you</span></div></div>',
+    '<div class="approve"><button class="ap-btn go" onclick="approveBtn(this)">Approve &amp; send</button><button class="ap-btn ghost">Edit</button><span class="ap-note">nothing sends without you</span></div></div>',
     // Okafors
     '<div class="workcard"><div class="wk-head"><span class="worb"></span><b>Agent &middot; D. &amp; A. Okafor</b><span>30s</span></div>' +
     '<div class="wk-row"><span class="wic">&#10003;</span><span><b>Real East Van</b> &middot; retail &middot; under $1M &middot; Commercial Dr</span></div>' +
     '<div class="wk-row"><span class="wic">&#10003;</span><span><b>2 matches</b> found in your listings</span></div>' +
     '<div class="draft"><div class="dh">Draft &middot; Real East Van</div>Hi both, two spaces fit what you described. The corner unit at Commercial &amp; 3rd is 1,400 sqft with strong foot traffic, and there is a quieter option just off Victoria Drive. Want the details on either?</div>' +
-    '<div class="approve"><button class="ap-btn go">Approved &#10003;</button><button class="ap-btn ghost">Edit</button><span class="ap-note">nothing sends without you</span></div></div>',
+    '<div class="approve"><button class="ap-btn go" onclick="approveBtn(this)">Approve &amp; send</button><button class="ap-btn ghost">Edit</button><span class="ap-note">nothing sends without you</span></div></div>',
     // spam
     '<div class="workcard"><div class="wk-head"><span class="worb"></span><b>Agent &middot; RankBoost SEO</b><span>2s</span></div>' +
     '<div class="wk-row"><span class="wic">&#10005;</span><span>Cold solicitation &middot; bulk sender</span></div>' +
@@ -555,12 +597,103 @@
         '<span class="post-brand" style="color:' + b.c + ';background:' + hexA(b.c, 0.14) + '">' + b.short + '</span></div>' +
         '<div class="post-cap">' + p.cap + '</div>' +
         '<div class="post-tags">' + p.tags + '</div>' +
-        '<div class="post-foot"><span class="post-stat">&#10003; ready for approval</span><span class="post-go">Approve &amp; queue</span></div></div>';
+        '<div class="post-foot"><span class="post-stat">&#10003; ready for approval</span><span class="post-go" style="cursor:pointer" onclick="approveBtn(this)">Approve &amp; queue</span></div></div>';
     }).join('');
   }
 
+  // ---- working approve buttons ----
+  function approveBtn(el) {
+    el.textContent = 'Approved ✓';
+    el.style.background = 'linear-gradient(135deg, var(--green), #16A34A)';
+    el.style.color = '#052012'; el.style.borderColor = 'transparent';
+  }
+
+  // ---- the live try-it agent (all client-side, deterministic) ----
+  var SAMPLES = [
+    'Hi, is the Kitsilano cafe still for sale? We have $400k and financing pre-approved, hoping to move in the next 60 days.',
+    'Looking for a 2-bed townhouse in Burnaby under $850k for my parents. Could we view something this week?',
+    'Do you have any retail space on Commercial Drive under $1M? We already run two stores and want a third.',
+    'FINAL NOTICE: Your business listing needs SEO optimization!!! Click now for our limited-time marketing package, guaranteed #1 ranking.'
+  ];
+  function trySample(i) {
+    var t = document.getElementById('try-input'); t.value = SAMPLES[i]; t.focus();
+  }
+  function analyse(text) {
+    var t = text.toLowerCase();
+    if (/seo|ranking|marketing package|click now|guarantee|limited.time|final notice/.test(t)) return { spam: true };
+    var brand = 1, listing = 'the property';
+    if (/restaurant|cafe|bar |bakery|bistro|food|kitchen/.test(t)) { brand = 0; listing = 'the restaurant listing'; }
+    else if (/townhouse|condo|house|home|apartment|residential|bed/.test(t)) { brand = 2; listing = 'the home'; }
+    else if (/retail|storefront|shop|store/.test(t)) { brand = 3; listing = 'the retail space'; }
+    else if (/commercial|office|warehouse|industrial|building|business/.test(t)) { brand = 1; listing = 'the commercial listing'; }
+    var m = text.match(/\$\s?([\d,.]+)\s?(k|m|million|thousand)?/i);
+    var budget = m ? ('$' + m[1] + (m[2] ? m[2].toUpperCase().charAt(0) : '')) : null;
+    var pre = /pre.?approved|financing in place|cash buyer|cash offer/.test(t);
+    var soon = /asap|fast|quick|this week|this month|\b\d{1,2}0? days\b|soon|next month/.test(t);
+    var score = 55 + (budget ? 14 : 0) + (pre ? 18 : 0) + (soon ? 9 : 0);
+    if (score > 96) score = 96;
+    var conf = brand === 0 || brand === 1; // confidential listing types get NDA-gated
+    var draft;
+    if (conf) draft = 'Hi, thanks for reaching out about ' + listing + '. It is still available. Before I share financials I’ll need a quick NDA signed, link below. Once that’s in, the full package is on its way and we can line up a viewing.';
+    else if (brand === 2) draft = 'Hi, it is still available. I could show it Wednesday after 3, Thursday morning, or Friday at noon. Which works best for you?';
+    else draft = 'Hi, two spaces currently fit what you described. Happy to send details on both, and we can walk through whichever catches your eye.';
+    return { spam: false, brand: brand, listing: listing, budget: budget, pre: pre, soon: soon, score: score, conf: conf, draft: draft };
+  }
+  var trying = false;
+  async function runTry() {
+    if (trying) return;
+    var input = (document.getElementById('try-input').value || '').trim();
+    if (!input) { trySample(0); input = SAMPLES[0]; }
+    trying = true;
+    var btn = document.getElementById('try-btn'); btn.disabled = true; btn.textContent = 'Working...';
+    var steps = document.getElementById('try-steps'); steps.innerHTML = '';
+    var out = document.getElementById('try-result'); out.innerHTML = '<div class="try-empty">...</div>';
+    var a = analyse(input);
+    function step(html) {
+      var el = document.createElement('div'); el.className = 'tstep';
+      el.innerHTML = '<span class="tic">✓</span><span>' + html + '</span>';
+      steps.appendChild(el);
+      requestAnimationFrame(function () { el.classList.add('show'); });
+    }
+    step('reading inquiry');
+    await sleep(650);
+    if (a.spam) {
+      step('bulk-sender fingerprint detected');
+      await sleep(650);
+      step('<b>filed to spam</b> · inbox stays clean');
+      out.innerHTML = '<div class="workcard"><div class="wk-head"><span class="worb"></span><b>Agent · your test inquiry</b><span>2s</span></div>' +
+        '<div class="wk-row"><span class="wic">✕</span><span>Cold solicitation · bulk sender</span></div>' +
+        '<div class="wk-row"><span class="wic">✓</span><span>Filed to spam · <b>you never see it</b></span></div></div>';
+    } else {
+      var b = BRANDS[a.brand];
+      step('routed → <b>' + b.short + '</b>');
+      await sleep(700);
+      step('qualifying buyer');
+      await sleep(700);
+      step('<b>drafting reply</b> in brand voice');
+      await sleep(750);
+      var chips = '';
+      if (a.budget) chips += '<span class="qchip"><b>' + a.budget + '</b></span>';
+      chips += '<span class="qchip"><b>' + (a.pre ? 'pre-approved' : 'financing unknown') + '</b></span>';
+      if (a.soon) chips += '<span class="qchip"><b>ready soon</b></span>';
+      chips += '<span class="score">★ ' + a.score + '/100</span>';
+      out.innerHTML = '<div class="workcard"><div class="wk-head"><span class="worb"></span><b>Agent · your test inquiry</b><span>38s</span></div>' +
+        '<div class="wk-row"><span class="wic">✓</span><span><b>' + b.short + '</b> · ' + a.listing + '</span></div>' +
+        '<div class="wk-row"><span class="wic">✓</span><span>Qualified:</span></div>' +
+        '<div class="quals">' + chips + '</div>' +
+        '<div class="draft"><div class="dh">Draft · ' + b.short + '</div><span id="try-draft"></span></div>' +
+        (a.conf ? '<div class="wk-row"><span class="wic">✓</span><span>NDA queued · financials gated until signed</span></div>' : '') +
+        '<div class="wk-row"><span class="wic">✓</span><span>Added to pipeline · <b>New</b></span></div>' +
+        '<div class="approve"><button class="ap-btn go" onclick="approveBtn(this)">Approve &amp; send</button><button class="ap-btn ghost">Edit</button><span class="ap-note">nothing sends without you</span></div></div>';
+      var d = document.getElementById('try-draft');
+      for (var i = 0; i < a.draft.length; i++) { d.textContent += a.draft[i]; await sleep(7); }
+    }
+    btn.disabled = false; btn.textContent = 'Run it again ▶';
+    trying = false;
+  }
+
   // ---- view switching ----
-  var VIEWS = { inbox: 'Inbox', pipe: 'Pipeline', show: 'Showings', mkt: 'Marketing' };
+  var VIEWS = { inbox: 'Inbox', pipe: 'Pipeline', show: 'Showings', mkt: 'Marketing', try: 'Try it live' };
   var tourToken = 0;
   function go(v, manual) {
     if (manual) { tourToken++; caption('EXPLORE', 'All yours. Click anything.'); }
@@ -582,7 +715,7 @@
       ['pipe',  '2 / 4', 'Pipeline: every buyer tracked, moved forward automatically.'],
       ['show',  '3 / 4', 'Showings: booked into your real week, confirmed both sides.'],
       ['mkt',   '4 / 4', 'Marketing: posts drafted per brand. You approve.'],
-      ['inbox', 'DONE',  'The whole desk. Click around.']
+      ['try',   'YOUR TURN', 'Now you: type any inquiry and run the agent yourself.']
     ];
     for (var i = 0; i < stops.length; i++) {
       if (my !== tourToken) return;
@@ -596,7 +729,7 @@
   buildBrandLeg(); buildMail(); buildPipe(); buildCal(); buildMkt();
   var qaView = null;
   try { qaView = new URLSearchParams(location.search).get('qa'); } catch (e) {}
-  if (qaView && VIEWS[qaView]) { tourToken++; go(qaView, false); }
+  if (qaView && VIEWS[qaView]) { tourToken++; go(qaView, false); if (qaView === 'try') { trySample(0); runTry(); } }
   else window.addEventListener('load', function () { setTimeout(tour, 900); });
 </script>
 </body>
