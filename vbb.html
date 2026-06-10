@@ -173,6 +173,9 @@
     .desknote { margin-top: 11px; font-size: 11px; color: var(--text4); text-align: center; }
     .desknote.ok { color: var(--green); font-weight: 700; }
 
+    /* reel-mode highlight */
+    .spot { box-shadow: 0 0 0 2px var(--accent3), 0 14px 44px rgba(168,85,247,0.22) !important; transition: box-shadow .5s; }
+
     /* ===== bottom line ===== */
     .bottomline { position: relative; z-index: 5; margin-top: 58px; background: linear-gradient(180deg, var(--surface), var(--bg2)); border: 1px solid var(--border); border-radius: 16px; padding: 24px; text-align: center; }
     .bl-nums { display: flex; justify-content: center; gap: 34px; flex-wrap: wrap; margin-top: 14px; }
@@ -576,10 +579,50 @@
   // init
   buildDesk();
 
-  // qa hook for screenshots
+  // ---- reel mode (?reel=1): the page performs itself for a silent screen
+  // recording. Scrolls the story, types the inquiry, runs the agent, shows the
+  // desk update, ends on the bottom line. No voice or cursor needed.
+  function spot(el) {
+    document.querySelectorAll('.spot').forEach(function (e) { e.classList.remove('spot'); });
+    if (el) el.classList.add('spot');
+  }
+  async function reel() {
+    window.scrollTo(0, 0);
+    await sleep(1600);
+    var steps = document.querySelectorAll('.fstep .fbody > div:last-child');
+    for (var i = 0; i < steps.length; i++) {
+      steps[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      spot(steps[i]);
+      await sleep(i === 1 ? 3400 : 2600);
+    }
+    spot(null);
+    var quote = document.querySelector('.quote');
+    if (quote) { quote.scrollIntoView({ behavior: 'smooth', block: 'center' }); await sleep(2600); }
+    var pains = document.querySelector('.pains');
+    if (pains) { pains.scrollIntoView({ behavior: 'smooth', block: 'center' }); await sleep(3000); }
+    var tryBox = document.querySelector('.trybox');
+    tryBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    await sleep(1300);
+    var ta = document.getElementById('try-input');
+    ta.value = '';
+    var txt = SAMPLES[0];
+    for (var c = 0; c < txt.length; c++) { ta.value += txt[c]; await sleep(22); }
+    await sleep(600);
+    await runTry();
+    await sleep(2400);
+    var bl = document.querySelector('.bottomline');
+    bl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    await sleep(2800);
+    document.querySelector('.closer').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // qa + reel hooks
   try {
     var qa = new URLSearchParams(location.search).get('qa');
     if (qa === 'try') { trySample(0); runTry(); }
+    if (new URLSearchParams(location.search).get('reel') === '1') {
+      window.addEventListener('load', function () { setTimeout(reel, 800); });
+    }
   } catch (e) {}
 </script>
 </body>
