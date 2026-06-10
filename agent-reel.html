@@ -198,11 +198,24 @@
     .hud1 b { font-size: 12.5px; display: block; }
     .hud1 span { font-size: 11px; color: #8A93A8; display: block; }
     .hudchips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+    .hudfoot { font-size: 10px; color: #5E6480; border-top: 1px solid rgba(99,102,241,0.2); margin-top: 10px; padding-top: 8px; }
     .hchip { font-size: 10px; font-weight: 500; background: #241F38; border: 1px solid rgba(99,102,241,0.3); border-radius: 14px; padding: 2px 9px; color: #B8C2D0; opacity: 0; transform: scale(.7); transition: all .3s cubic-bezier(.2,1.4,.4,1); }
     .hchip.show { opacity: 1; transform: none; }
     .hchip.g { color: #22C55E; border-color: rgba(34,197,94,0.4); }
     .hchip.c { color: #22D3EE; border-color: rgba(34,211,238,0.4); }
     .hchip.a { color: #FB923C; border-color: rgba(251,146,60,0.4); }
+
+    /* ===== appointment notification (Google-style toast) ===== */
+    .gnotif { position: fixed; top: 52px; right: 20px; width: 330px; background: #fff; border: 1px solid #e0e3e7; border-radius: 12px; box-shadow: 0 6px 26px rgba(0,0,0,0.22); padding: 13px 15px; z-index: 80; display: flex; gap: 12px; transform: translateX(380px); }
+    .gnotif.show { animation: notifin .55s cubic-bezier(.2,1,.3,1) forwards; }
+    @keyframes notifin { to { transform: none; } }
+    .gnotif.hide { animation: notifout .5s ease forwards; }
+    @keyframes notifout { to { transform: translateX(380px); opacity: 0; } }
+    .gnotif .nico { width: 34px; height: 34px; flex-shrink: 0; }
+    .gnotif b { font-size: 13.5px; color: #202124; display: block; line-height: 1.4; }
+    .gnotif .ntime { font-size: 12.5px; color: #5f6368; }
+    .gnotif .nok { font-size: 11.5px; color: #188038; font-weight: 700; margin-top: 5px; }
+    .gnotif .nby { font-size: 10.5px; color: #9aa0a6; margin-top: 2px; }
 
     /* ===== cursor ===== */
     #cursor { position: fixed; z-index: 100; width: 20px; height: 22px; pointer-events: none; left: -60px; top: 40%; transition: left 1s cubic-bezier(.35,.9,.35,1), top 1s cubic-bezier(.35,.9,.35,1); filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4)); }
@@ -230,10 +243,6 @@
   <div class="ctab on" id="tab-gmail">
     <svg class="tfav" viewBox="0 0 52 40"><path fill="#EA4335" d="M3.6 40h8.8V18.6L0 9.2V36.4C0 38.4 1.6 40 3.6 40z"/><path fill="#4285F4" d="M39.6 40h8.8c2 0 3.6-1.6 3.6-3.6V9.2l-12.4 9.4z"/><path fill="#FBBC04" d="M39.6 9.2v9.4L52 9.2V7.4c0-4.5-5.1-7-8.7-4.3z"/><path fill="#C5221F" d="M12.4 18.6L26 28.9l13.6-10.3V9.2L26 19.5 12.4 9.2z"/></svg>
     <span class="ttl" id="tab-gmail-t">Inbox (1) - jean@vancouvercommercialbrokers.ca</span><span class="cx">&#10005;</span>
-  </div>
-  <div class="ctab" id="tab-gcal">
-    <svg class="tfav" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="19" rx="4" fill="#1a73e8"/><text x="12" y="17.5" text-anchor="middle" font-size="11" fill="#fff" font-weight="700" font-family="Roboto, Arial">9</text></svg>
-    <span class="ttl">Google Calendar - June 2026</span><span class="cx">&#10005;</span>
   </div>
   <div class="ctab" id="tab-crm">
     <span class="afav">A</span>
@@ -359,26 +368,6 @@
   </div>
 </div>
 
-<!-- Google Calendar -->
-<div id="gcal">
-  <div class="caltop">
-    <span class="glogo"><span class="menu"><span></span></span></span>
-    <span class="callogo"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="19" rx="4" fill="#1a73e8"/><text x="12" y="17.5" text-anchor="middle" font-size="11" fill="#fff" font-weight="700" font-family="Roboto, Arial">9</text></svg> Calendar</span>
-    <span class="ctoday">Today</span>
-    <span class="calmonth">June 2026</span>
-    <div class="gright"><span class="gava">J</span></div>
-  </div>
-  <div class="calhead">
-    <span></span>
-    <div class="chd">MON<b>8</b></div>
-    <div class="chd today">TUE<b>9</b></div>
-    <div class="chd">WED<b>10</b></div>
-    <div class="chd">THU<b>11</b></div>
-    <div class="chd">FRI<b>12</b></div>
-  </div>
-  <div class="calbody" id="calbody"></div>
-</div>
-
 <!-- CRM (Broker Desk) -->
 <div id="crm">
   <div class="crmtop">
@@ -436,6 +425,7 @@
     <div><b>Aevon Agent</b><span id="hudstat">watching your inbox...</span></div>
   </div>
   <div class="hudchips" id="hudchips"></div>
+  <div class="hudfoot">working in the background &middot; you never lift a finger</div>
 </div>
 
 <!-- cursor -->
@@ -467,54 +457,39 @@
   var LEADS = [
     { from: 'Minh Tran', email: 'minh.tran@gmail.com', ava: '#FB8C00', init: 'M',
       sub: 'Gastown restaurant, still available?', time: '9:02 AM',
-      body: 'Hi,\n\nSaw the listing on your site. We have $500k, financing pre-approved, and can close inside 60 days if the numbers work.\n\nCould you send the financials over?\n\nMinh',
-      snip: 'Saw the listing on your site. We have $500k, financing pre-approved, and can',
-      chips: [['$500k budget',''], ['pre-approved','g'], ['< 60 days','c'], ['★ STRONG · 93/100','g']],
+      body: 'Hi there,\n\nI came across the Gastown restaurant listing on your site this morning. My partner and I sold our Victoria location last fall, so we have about $500k to work with and financing is already pre-approved through our credit union.\n\nWe are hoping to move on something within the next 60 days. Could you send the financials over when you get a chance? If it looks right, Thursday afternoon would work best for us to come see the space.\n\nThanks,\nMinh Tran',
+      snip: 'I came across the Gastown restaurant listing on your site this morning. My partner and I sold our',
+      chips: [['$500k budget',''], ['pre-approved','g'], ['< 60 days','c'], ['Thu PM viewing asked','c'], ['★ STRONG · 93/100','g']],
       label: { t: '★ Strong buyer', bg: '#e6f4ea', fg: '#137333' },
       brand: { t: 'Restaurant Broker', bg: '#fef3e0', fg: '#b06000' },
-      draft: 'Hi Minh,\n\nThanks for reaching out about the Gastown location. It is still available.\n\nBefore I share financials I’ll need a quick NDA signed, link below. Once that’s in, the full package is on its way and we can line up a viewing.\n\nJean' },
+      book: { title: 'Showing · Minh Tran · Gastown', when: 'Thu, Jun 11 · 2:00 to 2:30 PM' },
+      draft: 'Hi Minh,\n\nThanks for reaching out about the Gastown location. It is still available, and congrats on the Victoria sale.\n\nBefore I share financials I’ll need a quick NDA signed, link below. Once that’s in, the full package is on its way.\n\nThursday afternoon works on my end. I’ve penciled in 2:00 PM and sent a calendar invite, just confirm and we’re set.\n\nJean' },
     { from: 'Daniel Kwon', email: 'dkwon.invest@gmail.com', ava: '#1a73e8', init: 'D',
       sub: 'Re: Kingsway 12-unit building - package', time: '9:14 AM',
-      body: 'Hi Jean,\n\nWe sent the signed NDA back yesterday for the Kingsway 12-unit building.\n\nCould you send the full package when you have a minute? Our lender wants the rent roll this week.\n\nDaniel',
-      snip: 'We sent the signed NDA back yesterday for the Kingsway 12-unit building. Could',
+      body: 'Hi Jean,\n\nGood speaking with you last week. We sent the signed NDA back yesterday afternoon for the Kingsway 12-unit building.\n\nCould you send over the full package when you have a minute? Our lender at the bank is asking for the rent roll and income statement before Friday, and my partner would love to see the floor plans too if you have them handy.\n\nAppreciate it,\nDaniel Kwon',
+      snip: 'Good speaking with you last week. We sent the signed NDA back yesterday afternoon for the Kingsway',
       chips: [['NDA on file ✓','g'], ['lender engaged','c'], ['multi-family · 12 units',''], ['★ HOT · ready to move','g']],
       label: { t: 'Package attached', bg: '#e6f4ea', fg: '#137333' },
       brand: { t: 'Vancouver Brokers', bg: '#e8f0fe', fg: '#1967d2' },
-      attach: [['Kingsway-12unit_Offering.pdf', '2.4 MB', '#d93025'], ['Rent-roll-2026.xlsx', '88 KB', '#188038'], ['Income-statement.pdf', '1.1 MB', '#d93025']],
-      draft: 'Hi Daniel,\n\nGot it, thanks for the signed NDA. The full Kingsway package is attached: offering summary, current rent roll, and the income statement.\n\nIf your lender needs anything else this week, just say the word.\n\nJean' },
+      attach: [['Kingsway-12unit_Offering.pdf', '2.4 MB', '#d93025'], ['Rent-roll-2026.xlsx', '88 KB', '#188038'], ['Income-statement.pdf', '1.1 MB', '#d93025'], ['Floor-plans.pdf', '3.2 MB', '#d93025']],
+      draft: 'Hi Daniel,\n\nGot the signed NDA, thanks. The full Kingsway package is attached: offering summary, current rent roll, income statement, and the floor plans your partner asked about.\n\nThat should cover what your lender needs before Friday. If anything else comes up, just say the word.\n\nJean' },
     { from: 'Priya & Dev Sharma', email: 'priya.sharma@outlook.com', ava: '#00ACC1', init: 'P',
       sub: 'Burnaby townhouse, can we view this week?', time: '9:27 AM',
-      body: 'Hello,\n\nWe’re interested in the townhouse on Canada Way for my parents. Budget is around $850k.\n\nIs it still available, and could we see it this week?\n\nPriya',
-      snip: 'We’re interested in the townhouse on Canada Way for my parents. Budget is',
+      body: 'Hello,\n\nMy husband and I are looking at the townhouse on Canada Way for my parents, who are downsizing from their house in Surrey this summer.\n\nOur budget is around $850k. Is it still available? We are fairly flexible, but it would be wonderful to view it sometime this week if possible since my parents are in town.\n\nThank you,\nPriya Sharma',
+      snip: 'My husband and I are looking at the townhouse on Canada Way for my parents, who are downsizing',
       chips: [['$850k budget',''], ['viewing this week','c'], ['GOOD FIT · 78/100','c']],
       label: { t: 'Qualified', bg: '#e8f0fe', fg: '#1967d2' },
       brand: { t: 'Canada Homes', bg: '#e0f7fa', fg: '#00838f' },
       draft: 'Hi Priya,\n\nIt is still available. I could show it Wednesday after 3, Thursday morning, or Friday at noon.\n\nWhich works best for you and your parents?\n\nJean' },
     { from: 'Jay Rondo', email: 'jayr.deals@gmail.com', ava: '#9e9e9e', init: 'J',
       sub: 'restaurants for sale?', time: '9:38 AM',
-      body: 'How much are your restaurants? What’s the cheapest one you got?\n\nJay',
-      snip: 'How much are your restaurants? What’s the cheapest one you got?',
+      body: 'hey\n\nhow much are your restaurants going for? whats the cheapest one you got rn. also do u do financing\n\nJay',
+      snip: 'how much are your restaurants going for? whats the cheapest one you got rn. also do u do',
       chips: [['no budget given','a'], ['no timeline','a'], ['WEAK · 35/100','a']],
       label: { t: 'Needs qualifying', bg: '#fef7e0', fg: '#b06000' },
       brand: { t: 'Restaurant Broker', bg: '#fef3e0', fg: '#b06000' },
       draft: 'Hi Jay,\n\nHappy to help. Prices range a lot depending on size, location and revenue.\n\nWhat budget are you working with, and are you set on a restaurant or open to other food businesses? I’ll send the two or three that actually fit.\n\nJean' }
   ];
-
-  // ---- google calendar grid ----
-  function buildGCal() {
-    var hours = ['9 AM', '10 AM', '11 AM', '12 PM', '1 PM', '2 PM', '3 PM', '4 PM'];
-    var EV = { '0-1': ['Valuation call', '#7986cb'], '1-3': ['Listing visit', '#33b679'], '2-0': ['Strata AGM', '#8e24aa'], '4-2': ['Showing · J. Castillo', '#039be5'] };
-    var html = '';
-    for (var h = 0; h < hours.length; h++) {
-      html += '<div class="crow2"><span class="ctm">' + hours[h] + '</span>';
-      for (var d = 0; d < 5; d++) {
-        var ev = EV[d + '-' + h];
-        html += '<div class="ccell" id="gc-' + d + '-' + h + '">' + (ev ? '<span class="cev" style="background:' + ev[1] + '">' + ev[0] + '</span>' : '') + '</div>';
-      }
-      html += '</div>';
-    }
-    el('calbody').innerHTML = html;
-  }
 
   var inboxCount = 1, draftCount = 1, spamCount = 0;
   function counts() {
@@ -634,6 +609,23 @@
     await sleep(900);
   }
 
+  // Google-style appointment toast for the slot the buyer asked for
+  async function showNotif(book) {
+    var n = document.createElement('div');
+    n.className = 'gnotif';
+    n.innerHTML = '<svg class="nico" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="19" rx="4" fill="#1a73e8"/><text x="12" y="17.5" text-anchor="middle" font-size="11" fill="#fff" font-weight="700" font-family="Roboto, Arial">11</text></svg>' +
+      '<div><b>' + book.title + '</b><span class="ntime">' + book.when + '</span>' +
+      '<div class="nok">&#10003; Appointment scheduled, the time they asked for</div>' +
+      '<div class="nby">by Aevon Agent &middot; invite goes out with your approved reply</div></div>';
+    document.body.appendChild(n);
+    requestAnimationFrame(function () { n.classList.add('show'); });
+    hud('appointment scheduled · Thu 2:00 PM');
+    await sleep(3200);
+    n.classList.add('hide');
+    await sleep(550);
+    n.remove();
+  }
+
   function rowChips(id, m) {
     el(id + '-chips').innerHTML =
       '<span class="gchip" style="background:' + m.brand.bg + ';color:' + m.brand.fg + '">' + m.brand.t + '</span>' +
@@ -666,6 +658,7 @@
     await click();
     await typeDraft(m);
     hud('draft saved · waiting for your approval');
+    if (m.book) await showNotif(m.book);
     await sleep(1300);
     await curTo(el('tback'), null, null, true);
     await click();
@@ -676,33 +669,8 @@
     await sleep(900);
   }
 
-  // After Minh's showing books, hop to the Calendar tab and show the event land.
-  async function calendarBeat() {
-    hud('updating your calendar...');
-    await sleep(700);
-    await curTo(el('tab-gcal'), null, null);
-    await click();
-    el('tab-gmail').classList.remove('on');
-    el('tab-gcal').classList.add('on');
-    document.title = 'Google Calendar - June 2026';
-    el('gcal').classList.add('on');
-    await curPark();
-    await sleep(700);
-    var cell = el('gc-3-5');
-    if (cell) cell.innerHTML = '<span class="cev new" style="background:#0b8043">2:00 · Showing · Minh Tran</span>';
-    hud('showing added · invite sent to both sides');
-    await sleep(2400);
-    await curTo(el('tab-gmail'), null, null, true);
-    await click();
-    el('tab-gcal').classList.remove('on');
-    el('tab-gmail').classList.add('on');
-    el('gcal').classList.remove('on');
-    counts();
-    await sleep(700);
-  }
-
   async function run() {
-    buildList(); buildGCal(); counts();
+    buildList(); counts();
     await sleep(1800);
 
     for (var i = 0; i < LEADS.length; i++) {
@@ -710,7 +678,6 @@
       hud('new inquiry detected');
       await sleep(1100);
       await handleLead(LEADS[i], 'L' + i);
-      if (i === 0) await calendarBeat();
     }
     await sleep(600);
 
