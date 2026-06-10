@@ -149,6 +149,30 @@
     .wk-row .wic { width: 16px; height: 16px; border-radius: 5px; background: rgba(34,197,94,0.15); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 2px; }
     .wk-row b { color: var(--text); }
 
+    /* ===== buyer desk (live CRM) ===== */
+    .deskwrap { position: relative; z-index: 5; margin-top: 14px; background: linear-gradient(180deg, var(--surface), var(--bg2)); border: 1px solid var(--border); border-radius: 14px; padding: 15px; }
+    .deskhead { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .deskhead b { font-size: 14px; display: block; }
+    .deskhead span { font-size: 11.5px; color: var(--text3); display: block; }
+    .desklive { margin-left: auto; font-size: 10.5px; color: var(--green); display: flex; align-items: center; gap: 6px; font-weight: 700; white-space: nowrap; }
+    .desklive .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: live 2s infinite; }
+    .pcols { display: grid; grid-template-columns: repeat(4,1fr); gap: 9px; }
+    @media (max-width:760px){ .pcols { display: flex; overflow-x: auto; padding-bottom: 6px; } .pcol { min-width: 158px; flex-shrink: 0; } }
+    .pcol { background: var(--bg2); border: 1px solid var(--border); border-radius: 11px; padding: 8px 7px; min-height: 120px; }
+    .pcol-h { font-size: 8.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--text4); font-weight: 700; margin-bottom: 8px; display: flex; justify-content: space-between; padding: 0 3px; }
+    .pcol-h .pct { color: var(--text3); background: var(--surface2); border-radius: 10px; padding: 0 7px; }
+    .pcard { background: linear-gradient(180deg, var(--surface3), var(--surface2)); border: 1px solid var(--border); border-radius: 8px; padding: 8px 9px; margin-bottom: 7px; box-shadow: 0 2px 8px rgba(0,0,0,0.25); transition: all .4s cubic-bezier(.2,1.2,.4,1); }
+    .pcard:last-child { margin-bottom: 0; }
+    .pcard .pn { font-size: 10.5px; font-weight: 700; display: flex; align-items: center; gap: 5px; }
+    .pcard .pn .bdot2 { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .pcard .pv { font-size: 9px; color: var(--text3); margin-top: 2px; }
+    .pcard .ptag { font-size: 8.5px; font-weight: 800; color: var(--green); margin-top: 5px; }
+    .pcard.hot { border-color: var(--cyan); box-shadow: 0 0 0 1px var(--cyan), 0 5px 16px rgba(34,211,238,0.18); }
+    .pcard.enter { animation: cardin .55s cubic-bezier(.2,1.3,.4,1); }
+    @keyframes cardin { from { opacity: 0; transform: translateY(-10px) scale(.85); } to { opacity: 1; transform: none; } }
+    .desknote { margin-top: 11px; font-size: 11px; color: var(--text4); text-align: center; }
+    .desknote.ok { color: var(--green); font-weight: 700; }
+
     /* ===== bottom line ===== */
     .bottomline { position: relative; z-index: 5; margin-top: 58px; background: linear-gradient(180deg, var(--surface), var(--bg2)); border: 1px solid var(--border); border-radius: 16px; padding: 24px; text-align: center; }
     .bl-nums { display: flex; justify-content: center; gap: 34px; flex-wrap: wrap; margin-top: 14px; }
@@ -328,6 +352,19 @@
     <div id="try-result"><div class="try-empty">The agent's work will appear here.</div></div>
   </div>
 
+  <!-- ============ 3b. WHERE IT LANDS (live CRM) ============ -->
+  <div class="deskwrap">
+    <div class="deskhead">
+      <div>
+        <b>...and it lands in your buyer desk</b>
+        <span>The simple CRM that comes with it. The agent keeps it updated, you just glance.</span>
+      </div>
+      <span class="desklive"><span class="dot"></span> updates live</span>
+    </div>
+    <div class="pcols" id="pcols"></div>
+    <div class="desknote" id="desknote">Run an inquiry above and watch your test buyer drop in.</div>
+  </div>
+
   <!-- ============ 4. BOTTOM LINE ============ -->
   <div class="bottomline">
     <span class="knum">A TYPICAL MORNING</span>
@@ -437,6 +474,52 @@
     else draft = 'Hi, two spaces currently fit what you described. Happy to send details on both, and we can walk through whichever catches your eye.';
     return { spam: false, brand: brand, listing: listing, budget: budget, pre: pre, soon: soon, score: score, conf: conf, draft: draft };
   }
+  // ---- buyer desk (live mini CRM) ----
+  var PSTAGES = ['New', 'Qualified', 'Package sent', 'Showing booked'];
+  var SEED = [
+    { name: 'S. Patel', brand: 2, val: 'Burnaby townhouse', col: 0 },
+    { name: 'The Okafors', brand: 3, val: 'Retail, 2 matches', col: 1 },
+    { name: 'K. Wong', brand: 1, val: 'Commercial, $1.2M', col: 1 },
+    { name: 'J. Castillo', brand: 0, val: 'Cafe, Mt Pleasant', col: 2 },
+    { name: 'Minh Tran', brand: 0, val: 'Gastown restaurant', col: 3, tag: '✓ booked Thu 2 PM, by the agent' }
+  ];
+  function deskCard(p, extra) {
+    var b = BRANDS[p.brand];
+    return '<div class="pcard' + (extra || '') + '"' + (p.id ? ' id="' + p.id + '"' : '') + '>' +
+      '<div class="pn"><span class="bdot2" style="background:' + b.c + '"></span>' + p.name + '</div>' +
+      '<div class="pv">' + p.val + '</div>' +
+      (p.tag ? '<div class="ptag">' + p.tag + '</div>' : '') + '</div>';
+  }
+  function buildDesk() {
+    document.getElementById('pcols').innerHTML = PSTAGES.map(function (s, c) {
+      var cards = SEED.filter(function (p) { return p.col === c; }).map(function (p) { return deskCard(p); }).join('');
+      var n = SEED.filter(function (p) { return p.col === c; }).length;
+      return '<div class="pcol"><div class="pcol-h"><span>' + s + '</span><span class="pct" id="pct' + c + '">' + n + '</span></div><div class="pbody" id="pb' + c + '">' + cards + '</div></div>';
+    }).join('');
+  }
+  function addToDesk(a) {
+    var old = document.getElementById('try-pcard');
+    if (old) {
+      var oldCol = old.closest('.pcol');
+      old.remove();
+      if (oldCol) { var oc = oldCol.querySelector('.pct'); if (oc) oc.textContent = parseInt(oc.textContent, 10) - 1; }
+    }
+    var col = a.score >= 70 ? 1 : 0;
+    var card = { name: 'Your test buyer', brand: a.brand, val: a.listing + ' · ★ ' + a.score, id: 'try-pcard', tag: '✓ added by the agent just now' };
+    document.getElementById('pb' + col).insertAdjacentHTML('afterbegin', deskCard(card, ' hot enter'));
+    var ct = document.getElementById('pct' + col); if (ct) ct.textContent = parseInt(ct.textContent, 10) + 1;
+    var note = document.getElementById('desknote');
+    note.textContent = '✓ Your test buyer just landed in "' + PSTAGES[col] + '". This is how every real inquiry shows up, sorted and scored.';
+    note.classList.add('ok');
+    var desk = document.querySelector('.deskwrap');
+    if (desk && desk.scrollIntoView) desk.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+  function spamDeskNote() {
+    var note = document.getElementById('desknote');
+    note.textContent = '✕ Spam filtered. Your buyer desk stays clean, nothing landed.';
+    note.classList.remove('ok');
+  }
+
   var trying = false;
   async function runTry() {
     if (trying) return;
@@ -462,6 +545,7 @@
       out.innerHTML = '<div class="workcard"><div class="wk-head"><span class="worb"></span><b>Agent · your test inquiry</b><span>2s</span></div>' +
         '<div class="wk-row"><span class="wic">✕</span><span>Cold solicitation · bulk sender</span></div>' +
         '<div class="wk-row"><span class="wic">✓</span><span>Filed to spam · <b>you never see it</b></span></div></div>';
+      spamDeskNote();
     } else {
       var b = BRANDS[a.brand];
       step('routed → <b>' + b.short + '</b>');
@@ -483,10 +567,14 @@
         '<div class="approve"><button class="ap-btn go" onclick="approveBtn(this)">Approve &amp; send</button><button class="ap-btn ghost">Edit</button><span class="ap-note">nothing sends without you</span></div></div>';
       var d = document.getElementById('try-draft');
       for (var i = 0; i < a.draft.length; i++) { d.textContent += a.draft[i]; await sleep(7); }
+      addToDesk(a);
     }
     btn.disabled = false; btn.textContent = 'Run it again ▶';
     trying = false;
   }
+
+  // init
+  buildDesk();
 
   // qa hook for screenshots
   try {
