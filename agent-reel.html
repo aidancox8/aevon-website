@@ -254,7 +254,7 @@
   </div>
   <div class="ctab" id="tab-crm">
     <span class="afav">A</span>
-    <span class="ttl">Broker Desk &middot; Buyers</span><span class="cx">&#10005;</span>
+    <span class="ttl" id="tabcrm-t">Broker Desk &middot; Buyers</span><span class="cx">&#10005;</span>
   </div>
   <span class="newtab">+</span>
 </div>
@@ -299,10 +299,7 @@
     </nav>
     <div class="glabels">
       <div class="glh">Labels</div>
-      <div class="glabel"><span class="ldot" style="background:#FB8C00"></span>Restaurant Broker</div>
-      <div class="glabel"><span class="ldot" style="background:#1a73e8"></span>Vancouver Brokers</div>
-      <div class="glabel"><span class="ldot" style="background:#00ACC1"></span>Canada Homes</div>
-      <div class="glabel"><span class="ldot" style="background:#9C27B0"></span>Real East Van</div>
+      <div id="glabels"></div>
     </div>
   </aside>
 
@@ -379,49 +376,27 @@
 <!-- CRM (Broker Desk) -->
 <div id="crm">
   <div class="crmtop">
-    <span class="crmlogo"><span class="alogo">A</span> Broker Desk</span>
+    <span class="crmlogo"><span class="alogo">A</span> <span id="crmlogo-t">Broker Desk</span></span>
     <div class="gsearch" style="max-width:560px">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-      Search buyers, listings, showings
+      <span id="crmsearch-t">Search buyers, listings, showings</span>
     </div>
     <div class="gright"><span class="gava">J</span></div>
   </div>
   <div class="crmmain">
     <aside class="crail">
       <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</div>
-      <div class="citem sel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Buyers <span class="gct" id="crmbuyers">8</span></div>
-      <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg>Listings</div>
-      <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Showings</div>
-      <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>NDAs &amp; Packages</div>
+      <div class="citem sel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span id="crmrail-t">Buyers</span> <span class="gct" id="crmbuyers">8</span></div>
+      <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg><span id="crmrail2-t">Listings</span></div>
+      <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg><span id="crmrail3-t">Showings</span></div>
+      <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><span id="crmrail4-t">NDAs &amp; Packages</span></div>
       <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-7-7 18-2.5-7.5z"/></svg>Marketing</div>
       <div class="citem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-5"/></svg>Reports</div>
     </aside>
     <div class="cboard">
-      <div class="cb-head"><h1>Buyers</h1><span>all brands &middot; sorted by stage &middot; kept up to date by your agent</span></div>
-      <div class="cstats">
-        <div class="cstat"><b id="cs1">8</b>active buyers</div>
-        <div class="cstat"><b class="bl" id="cs2">0</b>awaiting your approval</div>
-        <div class="cstat"><b id="cs3">2</b>showings this week</div>
-        <div class="cstat"><b class="bl" id="cs4">0</b>new today</div>
-      </div>
-      <div class="ccols">
-        <div class="ccol"><div class="ccol-h"><span>New</span><span class="cct" id="cc0">2</span></div><div id="cb0">
-          <div class="ccard"><b>D. &amp; A. Okafor</b><div class="csub">Retail space &middot; Commercial Drive</div><div class="crow"><span class="gchip" style="background:#f3e8fd;color:#7b1fa2">Real East Van</span><span class="gchip" style="background:#fef7e0;color:#b06000">reply pending</span></div></div>
-          <div class="ccard"><b>C. Dubois</b><div class="csub">Liquor store &middot; Burnaby</div><div class="crow"><span class="gchip" style="background:#e8f0fe;color:#1967d2">Vancouver Brokers</span><span class="gchip" style="background:#e8f0fe;color:#1967d2">intro sent</span></div></div>
-        </div></div>
-        <div class="ccol"><div class="ccol-h"><span>Qualified</span><span class="cct" id="cc1">2</span></div><div id="cb1">
-          <div class="ccard"><b>T. Nguyen</b><div class="csub">Bakery &middot; Kitsilano</div><div class="crow"><span class="gchip" style="background:#fef3e0;color:#b06000">Restaurant Broker</span><span class="gchip" style="background:#e6f4ea;color:#137333">&#9733; Strong &middot; 82</span></div></div>
-          <div class="ccard"><b>S. Abadi</b><div class="csub">Duplex &middot; New Westminster</div><div class="crow"><span class="gchip" style="background:#e0f7fa;color:#00838f">Canada Homes</span><span class="gchip" style="background:#fef7e0;color:#b06000">docs requested</span></div></div>
-        </div></div>
-        <div class="ccol"><div class="ccol-h"><span>Package sent</span><span class="cct" id="cc2">2</span></div><div id="cb2">
-          <div class="ccard"><b>K. Wong</b><div class="csub">Commercial building &middot; $1.2M</div><div class="crow"><span class="gchip" style="background:#e8f0fe;color:#1967d2">Vancouver Brokers</span><span class="gchip" style="background:#e6f4ea;color:#137333">NDA signed &#10003;</span></div></div>
-          <div class="ccard"><b>R. &amp; M. Silva</b><div class="csub">6-unit rental &middot; East Van</div><div class="crow"><span class="gchip" style="background:#f3e8fd;color:#7b1fa2">Real East Van</span><span class="gchip" style="background:#e6f4ea;color:#137333">rent roll sent</span></div></div>
-        </div></div>
-        <div class="ccol"><div class="ccol-h"><span>Showing booked</span><span class="cct" id="cc3">2</span></div><div id="cb3">
-          <div class="ccard"><b>J. Castillo</b><div class="csub">Cafe &middot; Mount Pleasant</div><div class="crow"><span class="gchip" style="background:#fef3e0;color:#b06000">Restaurant Broker</span><span class="gchip" style="background:#e6f4ea;color:#137333">Fri 11:00 AM</span></div></div>
-          <div class="ccard"><b>A. Petrov</b><div class="csub">Condo &middot; Brentwood</div><div class="crow"><span class="gchip" style="background:#e0f7fa;color:#00838f">Canada Homes</span><span class="gchip" style="background:#e6f4ea;color:#137333">Sat 10:00 AM</span></div></div>
-        </div></div>
-      </div>
+      <div class="cb-head"><h1 id="crmtitle">Buyers</h1><span id="crmsub">all brands &middot; sorted by stage &middot; kept up to date by your agent</span></div>
+      <div class="cstats" id="crmstats"></div>
+      <div class="ccols" id="ccols"></div>
     </div>
   </div>
 </div>
@@ -443,12 +418,12 @@
 <div class="endcard" id="endcard">
   <div class="end-inner">
     <h2>Inbox cleared. CRM sorted. Zero typing.</h2>
-    <div class="end-nums">
+    <div class="end-nums" id="endnums">
       <div class="en"><div class="n g">3</div><div class="l">buyers qualified &amp; filed</div></div>
       <div class="en"><div class="n">4</div><div class="l">drafts await your OK</div></div>
       <div class="en"><div class="n">1</div><div class="l">listing package attached</div></div>
     </div>
-    <p>The agent works inside the inbox you already use and keeps your buyer desk sorted.<br>You read the drafts, hit send. <b>Nothing ever sends without you.</b></p>
+    <p id="endline">The agent works inside the inbox you already use and keeps your buyer desk sorted.<br>You read the drafts, hit send. <b>Nothing ever sends without you.</b></p>
     <div style="margin-top:22px;display:flex;gap:12px;justify-content:center;align-items:center">
       <button onclick="location.reload()" style="background:#241F38;border:1px solid rgba(99,102,241,0.5);color:#F8FAFC;font-family:inherit;font-size:13px;font-weight:500;padding:9px 18px;border-radius:9px;cursor:pointer">&#8635; Watch again</button>
       <span style="font-size:12.5px;color:#8A93A8">This is a mockup. Want it on your inbox? Just reply to my email.</span>
@@ -478,52 +453,353 @@
     { from: 'Strata Council', sub: 'Re: Parkade cleaning schedule', snip: 'Reminder that levels 1 and 2 will be closed Thursday morning for', time: '7:48 AM' },
     { from: 'ICBC', sub: 'Fleet policy renewal', snip: 'Your commercial vehicle policy is due for renewal on July 2', time: 'Jun 8' }
   ];
-  var LEADS = [
-    { from: 'Minh Tran', email: 'minh.tran@gmail.com', ava: '#FB8C00', init: 'M',
-      sub: 'Gastown restaurant, still available?', time: '9:02 AM',
-      body: 'Hi there,\n\nI came across the Gastown restaurant listing on your site this morning. My partner and I sold our Victoria location last fall, so we have about $500k to work with and financing is already pre-approved through our credit union.\n\nWe are hoping to move on something within the next 60 days. Could you send the financials over when you get a chance? If it looks right, Thursday afternoon would work best for us to come see the space.\n\nThanks,\nMinh Tran',
-      snip: 'I came across the Gastown restaurant listing on your site this morning. My partner and I sold our',
-      chips: [['$500k budget',''], ['pre-approved','g'], ['< 60 days','c'], ['Thu PM viewing asked','c'], ['★ STRONG · 93/100','g']],
-      label: { t: '★ Strong buyer', bg: '#e6f4ea', fg: '#137333' },
-      brand: { t: 'Restaurant Broker', bg: '#fef3e0', fg: '#b06000' },
-      book: { title: 'Showing · Minh Tran · Gastown', when: 'Thu, Jun 11 · 2:00 to 2:30 PM' },
-      attach: [['NDA-Confidentiality.pdf', '142 KB', '#d93025']],
-      attachMsg: 'attaching the NDA...',
-      draft: 'Hi Minh,\n\nThanks for reaching out about the Gastown location. It is still available, and congrats on the Victoria sale.\n\nBefore I share financials I’ll need a quick NDA signed, attached here. Once that’s back, the full package is on its way.\n\nThursday afternoon works on my end. I’ve penciled in 2:00 PM and sent a calendar invite, just confirm and we’re set.\n\nJean' },
-    { from: 'Daniel Kwon', email: 'dkwon.invest@gmail.com', ava: '#1a73e8', init: 'D',
-      sub: 'Re: Kingsway 12-unit building - package', time: '9:14 AM',
-      body: 'Hi Jean,\n\nGood speaking with you last week. We sent the signed NDA back yesterday afternoon for the Kingsway 12-unit building.\n\nCould you send over the full package when you have a minute? Our lender at the bank is asking for the rent roll and income statement before Friday, and my partner would love to see the floor plans too if you have them handy.\n\nAppreciate it,\nDaniel Kwon',
-      snip: 'Good speaking with you last week. We sent the signed NDA back yesterday afternoon for the Kingsway',
-      chips: [['NDA on file ✓','g'], ['lender engaged','c'], ['multi-family · 12 units',''], ['★ HOT · ready to move','g']],
-      label: { t: 'Package attached', bg: '#e6f4ea', fg: '#137333' },
-      brand: { t: 'Vancouver Brokers', bg: '#e8f0fe', fg: '#1967d2' },
-      attach: [['Kingsway-12unit_Offering.pdf', '2.4 MB', '#d93025'], ['Rent-roll-2026.xlsx', '88 KB', '#188038'], ['Income-statement.pdf', '1.1 MB', '#d93025'], ['Floor-plans.pdf', '3.2 MB', '#d93025']],
-      draft: 'Hi Daniel,\n\nGot the signed NDA, thanks. The full Kingsway package is attached: offering summary, current rent roll, income statement, and the floor plans your partner asked about.\n\nThat should cover what your lender needs before Friday. If anything else comes up, just say the word.\n\nJean' },
-    { from: 'Priya & Dev Sharma', email: 'priya.sharma@outlook.com', ava: '#00ACC1', init: 'P',
-      sub: 'Burnaby townhouse, can we view this week?', time: '9:27 AM',
-      body: 'Hello,\n\nMy husband and I are looking at the townhouse on Canada Way for my parents, who are downsizing from their house in Surrey this summer.\n\nOur budget is around $850k. Is it still available? We are fairly flexible, but it would be wonderful to view it sometime this week if possible since my parents are in town.\n\nThank you,\nPriya Sharma',
-      snip: 'My husband and I are looking at the townhouse on Canada Way for my parents, who are downsizing',
-      chips: [['$850k budget',''], ['viewing this week','c'], ['GOOD FIT · 78/100','c']],
-      label: { t: 'Qualified', bg: '#e8f0fe', fg: '#1967d2' },
-      brand: { t: 'Canada Homes', bg: '#e0f7fa', fg: '#00838f' },
-      draft: 'Hi Priya,\n\nIt is still available. I could show it Wednesday after 3, Thursday morning, or Friday at noon.\n\nWhich works best for you and your parents?\n\nJean' },
-    { from: 'Jay Rondo', email: 'jayr.deals@gmail.com', ava: '#9e9e9e', init: 'J',
-      sub: 'restaurants for sale?', time: '9:38 AM',
-      body: 'hey\n\nhow much are your restaurants going for? whats the cheapest one you got rn. also do u do financing\n\nJay',
-      snip: 'how much are your restaurants going for? whats the cheapest one you got rn. also do u do',
-      chips: [['no budget given','a'], ['no timeline','a'], ['WEAK · 35/100','a']],
-      label: { t: 'Needs qualifying', bg: '#fef7e0', fg: '#b06000' },
-      brand: { t: 'Restaurant Broker', bg: '#fef3e0', fg: '#b06000' },
-      draft: 'Hi Jay,\n\nHappy to help. Prices range a lot depending on size, location and revenue.\n\nWhat budget are you working with, and are you set on a restaurant or open to other food businesses? I’ll send the two or three that actually fit.\n\nJean' }
-  ];
+  // ---------- industry presets (?v=realestate|mortgage|insurance, default vbb) ----------
+  // Shared chip palettes
+  var CB = { blue: ['#e8f0fe','#1967d2'], green: ['#e6f4ea','#137333'], orange: ['#fef3e0','#b06000'],
+             amber: ['#fef7e0','#b06000'], purple: ['#f3e8fd','#7b1fa2'], teal: ['#e0f7fa','#00838f'] };
+  function chip(t, p) { return [t, CB[p][0], CB[p][1]]; }
+
+  var PRESETS = {
+
+    vbb: {
+      acct: 'jean@vancouvercommercialbrokers.ca',
+      labels: [['Restaurant Broker','#FB8C00'],['Vancouver Brokers','#1a73e8'],['Canada Homes','#00ACC1'],['Real East Van','#9C27B0']],
+      desk: { tab: 'Broker Desk · Buyers', logo: 'Broker Desk', search: 'Search buyers, listings, showings',
+              rail: ['Buyers','Listings','Showings','NDAs & Packages'], title: 'Buyers',
+              sub: 'all brands · sorted by stage · kept up to date by your agent' },
+      stages: ['New','Qualified','Package sent','Showing booked'],
+      stats0: [['8','active buyers',0],['0','awaiting your approval',1],['2','showings this week',0],['0','new today',1]],
+      seed: [
+        [ { n:'D. & A. Okafor', sub:'Retail space · Commercial Drive', chips:[chip('Real East Van','purple'), chip('reply pending','amber')] },
+          { n:'C. Dubois', sub:'Liquor store · Burnaby', chips:[chip('Vancouver Brokers','blue'), chip('intro sent','blue')] } ],
+        [ { n:'T. Nguyen', sub:'Bakery · Kitsilano', chips:[chip('Restaurant Broker','orange'), chip('★ Strong · 82','green')] },
+          { n:'S. Abadi', sub:'Duplex · New Westminster', chips:[chip('Canada Homes','teal'), chip('docs requested','amber')] } ],
+        [ { n:'K. Wong', sub:'Commercial building · $1.2M', chips:[chip('Vancouver Brokers','blue'), chip('NDA signed ✓','green')] },
+          { n:'R. & M. Silva', sub:'6-unit rental · East Van', chips:[chip('Real East Van','purple'), chip('rent roll sent','green')] } ],
+        [ { n:'J. Castillo', sub:'Cafe · Mount Pleasant', chips:[chip('Restaurant Broker','orange'), chip('Fri 11:00 AM','green')] },
+          { n:'A. Petrov', sub:'Condo · Brentwood', chips:[chip('Canada Homes','teal'), chip('Sat 10:00 AM','green')] } ]
+      ],
+      inserts: [
+        { col: 3, n: 'Minh Tran', sub: 'Gastown restaurant · $500k · pre-approved',
+          chips: [chip('Restaurant Broker','orange'), chip('★ Strong · 93','green'), chip('draft awaiting your OK','blue'), chip('Thu 2:00 PM','green')],
+          stats: ['9','1','3','1'], rail: '9' },
+        { col: 2, n: 'Daniel Kwon', sub: 'Kingsway 12-unit building · lender engaged',
+          chips: [chip('Vancouver Brokers','blue'), chip('NDA signed ✓','green'), chip('package attached','green'), chip('draft awaiting your OK','blue')],
+          stats: ['10','2','3','2'], rail: '10' },
+        { col: 1, n: 'Priya & Dev Sharma', sub: 'Burnaby townhouse · $850k',
+          chips: [chip('Canada Homes','teal'), chip('Good fit · 78','blue'), chip('draft awaiting your OK','blue')],
+          stats: ['11','3','3','3'], rail: '11' }
+      ],
+      hudCRM: 'filing buyers into your CRM...', crmDone: 'CRM updated · 3 buyers filed and sorted',
+      endNums: [['3','buyers qualified & filed',1],['4','drafts await your OK',0],['1','listing package attached',0]],
+      endLine: 'The agent works inside the inbox you already use and keeps your buyer desk sorted.<br>You read the drafts, hit send. <b>Nothing ever sends without you.</b>',
+      leads: [
+        { from: 'Minh Tran', email: 'minh.tran@gmail.com', ava: '#FB8C00', init: 'M',
+          sub: 'Gastown restaurant, still available?', time: '9:02 AM',
+          body: 'Hi there,\n\nI came across the Gastown restaurant listing on your site this morning. My partner and I sold our Victoria location last fall, so we have about $500k to work with and financing is already pre-approved through our credit union.\n\nWe are hoping to move on something within the next 60 days. Could you send the financials over when you get a chance? If it looks right, Thursday afternoon would work best for us to come see the space.\n\nThanks,\nMinh Tran',
+          snip: 'I came across the Gastown restaurant listing on your site this morning. My partner and I sold our',
+          chips: [['$500k budget',''], ['pre-approved','g'], ['< 60 days','c'], ['Thu PM viewing asked','c'], ['★ STRONG · 93/100','g']],
+          label: { t: '★ Strong buyer', bg: '#e6f4ea', fg: '#137333' },
+          brand: { t: 'Restaurant Broker', bg: '#fef3e0', fg: '#b06000' },
+          book: { title: 'Showing · Minh Tran · Gastown', when: 'Thu, Jun 11 · 2:00 to 2:30 PM' },
+          attach: [['NDA-Confidentiality.pdf', '142 KB', '#d93025']],
+          attachMsg: 'attaching the NDA...',
+          draft: 'Hi Minh,\n\nThanks for reaching out about the Gastown location. It is still available, and congrats on the Victoria sale.\n\nBefore I share financials I’ll need a quick NDA signed, attached here. Once that’s back, the full package is on its way.\n\nThursday afternoon works on my end. I’ve penciled in 2:00 PM and sent a calendar invite, just confirm and we’re set.\n\nJean' },
+        { from: 'Daniel Kwon', email: 'dkwon.invest@gmail.com', ava: '#1a73e8', init: 'D',
+          sub: 'Re: Kingsway 12-unit building - package', time: '9:14 AM',
+          body: 'Hi Jean,\n\nGood speaking with you last week. We sent the signed NDA back yesterday afternoon for the Kingsway 12-unit building.\n\nCould you send over the full package when you have a minute? Our lender at the bank is asking for the rent roll and income statement before Friday, and my partner would love to see the floor plans too if you have them handy.\n\nAppreciate it,\nDaniel Kwon',
+          snip: 'Good speaking with you last week. We sent the signed NDA back yesterday afternoon for the Kingsway',
+          chips: [['NDA on file ✓','g'], ['lender engaged','c'], ['multi-family · 12 units',''], ['★ HOT · ready to move','g']],
+          label: { t: 'Package attached', bg: '#e6f4ea', fg: '#137333' },
+          brand: { t: 'Vancouver Brokers', bg: '#e8f0fe', fg: '#1967d2' },
+          attach: [['Kingsway-12unit_Offering.pdf', '2.4 MB', '#d93025'], ['Rent-roll-2026.xlsx', '88 KB', '#188038'], ['Income-statement.pdf', '1.1 MB', '#d93025'], ['Floor-plans.pdf', '3.2 MB', '#d93025']],
+          draft: 'Hi Daniel,\n\nGot the signed NDA, thanks. The full Kingsway package is attached: offering summary, current rent roll, income statement, and the floor plans your partner asked about.\n\nThat should cover what your lender needs before Friday. If anything else comes up, just say the word.\n\nJean' },
+        { from: 'Priya & Dev Sharma', email: 'priya.sharma@outlook.com', ava: '#00ACC1', init: 'P',
+          sub: 'Burnaby townhouse, can we view this week?', time: '9:27 AM',
+          body: 'Hello,\n\nMy husband and I are looking at the townhouse on Canada Way for my parents, who are downsizing from their house in Surrey this summer.\n\nOur budget is around $850k. Is it still available? We are fairly flexible, but it would be wonderful to view it sometime this week if possible since my parents are in town.\n\nThank you,\nPriya Sharma',
+          snip: 'My husband and I are looking at the townhouse on Canada Way for my parents, who are downsizing',
+          chips: [['$850k budget',''], ['viewing this week','c'], ['GOOD FIT · 78/100','c']],
+          label: { t: 'Qualified', bg: '#e8f0fe', fg: '#1967d2' },
+          brand: { t: 'Canada Homes', bg: '#e0f7fa', fg: '#00838f' },
+          draft: 'Hi Priya,\n\nIt is still available. I could show it Wednesday after 3, Thursday morning, or Friday at noon.\n\nWhich works best for you and your parents?\n\nJean' },
+        { from: 'Jay Rondo', email: 'jayr.deals@gmail.com', ava: '#9e9e9e', init: 'J',
+          sub: 'restaurants for sale?', time: '9:38 AM',
+          body: 'hey\n\nhow much are your restaurants going for? whats the cheapest one you got rn. also do u do financing\n\nJay',
+          snip: 'how much are your restaurants going for? whats the cheapest one you got rn. also do u do',
+          chips: [['no budget given','a'], ['no timeline','a'], ['WEAK · 35/100','a']],
+          label: { t: 'Needs qualifying', bg: '#fef7e0', fg: '#b06000' },
+          brand: { t: 'Restaurant Broker', bg: '#fef3e0', fg: '#b06000' },
+          draft: 'Hi Jay,\n\nHappy to help. Prices range a lot depending on size, location and revenue.\n\nWhat budget are you working with, and are you set on a restaurant or open to other food businesses? I’ll send the two or three that actually fit.\n\nJean' }
+      ]
+    },
+
+    realestate: {
+      acct: 'you@yourrealty.ca',
+      labels: [['Buyers','#1a73e8'],['Sellers','#FB8C00'],['Showings','#00ACC1'],['Hot leads','#188038']],
+      desk: { tab: 'Client Desk · Pipeline', logo: 'Client Desk', search: 'Search clients, listings, showings',
+              rail: ['Clients','Listings','Showings','Offers & Docs'], title: 'Clients',
+              sub: 'every lead · sorted by stage · kept up to date by your agent' },
+      stages: ['New','Qualified','Viewing set','Offer stage'],
+      stats0: [['8','active clients',0],['0','awaiting your approval',1],['2','showings this week',0],['0','new today',1]],
+      seed: [
+        [ { n:'Hardeep S.', sub:'Condo search · Brentwood', chips:[chip('Buyer','blue'), chip('reply pending','amber')] },
+          { n:'G. Moreau', sub:'Townhouse · Port Moody', chips:[chip('Buyer','blue'), chip('intro sent','blue')] } ],
+        [ { n:'N. & P. Singh', sub:'Selling · Fleetwood', chips:[chip('Seller','orange'), chip('eval booked','green')] },
+          { n:'C. Park', sub:'Buyer · pre-approved $1.1M', chips:[chip('Buyer','blue'), chip('★ Strong · 84','green')] } ],
+        [ { n:'J. Castillo', sub:'Viewing · Sat 1:00 PM', chips:[chip('Buyer','blue'), chip('confirmed ✓','green')] },
+          { n:'L. Tan', sub:'Viewing · Fri 5:30 PM', chips:[chip('Buyer','blue'), chip('confirmed ✓','green')] } ],
+        [ { n:'The Werners', sub:'Offer in · 7724 Hazel St', chips:[chip('Buyer','blue'), chip('with sellers','amber')] },
+          { n:'M. Osei', sub:'Counter expected today', chips:[chip('Seller','orange'), chip('negotiating','amber')] } ]
+      ],
+      inserts: [
+        { col: 2, n: 'Maya Chen', sub: '2847 Maple St · $950k · pre-approved',
+          chips: [chip('Buyer','blue'), chip('★ Strong · 91','green'), chip('draft awaiting your OK','blue'), chip('Sat 10:00 AM','green')],
+          stats: ['9','1','3','1'], rail: '9' },
+        { col: 1, n: 'Rob & Lisa Tran', sub: 'Listing evaluation · Oak Street',
+          chips: [chip('Seller','orange'), chip('comparables sent','green'), chip('draft awaiting your OK','blue')],
+          stats: ['10','2','3','2'], rail: '10' },
+        { col: 1, n: 'Sam Whitfield', sub: 'First condo · under $550k',
+          chips: [chip('Buyer','blue'), chip('Good fit · 74','blue'), chip('draft awaiting your OK','blue')],
+          stats: ['11','3','3','3'], rail: '11' }
+      ],
+      hudCRM: 'filing clients into your CRM...', crmDone: 'CRM updated · 3 clients filed and sorted',
+      endNums: [['3','clients qualified & filed',1],['4','drafts await your OK',0],['1','showing booked',0]],
+      endLine: 'The agent works inside the inbox you already use and keeps every client moving.<br>You read the drafts, hit send. <b>Nothing ever sends without you.</b>',
+      leads: [
+        { from: 'Maya Chen', email: 'maya.chen87@gmail.com', ava: '#1a73e8', init: 'M',
+          sub: 'Is 2847 Maple St still available?', time: '9:02 AM',
+          body: 'Hi,\n\nI saw the Maple Street listing this morning and it looks exactly like what we have been hunting for. We are pre-approved for $950k through RBC and our condo is already on the market.\n\nCould we see it Saturday morning if it is still available?\n\nMaya',
+          snip: 'I saw the Maple Street listing this morning and it looks exactly like what we have been hunting',
+          chips: [['$950k budget',''], ['pre-approved','g'], ['selling current home','c'], ['Sat AM viewing asked','c'], ['★ STRONG · 91/100','g']],
+          label: { t: '★ Strong buyer', bg: '#e6f4ea', fg: '#137333' },
+          brand: { t: 'Buyer', bg: '#e8f0fe', fg: '#1967d2' },
+          book: { title: 'Showing · Maya Chen · 2847 Maple St', when: 'Sat, Jun 13 · 10:00 to 10:30 AM' },
+          attach: [['2847-Maple_FeatureSheet.pdf', '1.6 MB', '#d93025']],
+          attachMsg: 'attaching the feature sheet...',
+          draft: 'Hi Maya,\n\nIt is still available, and it sounds like the timing lines up well on your end.\n\nFeature sheet attached so you can look it over before the weekend. Saturday at 10 works for me. I have penciled it in and sent a calendar invite, just confirm and we are set.\n\nTalk soon' },
+        { from: 'Rob & Lisa Tran', email: 'rob.tran@outlook.com', ava: '#FB8C00', init: 'R',
+          sub: 'Re: What our place might be worth', time: '9:16 AM',
+          body: 'Hi,\n\nGood chatting at the open house on Sunday. We are seriously thinking about listing the Oak Street house this summer once school wraps up.\n\nCould you put together an idea of what it might go for in this market?\n\nRob and Lisa',
+          snip: 'Good chatting at the open house on Sunday. We are seriously thinking about listing the Oak Street',
+          chips: [['met at open house','g'], ['listing this summer','c'], ['evaluation requested',''], ['★ HOT seller','g']],
+          label: { t: 'Comparables sent', bg: '#e6f4ea', fg: '#137333' },
+          brand: { t: 'Seller', bg: '#fef3e0', fg: '#b06000' },
+          attach: [['Recent-comparables_OakSt.pdf', '940 KB', '#d93025']],
+          attachMsg: 'pulling recent comparables...',
+          draft: 'Hi Rob and Lisa,\n\nGreat meeting you both on Sunday. Attached are the most recent comparable sales on and around your block so you can see where things are landing.\n\nFor a proper evaluation I would want to walk through the house. Would Tuesday evening work, or is the weekend easier?\n\nTalk soon' },
+        { from: 'Sam Whitfield', email: 'samwhit@gmail.com', ava: '#00ACC1', init: 'S',
+          sub: 'First condo, under $550k?', time: '9:29 AM',
+          body: 'Hello,\n\nFirst-time buyer here. I have my down payment saved and I am looking for a one or two bedroom under $550k, ideally close to a SkyTrain station for the commute downtown.\n\nIs that realistic right now? What would you suggest?\n\nSam',
+          snip: 'First-time buyer here. I have my down payment saved and I am looking for a one or two bedroom',
+          chips: [['$550k cap',''], ['first-time buyer','c'], ['near SkyTrain','c'], ['GOOD FIT · 74/100','c']],
+          label: { t: 'Qualified', bg: '#e8f0fe', fg: '#1967d2' },
+          brand: { t: 'Buyer', bg: '#e8f0fe', fg: '#1967d2' },
+          draft: 'Hi Sam,\n\nVery realistic, and being ready with the down payment puts you ahead of most first-timers.\n\nTwo listings fit what you described, one in Burnaby two blocks from Brentwood station and one near Joyce. Want the details on both?\n\nTalk soon' },
+        { from: 'kyle b.', email: 'kyleb.deals@gmail.com', ava: '#9e9e9e', init: 'K',
+          sub: 'houses?', time: '9:41 AM',
+          body: 'yo\n\ndo u have any cheap houses in van rn? what can i get\n\nkyle',
+          snip: 'do u have any cheap houses in van rn? what can i get',
+          chips: [['no budget given','a'], ['no area','a'], ['WEAK · 28/100','a']],
+          label: { t: 'Needs qualifying', bg: '#fef7e0', fg: '#b06000' },
+          brand: { t: 'Buyer', bg: '#e8f0fe', fg: '#1967d2' },
+          draft: 'Hi Kyle,\n\nHappy to help. Prices range a lot by area and type.\n\nWhat budget are you working with, and are you set on a house or open to a townhouse or condo? I will send over what actually fits.\n\nTalk soon' }
+      ]
+    },
+
+    mortgage: {
+      acct: 'you@yourmortgageco.ca',
+      labels: [['Purchases','#1a73e8'],['Refinances','#8e24aa'],['Renewals','#FB8C00'],['Pre-approvals','#188038']],
+      desk: { tab: 'File Desk · Applications', logo: 'File Desk', search: 'Search files, clients, lenders',
+              rail: ['Files','Lenders','Appointments','Documents'], title: 'Files',
+              sub: 'every application · sorted by stage · kept up to date by your agent' },
+      stages: ['New','Collecting docs','Submitted','Approved'],
+      stats0: [['8','active files',0],['0','awaiting your approval',1],['3','with lenders',0],['0','new today',1]],
+      seed: [
+        [ { n:'D. Roy', sub:'Purchase · $640k', chips:[chip('Purchase','blue'), chip('intro sent','blue')] },
+          { n:'K. & J. Lim', sub:'Renewal · August', chips:[chip('Renewal','orange'), chip('info requested','amber')] } ],
+        [ { n:'S. Grewal', sub:'Refinance · docs 60%', chips:[chip('Refinance','purple'), chip('2 items left','amber')] },
+          { n:'A. Costa', sub:'Purchase · gift letter pending', chips:[chip('Purchase','blue'), chip('waiting on client','amber')] } ],
+        [ { n:'Patel file', sub:'Purchase · $810k', chips:[chip('Purchase','blue'), chip('with lender ✓','green')] },
+          { n:'R. Nakamura', sub:'Refinance · submitted Tue', chips:[chip('Refinance','purple'), chip('with lender ✓','green')] } ],
+        [ { n:'E. Boucher', sub:'Approved · signing Friday', chips:[chip('Purchase','blue'), chip('approved ✓','green')] },
+          { n:'T. Adler', sub:'Approved · funded', chips:[chip('Refinance','purple'), chip('funded ✓','green')] } ]
+      ],
+      inserts: [
+        { col: 1, n: 'Arjun Mehta', sub: 'Purchase · checklist sent · call Thu 9:30',
+          chips: [chip('Purchase','blue'), chip('★ Strong · 90','green'), chip('draft awaiting your OK','blue')],
+          stats: ['9','1','3','1'], rail: '9' },
+        { col: 1, n: 'Chen purchase', sub: '2 items flagged · chase drafted',
+          chips: [chip('Purchase','blue'), chip('deadline Friday','amber'), chip('draft awaiting your OK','blue')],
+          stats: ['10','2','3','2'], rail: '10' },
+        { col: 2, n: 'Patel file', sub: 'Status update drafted for realtor',
+          chips: [chip('Purchase','blue'), chip('lender ETA Friday','green'), chip('draft awaiting your OK','blue')],
+          stats: ['11','3','3','3'], rail: '11' }
+      ],
+      hudCRM: 'filing updates into your file desk...', crmDone: 'File desk updated · 3 files moved forward',
+      endNums: [['3','files moved forward',1],['4','drafts await your OK',0],['1','call booked',0]],
+      endLine: 'The agent works inside the inbox you already use and keeps every file moving.<br>You read the drafts, hit send. <b>Nothing ever sends without you.</b>',
+      leads: [
+        { from: 'Arjun Mehta', email: 'arjun.mehta@gmail.com', ava: '#1a73e8', init: 'A',
+          sub: 'Pre-approval, hoping to move quickly', time: '9:04 AM',
+          body: 'Hi,\n\nWe are about to put an offer on a place in Coquitlam and want to be ready. Household income is around $180k and we have 20 percent saved for the down payment.\n\nCould we talk Thursday morning? Our realtor says things are moving fast on this one.\n\nArjun',
+          snip: 'We are about to put an offer on a place in Coquitlam and want to be ready. Household income is',
+          chips: [['$180k income','g'], ['20% down saved','g'], ['offer pending','c'], ['Thu AM call asked','c'], ['★ STRONG · 90/100','g']],
+          label: { t: '★ Strong file', bg: '#e6f4ea', fg: '#137333' },
+          brand: { t: 'Purchase', bg: '#e8f0fe', fg: '#1967d2' },
+          book: { title: 'Call · Arjun Mehta · pre-approval', when: 'Thu, Jun 11 · 9:30 to 10:00 AM' },
+          attach: [['Document-checklist.pdf', '120 KB', '#d93025']],
+          attachMsg: 'attaching your document checklist...',
+          draft: 'Hi Arjun,\n\nCongrats on finding the place, and you are in a strong position with that income and down payment.\n\nYour document checklist is attached so we can move fast: T4s, recent paystubs, and 90 days of down payment history to start.\n\nThursday at 9:30 works. I have penciled it in and sent a calendar invite, just confirm and we are set.' },
+        { from: 'Grace Chen', email: 'gracechen.bc@gmail.com', ava: '#8e24aa', init: 'G',
+          sub: 'Re: Chen purchase - documents', time: '9:17 AM',
+          body: 'Hi,\n\nI uploaded our T4s and the notice of assessment yesterday like you asked.\n\nIs there anything else you need from us? I know the lender deadline is Friday and I do not want to hold things up.\n\nGrace',
+          snip: 'I uploaded our T4s and the notice of assessment yesterday like you asked. Is there anything else',
+          chips: [['T4s + NOA received','g'], ['2 items still missing','a'], ['lender deadline Friday','c'], ['file 80% complete','c']],
+          label: { t: 'Chase drafted', bg: '#e8f0fe', fg: '#1967d2' },
+          brand: { t: 'Purchase', bg: '#e8f0fe', fg: '#1967d2' },
+          attach: [['Gift-letter_template.pdf', '85 KB', '#d93025']],
+          attachMsg: 'attaching the gift letter template...',
+          draft: 'Hi Grace,\n\nGot the T4s and the NOA, thank you. Two things left and the file is complete: your two most recent paystubs, and the signed gift letter for the down payment portion from your parents. Template attached.\n\nGet me those by Thursday and we make the Friday deadline comfortably.' },
+        { from: 'Mark Donnelly', email: 'mark@donnellyrealty.ca', ava: '#00ACC1', init: 'M',
+          sub: 'Status on the Patel file?', time: '9:31 AM',
+          body: 'Hey,\n\nMy clients are getting a little anxious. Any word from the lender on the Patel purchase? Subject removal is coming up next week.\n\nMark',
+          snip: 'My clients are getting a little anxious. Any word from the lender on the Patel purchase? Subject',
+          chips: [['file located','g'], ['submitted Tuesday','c'], ['lender ETA Friday','c']],
+          label: { t: 'Status drafted', bg: '#e8f0fe', fg: '#1967d2' },
+          brand: { t: 'Purchase', bg: '#e8f0fe', fg: '#1967d2' },
+          draft: 'Hi Mark,\n\nGood timing. The Patel file went to the lender Tuesday and the underwriter response is expected Friday.\n\nThat leaves a comfortable buffer before subject removal. I will ping you the moment it lands.' },
+        { from: 'ratehunter22', email: 'ratehunter22@gmail.com', ava: '#9e9e9e', init: 'R',
+          sub: 'rates??', time: '9:44 AM',
+          body: 'what r ur rates for 5 yr fixed\n\nthx',
+          snip: 'what r ur rates for 5 yr fixed',
+          chips: [['no file details','a'], ['rate shopping','a'], ['WEAK · 31/100','a']],
+          label: { t: 'Needs qualifying', bg: '#fef7e0', fg: '#b06000' },
+          brand: { t: 'Pre-approval', bg: '#e6f4ea', fg: '#137333' },
+          draft: 'Hi,\n\nRates depend on the file: purchase or renewal, down payment, income type, and property.\n\nIf you tell me those four things I can quote you something real instead of a teaser number. What is the situation?' }
+      ]
+    },
+
+    insurance: {
+      acct: 'you@yourbrokerage.ca',
+      labels: [['Commercial','#1a73e8'],['Home','#188038'],['Auto','#FB8C00'],['Renewals','#8e24aa']],
+      desk: { tab: 'Policy Desk · Quotes', logo: 'Policy Desk', search: 'Search quotes, clients, policies',
+              rail: ['Quotes','Policies','Renewals','Insurers'], title: 'Quotes & files',
+              sub: 'every request · sorted by stage · kept up to date by your agent' },
+      stages: ['New','Quoting','With insurer','Bound'],
+      stats0: [['8','open files',0],['0','awaiting your approval',1],['3','with insurers',0],['0','new today',1]],
+      seed: [
+        [ { n:'M. Aziz', sub:'Home + auto bundle', chips:[chip('Home','green'), chip('reply pending','amber')] },
+          { n:'Coastal Catering', sub:'Commercial · new venture', chips:[chip('Commercial','blue'), chip('intro sent','blue')] } ],
+        [ { n:'R. Singh', sub:'Auto · 2 vehicles', chips:[chip('Auto','orange'), chip('quoting','blue')] },
+          { n:'Bright Dental', sub:'Commercial · clinic policy', chips:[chip('Commercial','blue'), chip('quoting','blue')] } ],
+        [ { n:'Hammond Roofing', sub:'Liability · 8 crew', chips:[chip('Commercial','blue'), chip('with insurer ✓','green')] },
+          { n:'J. Mercer', sub:'Home · renewal requote', chips:[chip('Renewal','purple'), chip('with insurer ✓','green')] } ],
+        [ { n:'K. Tran', sub:'Auto · bound', chips:[chip('Auto','orange'), chip('bound ✓','green')] },
+          { n:'Lo’s Bakery', sub:'Commercial · bound', chips:[chip('Commercial','blue'), chip('bound ✓','green')] } ]
+      ],
+      inserts: [
+        { col: 1, n: 'Brooks Plumbing', sub: 'Liability · 6 crew · 3 vans',
+          chips: [chip('Commercial','blue'), chip('★ Strong · 89','green'), chip('call Fri 9:00','green'), chip('draft awaiting your OK','blue')],
+          stats: ['9','1','3','1'], rail: '9' },
+        { col: 1, n: 'Moss Consulting', sub: 'Renewal requote · 2 insurers',
+          chips: [chip('Renewal','purple'), chip('summary attached','green'), chip('draft awaiting your OK','blue')],
+          stats: ['10','2','3','2'], rail: '10' },
+        { col: 0, n: 'Omar Haddad', sub: 'Home + auto bundle · qualified',
+          chips: [chip('Home','green'), chip('Good fit · 72','blue'), chip('draft awaiting your OK','blue')],
+          stats: ['11','3','3','3'], rail: '11' }
+      ],
+      hudCRM: 'filing quotes into your policy desk...', crmDone: 'Policy desk updated · 3 files moved forward',
+      endNums: [['3','files moved forward',1],['4','drafts await your OK',0],['1','call booked',0]],
+      endLine: 'The agent works inside the inbox you already use and keeps every quote moving.<br>You read the drafts, hit send. <b>Nothing ever sends without you.</b>',
+      leads: [
+        { from: 'Dana Brooks', email: 'dana@brooksplumbing.ca', ava: '#1a73e8', init: 'D',
+          sub: 'Liability quote - Brooks Plumbing', time: '9:03 AM',
+          body: 'Hi,\n\nWe are a six-person plumbing crew with three vans, and our current liability policy ends July 1. Honestly we feel like we have been overpaying for two years.\n\nCan you quote us? I am free Friday morning if a call is easier.\n\nDana Brooks',
+          snip: 'We are a six-person plumbing crew with three vans, and our current liability policy ends July 1.',
+          chips: [['6 staff · 3 vans',''], ['renewal July 1','c'], ['switching insurers','g'], ['Fri AM call asked','c'], ['★ STRONG · 89/100','g']],
+          label: { t: '★ Hot prospect', bg: '#e6f4ea', fg: '#137333' },
+          brand: { t: 'Commercial', bg: '#e8f0fe', fg: '#1967d2' },
+          book: { title: 'Call · Dana Brooks · liability quote', when: 'Fri, Jun 12 · 9:00 to 9:30 AM' },
+          attach: [['Commercial-intake_prefilled.pdf', '310 KB', '#d93025']],
+          attachMsg: 'pre-filling the intake form...',
+          draft: 'Hi Dana,\n\nHappy to quote it, and July 1 gives us plenty of runway to shop it properly.\n\nI pre-filled the intake form from your email, crew size, vehicles, trade. Give it a quick check, confirm, and I will take it to market.\n\nFriday at 9 works. I have penciled it in and sent a calendar invite, just confirm and we are set.' },
+        { from: 'Helen Moss', email: 'helen@mossconsulting.ca', ava: '#8e24aa', init: 'H',
+          sub: 'Re: Policy renewal - updated info', time: '9:18 AM',
+          body: 'Hi,\n\nAs requested, here is our updated business info for the renewal: we are now five staff instead of three, revenue is up about 30 percent, and we moved to the new office on Hastings in March.\n\nHoping the premium does not jump too much. What are we looking at?\n\nHelen',
+          snip: 'As requested, here is our updated business info for the renewal: we are now five staff instead of',
+          chips: [['renewal · 18 days','c'], ['info extracted','g'], ['2 insurers to requote','c']],
+          label: { t: 'Requote drafted', bg: '#e6f4ea', fg: '#137333' },
+          brand: { t: 'Renewal', bg: '#f3e8fd', fg: '#7b1fa2' },
+          attach: [['Renewal-summary_Moss.pdf', '240 KB', '#d93025']],
+          attachMsg: 'preparing the renewal summary...',
+          draft: 'Hi Helen,\n\nThanks, that is everything I need. Summary attached with the updated details laid out.\n\nGrowth and the new office will nudge the premium, but I am taking it to two insurers rather than auto-renewing, which usually lands better than the renewal notice. You will have numbers this week.' },
+        { from: 'Omar Haddad', email: 'omar.haddad@gmail.com', ava: '#188038', init: 'O',
+          sub: 'Home and auto bundle?', time: '9:32 AM',
+          body: 'Hello,\n\nWe just bought a condo in New West and have two cars. Right now everything is with different companies and it feels like we are overpaying.\n\nDoes bundling actually save much? What would you need from me?\n\nOmar',
+          snip: 'We just bought a condo in New West and have two cars. Right now everything is with different',
+          chips: [['condo + 2 vehicles',''], ['bundle eligible','g'], ['GOOD FIT · 72/100','c']],
+          label: { t: 'Qualified', bg: '#e8f0fe', fg: '#1967d2' },
+          brand: { t: 'Home', bg: '#e6f4ea', fg: '#137333' },
+          draft: 'Hi Omar,\n\nCongrats on the condo. Bundling usually saves real money in your situation, and it is one renewal date instead of three.\n\nTo quote it I just need your current policy numbers and renewal dates. Send those over and I will have options for you this week.' },
+        { from: 'cheapinsurance4u', email: 'cheapinsurance4u@gmail.com', ava: '#9e9e9e', init: 'C',
+          sub: 'how much for car insurance', time: '9:43 AM',
+          body: 'how much is car insurance for a civic\n\nthanks',
+          snip: 'how much is car insurance for a civic',
+          chips: [['no details','a'], ['price shopping','a'], ['WEAK · 25/100','a']],
+          label: { t: 'Needs qualifying', bg: '#fef7e0', fg: '#b06000' },
+          brand: { t: 'Auto', bg: '#fef3e0', fg: '#b06000' },
+          draft: 'Hi,\n\nIt depends on the year, your driving history, and where you park it overnight.\n\nSend me those three things and I can give you a real number instead of a guess.' }
+      ]
+    }
+  };
+
+  var V = (function () {
+    try { return PRESETS[new URLSearchParams(location.search).get('v')] || PRESETS.vbb; }
+    catch (e) { return PRESETS.vbb; }
+  })();
+  var LEADS = V.leads;
+
+  // apply preset to static chrome
+  function applyPreset() {
+    el('glabels').innerHTML = V.labels.map(function (l) {
+      return '<div class="glabel"><span class="ldot" style="background:' + l[1] + '"></span>' + l[0] + '</div>';
+    }).join('');
+    el('tabcrm-t').textContent = V.desk.tab.replace(' &middot; ', ' · ');
+    el('tabcrm-t').innerHTML = V.desk.logo + ' &middot; ' + V.desk.title;
+    el('crmlogo-t').textContent = V.desk.logo;
+    el('crmsearch-t').textContent = V.desk.search;
+    el('crmrail-t').textContent = V.desk.rail[0];
+    el('crmrail2-t').textContent = V.desk.rail[1];
+    el('crmrail3-t').textContent = V.desk.rail[2];
+    el('crmrail4-t').innerHTML = V.desk.rail[3];
+    el('crmtitle').textContent = V.desk.title;
+    el('crmsub').textContent = V.desk.sub;
+    el('crmstats').innerHTML = V.stats0.map(function (s, i) {
+      return '<div class="cstat"><b' + (s[2] ? ' class="bl"' : '') + ' id="cs' + (i + 1) + '">' + s[0] + '</b>' + s[1] + '</div>';
+    }).join('');
+    el('ccols').innerHTML = V.stages.map(function (st, c) {
+      var cards = V.seed[c].map(function (p) { return deskCard(p); }).join('');
+      return '<div class="ccol"><div class="ccol-h"><span>' + st + '</span><span class="cct" id="cc' + c + '">' + V.seed[c].length + '</span></div><div id="cb' + c + '">' + cards + '</div></div>';
+    }).join('');
+    el('crmbuyers').textContent = String(V.seed.reduce(function (a, col) { return a + col.length; }, 0));
+    el('endnums').innerHTML = V.endNums.map(function (n) {
+      return '<div class="en"><div class="n' + (n[2] ? ' g' : '') + '">' + n[0] + '</div><div class="l">' + n[1] + '</div></div>';
+    }).join('');
+    el('endline').innerHTML = V.endLine;
+  }
+  function chipHtml(c) { return '<span class="gchip" style="background:' + c[1] + ';color:' + c[2] + '">' + c[0] + '</span>'; }
+  function deskCard(p, extra) {
+    return '<div class="ccard' + (extra || '') + '"><b>' + p.n + '</b><div class="csub">' + p.sub + '</div><div class="crow">' + p.chips.map(chipHtml).join('') + '</div>' +
+      (extra ? '<div class="cnew">&#9679; filed by your agent just now</div>' : '') + '</div>';
+  }
 
   var inboxCount = 1, draftCount = 1, spamCount = 0;
   function counts() {
     el('inboxct').textContent = inboxCount;
     el('draftct').textContent = draftCount;
     el('spamct').textContent = spamCount || '';
-    document.title = 'Inbox (' + inboxCount + ') - jean@vancouvercommercialbrokers.ca';
-    el('tab-gmail-t').textContent = 'Inbox (' + inboxCount + ') - jean@vancouvercommercialbrokers.ca';
+    document.title = 'Inbox (' + inboxCount + ') - ' + V.acct;
+    el('tab-gmail-t').textContent = 'Inbox (' + inboxCount + ') - ' + V.acct;
   }
 
   function rowHtml(m, id, unread) {
@@ -645,7 +921,7 @@
       '<div class="nby">by Aevon Agent &middot; invite goes out with your approved reply</div></div>';
     document.body.appendChild(n);
     requestAnimationFrame(function () { n.classList.add('show'); });
-    hud('appointment scheduled · Thu 2:00 PM');
+    hud('appointment scheduled · the time they asked for');
     await sleep(3200);
     n.classList.add('hide');
     await sleep(550);
@@ -696,7 +972,7 @@
   }
 
   async function run() {
-    buildList(); counts();
+    applyPreset(); buildList(); counts();
     await sleep(1800);
 
     for (var i = 0; i < LEADS.length; i++) {
@@ -707,53 +983,27 @@
     }
     await sleep(600);
 
-    // open the CRM tab and file the buyers
-    hud('filing buyers into your CRM...');
+    // open the CRM tab and file the day's work (preset-driven)
+    hud(V.hudCRM);
     hudClear();
     await sleep(900);
     await curTo(el('tab-crm'), null, null);
     await click();
     el('tab-gmail').classList.remove('on');
     el('tab-crm').classList.add('on');
-    document.title = 'Broker Desk · Buyers';
+    document.title = V.desk.logo + ' · ' + V.desk.title;
     el('crm').classList.add('on');
     await curPark();
     await sleep(700);
-    // Minh: showing booked
-    el('cb3').insertAdjacentHTML('afterbegin',
-      '<div class="ccard newcard"><b>Minh Tran</b><div class="csub">Gastown restaurant &middot; $500k &middot; pre-approved</div>' +
-      '<div class="crow"><span class="gchip" style="background:#fef3e0;color:#b06000">Restaurant Broker</span>' +
-      '<span class="gchip" style="background:#e6f4ea;color:#137333">&#9733; Strong &middot; 93</span>' +
-      '<span class="gchip" style="background:#e8f0fe;color:#1967d2">draft awaiting your OK</span>' +
-      '<span class="gchip" style="background:#e6f4ea;color:#137333">Thu 2:00 PM</span></div>' +
-      '<div class="cnew">&#9679; filed by your agent just now</div></div>');
-    el('cc3').textContent = '3';
-    el('cs1').textContent = '9'; el('cs2').textContent = '1'; el('cs3').textContent = '3'; el('cs4').textContent = '1';
-    el('crmbuyers').textContent = '9';
-    await sleep(950);
-    // Daniel: package sent
-    el('cb2').insertAdjacentHTML('afterbegin',
-      '<div class="ccard newcard"><b>Daniel Kwon</b><div class="csub">Kingsway 12-unit building &middot; lender engaged</div>' +
-      '<div class="crow"><span class="gchip" style="background:#e8f0fe;color:#1967d2">Vancouver Brokers</span>' +
-      '<span class="gchip" style="background:#e6f4ea;color:#137333">NDA signed &#10003;</span>' +
-      '<span class="gchip" style="background:#e6f4ea;color:#137333">package attached</span>' +
-      '<span class="gchip" style="background:#e8f0fe;color:#1967d2">draft awaiting your OK</span></div>' +
-      '<div class="cnew">&#9679; filed by your agent just now</div></div>');
-    el('cc2').textContent = '3';
-    el('cs1').textContent = '10'; el('cs2').textContent = '2'; el('cs4').textContent = '2';
-    el('crmbuyers').textContent = '10';
-    await sleep(950);
-    // Priya: qualified
-    el('cb1').insertAdjacentHTML('afterbegin',
-      '<div class="ccard newcard"><b>Priya &amp; Dev Sharma</b><div class="csub">Burnaby townhouse &middot; $850k</div>' +
-      '<div class="crow"><span class="gchip" style="background:#e0f7fa;color:#00838f">Canada Homes</span>' +
-      '<span class="gchip" style="background:#e8f0fe;color:#1967d2">Good fit &middot; 78</span>' +
-      '<span class="gchip" style="background:#e8f0fe;color:#1967d2">draft awaiting your OK</span></div>' +
-      '<div class="cnew">&#9679; filed by your agent just now</div></div>');
-    el('cc1').textContent = '3';
-    el('cs1').textContent = '11'; el('cs2').textContent = '3'; el('cs4').textContent = '3';
-    el('crmbuyers').textContent = '11';
-    hud('CRM updated · 3 buyers filed and sorted');
+    for (var ins = 0; ins < V.inserts.length; ins++) {
+      var p = V.inserts[ins];
+      el('cb' + p.col).insertAdjacentHTML('afterbegin', deskCard(p, ' newcard'));
+      el('cc' + p.col).textContent = String(parseInt(el('cc' + p.col).textContent, 10) + 1);
+      for (var st = 0; st < 4; st++) el('cs' + (st + 1)).textContent = p.stats[st];
+      el('crmbuyers').textContent = p.rail;
+      await sleep(950);
+    }
+    hud(V.crmDone);
     await sleep(2900);
 
     // wrap
