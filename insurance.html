@@ -207,6 +207,10 @@
         </div>
       </div>
     </div>
+    <div style="text-align:center;margin-top:26px">
+      <button class="btn-pri" style="border:none;cursor:pointer" onclick="jumpToInterest()">That's exactly what I need &rarr; have Aidan reach out</button>
+      <div class="book-alt" style="margin-top:10px">or <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank">book a quick call yourself</a></div>
+    </div>
   </section>
 
   <section>
@@ -265,6 +269,12 @@
     var stage = document.getElementById('rp-stage');
     stage.innerHTML = '<iframe src="agent-reel.html?v=insurance" title="Aevon agent demo" loading="eager"></iframe>';
     var rec = document.getElementById('rp-rec'); if (rec) rec.textContent = '\u25CF PLAYING';
+  }
+
+  function jumpToInterest() {
+    showInterest();
+    var c = document.querySelector('.closer');
+    if (c) c.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
   function showInterest() {
