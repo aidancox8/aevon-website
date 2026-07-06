@@ -439,7 +439,12 @@
       if (ref && /^[0-9a-f-]{36}$/i.test(ref)) {
         var u = 'https://qzxtfgzpyptvriorfhxw.supabase.co/functions/v1/track-visit?ref=' + encodeURIComponent(ref);
         if (navigator.sendBeacon) navigator.sendBeacon(u); else fetch(u, { mode: 'no-cors', keepalive: true });
-        history.replaceState({}, document.title, location.pathname + location.hash);
+        // Strip only the ref; keep other params (?v= picks the industry preset and
+        // is read after this runs, so it must survive).
+        var sp = new URLSearchParams(location.search);
+        sp.delete('ref');
+        var rest = sp.toString();
+        history.replaceState({}, document.title, location.pathname + (rest ? '?' + rest : '') + location.hash);
       }
     } catch (e) {}
   })();
@@ -530,6 +535,79 @@
           label: { t: 'Needs qualifying', bg: '#fef7e0', fg: '#b06000' },
           brand: { t: 'Restaurant Broker', bg: '#fef3e0', fg: '#b06000' },
           draft: 'Hi Jay,\n\nHappy to help. Prices range a lot depending on size, location and revenue.\n\nWhat budget are you working with, and are you set on a restaurant or open to other food businesses? I’ll send the two or three that actually fit.\n\nJean' }
+      ]
+    },
+
+    generic: {
+      acct: 'you@yourcompany.ca',
+      labels: [['Quotes','#1a73e8'],['Bookings','#188038'],['Clients','#FB8C00'],['Follow-ups','#8e24aa']],
+      desk: { tab: 'Front Desk · Pipeline', logo: 'Front Desk', search: 'Search leads, quotes, bookings',
+              rail: ['Leads','Quotes','Bookings','Documents'], title: 'Leads',
+              sub: 'every inquiry · sorted by stage · kept up to date by your agent' },
+      stages: ['New','Qualified','Booked','Follow-up'],
+      stats0: [['8','active leads',0],['0','awaiting your approval',1],['2','booked this week',0],['0','new today',1]],
+      seed: [
+        [ { n:'R. Dhillon', sub:'Quote request · kitchen reno', chips:[chip('Quote','blue'), chip('reply pending','amber')] },
+          { n:'BluePeak Offices', sub:'Service inquiry · monthly contract', chips:[chip('Quote','blue'), chip('intro sent','blue')] } ],
+        [ { n:'M. Okafor', sub:'Quote sent · $4,800', chips:[chip('Quote','blue'), chip('awaiting reply','amber')] },
+          { n:'S. Leung', sub:'Estimate requested · downtown', chips:[chip('Quote','blue'), chip('qualified','green')] } ],
+        [ { n:'J. Alvarez', sub:'Site visit · Thu 10:00 AM', chips:[chip('Booking','green'), chip('confirmed ✓','green')] },
+          { n:'T. Nakamura', sub:'Consult · Fri 2:30 PM', chips:[chip('Booking','green'), chip('confirmed ✓','green')] } ],
+        [ { n:'K. Braun', sub:'No reply · nudge sent day 5', chips:[chip('Follow-up','purple'), chip('auto-chased','blue')] },
+          { n:'P. Sidhu', sub:'Quiet · final follow-up queued', chips:[chip('Follow-up','purple'), chip('auto-chased','blue')] } ]
+      ],
+      inserts: [
+        { col: 2, n: 'Melissa Grant', sub: 'Site visit · Thu 3:00 PM · budget noted',
+          chips: [chip('Quote','blue'), chip('★ Strong · 90','green'), chip('draft awaiting your OK','blue'), chip('Thu 3:00 PM','green')],
+          stats: ['9','1','3','1'], rail: '9' },
+        { col: 1, n: 'Dan Kowalski', sub: 'Invoice + warranty sent · referral mentioned',
+          chips: [chip('Client','orange'), chip('docs attached ✓','green'), chip('draft awaiting your OK','blue')],
+          stats: ['10','2','3','2'], rail: '10' },
+        { col: 1, n: 'Priya N.', sub: 'In service area · pricing question',
+          chips: [chip('Quote','blue'), chip('Good fit · 74','blue'), chip('draft awaiting your OK','blue')],
+          stats: ['11','3','3','3'], rail: '11' }
+      ],
+      hudCRM: 'filing leads into your pipeline...', crmDone: 'Pipeline updated · 3 leads filed and sorted',
+      endNums: [['3','leads handled & filed',1],['4','drafts await your OK',0],['1','site visit booked',0]],
+      endLine: 'The agent works inside the inbox you already use and keeps your front desk running.<br>You read the drafts, hit send. <b>Nothing ever sends without you.</b>',
+      leads: [
+        { from: 'Melissa Grant', email: 'melissa.grant@gmail.com', ava: '#1a73e8', init: 'M',
+          sub: 'Need a quote, hoping for this month', time: '9:03 AM',
+          body: 'Hi,\n\nFound you on Google this morning. We are looking to get the work done sometime this month if possible, budget is around $6,000 depending on what you recommend.\n\nCould someone come by Thursday afternoon to take a look and give us a proper quote?\n\nMelissa',
+          snip: 'Found you on Google this morning. We are looking to get the work done sometime this month if',
+          chips: [['~$6k budget',''], ['this month','c'], ['Thu PM visit asked','c'], ['★ STRONG · 90/100','g']],
+          label: { t: '★ Strong lead', bg: '#e6f4ea', fg: '#137333' },
+          brand: { t: 'Quote', bg: '#e8f0fe', fg: '#1967d2' },
+          book: { title: 'Site visit · Melissa Grant', when: 'Thu · 3:00 to 3:30 PM' },
+          attach: [['Service-overview.pdf', '420 KB', '#d93025']],
+          attachMsg: 'attaching your service overview...',
+          draft: 'Hi Melissa,\n\nThanks for reaching out, and this month is doable on our end.\n\nThursday afternoon works. I have penciled in 3:00 PM for the site visit and sent a calendar invite, just confirm and we are set. Our service overview is attached so you can see how we typically run jobs like yours.\n\nTalk soon' },
+        { from: 'Dan Kowalski', email: 'dan.kowalski@outlook.com', ava: '#FB8C00', init: 'D',
+          sub: 'Re: invoice and warranty docs', time: '9:17 AM',
+          body: 'Hey,\n\nThe crew wrapped up last week and everything looks great, thanks again.\n\nCould you send over the final invoice and the warranty info when you get a chance? Also my neighbour saw the work and wants a quote, I gave him your number.\n\nDan',
+          snip: 'The crew wrapped up last week and everything looks great, thanks again. Could you send over the',
+          chips: [['past client','g'], ['docs requested',''], ['referral mentioned','g']],
+          label: { t: 'Docs sent', bg: '#e6f4ea', fg: '#137333' },
+          brand: { t: 'Client', bg: '#fef3e0', fg: '#b06000' },
+          attach: [['Invoice-1042.pdf', '120 KB', '#d93025'], ['Warranty-info.pdf', '310 KB', '#d93025']],
+          attachMsg: 'attaching the invoice and warranty...',
+          draft: 'Hi Dan,\n\nGlad it turned out well, it was a good one to work on.\n\nInvoice and warranty info are attached. And thanks for passing our name to your neighbour, tell him to mention you and we will take good care of him.\n\nTalk soon' },
+        { from: 'Priya N.', email: 'priya.n.home@gmail.com', ava: '#188038', init: 'P',
+          sub: 'Do you service Burnaby?', time: '9:31 AM',
+          body: 'Hello,\n\nDo you take on jobs in Burnaby? And roughly what does something like this usually run? Trying to plan our budget before we commit to anything.\n\nPriya',
+          snip: 'Do you take on jobs in Burnaby? And roughly what does something like this usually run? Trying to',
+          chips: [['in service area','g'], ['pricing question',''], ['GOOD FIT · 74/100','c']],
+          label: { t: 'Qualified', bg: '#e8f0fe', fg: '#1967d2' },
+          brand: { t: 'Quote', bg: '#e8f0fe', fg: '#1967d2' },
+          draft: 'Hi Priya,\n\nYes, Burnaby is right in our service area.\n\nPricing depends on scope, but jobs like yours usually land in a fairly tight range. If you can send a couple of photos or a quick description, I will give you a real number instead of a guess.\n\nTalk soon' },
+        { from: 'mike', email: 'mikey.t.99@gmail.com', ava: '#9e9e9e', init: 'M',
+          sub: 'price??', time: '9:44 AM',
+          body: 'how much do u charge\n\nmike',
+          snip: 'how much do u charge',
+          chips: [['no details','a'], ['WEAK · 25/100','a']],
+          label: { t: 'Needs qualifying', bg: '#fef7e0', fg: '#b06000' },
+          brand: { t: 'Quote', bg: '#e8f0fe', fg: '#1967d2' },
+          draft: 'Hi Mike,\n\nDepends on the job. What are you looking to get done, and roughly where are you located? With those two answers I can give you a real price.\n\nTalk soon' }
       ]
     },
 
