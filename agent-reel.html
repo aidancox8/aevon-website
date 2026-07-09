@@ -427,7 +427,7 @@
     <div style="margin-top:22px;display:flex;gap:12px;justify-content:center;align-items:center">
       <button onclick="location.reload()" style="background:#241F38;border:1px solid rgba(99,102,241,0.5);color:#F8FAFC;font-family:inherit;font-size:13px;font-weight:500;padding:9px 18px;border-radius:9px;cursor:pointer">&#8635; Watch again</button>
       <a href="frontdesk.html" style="background:linear-gradient(135deg,#6366F1,#7C3AED);color:#fff;font-family:inherit;font-size:13px;font-weight:600;padding:9px 18px;border-radius:9px;text-decoration:none">See pricing &rarr;</a>
-      <span style="font-size:12.5px;color:#8A93A8">This is a mockup. Want it on your inbox? Reply to my email or see the pricing.</span>
+      <span id="endcta" style="font-size:12.5px;color:#8A93A8">This is a mockup. Want it on your inbox? Reply to my email or see the pricing.</span>
     </div>
   </div>
 </div>
@@ -541,8 +541,10 @@
 
     vickers: {
       acct: 'intake@vickerslaw.ca',
+      intro: { title: 'Built for Vickers Law Group', sub: 'Your intake, run by an agent · Abbotsford' },
+      endCta: 'This is a mockup built around your practice areas. Want it on intake@vickerslaw.ca? Reply to my email.',
       labels: [['Family Law','#1a73e8'],['Civil Litigation','#8e24aa'],['Personal Injury','#FB8C00'],['Estates','#188038']],
-      desk: { tab: 'Intake Desk · Matters', logo: 'Intake Desk', search: 'Search matters, consults, retainers',
+      desk: { tab: 'Vickers Intake · Matters', logo: 'Vickers Intake', search: 'Search matters, consults, retainers',
               rail: ['Matters','Consults','Retainers','Deadlines'], title: 'Matters',
               sub: 'all practice areas · sorted by stage · kept up to date by your agent' },
       stages: ['New','Conflict check','Consult booked','Retainer out'],
@@ -934,6 +936,7 @@
       return '<div class="ccol"><div class="ccol-h"><span>' + st + '</span><span class="cct" id="cc' + c + '">' + V.seed[c].length + '</span></div><div id="cb' + c + '">' + cards + '</div></div>';
     }).join('');
     el('crmbuyers').textContent = String(V.seed.reduce(function (a, col) { return a + col.length; }, 0));
+    if (V.endCta) el('endcta').textContent = V.endCta;
     el('endnums').innerHTML = V.endNums.map(function (n) {
       return '<div class="en"><div class="n' + (n[2] ? ' g' : '') + '">' + n[0] + '</div><div class="l">' + n[1] + '</div></div>';
     }).join('');
@@ -1123,8 +1126,26 @@
     await sleep(900);
   }
 
+  // Personalized title card (only for presets that define intro) — sets the
+  // "this was built for YOU" frame before the inbox starts.
+  async function introSplash() {
+    if (!V.intro) return;
+    var s = document.createElement('div');
+    s.style.cssText = 'position:fixed;inset:0;z-index:300;background:#0A0813;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .6s ease';
+    s.innerHTML =
+      '<svg viewBox="0 0 64 64" style="width:64px;height:64px"><defs><linearGradient id="ig" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#6366F1"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="#15121F"/><path d="M8 56 L32 8 L40 24 L24 56 Z" fill="url(#ig)"/><path d="M40 24 L56 56 L32 56 L32 40 Z" fill="url(#ig)" opacity="0.55"/><path d="M32 40 L40 40 L40 24 L36 32 Z" fill="url(#ig)"/></svg>' +
+      '<div style="font-family:Roboto,Arial,sans-serif;font-size:30px;font-weight:700;color:#F8FAFC;letter-spacing:-0.5px">' + V.intro.title + '</div>' +
+      '<div style="font-family:Roboto,Arial,sans-serif;font-size:15px;color:#8A93A8">' + V.intro.sub + '</div>';
+    document.body.appendChild(s);
+    await sleep(2500);
+    s.style.opacity = '0';
+    await sleep(650);
+    s.remove();
+  }
+
   async function run() {
     applyPreset(); buildList(); counts();
+    await introSplash();
     await sleep(1800);
 
     for (var i = 0; i < LEADS.length; i++) {
