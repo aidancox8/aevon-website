@@ -178,14 +178,23 @@
     .cstat { border: 1px solid #e0e3e7; border-radius: 10px; padding: 8px 16px; font-size: 11.5px; color: #5f6368; }
     .cstat b { display: block; font-size: 18px; color: #202124; }
     .cstat b.bl { color: #1967d2; }
+    .ctools { display: flex; align-items: center; gap: 8px; margin: 12px 0 0; }
+    .cpill { border: 1px solid #dadce0; border-radius: 18px; padding: 5px 13px; font-size: 12px; color: #3c4043; background: #fff; }
+    .cpill.on { background: #e8f0fe; border-color: #d2e3fc; color: #1967d2; font-weight: 500; }
+    .cnewbtn { margin-left: auto; background: #1a73e8; color: #fff; border-radius: 8px; padding: 7px 14px; font-size: 12.5px; font-weight: 500; }
     .ccols { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
-    .ccol { background: #f6f8fc; border-radius: 12px; padding: 10px; min-height: 230px; }
-    .ccol-h { font-size: 10.5px; font-weight: 700; color: #5f6368; letter-spacing: .04em; text-transform: uppercase; display: flex; justify-content: space-between; margin-bottom: 9px; padding: 0 3px; }
-    .ccol-h .cct { background: #e0e3e7; border-radius: 10px; padding: 0 8px; color: #3c4043; }
-    .ccard { background: #fff; border: 1px solid #e0e3e7; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .ccol { background: #f6f8fc; border-radius: 12px; padding: 0 10px 10px; min-height: 230px; border-top: 3px solid var(--colc, #dadce0); }
+    .ccol-h { font-size: 10.5px; font-weight: 700; color: #5f6368; letter-spacing: .04em; text-transform: uppercase; display: flex; align-items: center; gap: 6px; margin: 10px 0 9px; padding: 0 3px; }
+    .ccol-h .cdot { width: 8px; height: 8px; border-radius: 50%; background: var(--colc, #dadce0); flex-shrink: 0; }
+    .ccol-h .cct { background: #e0e3e7; border-radius: 10px; padding: 0 8px; color: #3c4043; margin-left: auto; }
+    .ccard { background: #fff; border: 1px solid #e0e3e7; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); position: relative; }
     .ccard b { font-size: 13px; }
-    .ccard .csub { font-size: 11.5px; color: #5f6368; margin: 2px 0 7px; }
+    .ccard .cwho { position: absolute; top: 9px; right: 10px; width: 22px; height: 22px; border-radius: 50%; background: #e8f0fe; color: #1967d2; font-size: 9.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .ccard .csub { font-size: 11.5px; color: #5f6368; margin: 2px 0 7px; padding-right: 24px; }
     .ccard .crow { display: flex; gap: 4px; flex-wrap: wrap; }
+    .ccard .cnext { display: flex; align-items: center; gap: 5px; font-size: 10.5px; color: #3c4043; font-weight: 500; margin-top: 8px; padding-top: 7px; border-top: 1px solid #f1f3f4; }
+    .ccard .cnext svg { width: 11px; height: 11px; color: #5f6368; flex-shrink: 0; }
+    .ccard .cnext .due { margin-left: auto; font-size: 10px; font-weight: 700; color: #1967d2; background: #e8f0fe; border-radius: 8px; padding: 1px 7px; }
     .ccard.newcard { border-left: 3px solid #1a73e8; animation: rowin .5s cubic-bezier(.2,1,.3,1); }
     .ccard .cnew { font-size: 10px; color: #1a73e8; font-weight: 700; margin-top: 7px; }
 
@@ -395,6 +404,7 @@
     </aside>
     <div class="cboard">
       <div class="cb-head"><h1 id="crmtitle">Buyers</h1><span id="crmsub">all brands &middot; sorted by stage &middot; kept up to date by your agent</span></div>
+      <div class="ctools" id="ctools"></div>
       <div class="cstats" id="crmstats"></div>
       <div class="ccols" id="ccols"></div>
     </div>
@@ -546,33 +556,37 @@
       labels: [['Family Law','#1a73e8'],['Civil Litigation','#8e24aa'],['Personal Injury','#FB8C00'],['Estates','#188038']],
       desk: { tab: 'Vickers Intake · Matters', logo: 'Vickers Intake', search: 'Search matters, consults, retainers',
               rail: ['Matters','Consults','Retainers','Deadlines'], title: 'Matters',
-              sub: 'all practice areas · sorted by stage · kept up to date by your agent' },
+              sub: 'all practice areas · sorted by stage · kept up to date by your agent',
+              filterAll: 'All practice areas' },
       stages: ['New','Conflict check','Consult booked','Retainer out'],
       stats0: [['8','open intakes',0],['0','awaiting your approval',1],['2','consults this week',0],['0','new today',1]],
       seed: [
-        [ { n:'D. Sohal', sub:'Employment · wrongful dismissal', chips:[chip('Employment','teal'), chip('reply pending','amber')] },
-          { n:'G. Fontaine', sub:'Defamation inquiry · online post', chips:[chip('Civil Litigation','purple'), chip('intro sent','blue')] } ],
-        [ { n:'R. Sandhu', sub:'Civil · neighbour dispute', chips:[chip('Civil Litigation','purple'), chip('conflict check running','amber')] },
-          { n:'B. Kaur', sub:'Family · custody variation', chips:[chip('Family Law','blue'), chip('clear ✓','green')] } ],
-        [ { n:'T. Nguyen', sub:'Estate · executor dispute · Fri 11:00', chips:[chip('Estates','green'), chip('confirmed ✓','green')] },
-          { n:'M. Price', sub:'PI · slip and fall · Wed 3:30', chips:[chip('Personal Injury','orange'), chip('confirmed ✓','green')] } ],
-        [ { n:'A. Gill', sub:'Commercial · retainer out · day 4', chips:[chip('Civil Litigation','purple'), chip('auto-chased','blue')] },
-          { n:'L. Chen', sub:'Quiet · final follow-up queued', chips:[chip('Family Law','blue'), chip('auto-chased','blue')] } ]
+        [ { n:'D. Sohal', sub:'Employment · wrongful dismissal', chips:[chip('Employment','teal'), chip('reply pending','amber')], next:'Reply awaiting approval', due:'today', who:'JB' },
+          { n:'G. Fontaine', sub:'Defamation inquiry · online post', chips:[chip('Civil Litigation','purple'), chip('intro sent','blue')], next:'Auto follow-up if quiet', due:'Fri' } ],
+        [ { n:'R. Sandhu', sub:'Civil · neighbour dispute', chips:[chip('Civil Litigation','purple'), chip('conflict check running','amber')], next:'Conflict result', due:'today', who:'JB' },
+          { n:'B. Kaur', sub:'Family · custody variation', chips:[chip('Family Law','blue'), chip('clear ✓','green')], next:'Book consult', who:'VN' } ],
+        [ { n:'T. Nguyen', sub:'Estate · executor dispute', chips:[chip('Estates','green'), chip('confirmed ✓','green')], next:'Consult Fri 11:00 AM', due:'Fri', who:'HB' },
+          { n:'M. Price', sub:'PI · slip and fall', chips:[chip('Personal Injury','orange'), chip('confirmed ✓','green')], next:'Consult Wed 3:30 PM', due:'Wed', who:'SB' } ],
+        [ { n:'A. Gill', sub:'Commercial · retainer out', chips:[chip('Civil Litigation','purple'), chip('auto-chased','blue')], next:'Nudge sent · day 4', who:'BV' },
+          { n:'L. Chen', sub:'Family · retainer out', chips:[chip('Family Law','blue'), chip('auto-chased','blue')], next:'Final follow-up queued', due:'Mon' } ]
       ],
       inserts: [
-        { col: 2, n: 'Sandra Whitmore', sub: 'Family · consult Thu 2:00 PM',
-          chips: [chip('Family Law','blue'), chip('★ Strong · 92','green'), chip('draft awaiting your OK','blue'), chip('Thu 2:00 PM','green')],
+        { col: 2, n: 'Sandra Whitmore', sub: 'Family · separation, opposing counsel retained',
+          chips: [chip('Family Law','blue'), chip('★ Strong · 92','green'), chip('draft awaiting your OK','blue')],
+          next: 'Consult Thu 2:00 PM · intake form sent', due: 'Thu', who: 'KA',
           stats: ['9','1','3','1'], rail: '9' },
-        { col: 3, n: 'Mark Deol', sub: 'Commercial · retainer sent',
+        { col: 3, n: 'Mark Deol', sub: 'Commercial · builder contract dispute',
           chips: [chip('Civil Litigation','purple'), chip('retainer attached ✓','green'), chip('draft awaiting your OK','blue')],
+          next: 'Auto-chase until retainer signed', who: 'BV',
           stats: ['10','2','3','2'], rail: '10' },
-        { col: 1, n: 'Karen & Douglas Lim', sub: 'Estate · will dispute · conflict check',
+        { col: 1, n: 'Karen & Douglas Lim', sub: 'Estate · will validity challenge',
           chips: [chip('Estates','green'), chip('Good fit · 78','blue'), chip('time-sensitive','amber'), chip('draft awaiting your OK','blue')],
+          next: 'Conflict check, then offer consult times', due: 'today', who: 'HB',
           stats: ['11','3','3','3'], rail: '11' }
       ],
       hudCRM: 'filing matters into your intake desk...', crmDone: 'Intake desk updated · 3 matters filed and sorted',
-      endNums: [['3','matters qualified & filed',1],['4','drafts await your OK',0],['1','consultation booked',0]],
-      endLine: 'The agent works inside the inbox you already use and keeps your intake moving.<br>Your team reads the drafts, hits send. <b>Nothing ever sends without you.</b>',
+      endNums: [['3','matters qualified & filed',1],['3','drafts await your OK',0],['1','consultation booked',0]],
+      endLine: 'Every part of this is customizable to how your firm works: the stages, the documents, the voice, the booking rules.<br>Your team reads the drafts, hits send. <b>Nothing ever sends without you.</b>',
       leads: [
         { from: 'Sandra Whitmore', email: 'sandra.whitmore@gmail.com', ava: '#1a73e8', init: 'S',
           sub: 'Separation, need advice soon', time: '9:04 AM',
@@ -602,15 +616,7 @@
           chips: [['estate litigation match','g'], ['time limits apply','c'], ['GOOD FIT · 78/100','c']],
           label: { t: 'Qualified', bg: '#e8f0fe', fg: '#1967d2' },
           brand: { t: 'Estates', bg: '#e6f4ea', fg: '#137333' },
-          draft: 'Hi Karen,\n\nThank you for writing, and I am sorry about your mother.\n\nWill challenges like this are something we handle regularly, and in BC there are strict time limits, so it is worth speaking with a lawyer sooner rather than later.\n\nWe could meet Wednesday afternoon or Friday morning. Which works better for you and Douglas?\n\nVickers Law Group' },
-        { from: 'jason t', email: 'jt.hustle21@gmail.com', ava: '#9e9e9e', init: 'J',
-          sub: 'how much for a lawyer letter', time: '9:45 AM',
-          body: 'hey how much would it cost to get a lawyer to send a letter to someone for me\n\njason',
-          snip: 'hey how much would it cost to get a lawyer to send a letter to someone for me',
-          chips: [['no matter details','a'], ['WEAK · 30/100','a']],
-          label: { t: 'Needs qualifying', bg: '#fef7e0', fg: '#b06000' },
-          brand: { t: 'Civil Litigation', bg: '#f3e8fd', fg: '#7b1fa2' },
-          draft: 'Hi Jason,\n\nHappy to point you in the right direction. It depends on the situation: what is the dispute about, and what would you want the letter to accomplish?\n\nWith those two answers we can tell you whether it is something we can help with and what it would run.\n\nVickers Law Group' }
+          draft: 'Hi Karen,\n\nThank you for writing, and I am sorry about your mother.\n\nWill challenges like this are something we handle regularly, and in BC there are strict time limits, so it is worth speaking with a lawyer sooner rather than later.\n\nWe could meet Wednesday afternoon or Friday morning. Which works better for you and Douglas?\n\nVickers Law Group' }
       ]
     },
 
@@ -931,9 +937,16 @@
     el('crmstats').innerHTML = V.stats0.map(function (s, i) {
       return '<div class="cstat"><b' + (s[2] ? ' class="bl"' : '') + ' id="cs' + (i + 1) + '">' + s[0] + '</b>' + s[1] + '</div>';
     }).join('');
+    // Filter pills + new button make the board read like a real managed tool.
+    el('ctools').innerHTML =
+      '<span class="cpill on">' + (V.desk.filterAll || 'All') + '</span>' +
+      '<span class="cpill">This week &#9662;</span>' +
+      '<span class="cpill">Assigned to &#9662;</span>' +
+      '<span class="cnewbtn">+ New</span>';
+    var COLC = ['#1a73e8', '#f9ab00', '#188038', '#8e24aa'];
     el('ccols').innerHTML = V.stages.map(function (st, c) {
       var cards = V.seed[c].map(function (p) { return deskCard(p); }).join('');
-      return '<div class="ccol"><div class="ccol-h"><span>' + st + '</span><span class="cct" id="cc' + c + '">' + V.seed[c].length + '</span></div><div id="cb' + c + '">' + cards + '</div></div>';
+      return '<div class="ccol" style="--colc:' + COLC[c % 4] + '"><div class="ccol-h"><span class="cdot"></span><span>' + st + '</span><span class="cct" id="cc' + c + '">' + V.seed[c].length + '</span></div><div id="cb' + c + '">' + cards + '</div></div>';
     }).join('');
     el('crmbuyers').textContent = String(V.seed.reduce(function (a, col) { return a + col.length; }, 0));
     if (V.endCta) el('endcta').textContent = V.endCta;
@@ -943,8 +956,12 @@
     el('endline').innerHTML = V.endLine;
   }
   function chipHtml(c) { return '<span class="gchip" style="background:' + c[1] + ';color:' + c[2] + '">' + c[0] + '</span>'; }
+  var CLOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
   function deskCard(p, extra) {
-    return '<div class="ccard' + (extra || '') + '"><b>' + p.n + '</b><div class="csub">' + p.sub + '</div><div class="crow">' + p.chips.map(chipHtml).join('') + '</div>' +
+    return '<div class="ccard' + (extra || '') + '">' +
+      (p.who ? '<span class="cwho">' + p.who + '</span>' : '') +
+      '<b>' + p.n + '</b><div class="csub">' + p.sub + '</div><div class="crow">' + p.chips.map(chipHtml).join('') + '</div>' +
+      (p.next ? '<div class="cnext">' + CLOCK + '<span>' + p.next + '</span>' + (p.due ? '<span class="due">' + p.due + '</span>' : '') + '</div>' : '') +
       (extra ? '<div class="cnew">&#9679; filed by your agent just now</div>' : '') + '</div>';
   }
 
