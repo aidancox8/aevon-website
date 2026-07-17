@@ -912,9 +912,41 @@
     }
   };
 
+  // ---------- dynamic tailoring (same service, tailored surface) ----------
+  // Hand-built client presets are pristine and must never be renamed (vbb is the
+  // default Jean's live links depend on; vickers is a specific firm). Everyone
+  // else gets an industry template branded with their own business name, so a
+  // cold link shows the SAME agent running in THEIR world. Capabilities never
+  // change, only the surface (desk name, header) does.
+  var CLIENT_PRESETS = { vbb: 1, vickers: 1 };
+  function templateFor(industry) {
+    var i = (industry || '').toLowerCase();
+    if (/real estate|realtor|realty/.test(i)) return 'realestate';
+    if (/mortgage|lending|loan/.test(i)) return 'mortgage';
+    if (/insurance/.test(i)) return 'insurance';
+    // NB: vbb and vickers are client-specific (Jean, Vickers) and are NEVER used
+    // as templates for other businesses. Brokers fall through to the generic desk.
+    return 'generic';
+  }
+  function tailor(base, biz) {
+    var name = String(biz).replace(/[<>]/g, '').replace(/\s+/g, ' ').trim().slice(0, 42);
+    if (!name) return base;
+    var P = JSON.parse(JSON.stringify(base)); // presets are plain data (chip() -> array)
+    P.desk.logo = name;
+    P.desk.tab = name + ' · ' + P.desk.title;
+    P.endCta = 'This is a mockup of the Aevon Front Desk agent running for ' + name +
+               '. Every part of it is customizable to how you work. Want it live on your inbox? Just reply.';
+    return P;
+  }
   var V = (function () {
-    try { return PRESETS[new URLSearchParams(location.search).get('v')] || PRESETS.vbb; }
-    catch (e) { return PRESETS.vbb; }
+    try {
+      var sp = new URLSearchParams(location.search);
+      var v = sp.get('v'), biz = sp.get('biz'), industry = sp.get('industry');
+      if (v && CLIENT_PRESETS[v]) return PRESETS[v];        // hand-built, never touch
+      if (!v && !biz && !industry) return PRESETS.vbb;      // no signal -> default (unchanged)
+      var base = (v && PRESETS[v]) ? PRESETS[v] : PRESETS[templateFor(industry)];
+      return biz ? tailor(base, biz) : base;
+    } catch (e) { return PRESETS.vbb; }
   })();
   var LEADS = V.leads;
 
