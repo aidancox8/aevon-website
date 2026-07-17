@@ -87,6 +87,16 @@
     .rp-play { width: 62px; height: 62px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; font-size: 21px; display: flex; align-items: center; justify-content: center; padding-left: 5px; box-shadow: 0 10px 36px rgba(99,102,241,0.5); transition: transform .15s; }
     .rp-poster:hover .rp-play { transform: scale(1.07); }
 
+    /* self-serve demo form */
+    .demoform { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 640px; margin: 0 auto 20px; }
+    .demoform input, .demoform select { background: var(--surface2); border: 1px solid var(--border2); border-radius: 11px; color: var(--text); font-family: inherit; font-size: 14px; padding: 12px 14px; }
+    .demoform input { flex: 1 1 220px; min-width: 0; }
+    .demoform input::placeholder { color: var(--text4); }
+    .demoform input:focus, .demoform select:focus { outline: none; border-color: var(--accent); }
+    .demoform select { flex: 0 1 180px; cursor: pointer; }
+    .demoform button { padding: 12px 22px; }
+    @media (max-width: 560px){ .demoform input, .demoform select, .demoform button { flex: 1 1 100%; } }
+
     /* pricing */
     .price { max-width: 560px; margin: 0 auto; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1px solid var(--border2); border-radius: 20px; padding: 30px; text-align: center; }
     .price .big { font-size: 42px; font-weight: 800; letter-spacing: -0.03em; }
@@ -152,7 +162,20 @@
   <section id="demo">
     <div class="sec-tag">See it work</div>
     <h2>Watch it clear a morning of inquiries</h2>
-    <p class="sub">It plays on its own: real-looking inbox, real workflow. Qualifies, books, attaches the documents, files everything, chases the quiet ones.</p>
+    <p class="sub">Put in your business and watch the agent run <i>your</i> front desk, not a generic one. It plays on its own: qualifies, books, attaches the documents, files everything, chases the quiet ones.</p>
+    <div class="demoform">
+      <input id="df-biz" type="text" placeholder="Your business name" maxlength="42" autocomplete="off" />
+      <select id="df-ind" aria-label="Your industry">
+        <option value="">Industry: general</option>
+        <option value="real estate">Real estate</option>
+        <option value="mortgage">Mortgage</option>
+        <option value="insurance">Insurance</option>
+        <option value="law firm">Law firm</option>
+        <option value="dental clinic">Clinic / dental</option>
+        <option value="contractor">Contractor / trades</option>
+      </select>
+      <button class="btn-pri" onclick="playReelFor()">Show my demo</button>
+    </div>
     <div class="reelplayer">
       <div class="rp-bar">
         <span class="rp-dots"><i></i><i></i><i></i></span>
@@ -160,7 +183,7 @@
         <span class="rp-rec" id="rp-rec">&#9679; LIVE</span>
       </div>
       <div class="rp-stage" id="rp-stage">
-        <div class="rp-poster" onclick="playReel()">
+        <div class="rp-poster" onclick="playReelFor()">
           <span class="rp-play">&#9654;</span>
           <b>Press play, the agent does the rest</b>
           <span class="rp-sub">about 90 seconds &middot; qualifies &middot; books &middot; files &middot; follows up</span>
@@ -265,6 +288,18 @@
     if (stage.querySelector('iframe')) return;
     stage.innerHTML = '<iframe src="agent-reel.html?v=generic" title="Aevon Front Desk demo" loading="eager"></iframe>';
     var rec = document.getElementById('rp-rec'); if (rec) rec.textContent = '● PLAYING';
+  }
+  // Self-serve: load the demo tailored to whatever the visitor typed. Same
+  // engine the cold links use, so they see the agent branded to their business.
+  function playReelFor() {
+    var biz = (document.getElementById('df-biz').value || '').replace(/[<>]/g, '').trim().slice(0, 42);
+    var ind = document.getElementById('df-ind').value || '';
+    var q = 'industry=' + encodeURIComponent(ind);
+    if (biz) q += '&biz=' + encodeURIComponent(biz);
+    var stage = document.getElementById('rp-stage');
+    stage.innerHTML = '<iframe src="agent-reel.html?' + q + '" title="Aevon Front Desk demo" loading="eager"></iframe>';
+    var rec = document.getElementById('rp-rec'); if (rec) rec.textContent = '● PLAYING';
+    document.getElementById('demo').scrollIntoView({ behavior: 'smooth' });
   }
 
   function showInterest() {
