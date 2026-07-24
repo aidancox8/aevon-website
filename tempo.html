@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tempo: Staff & Room Scheduling Built Around Your Clinic | Aevon</title>
+  <meta name="description" content="Tempo builds your clinic's weekly staff and room schedule, covers sick calls by text, schedules the front desk, syncs time off with payroll, and shows room utilization. Built around your clinic, in BC. It runs alongside Jane, not instead of it." />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <meta name="robots" content="index, follow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9R5SHY2LD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-M9R5SHY2LD');
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0A0813; --bg2: #0E0C18; --surface: #15121F; --surface2: #1C1830;
+      --border: rgba(99,102,241,0.16); --border2: rgba(99,102,241,0.32);
+      --accent: #6366F1; --accent2: #7C3AED; --accent3: #A855F7;
+      --text: #F8FAFC; --text2: #B8C2D0; --text3: #8A93A8; --text4: #5E6480;
+      --green: #22C55E; --amber: #FB923C; --cyan: #22D3EE; --red: #F87171;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 22px; }
+    ::selection { background: rgba(124,58,237,0.35); }
+    body::before { content:''; position: fixed; top: -28%; left: 50%; transform: translateX(-50%); width: 1100px; height: 760px; background: radial-gradient(ellipse, rgba(124,58,237,0.17), transparent 62%); pointer-events: none; z-index: 0; }
+
+    header { position: relative; z-index: 5; padding: 20px 0; border-bottom: 1px solid var(--border); }
+    .nav { display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; text-decoration: none; }
+    .brand img { width: 30px; height: 30px; border-radius: 7px; }
+    .cta { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: 600; text-decoration: none; white-space: nowrap; box-shadow: 0 4px 20px rgba(99,102,241,0.35); transition: transform .15s, box-shadow .15s; }
+    .cta:hover { transform: translateY(-1px); box-shadow: 0 6px 26px rgba(99,102,241,0.5); }
+
+    .hero { position: relative; z-index: 5; text-align: center; padding: 64px 0 24px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; color: var(--text2); background: var(--surface); border: 1px solid var(--border); padding: 6px 13px; border-radius: 30px; margin-bottom: 22px; }
+    .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+    h1 { font-size: clamp(30px, 5.2vw, 48px); font-weight: 800; letter-spacing: -0.035em; line-height: 1.06; }
+    h1 span { background: linear-gradient(110deg, var(--accent2), var(--accent3), var(--cyan)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { color: var(--text2); font-size: 18px; max-width: 660px; margin: 18px auto 22px; }
+    .terms { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 26px; }
+    .term { background: var(--surface); border: 1px solid var(--border2); border-radius: 30px; padding: 8px 16px; font-size: 13.5px; font-weight: 600; color: var(--text2); }
+    .term b { color: var(--text); }
+    .hero .btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-ghost { border: 1px solid var(--border2); color: var(--text); padding: 13px 24px; border-radius: 11px; font-size: 14px; font-weight: 600; text-decoration: none; background: none; cursor: pointer; font-family: inherit; }
+    .btn-ghost:hover { background: var(--surface); }
+    .btn-pri { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; padding: 14px 26px; border-radius: 11px; font-size: 14px; font-weight: 600; text-decoration: none; box-shadow: 0 6px 24px rgba(99,102,241,0.4); border: none; cursor: pointer; font-family: inherit; display: inline-block; }
+    .btn-pri:hover { transform: translateY(-1px); }
+
+    section { position: relative; z-index: 5; padding: 44px 0; }
+    .sec-tag { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); text-align: center; }
+    h2 { font-size: clamp(22px, 3.4vw, 32px); font-weight: 800; letter-spacing: -0.025em; text-align: center; margin: 8px 0 8px; }
+    .sec-sub { color: var(--text3); text-align: center; max-width: 620px; margin: 0 auto 30px; font-size: 15px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px; }
+    .card .ic { font-size: 20px; margin-bottom: 10px; }
+    .card h3 { font-size: 15.5px; font-weight: 700; margin-bottom: 6px; }
+    .card p { color: var(--text3); font-size: 13.5px; }
+
+    .jane { background: var(--surface); border: 1px solid var(--border2); border-radius: 18px; padding: 28px; max-width: 720px; margin: 0 auto; }
+    .jane h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+    .jane p { color: var(--text2); font-size: 14.5px; margin-bottom: 8px; }
+
+    .demos { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; max-width: 760px; margin: 0 auto; }
+    .demo-card { background: var(--surface); border: 1px solid var(--border2); border-radius: 18px; padding: 26px; text-align: center; }
+    .demo-card .badge { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--cyan); background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.25); border-radius: 20px; padding: 4px 12px; margin-bottom: 12px; }
+    .demo-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 6px; }
+    .demo-card p { color: var(--text3); font-size: 13.5px; margin-bottom: 16px; }
+
+    .steps { max-width: 640px; margin: 0 auto; display: grid; gap: 12px; }
+    .step { display: flex; gap: 14px; align-items: flex-start; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; }
+    .step .n { font-family: var(--mono); font-size: 13px; color: var(--accent3); font-weight: 700; background: rgba(168,85,247,.1); border: 1px solid rgba(168,85,247,.3); width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step p { color: var(--text2); font-size: 14px; }
+    .step b { color: var(--text); }
+
+    footer { position: relative; z-index: 5; border-top: 1px solid var(--border); padding: 28px 0; margin-top: 20px; }
+    footer .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    footer p { color: var(--text4); font-size: 12.5px; }
+    footer a { color: var(--text3); text-decoration: none; font-size: 12.5px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="/"><img src="logo.svg" alt="Aevon" /> Aevon</a>
+      <a class="cta" href="mailto:aidan@aevon.ca?subject=Tempo%20for%20our%20clinic">Talk to us</a>
+    </div>
+  </header>
+
+  <div class="hero wrap">
+    <div class="eyebrow"><span class="dot"></span> Built in BC for multi-provider clinics</div>
+    <h1>Your booking software schedules patients.<br /><span>Tempo schedules your team.</span></h1>
+    <p>Tempo builds the weekly grid of who works where: every practitioner, every treatment room, the front desk and support staff too. It replaces the spreadsheet, not your booking system.</p>
+    <div class="terms">
+      <div class="term"><b>Custom-built</b> around your clinic</div>
+      <div class="term">Runs <b>alongside Jane</b></div>
+      <div class="term"><b>You own it</b></div>
+    </div>
+    <div class="btns">
+      <a class="btn-pri" href="https://allied-scheduler-demo.web.app" target="_blank" rel="noopener">Try the live demo</a>
+      <a class="btn-ghost" href="mailto:aidan@aevon.ca?subject=Tempo%20for%20our%20clinic">Email Aidan</a>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-tag">What it does</div>
+      <h2>The scheduling your booking software leaves to you</h2>
+      <p class="sec-sub">Patient booking tells patients when you're available. Someone still decides who works, where, and when. That is Tempo's whole job.</p>
+      <div class="grid">
+        <div class="card"><div class="ic">🗓</div><h3>Weekly staff + room schedule</h3><p>Which practitioner is in which room, each day. Auto-filled from your defaults, adjusted in clicks, published to everyone instantly.</p></div>
+        <div class="card"><div class="ic">🖥</div><h3>Front desk &amp; support scheduling</h3><p>Reception, aides, and admin staff live on the same schedule as practitioners, the part patient-booking tools tell you to keep in a separate calendar.</p></div>
+        <div class="card"><div class="ic">📱</div><h3>Sick-call cover in one tap</h3><p>Someone calls out, Tempo finds every qualified staff member who's free and texts them. First yes fills the shift and everyone gets confirmed.</p></div>
+        <div class="card"><div class="ic">💵</div><h3>Payroll-synced time off</h3><p>Approved time off flows into the schedule automatically, and scheduled hours export payroll-ready per pay period.</p></div>
+        <div class="card"><div class="ic">📊</div><h3>Room &amp; coverage analytics</h3><p>Room utilization, coverage per day of week, away impact, evening and weekend load, in your clinic's own vocabulary.</p></div>
+        <div class="card"><div class="ic">🛡</div><h3>Credential expiry watch</h3><p>Registrations, licences, and First Aid expiries tracked per person, with warnings long before anything lapses.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="jane">
+        <h3>Already on Jane? Good. Keep it.</h3>
+        <p>Almost every allied clinic in Canada runs Jane, and Tempo is not a Jane replacement. Jane books your patients. Tempo decides which humans are in the building: shifts, rooms, coverage, front desk, time off.</p>
+        <p>Most clinics still plan all of that in a spreadsheet before typing it into anything. Tempo is that missing layer, built around your clinic instead of forcing your clinic around software.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-tag">See it live</div>
+      <h2>Click around a working clinic</h2>
+      <p class="sec-sub">Both demos are real, running schedules. Change anything you like; it resets on refresh.</p>
+      <div class="demos">
+        <div class="demo-card">
+          <div class="badge">Allied health</div>
+          <h3>Physio · RMT · Chiro · Kin</h3>
+          <p>Treatment rooms, students shadowing, split shifts, sick-call cover, front desk on the schedule.</p>
+          <a class="btn-pri" href="https://allied-scheduler-demo.web.app" target="_blank" rel="noopener">Open the allied demo</a>
+        </div>
+        <div class="demo-card">
+          <div class="badge">Medical groups</div>
+          <h3>Physicians · MOAs · On-call</h3>
+          <p>Procedure and consult rooms, on-call rotation with SMS confirmations, locum coverage, payroll sync.</p>
+          <a class="btn-pri" href="https://clinic-scheduler-demo.web.app" target="_blank" rel="noopener">Open the medical demo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-tag">How it works</div>
+      <h2>Configured to your clinic, not the other way around</h2>
+      <div class="steps" style="margin-top: 26px;">
+        <div class="step"><div class="n">1</div><p><b>We map your clinic.</b> Your disciplines, rooms, hours, roles, and how the week actually runs, in one short call.</p></div>
+        <div class="step"><div class="n">2</div><p><b>Tempo is set up around it.</b> Your names for everything, your rooms, your modules. Nothing generic, nothing you don't use.</p></div>
+        <div class="step"><div class="n">3</div><p><b>Your team just sees their schedule.</b> Staff sign in and see their week; managers drag, publish, and stop maintaining the spreadsheet.</p></div>
+      </div>
+      <div style="text-align:center; margin-top: 30px;">
+        <a class="btn-pri" href="mailto:aidan@aevon.ca?subject=Tempo%20for%20our%20clinic">Get a version set up for your clinic</a>
+        <p style="color: var(--text4); font-size: 12.5px; margin-top: 10px;">No demo call required. Email what your clinic looks like and we'll take it from there.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p>© 2026 Aevon · Lower Mainland, BC · <a href="mailto:aidan@aevon.ca">aidan@aevon.ca</a></p>
+      <p><a href="/">aevon.ca</a> · <a href="/privacy.html">Privacy</a></p>
+    </div>
+  </footer>
+</body>
+</html>
