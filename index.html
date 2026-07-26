@@ -582,6 +582,37 @@
     .cf-success p { font-size: 14px; color: var(--text2); }
 
     /* ── FOOTER ── */
+    /* Products dropdown — groups the two products and the industry pages so the
+       nav stays at five items instead of nine unrelated links. */
+    .nav-drop { position: relative; }
+    .nav-drop-trigger { cursor: pointer; }
+    .nav-drop-menu {
+      position: absolute; top: 100%; left: -14px; padding-top: 14px;
+      opacity: 0; visibility: hidden; transform: translateY(-6px);
+      transition: opacity .16s, transform .16s, visibility .16s;
+      min-width: 268px; z-index: 60;
+    }
+    .nav-drop:hover .nav-drop-menu, .nav-drop:focus-within .nav-drop-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-drop-menu > a, .nav-drop-menu > .nav-drop-sep {
+      display: block; padding: 10px 16px; text-decoration: none;
+      background: #14192E; border-left: 1px solid rgba(99,102,241,0.16); border-right: 1px solid rgba(99,102,241,0.16);
+    }
+    .nav-drop-menu > a:first-of-type { border-top: 1px solid rgba(99,102,241,0.16); border-radius: 12px 12px 0 0; padding-top: 13px; }
+    .nav-drop-menu > a:last-child { border-bottom: 1px solid rgba(99,102,241,0.16); border-radius: 0 0 12px 12px; padding-bottom: 13px; }
+    .nav-drop-menu > a:hover { background: #1A2039; }
+    .nav-drop-menu b { display: block; font-size: 13.5px; font-weight: 650; color: var(--text); }
+    .nav-drop-menu span { display: block; font-size: 11.5px; color: var(--text3); margin-top: 2px; }
+    .nav-drop-menu > a { font-size: 13px; color: var(--text2); }
+    .nav-drop-sep {
+      font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--text4); padding-top: 12px !important; padding-bottom: 6px !important;
+      border-top: 1px solid rgba(99,102,241,0.12) !important; margin-top: 4px;
+    }
+    @media (max-width: 900px) {
+      .nav-drop-menu { position: static; opacity: 1; visibility: visible; transform: none; padding-top: 4px; min-width: 0; }
+      .nav-drop-menu > a, .nav-drop-menu > .nav-drop-sep { background: transparent; border: none !important; padding: 7px 0; }
+    }
+
     footer { border-top: 1px solid var(--border); padding: 40px 0; }
     .footer-row { display: flex; align-items: center; justify-content: space-between; }
     .flogo { display: flex; align-items: center; gap: 9px; font-size: 14.5px; font-weight: 750; letter-spacing: -0.04em; }
@@ -676,12 +707,18 @@
   <ul class="nav-links">
     <li><a href="#problem">Why Aevon</a></li>
     <li><a href="#showcase">What We Build</a></li>
+    <li class="nav-drop">
+      <a href="#showcase" class="nav-drop-trigger">Products <span style="font-size:9px;opacity:.6">▾</span></a>
+      <div class="nav-drop-menu">
+        <a href="tempo.html"><b>Tempo</b><span>Staff &amp; room scheduling for clinics</span></a>
+        <a href="frontdesk.html"><b>Front Desk</b><span>AI agent that runs your intake</span></a>
+        <div class="nav-drop-sep">Built for your industry</div>
+        <a href="insurance.html">Insurance brokerages</a>
+        <a href="realestate.html">Real estate teams</a>
+        <a href="mortgage.html">Mortgage brokers</a>
+      </div>
+    </li>
     <li><a href="#work">Our Work</a></li>
-    <li><a href="frontdesk.html">Front Desk</a></li>
-    <li><a href="tempo.html">Tempo (Clinics)</a></li>
-    <li><a href="insurance.html">Insurance</a></li>
-    <li><a href="realestate.html">Real Estate</a></li>
-    <li><a href="mortgage.html">Mortgage</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" class="nav-cta">Book a Free Call</a></li>
   </ul>
