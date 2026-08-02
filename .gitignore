@@ -1,0 +1,5 @@
+
+# Old design prototypes. Kept on disk, never committed: GitHub Pages serves everything in
+# the repo, so committing these publishes a duplicate homepage and privacy page at
+# /new design/, which competes with the real ones in search.
+new design/
