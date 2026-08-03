@@ -133,7 +133,7 @@
   <header>
     <div class="wrap nav">
       <a class="brand" href="/"><img src="logo.svg" alt="Aevon" /> Aevon</a>
-      <a class="cta" href="mailto:aidan@aevon.ca?subject=Tempo%20for%20our%20clinic">Talk to us</a>
+      <a class="cta" href="#pilot">Free 2-week pilot</a>
     </div>
   </header>
 
@@ -148,7 +148,7 @@
     </div>
     <div class="btns">
       <a class="btn-pri" href="https://allied-scheduler-demo.web.app" target="_blank" rel="noopener">Try the live demo</a>
-      <a class="btn-ghost" href="mailto:aidan@aevon.ca?subject=Tempo%20for%20our%20clinic">Email Aidan</a>
+      <a class="btn-ghost" href="#pilot">Run it free for two weeks</a>
     </div>
   </div>
 
@@ -210,9 +210,76 @@
         <div class="step"><div class="n">3</div><p><b>Your team just sees their schedule.</b> Staff sign in and see their week; managers drag, publish, and stop maintaining the spreadsheet.</p></div>
       </div>
       <div style="text-align:center; margin-top: 30px;">
-        <a class="btn-pri" href="mailto:aidan@aevon.ca?subject=Tempo%20for%20our%20clinic">Get a version set up for your clinic</a>
-        <p style="color: var(--text4); font-size: 12.5px; margin-top: 10px;">No demo call required. Email what your clinic looks like and we'll take it from there.</p>
+        <a class="btn-pri" href="#pilot">Run it free for two weeks</a>
+        <p style="color: var(--text4); font-size: 12.5px; margin-top: 10px;">No demo call required. Tell us what your clinic looks like and we'll take it from there.</p>
       </div>
+    </div>
+  </section>
+
+  <section id="pilot">
+    <div class="wrap">
+      <div class="sec-tag">The pilot</div>
+      <h2>Two weeks, set up around your clinic, free</h2>
+      <p class="sec-sub">
+        Not a signup for generic software. We build it around your disciplines, your rooms and
+        your hours, then you run a real week on it before deciding anything.
+      </p>
+
+      <div style="background: var(--surface); border: 1px solid var(--border2); border-radius: 16px; padding: 24px 26px; margin-bottom: 18px;">
+        <h3 style="font-size:19px; font-weight:800; margin-bottom:8px;">Why it's free</h3>
+        <p style="color: var(--text2); font-size: 15px;">
+          Tempo runs a real clinic every day, but it's new as a product for other clinics, so
+          we're setting up the first few ourselves to get it right and earn the reference.
+          That's the whole reason. Once we have the workload it goes back to paid, and we'll
+          take this offer down rather than pretend a deadline.
+        </p>
+      </div>
+
+      <div class="grid" style="margin-bottom: 22px;">
+        <div class="card">
+          <div class="ic">✓</div>
+          <h3>What we do</h3>
+          <p>Load your staff, rooms, disciplines and hours, and configure the modules you
+             actually use. You send a roster, we handle the setup.</p>
+        </div>
+        <div class="card">
+          <div class="ic">↺</div>
+          <h3>What it replaces</h3>
+          <p>The weekly grid someone rebuilds by hand. It sits alongside your patient booking,
+             it does not replace it.</p>
+        </div>
+        <div class="card">
+          <div class="ic">→</div>
+          <h3>After two weeks</h3>
+          <p>Keep it and we talk terms, or walk away and owe nothing. No auto-renewal, no card
+             up front, nothing to cancel.</p>
+        </div>
+      </div>
+
+      <form id="pf" novalidate style="background: var(--surface); border: 1px solid var(--border2); border-radius: 16px; padding: 24px 26px;">
+        <div id="pfields">
+          <label for="pclinic" style="display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;">Clinic</label>
+          <input id="pclinic" type="text" autocomplete="organization" placeholder="Northshore Physio"
+                 style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 13px;color:var(--text);font-family:inherit;font-size:14.5px;margin-bottom:14px;" />
+
+          <label for="pemail" style="display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;">Email</label>
+          <input id="pemail" type="email" autocomplete="email" placeholder="you@yourclinic.ca"
+                 style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 13px;color:var(--text);font-family:inherit;font-size:14.5px;margin-bottom:14px;" />
+
+          <label for="pshape" style="display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;">What does your week look like?</label>
+          <textarea id="pshape" placeholder="Six physios, two RMTs, one chiro across eight rooms and two locations. Someone rebuilds it every Friday."
+                    style="width:100%;min-height:88px;resize:vertical;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 13px;color:var(--text);font-family:inherit;font-size:14.5px;margin-bottom:6px;"></textarea>
+          <p style="font-size:12.5px;color:var(--text4);margin-bottom:15px;">Rough is fine. Disciplines, rooms, locations, roughly how many staff.</p>
+
+          <div id="perr" style="display:none;color:var(--red);font-size:12.5px;margin-bottom:12px;"></div>
+          <button class="btn-pri" type="submit" id="pgo" style="width:100%;">Set up our pilot</button>
+        </div>
+        <div id="pdone" style="display:none;text-align:center;padding:16px 0;">
+          <div style="font-size:32px;margin-bottom:8px;">✓</div>
+          <div style="font-weight:700;font-size:17px;margin-bottom:6px;">Got it.</div>
+          <div style="color:var(--text2);font-size:14.5px;">We'll reply within a business day with the couple of things we need to set it up.</div>
+        </div>
+      </form>
     </div>
   </section>
 
@@ -222,5 +289,66 @@
       <p><a href="/">aevon.ca</a> · <a href="/privacy.html">Privacy</a></p>
     </div>
   </footer>
+
+<script>
+(function () {
+  var f = document.getElementById('pf');
+  if (!f) return;
+  var go = document.getElementById('pgo');
+  var err = document.getElementById('perr');
+
+  f.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var clinic = document.getElementById('pclinic').value.trim();
+    var email  = document.getElementById('pemail').value.trim();
+    var shape  = document.getElementById('pshape').value.trim();
+
+    var msgs = [];
+    if (!clinic) msgs.push('Which clinic is this?');
+    if (!/^[^s@]+@[^s@]+.[^s@]{2,}$/.test(email)) msgs.push('We need an email to reply to.');
+    if (!shape) msgs.push('Tell us roughly how your week runs.');
+    if (msgs.length) { err.textContent = msgs.join(' '); err.style.display = 'block'; return; }
+    err.style.display = 'none';
+
+    go.disabled = true;
+    go.textContent = 'Sending…';
+
+    // Lands in the CRM under its own status. Never 'queued', so a pilot request can never be
+    // swept into cold outreach, and it goes to the Tempo table rather than the Aevon one.
+    fetch('https://qzxtfgzpyptvriorfhxw.supabase.co/rest/v1/tempo_leads', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': 'sb_publishable_yeGHZBOyEf0wPb-YSCivPg_jA2dB5Kg',
+        'Authorization': 'Bearer sb_publishable_yeGHZBOyEf0wPb-YSCivPg_jA2dB5Kg',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        business_name: clinic,
+        email: email,
+        status: 'pilot_request',
+        source: 'website:tempo',
+        qualification_notes: 'PILOT REQUEST
+
+' + shape
+      })
+    })
+    .then(function (r) {
+      if (!r.ok) throw new Error('bad status');
+      document.getElementById('pfields').style.display = 'none';
+      document.getElementById('pdone').style.display = 'block';
+    })
+    .catch(function () {
+      // Never strand someone who just described their clinic.
+      go.disabled = false;
+      go.textContent = 'Set up our pilot';
+      window.location.href = 'mailto:aidan@aevon.ca'
+        + '?subject=' + encodeURIComponent('Tempo pilot: ' + clinic)
+        + '&body=' + encodeURIComponent(shape);
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
