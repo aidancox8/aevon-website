@@ -305,7 +305,7 @@
 
     var msgs = [];
     if (!clinic) msgs.push('Which clinic is this?');
-    if (!/^[^s@]+@[^s@]+.[^s@]{2,}$/.test(email)) msgs.push('We need an email to reply to.');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) msgs.push('We need an email to reply to.');
     if (!shape) msgs.push('Tell us roughly how your week runs.');
     if (msgs.length) { err.textContent = msgs.join(' '); err.style.display = 'block'; return; }
     err.style.display = 'none';
@@ -328,9 +328,7 @@
         email: email,
         status: 'pilot_request',
         source: 'website:tempo',
-        qualification_notes: 'PILOT REQUEST
-
-' + shape
+        qualification_notes: 'PILOT REQUEST\n\n' + shape
       })
     })
     .then(function (r) {
