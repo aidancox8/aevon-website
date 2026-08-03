@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I'll build one thing free | Aevon</title>
+  <meta name="description" content="Name one job your team does by hand and I'll build a working version of it for your business, free, yours either way. Limited while I'm building a track record." />
+  <link rel="canonical" href="https://aevon.ca/build.html" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aevon.ca/build.html" />
+  <meta property="og:site_name" content="Aevon" />
+  <meta property="og:title" content="I'll build one thing free | Aevon" />
+  <meta property="og:description" content="Name one job your team does by hand and I'll build a working version of it for your business, free, yours either way." />
+  <meta property="og:locale" content="en_CA" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="I'll build one thing free | Aevon" />
+  <meta name="twitter:description" content="Name one job your team does by hand and I'll build a working version of it for your business, free, yours either way." />
+  <link rel="icon" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0A0813; --surface: #15121F; --surface2: #1C1830;
+      --border: rgba(99,102,241,0.16); --border2: rgba(99,102,241,0.32);
+      --accent: #6366F1; --accent2: #7C3AED; --accent3: #A855F7;
+      --text: #F8FAFC; --text2: #B8C2D0; --text3: #8A93A8; --text4: #5E6480;
+      --green: #22C55E; --amber: #FB923C; --red: #F87171;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; }
+    .wrap { max-width: 820px; margin: 0 auto; padding: 0 22px; }
+    ::selection { background: rgba(124,58,237,0.35); }
+    body::before { content:''; position: fixed; top: -28%; left: 50%; transform: translateX(-50%); width: 1100px; height: 760px; background: radial-gradient(ellipse, rgba(124,58,237,0.17), transparent 62%); pointer-events: none; z-index: 0; }
+
+    header { position: relative; z-index: 5; padding: 20px 0; border-bottom: 1px solid var(--border); }
+    .nav { display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; text-decoration: none; }
+    .brand img { width: 30px; height: 30px; border-radius: 7px; }
+    .nav-back { font-size: 13px; color: var(--text3); text-decoration: none; }
+    .nav-back:hover { color: var(--text); }
+
+    .hero { position: relative; z-index: 5; text-align: center; padding: 60px 0 8px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; color: var(--text2); background: var(--surface); border: 1px solid var(--border); padding: 6px 13px; border-radius: 30px; margin-bottom: 22px; }
+    .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+    h1 { font-size: clamp(30px, 5.2vw, 46px); font-weight: 800; letter-spacing: -0.035em; line-height: 1.08; }
+    h1 span { background: linear-gradient(110deg, var(--accent2), var(--accent3)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { color: var(--text2); font-size: 17.5px; max-width: 620px; margin: 18px auto 0; }
+
+    section { position: relative; z-index: 5; padding: 40px 0; }
+    h2 { font-size: clamp(20px, 3vw, 27px); font-weight: 800; letter-spacing: -0.025em; margin-bottom: 10px; }
+    .lead { color: var(--text2); font-size: 15.5px; }
+    .lead + .lead { margin-top: 12px; }
+
+    .why { background: var(--surface); border: 1px solid var(--border2); border-radius: 16px; padding: 24px 26px; }
+    .why h2 { font-size: 20px; margin-bottom: 8px; }
+
+    .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+    @media (max-width: 680px) { .cols { grid-template-columns: 1fr; } }
+    .col { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; }
+    .col h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .col ul { list-style: none; }
+    .col li { color: var(--text2); font-size: 14px; padding: 5px 0 5px 20px; position: relative; }
+    .col li::before { position: absolute; left: 0; top: 5px; font-size: 13px; }
+    .yes li::before { content: '✓'; color: var(--green); }
+    .no li::before { content: '✕'; color: var(--red); }
+
+    .steps { counter-reset: s; margin-top: 6px; }
+    .step { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .step:last-child { border-bottom: none; }
+    .step .n { flex: 0 0 26px; height: 26px; border-radius: 8px; background: var(--surface2); border: 1px solid var(--border2); display: grid; place-items: center; font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--accent3); }
+    .step .t { font-size: 14.5px; color: var(--text2); }
+    .step .t b { color: var(--text); }
+
+    .form { background: var(--surface); border: 1px solid var(--border2); border-radius: 18px; padding: 26px; }
+    .form label { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text3); margin-bottom: 6px; }
+    .form input, .form textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px 13px; color: var(--text); font-family: inherit; font-size: 14.5px; margin-bottom: 15px; }
+    .form textarea { min-height: 92px; resize: vertical; }
+    .form input:focus, .form textarea:focus { outline: none; border-color: var(--accent); }
+    .form .hint { font-size: 12.5px; color: var(--text4); margin: -10px 0 15px; }
+    .btn-pri { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; padding: 14px 26px; border-radius: 11px; font-size: 15px; font-weight: 600; border: none; cursor: pointer; font-family: inherit; width: 100%; }
+    .btn-pri:hover { transform: translateY(-1px); }
+    .btn-pri:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+    .err { color: var(--red); font-size: 12.5px; margin: -10px 0 14px; }
+    .ok { text-align: center; padding: 18px 0; }
+    .ok .big { font-size: 34px; margin-bottom: 8px; }
+
+    footer { position: relative; z-index: 5; border-top: 1px solid var(--border); padding: 24px 0 40px; color: var(--text4); font-size: 13px; text-align: center; }
+    footer a { color: var(--text3); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/"><img src="/logo-email.png" alt="Aevon" />Aevon</a>
+    <a class="nav-back" href="/">← Everything else we build</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span> Open now, not forever</div>
+    <h1>Name one thing your team does by hand.<br><span>I'll build it. Free.</span></h1>
+    <p>
+      Not a trial of something generic. A working version of your process, using your rules,
+      built for your business. It's yours whether or not we ever work together again.
+    </p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap why">
+    <h2>Why it's free, plainly</h2>
+    <p class="lead">
+      I'm early. Aevon is a real software business in the Lower Mainland, but it's young, and
+      the honest problem with being young is that nobody has seen my work yet. So I'd rather
+      show you than tell you.
+    </p>
+    <p class="lead">
+      That means I'm doing a small number of these while I build a track record. Once I have
+      the workload, this stops and everything goes back to paid. No fake countdown, no
+      "3 spots left". When it's over I'll just take this page down.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What you get, and what you don't</h2>
+    <p class="lead">
+      Being specific up front so nobody wastes an afternoon. This is deliberately narrow,
+      because a narrow thing that actually works beats a broad thing that half does.
+    </p>
+    <div class="cols">
+      <div class="col yes">
+        <h3>✓ Yes</h3>
+        <ul>
+          <li>One process, start to finish</li>
+          <li>Built around how <b>you</b> do it, not a template</li>
+          <li>Real and clickable, not a mockup</li>
+          <li>Sample or historical data you send over</li>
+          <li>Yours to keep either way, no strings</li>
+        </ul>
+      </div>
+      <div class="col no">
+        <h3>✕ No</h3>
+        <ul>
+          <li>Not a whole system or a suite</li>
+          <li>Not wired into your live customer traffic</li>
+          <li>Nothing that needs a paid service to run</li>
+          <li>No ongoing cost handed to you afterwards</li>
+          <li>Not an obligation to buy anything</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" style="margin-top:16px">
+      If what you need is bigger than one process, tell me anyway. I'll say so honestly and we
+      can talk about scoping the real thing, rather than me pretending a weekend covers it.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>How it goes</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div class="t"><b>You name the job.</b> One line is enough. "We re-type every quote into two systems." "Someone rebuilds the schedule every Friday."</div></div>
+      <div class="step"><div class="n">2</div><div class="t"><b>I ask a couple of questions.</b> Usually by email, usually short. If it's quicker to talk, we talk.</div></div>
+      <div class="step"><div class="n">3</div><div class="t"><b>I build it.</b> Days, not weeks. You see it working on your own process.</div></div>
+      <div class="step"><div class="n">4</div><div class="t"><b>You decide nothing.</b> If it's useful we can talk about finishing it properly. If not, keep it and we're done, genuinely.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="ask">
+  <div class="wrap">
+    <h2>Tell me the one thing</h2>
+    <p class="lead" style="margin-bottom:18px">
+      Takes about thirty seconds. I read every one of these myself and reply within a business day.
+    </p>
+
+    <form class="form" id="f" novalidate>
+      <div id="fields">
+        <label for="biz">Business</label>
+        <input id="biz" name="biz" type="text" autocomplete="organization" placeholder="Northshore Physio" />
+        <div class="err" id="e-biz" style="display:none">Who are you? A name is enough.</div>
+
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="you@yourbusiness.ca" />
+        <div class="err" id="e-email" style="display:none">I need somewhere to send it.</div>
+
+        <label for="job">The one job you'd hand over</label>
+        <textarea id="job" name="job" placeholder="Every new client means re-typing the same details into three places."></textarea>
+        <div class="hint">Plain language is fine. You don't need to know what it should be built with.</div>
+        <div class="err" id="e-job" style="display:none">Tell me the job and I'll tell you if I can build it.</div>
+
+        <button class="btn-pri" type="submit" id="go">Send it over</button>
+      </div>
+
+      <div class="ok" id="done" style="display:none">
+        <div class="big">✓</div>
+        <div style="font-weight:700;font-size:17px;margin-bottom:6px">Got it.</div>
+        <div style="color:var(--text2);font-size:14.5px">
+          I'll read it properly and reply within a business day, usually sooner.
+          If it's a fit I'll just start building.
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Aevon · custom software for Lower Mainland businesses ·
+    <a href="mailto:aidan@aevon.ca">aidan@aevon.ca</a> ·
+    <a href="/privacy.html">Privacy</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var f = document.getElementById('f');
+  var go = document.getElementById('go');
+
+  function show(id, on) { document.getElementById(id).style.display = on ? 'block' : 'none'; }
+
+  f.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var biz = document.getElementById('biz').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var job = document.getElementById('job').value.trim();
+
+    var bad = false;
+    show('e-biz', !biz); if (!biz) bad = true;
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+    show('e-email', !emailOk); if (!emailOk) bad = true;
+    show('e-job', !job); if (!job) bad = true;
+    if (bad) return;
+
+    go.disabled = true;
+    go.textContent = 'Sending…';
+
+    // Same path the main contact form uses, so a request lands in the CRM rather than an
+    // inbox rule. status is not 'queued', so this can never be picked up by cold outreach.
+    fetch('https://qzxtfgzpyptvriorfhxw.supabase.co/rest/v1/leads', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': 'sb_publishable_yeGHZBOyEf0wPb-YSCivPg_jA2dB5Kg',
+        'Authorization': 'Bearer sb_publishable_yeGHZBOyEf0wPb-YSCivPg_jA2dB5Kg',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        business_name: biz,
+        email: email,
+        status: 'free_build_request',
+        source: 'website:build',
+        notes: 'FREE BUILD REQUEST\n\n' + job
+      })
+    })
+    .then(function (r) {
+      if (!r.ok) throw new Error('bad status');
+      show('fields', false);
+      show('done', true);
+    })
+    .catch(function () {
+      // Never strand someone who took the time to write it out. Hand them the direct route
+      // with what they typed already in the message.
+      go.disabled = false;
+      go.textContent = 'Send it over';
+      window.location.href = 'mailto:aidan@aevon.ca'
+        + '?subject=' + encodeURIComponent('Free build: ' + biz)
+        + '&body=' + encodeURIComponent(job);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
