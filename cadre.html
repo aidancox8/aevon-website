@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadre — Staff records, training and credentials in one system | Aevon</title>
+  <meta name="description" content="A live demo of Cadre: role-based onboarding, training that records itself, and credential expiries that warn before they lapse. Click around, nothing here is real." />
+  <link rel="canonical" href="https://aevon.ca/cadre.html" />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0e1116; --panel: #161b23; --panel2: #1c232e; --line: #263040;
+      --text: #e8edf4; --dim: #8b98a9; --accent: #5254cc; --accent2: #7a7cf0;
+      --ok: #34c98e; --warn: #e8b043; --bad: #e86060;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: Inter, -apple-system, sans-serif; font-size: 15px; line-height: 1.55; }
+    a { color: var(--accent2); text-decoration: none; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    header.site { padding: 18px 0; border-bottom: 1px solid var(--line); }
+    header.site .wrap { display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--text); }
+    .brand img { width: 28px; height: 28px; border-radius: 7px; }
+    .hero { padding: 44px 0 10px; }
+    .hero h1 { font-size: clamp(26px, 4vw, 38px); font-weight: 800; letter-spacing: -0.5px; }
+    .hero p.sub { color: var(--dim); max-width: 640px; margin-top: 10px; }
+    .hero .note { display: inline-block; margin-top: 14px; font-size: 13px; color: var(--warn); background: rgba(232,176,67,.08); border: 1px solid rgba(232,176,67,.25); padding: 5px 12px; border-radius: 999px; }
+    .demo { display: grid; grid-template-columns: 250px 1fr; gap: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin: 28px 0 16px; background: var(--panel); min-height: 560px; }
+    .roster { border-right: 1px solid var(--line); background: var(--panel2); overflow-y: auto; max-height: 640px; }
+    .roster h3 { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--dim); padding: 14px 16px 6px; }
+    .person { padding: 10px 16px; cursor: pointer; border-left: 3px solid transparent; }
+    .person:hover { background: rgba(255,255,255,.03); }
+    .person.sel { background: rgba(82,84,204,.12); border-left-color: var(--accent); }
+    .person .nm { font-weight: 600; font-size: 14px; }
+    .person .rl { font-size: 12px; color: var(--dim); }
+    .person .dots { float: right; margin-top: 4px; }
+    .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-left: 3px; }
+    .d-ok { background: var(--ok); } .d-warn { background: var(--warn); } .d-bad { background: var(--bad); }
+    .main { padding: 20px 24px; overflow-y: auto; max-height: 640px; }
+    .tabs { display: flex; gap: 6px; margin-bottom: 18px; flex-wrap: wrap; }
+    .tab { padding: 7px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--dim); cursor: pointer; border: 1px solid transparent; }
+    .tab.sel { color: var(--text); background: var(--panel2); border-color: var(--line); }
+    h2.pname { font-size: 22px; font-weight: 700; }
+    .meta { color: var(--dim); font-size: 13px; margin-bottom: 16px; }
+    .card { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; }
+    .cred { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    .cred .cn { font-weight: 600; }
+    .chip { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+    .c-ok { color: var(--ok); background: rgba(52,201,142,.1); }
+    .c-warn { color: var(--warn); background: rgba(232,176,67,.1); }
+    .c-bad { color: var(--bad); background: rgba(232,96,96,.12); }
+    .cred .exp { color: var(--dim); font-size: 12.5px; flex-basis: 100%; }
+    .step { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .step:last-child { border-bottom: none; }
+    .box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--dim); flex: none; display: grid; place-items: center; font-size: 13px; }
+    .step.done .box { border-color: var(--ok); background: rgba(52,201,142,.15); color: var(--ok); }
+    .step.done .lbl { color: var(--dim); text-decoration: line-through; }
+    .step .who { margin-left: auto; font-size: 12px; color: var(--dim); }
+    button.act { background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 7px 14px; font: 600 13px Inter, sans-serif; cursor: pointer; }
+    button.act:hover { background: var(--accent2); }
+    button.act:disabled { background: var(--line); color: var(--dim); cursor: default; }
+    .matrix { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .matrix th, .matrix td { border: 1px solid var(--line); padding: 7px 9px; text-align: center; }
+    .matrix th { background: var(--panel); font-weight: 600; }
+    .matrix td.rowh { text-align: left; font-weight: 600; white-space: nowrap; }
+    .matrix .m-ok { color: var(--ok); } .matrix .m-warn { color: var(--warn); }
+    .matrix .m-bad { color: var(--bad); } .matrix .m-na { color: #3a4657; }
+    .mnote { color: var(--dim); font-size: 13px; margin-top: 10px; }
+    .toast { position: fixed; right: 18px; bottom: 18px; display: flex; flex-direction: column; gap: 8px; z-index: 50; max-width: 360px; }
+    .toast .t { background: #10151d; border: 1px solid var(--line); border-left: 3px solid var(--ok); border-radius: 10px; padding: 10px 14px; font-size: 13px; box-shadow: 0 8px 30px rgba(0,0,0,.5); animation: tin .25s ease; }
+    @keyframes tin { from { transform: translateY(8px); opacity: 0; } to { transform: none; opacity: 1; } }
+    .cta { text-align: center; padding: 34px 0 60px; }
+    .cta p { color: var(--dim); margin-bottom: 14px; }
+    .cta a.book { display: inline-block; background: var(--accent); color: #fff; font-weight: 700; padding: 12px 26px; border-radius: 10px; }
+    .cta a.book:hover { background: var(--accent2); }
+    .cta .alt { display: block; margin-top: 12px; font-size: 13.5px; color: var(--dim); }
+    @media (max-width: 760px) {
+      .demo { grid-template-columns: 1fr; }
+      .roster { max-height: 180px; border-right: none; border-bottom: 1px solid var(--line); }
+      .main { max-height: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site"><div class="wrap">
+    <a class="brand" href="index.html"><img src="logo.svg" alt="" />Aevon</a>
+    <a href="index.html" style="color:var(--dim);font-size:14px">aevon.ca</a>
+  </div></header>
+
+  <section class="hero wrap">
+    <h1>Cadre — staff records, training and credentials in one system</h1>
+    <p class="sub">This is the actual product with an invented company loaded. Click a person, complete a training step, watch the record close itself and the matrix update. Everything resets when you refresh.</p>
+    <span class="note">Sandbox — nothing you click is saved, break whatever you like</span>
+  </section>
+
+  <div class="wrap">
+    <div class="demo">
+      <aside class="roster">
+        <h3>Northgate Mechanical — 8 of 42 staff</h3>
+        <div id="roster"></div>
+      </aside>
+      <div class="main">
+        <div class="tabs">
+          <div class="tab sel" data-t="record">Record</div>
+          <div class="tab" data-t="onboarding">Onboarding</div>
+          <div class="tab" data-t="matrix">Training matrix</div>
+        </div>
+        <div id="view"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="cta wrap">
+    <p>This runs daily at a 75-staff organisation in BC. Yours would be set up around your own roles, tickets and renewal cycles.</p>
+    <a class="book" href="https://calendar.app.google/7R7srDKzWrvmLQg37">Book ten minutes</a>
+    <span class="alt">or reply to the email that sent you here — that works too</span>
+  </section>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // Visit tracking, same pattern as every other Aevon page: a ?ref=<lead-id> beacon, then the
+  // parameter is stripped so it never gets bookmarked or shared onward.
+  var TRACK_BASE = 'https://qzxtfgzpyptvriorfhxw.supabase.co/functions/v1/track-visit';
+  (function () {
+    try {
+      var ref = new URLSearchParams(location.search).get('ref');
+      if (ref && /^[0-9a-f-]{36}$/i.test(ref)) {
+        if (navigator.sendBeacon) navigator.sendBeacon(TRACK_BASE + '?ref=' + encodeURIComponent(ref));
+        else fetch(TRACK_BASE + '?ref=' + encodeURIComponent(ref), { mode: 'no-cors', keepalive: true });
+        history.replaceState({}, document.title, location.pathname + location.hash);
+      }
+    } catch (e) {}
+  })();
+
+  // ── Invented data. No real company, no real person, no real record. ─────────
+  // Dates are generated relative to "today" so the demo never goes stale.
+  const day = 86400000;
+  const d = n => new Date(Date.now() + n * day);
+  const fmt = dt => dt.toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric' });
+
+  const ROLES = {
+    'HVAC Technician': ['Safety orientation', 'WHMIS 2015', 'Fall protection', 'Refrigerant handling cert', 'Company vehicle sign-out'],
+    'Plumber':         ['Safety orientation', 'WHMIS 2015', 'Trade qualification on file', 'Confined space entry', 'Company vehicle sign-out'],
+    'Apprentice':      ['Safety orientation', 'WHMIS 2015', 'Fall protection', 'Mentor assignment'],
+    'Office Admin':    ['Safety orientation', 'Privacy & records policy', 'Payroll system access'],
+  };
+
+  const PEOPLE = [
+    { name: 'Dana Whitfield', role: 'HVAC Technician', started: -412,
+      creds: [ { n: 'Refrigerant handling', exp: 9 }, { n: 'Fall protection', exp: 121 }, { n: 'WHMIS 2015', exp: 302 }, { n: 'First aid — OFA 1', exp: -6 } ],
+      steps: 5 },
+    { name: 'Marcus Oyelaran', role: 'Plumber', started: -890,
+      creds: [ { n: 'Red Seal — Plumbing', exp: null }, { n: 'Confined space entry', exp: 44 }, { n: 'WHMIS 2015', exp: 200 } ],
+      steps: 5 },
+    { name: 'Priya Sandhu', role: 'Office Admin', started: -61,
+      creds: [ { n: 'Privacy training', exp: 330 } ],
+      steps: 3 },
+    { name: 'Tomás Ferreira', role: 'HVAC Technician', started: -230,
+      creds: [ { n: 'Refrigerant handling', exp: 190 }, { n: 'Fall protection', exp: 22 }, { n: 'WHMIS 2015', exp: 265 } ],
+      steps: 5 },
+    { name: 'Jess Kowalczyk', role: 'Apprentice', started: -4,
+      creds: [ { n: 'WHMIS 2015', exp: 361 } ],
+      steps: 1 },
+    { name: 'Ray Delacroix', role: 'Plumber', started: -1340,
+      creds: [ { n: 'Red Seal — Plumbing', exp: null }, { n: 'Confined space entry', exp: -14 }, { n: 'WHMIS 2015', exp: 88 } ],
+      steps: 5 },
+    { name: 'Aiko Tanabe', role: 'HVAC Technician', started: -720,
+      creds: [ { n: 'Refrigerant handling', exp: 260 }, { n: 'Fall protection', exp: 300 }, { n: 'WHMIS 2015', exp: 45 }, { n: 'First aid — OFA 2', exp: 170 } ],
+      steps: 5 },
+    { name: 'Sam Brodeur', role: 'Apprentice', started: -19,
+      creds: [ { n: 'WHMIS 2015', exp: 348 }, { n: 'Fall protection', exp: 351 } ],
+      steps: 3 },
+  ];
+  PEOPLE.forEach(p => {
+    p.path = ROLES[p.role].map((s, i) => ({ label: s, done: i < p.steps }));
+    p.creds.forEach(c => { c.expDate = c.exp === null ? null : d(c.exp); });
+  });
+
+  let sel = 0, tab = 'record';
+
+  const chip = c => {
+    if (c.exp === null) return '<span class="chip c-ok">no expiry</span>';
+    if (c.exp < 0)   return '<span class="chip c-bad">lapsed</span>';
+    if (c.exp <= 30) return '<span class="chip c-warn">' + c.exp + ' days</span>';
+    return '<span class="chip c-ok">current</span>';
+  };
+  const dotClass = p => {
+    if (p.creds.some(c => c.exp !== null && c.exp < 0)) return 'd-bad';
+    if (p.creds.some(c => c.exp !== null && c.exp <= 30)) return 'd-warn';
+    return 'd-ok';
+  };
+
+  function toast(msg) {
+    const t = document.createElement('div'); t.className = 't'; t.textContent = msg;
+    document.getElementById('toast').appendChild(t);
+    setTimeout(() => t.remove(), 4200);
+  }
+
+  function renderRoster() {
+    document.getElementById('roster').innerHTML = PEOPLE.map((p, i) =>
+      '<div class="person' + (i === sel ? ' sel' : '') + '" onclick="pick(' + i + ')">'
+      + '<span class="dots"><span class="dot ' + dotClass(p) + '"></span></span>'
+      + '<div class="nm">' + p.name + '</div><div class="rl">' + p.role + '</div></div>').join('');
+  }
+
+  function renderView() {
+    const p = PEOPLE[sel];
+    const v = document.getElementById('view');
+    if (tab === 'record') {
+      v.innerHTML = '<h2 class="pname">' + p.name + '</h2>'
+        + '<div class="meta">' + p.role + ' · started ' + fmt(d(p.started)) + '</div>'
+        + p.creds.map((c, ci) => '<div class="card cred"><span class="cn">' + c.n + '</span>' + chip(c)
+          + (c.expDate ? '<span class="exp">' + (c.exp < 0 ? 'lapsed ' : 'renews ') + fmt(c.expDate)
+            + ' · reminders to ' + p.name.split(' ')[0] + ' and their manager at 60, 30 and 7 days'
+            + (c.exp !== null && c.exp <= 30 ? ' &nbsp;<button class="act" onclick="renew(' + ci + ')">Log renewal course</button>' : '')
+            + '</span>' : '')
+          + '</div>').join('');
+    } else if (tab === 'onboarding') {
+      const doneN = p.path.filter(s => s.done).length;
+      v.innerHTML = '<h2 class="pname">' + p.name + '</h2>'
+        + '<div class="meta">' + p.role + ' onboarding path · ' + doneN + ' of ' + p.path.length + ' complete'
+        + (doneN === p.path.length ? ' · nothing outstanding' : '') + '</div><div class="card">'
+        + p.path.map((s, si) => '<div class="step' + (s.done ? ' done' : '') + '"><span class="box">' + (s.done ? '✓' : '') + '</span>'
+          + '<span class="lbl">' + s.label + '</span>'
+          + (s.done ? '<span class="who">auto-closed on completion</span>'
+                    : '<button class="act" onclick="completeStep(' + si + ')">Complete</button>')
+          + '</div>').join('') + '</div>'
+        + '<p class="mnote">Each role has its own path. Completing a training step writes the record and, where the course carries a certificate, files it with the renewal date already set. Nobody re-keys anything.</p>';
+    } else {
+      const all = [...new Set(Object.values(ROLES).flat().filter(s => /WHMIS|Fall|Refrigerant|Confined|orientation/i.test(s)))];
+      v.innerHTML = '<h2 class="pname">Training matrix</h2>'
+        + '<div class="meta">Generated live from the records on the left — nobody maintains this document</div>'
+        + '<div style="overflow-x:auto"><table class="matrix"><tr><th></th>'
+        + all.map(c => '<th>' + c.replace(' 2015', '').replace(' cert', '') + '</th>').join('') + '</tr>'
+        + PEOPLE.map(p => '<tr><td class="rowh">' + p.name + '</td>' + all.map(cn => {
+            const need = ROLES[p.role].some(s => s.startsWith(cn.split(' ')[0]));
+            if (!need) return '<td class="m-na">—</td>';
+            if (/orientation|Fall protection$/.test(cn)) {
+              const step = p.path.find(s => s.label.startsWith(cn.split(' ')[0]));
+              const cred = p.creds.find(c => c.n.startsWith(cn.split(' ')[0]));
+              if (cred) return cell(cred);
+              return step && step.done ? '<td class="m-ok">✓</td>' : '<td class="m-bad">✗</td>';
+            }
+            const cred = p.creds.find(c => c.n.toLowerCase().startsWith(cn.split(' ')[0].toLowerCase()));
+            return cred ? cell(cred) : '<td class="m-bad">✗</td>';
+          }).join('') + '</tr>').join('')
+        + '</table></div>'
+        + '<p class="mnote">Green is current, amber renews inside 30 days, red is lapsed or missing. An auditor question is a glance at this screen, not a week of assembling it.</p>';
+    }
+    function cell(c) {
+      if (c.exp === null || c.exp > 30) return '<td class="m-ok">✓</td>';
+      if (c.exp >= 0) return '<td class="m-warn">' + c.exp + 'd</td>';
+      return '<td class="m-bad">✗</td>';
+    }
+  }
+
+  window.pick = i => { sel = i; renderRoster(); renderView(); };
+  window.completeStep = si => {
+    const p = PEOPLE[sel]; const s = p.path[si];
+    s.done = true;
+    toast('✓ ' + s.label + ' recorded for ' + p.name.split(' ')[0] + ' — onboarding step closed');
+    if (/WHMIS|Fall protection|Refrigerant|Confined/.test(s.label) && !p.creds.some(c => c.n.startsWith(s.label.split(' ')[0]))) {
+      const days = 365; p.creds.push({ n: s.label, exp: days, expDate: d(days) });
+      setTimeout(() => toast('Certificate filed — renewal set for ' + fmt(d(days)) + ', reminders scheduled'), 700);
+    }
+    renderRoster(); renderView();
+  };
+  window.renew = ci => {
+    const p = PEOPLE[sel]; const c = p.creds[ci];
+    c.exp = 365; c.expDate = d(365);
+    toast('✓ ' + c.n + ' renewed — next renewal ' + fmt(c.expDate) + ', reminders rescheduled');
+    renderRoster(); renderView();
+  };
+
+  document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('sel'));
+    t.classList.add('sel'); tab = t.dataset.t; renderView();
+  });
+
+  renderRoster(); renderView();
+  </script>
+</body>
+</html>
