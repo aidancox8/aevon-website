@@ -2,13 +2,442 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Cadre — HR Software for Certification Tracking | Aevon</title>
-  <link rel="canonical" href="https://aevon.ca/" />
-  <meta http-equiv="refresh" content="0; url=/" />
-  <meta name="robots" content="noindex, follow" />
-  <script>window.location.replace('/');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certification Tracking Software for Trades and Transport | Cadre</title>
+  <meta name="description" content="Cadre keeps every certification on the employee record, with the training that renews it in the same system. Forklift, first aid, fall protection, driver abstracts. Flat fee per site. Live demo, no signup." />
+  <link rel="canonical" href="https://aevon.ca/cadre.html" />
+  <meta name="robots" content="index, follow" />
+  <meta name="geo.region" content="CA-BC" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aevon.ca/cadre.html" />
+  <meta property="og:site_name" content="Aevon" />
+  <meta property="og:title" content="Certification Tracking Software for Trades and Transport" />
+  <meta property="og:description" content="Every certification on the employee record, with the training that renews it in the same system. Flat fee per site. Try the live demo." />
+  <meta property="og:locale" content="en_CA" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Certification Tracking Software for Trades and Transport" />
+  <meta name="twitter:description" content="Every certification on the employee record, with the training that renews it in the same system. Flat fee per site." />
+
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..800&family=IBM+Plex+Sans:wght@400;500;600&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Cadre",
+        "applicationCategory": "BusinessApplication",
+        "applicationSubCategory": "Certification tracking and HR software",
+        "operatingSystem": "Web",
+        "url": "https://aevon.ca/cadre.html",
+        "description": "Certification tracking software for trades, transport and manufacturing. Keeps every credential on the employee record alongside the training that renews it, with onboarding, reviews, equipment and offboarding in the same system.",
+        "publisher": { "@type": "Organization", "name": "Aevon", "url": "https://aevon.ca" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Can I see it without talking to anyone?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. The demo is the real application with a sample company loaded, signed in as an HR director. No signup and no sales call." } },
+          { "@type": "Question", "name": "How is this different from tracking certifications in a spreadsheet?",
+            "acceptedAnswer": { "@type": "Answer", "text": "A spreadsheet records what was true when it was last edited. It does not know that somebody completed the course that renews their ticket, so a person has to notice, chase and re-key. Cadre holds the credential and the training as one record." } },
+          { "@type": "Question", "name": "How is this different from an HR platform?",
+            "acceptedAnswer": { "@type": "Answer", "text": "General HR platforms store a certification as a custom field. A custom field cannot trigger a workflow, so nothing happens when the date passes." } },
+          { "@type": "Question", "name": "Does Cadre do payroll?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No, deliberately. Payroll is well served elsewhere. Cadre imports from your payroll system so the employee list stays in step." } }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* ── tokens ────────────────────────────────────────────────────────
+       Palette follows the product itself: fern accent, sage, warm-dark ink.
+       Paper is #F2F4F1 (warmth R-B = +1), deliberately out of the warm-cream
+       range. No purple anywhere, and the accent stays under ~3% of a viewport. */
+    :root {
+      --paper:      #F2F4F1;
+      --paper-2:    #E9ECE7;
+      --card:       #FBFCFA;
+      --ink:        #1B211C;
+      --ink-2:      #3D453E;
+      --ink-3:      #6B7369;
+      --accent:     #4C5E4E;
+      --accent-dk:  #3A4A3C;
+      --sage:       #AEB883;
+      --clay:       #B4715F;
+      --clay-bg:    #FAF0EE;
+      --amber:      #D4C4A0;
+      --amber-ink:  #5C4A2A;
+      /* Borders are ink at low alpha, never pure black. */
+      --line:       #1b211c1a;
+      --line-2:     #1b211c33;
+      --radius:     3px;
+
+      --f-display: Archivo, 'Helvetica Neue', Arial, sans-serif;
+      --f-body:    'IBM Plex Sans', system-ui, sans-serif;
+      --f-mono:    'Martian Mono', ui-monospace, 'SF Mono', monospace;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper); color: var(--ink);
+      font-family: var(--f-body); font-size: 17px; line-height: 1.6;
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    a { color: var(--accent-dk); text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    img { max-width: 100%; display: block; }
+
+    h1, h2, h3 { font-family: var(--f-display); font-weight: 700; letter-spacing: -0.02em; line-height: 1.08; }
+    h2 { font-size: clamp(28px, 3.6vw, 40px); }
+    h3 { font-size: 19px; letter-spacing: -0.01em; line-height: 1.25; }
+    p { text-wrap: pretty; }
+
+    /* mono does real work: dates, counts, statuses, labels */
+    .lbl {
+      font-family: var(--f-mono); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-3);
+    }
+
+    /* ── nav ───────────────────────────────────────────────────────── */
+    nav { border-bottom: 1px solid var(--line); background: var(--paper); position: sticky; top: 0; z-index: 40; }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 9px; font-family: var(--f-display); font-weight: 700; font-size: 18px; letter-spacing: -0.02em; color: var(--ink); }
+    .brand img { width: 26px; height: 26px; }
+    .brand .sep { color: var(--ink-3); font-weight: 400; }
+    .navr { display: flex; align-items: center; gap: 26px; font-size: 15px; }
+    .navr a { color: var(--ink-2); text-decoration: none; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: var(--f-body); font-size: 15px; font-weight: 600;
+      padding: 12px 20px; border-radius: var(--radius); border: 1px solid transparent;
+      text-decoration: none; cursor: pointer; transition: background 160ms ease, border-color 160ms ease;
+    }
+    .btn-primary { background: var(--accent); color: #F4F6F3; }
+    .btn-primary:hover { background: var(--accent-dk); color: #F4F6F3; }
+    .btn-ghost { border-color: var(--line-2); color: var(--ink); background: transparent; }
+    .btn-ghost:hover { border-color: var(--ink-2); color: var(--ink); }
+    @media (max-width: 860px) { .navr a:not(.btn) { display: none; } }
+
+    /* ── hero: asymmetric, not centred ─────────────────────────────── */
+    .hero { padding: 72px 0 56px; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 27rem) minmax(0, 1fr); gap: 56px; align-items: start; }
+    @media (max-width: 1000px) { .hero-grid { grid-template-columns: 1fr; gap: 36px; } }
+    h1 { font-size: clamp(34px, 4.4vw, 52px); font-variation-settings: 'wdth' 92; }
+    .hero p.sub { margin-top: 20px; font-size: 18px; color: var(--ink-2); }
+    .hero .cta { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+    .verify {
+      margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line);
+      font-size: 14.5px; color: var(--ink-3);
+    }
+    .verify b { color: var(--ink-2); font-weight: 600; }
+    figure { border: 1px solid var(--line-2); border-radius: var(--radius); overflow: hidden; background: var(--card); }
+    figcaption { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-3); padding: 9px 12px; border-top: 1px solid var(--line); }
+
+    /* ── sections: deliberately uneven rhythm ──────────────────────── */
+    .band { border-top: 1px solid var(--line); }
+    .p-lg { padding: 88px 0; }
+    .p-md { padding: 64px 0; }
+    .p-sm { padding: 44px 0; }
+    .lede { margin-top: 14px; font-size: 18px; color: var(--ink-2); max-width: 62ch; }
+
+    /* the enemy: three failure modes, as a list not cards */
+    .fails { margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line-2); }
+    @media (max-width: 880px) { .fails { grid-template-columns: 1fr; } }
+    .fail { padding: 24px 28px 26px 0; border-right: 1px solid var(--line); }
+    .fail:last-child { border-right: none; }
+    @media (max-width: 880px) { .fail { border-right: none; border-bottom: 1px solid var(--line); padding-right: 0; } }
+    .fail p { margin-top: 9px; font-size: 15.5px; color: var(--ink-2); }
+
+    /* capabilities: a checked list, capabilities not benefits */
+    .caps { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 26px 48px; }
+    @media (max-width: 880px) { .caps { grid-template-columns: 1fr; } }
+    .cap { display: grid; grid-template-columns: 18px 1fr; gap: 14px; align-items: start; }
+    .cap svg { margin-top: 4px; }
+    .cap p { font-size: 15.5px; color: var(--ink-2); margin-top: 5px; }
+
+    /* modules: plain wrapped list, not a card grid */
+    .mods { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .mod { border: 1px solid var(--line-2); border-radius: var(--radius); padding: 8px 13px; font-size: 14.5px; color: var(--ink-2); background: var(--card); }
+    .mod b { color: var(--ink); font-weight: 600; }
+
+    /* pricing */
+    .price-grid { margin-top: 36px; display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: start; }
+    @media (max-width: 940px) { .price-grid { grid-template-columns: 1fr; gap: 30px; } }
+    .price-box { border: 1px solid var(--line-2); border-radius: var(--radius); background: var(--card); padding: 28px; }
+    .price-num { font-family: var(--f-display); font-size: 40px; font-weight: 700; letter-spacing: -0.02em; }
+    .todo { background: #FFF6D8; border: 1px dashed var(--amber-ink); color: var(--amber-ink); padding: 2px 8px; border-radius: 2px; font-family: var(--f-mono); font-size: 12px; }
+    .price-list { list-style: none; margin-top: 18px; display: grid; gap: 10px; }
+    .price-list li { font-size: 15.5px; color: var(--ink-2); padding-left: 22px; position: relative; }
+    .price-list li::before { content: ''; position: absolute; left: 0; top: 9px; width: 11px; height: 6px; border-left: 1.5px solid var(--accent); border-bottom: 1.5px solid var(--accent); transform: rotate(-45deg); }
+
+    /* faq */
+    details { border-bottom: 1px solid var(--line); padding: 18px 0; }
+    summary { cursor: pointer; font-weight: 600; font-size: 17px; list-style: none; display: flex; justify-content: space-between; gap: 18px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '+'; color: var(--accent); font-family: var(--f-mono); }
+    details[open] summary::after { content: '−'; }
+    details p { margin-top: 12px; color: var(--ink-2); font-size: 16px; max-width: 68ch; }
+
+    footer { border-top: 1px solid var(--line); padding: 36px 0 44px; color: var(--ink-3); font-size: 14.5px; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    footer a { color: var(--ink-3); text-decoration: none; }
+    footer a:hover { color: var(--ink-2); }
+  </style>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9R5SHY2LD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-M9R5SHY2LD');
+  </script>
 </head>
 <body>
-  <p>Cadre now lives on the <a href="/">Aevon home page</a>.</p>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/"><img src="logo.svg" alt="" />Aevon <span class="sep">/</span> Cadre</a>
+    <div class="navr">
+      <a href="#problem">The problem</a>
+      <a href="#what">What it does</a>
+      <a href="#pricing">Pricing</a>
+      <a class="btn btn-primary" href="#pricing">See pricing</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Certification tracking software for trades and transport.</h1>
+      <p class="sub">
+        Still tracking forklift tickets, first aid and fall protection in a spreadsheet? Cadre keeps
+        every certification on the employee record, with the training that renews it in the same
+        system, so completing the course closes the expiry.
+      </p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#pricing">See pricing</a>
+        <a class="btn btn-ghost" href="https://cadre-demo.web.app/dashboard" target="_blank" rel="noopener">Open the live demo</a>
+      </div>
+      <p class="verify">
+        The demo is the real product with a sample company loaded. Check the screenshot against it:
+        <b>47 staff, 20 credentials, 1 expired and 4 expiring inside 30 days</b>, on one screen.
+      </p>
+    </div>
+    <figure>
+      <img src="img/cadre-renewals.jpg" width="1568" height="698"
+           alt="The Cadre renewals screen: staff listed with credential, issue date, expiry date and a status of Expired or Expiring, with counts for expired and for 30, 60 and 90 days." />
+      <figcaption>Renewals · cadre-demo.web.app</figcaption>
+    </figure>
+  </div>
+</header>
+
+<section class="band p-lg" id="problem">
+  <div class="wrap">
+    <h2>A spreadsheet fails in three specific ways</h2>
+    <p class="lede">
+      Not because it is a spreadsheet. Because of what it cannot know.
+    </p>
+    <div class="fails">
+      <div class="fail">
+        <h3>It only knows what it was told</h3>
+        <p>
+          A ticket renewed on a Tuesday is not in the file until somebody types it in. Between those
+          two moments the sheet is confidently wrong, and it looks exactly the same as when it is right.
+        </p>
+      </div>
+      <div class="fail">
+        <h3>It belongs to one person</h3>
+        <p>
+          Whoever built it knows which tab is current and which column is stale. That knowledge is not
+          in the file. It leaves when they take a week off, and it leaves for good when they do.
+        </p>
+      </div>
+      <div class="fail">
+        <h3>It cannot tell you about today</h3>
+        <p>
+          You can ask a sheet who was current at the last edit. You cannot ask it who is qualified to
+          go up the lift this morning, which is the only question anyone actually asks.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band p-lg" id="what">
+  <div class="wrap">
+    <h2>What Cadre does about it</h2>
+    <p class="lede">Four capabilities, in the order they matter.</p>
+    <div class="caps">
+      <div class="cap">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#4C5E4E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3.5" width="13" height="12" rx="1"/><path d="M2.5 7h13M6 2v3M12 2v3"/></svg>
+        <div>
+          <h3>Every credential carries a real date</h3>
+          <p>An issue date, a renewal period and an expiry, per person and per ticket. Not a text field somebody types "current" into.</p>
+        </div>
+      </div>
+      <div class="cap">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#4C5E4E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2.5a5.5 5.5 0 0 0-5.5 5.5v3l-1 2h13l-1-2V8A5.5 5.5 0 0 0 9 2.5Z"/><path d="M7.5 15.5a1.6 1.6 0 0 0 3 0"/></svg>
+        <div>
+          <h3>It warns the person, then their supervisor</h3>
+          <p>By email and Microsoft Teams, before the date rather than after it, so there is still time to book the course.</p>
+        </div>
+      </div>
+      <div class="cap">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#4C5E4E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 8.3V9a6.5 6.5 0 1 1-3.9-5.95"/><path d="M6.5 8.6 9 11l6.5-6.6"/></svg>
+        <div>
+          <h3>Completing the course closes the credential</h3>
+          <p>The training record and the certification are the same record, so the renewal clears the reminder. Nothing is re-keyed and nothing is chased twice.</p>
+        </div>
+      </div>
+      <div class="cap">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#4C5E4E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15.5h10M9 3v8"/><path d="m5.8 7.8 3.2-3.2 3.2 3.2"/></svg>
+        <div>
+          <h3>You can export who is current, on demand</h3>
+          <p>Filtered by site, by ticket or by status, as a CSV. The question an auditor asks is a screen, not an afternoon.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band p-md">
+  <div class="wrap">
+    <h2>And the rest of HR, on the same record</h2>
+    <p class="lede">
+      This is the part a dedicated expiry tracker cannot do. The reason the spreadsheet survives next
+      to an HR tool is that neither one holds the whole person.
+    </p>
+    <div class="mods">
+      <div class="mod"><b>Employee records</b> · profile, history, documents</div>
+      <div class="mod"><b>Onboarding</b> · staged, gated, e-signature</div>
+      <div class="mod"><b>Training</b> · courses, assignment, expiry</div>
+      <div class="mod"><b>Credentials</b> · renewals and reminders</div>
+      <div class="mod"><b>Performance reviews</b> · scored or written</div>
+      <div class="mod"><b>Equipment</b> · issued and returned</div>
+      <div class="mod"><b>Probation</b> · milestones and outcomes</div>
+      <div class="mod"><b>Recruitment</b> · postings and a public apply page</div>
+      <div class="mod"><b>Offboarding</b> · checklist, access, assets</div>
+      <div class="mod"><b>Policies</b> · publish and acknowledge</div>
+      <div class="mod"><b>Org chart</b> · reporting lines, printable</div>
+      <div class="mod"><b>Analytics</b> · headcount, turnover, compliance</div>
+      <div class="mod"><b>Activity log</b> · append-only</div>
+      <div class="mod"><b>Roles</b> · per module, per tier</div>
+    </div>
+  </div>
+</section>
+
+<section class="band p-lg" id="pricing">
+  <div class="wrap">
+    <h2>Priced per site, not per person</h2>
+    <p class="lede">
+      Per-seat pricing charges you for hiring, and the crews who need tickets are the headcount that
+      grows. So Cadre does not price that way.
+    </p>
+    <div class="price-grid">
+      <div class="price-box">
+        <span class="lbl">One site, everything included</span>
+        <div class="price-num" style="margin-top:8px">
+          <span class="todo">set a price</span> <span style="font-size:17px;font-weight:400;color:var(--ink-3)">/ month</span>
+        </div>
+        <ul class="price-list">
+          <li>Every module. There is no compliance add-on tier.</li>
+          <li>Unlimited employees at that site.</li>
+          <li>Import from whatever you keep now, the spreadsheet included.</li>
+          <li>Setup done with you, not handed over as homework.</li>
+          <li>Month to month. Your data, exportable in full.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>What we would need to quote you</h3>
+        <p style="margin-top:10px;color:var(--ink-2);font-size:15.5px">
+          Headcount, how many sites, and which tickets you track today. That is enough for a flat
+          monthly figure by email. There is no discovery call in front of it.
+        </p>
+        <a class="btn btn-primary" style="margin-top:18px" href="mailto:hello@aevon.ca?subject=Cadre%20pricing&amp;body=Headcount%3A%0ASites%3A%0AWhat%20we%20track%20today%3A%0A">Get a figure by email</a>
+        <p style="margin-top:14px" class="lbl">hello@aevon.ca · <span class="todo">add a phone number</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band p-md">
+  <div class="wrap" style="max-width:820px">
+    <h2>Where this actually stands</h2>
+    <p class="lede">
+      Cadre grew out of a system running in production at a 75-person organisation in BC, where it
+      handles records, onboarding, training and credentials for the whole staff. That is one
+      deployment. It is the only one we will claim, and we are not going to show you a wall of logos
+      we do not have.
+    </p>
+    <p class="lede">
+      It is built by <a href="/">Aevon</a>, a software company in the Lower Mainland. You deal with
+      the person who writes it, which is a real limit on how many customers we can take on and also
+      the reason the product fits the way these companies work. The demo is the entire product with
+      nothing held back, so you can judge all of that yourself.
+    </p>
+  </div>
+</section>
+
+<section class="band p-md">
+  <div class="wrap" style="max-width:820px">
+    <h2>Questions</h2>
+    <div style="margin-top:26px">
+      <details open>
+        <summary>Can I see it without talking to anyone?</summary>
+        <p>Yes, and you should. <a href="https://cadre-demo.web.app/dashboard" target="_blank" rel="noopener">The demo</a> is the real application with a sample company loaded, signed in as an HR director. Nothing is a screenshot. Change things.</p>
+      </details>
+      <details>
+        <summary>Who is it for?</summary>
+        <p>Companies where the employer, not the individual, is accountable for the workforce's tickets: trades and construction, transport and fleet, manufacturing, food processing, security. Roughly 15 to 150 staff. Below about 15 nobody owns renewals yet and a spreadsheet genuinely is fine.</p>
+      </details>
+      <details>
+        <summary>We already have an HR system. Does this replace it?</summary>
+        <p>Usually yes, and that is the point, because running both is how the double entry starts. If you are locked into payroll elsewhere that is fine, because payroll is the one thing Cadre deliberately does not do.</p>
+      </details>
+      <details>
+        <summary>Does it do payroll?</summary>
+        <p>No, on purpose. Payroll is regulated, solved and well served. Cadre imports from your payroll system so the employee list stays in step.</p>
+      </details>
+      <details>
+        <summary>How long does setup take?</summary>
+        <p>Days. The work is importing your people and naming your sites, departments and credential types. We do that with you rather than sending a CSV template and wishing you luck.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="band p-md">
+  <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
+    <div>
+      <h2 style="font-size:clamp(24px,3vw,32px)">Open it and see.</h2>
+      <p style="margin-top:8px;color:var(--ink-2)">Ten minutes in the demo answers more than a call would.</p>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <a class="btn btn-primary" href="https://cadre-demo.web.app/dashboard" target="_blank" rel="noopener">Open the live demo</a>
+      <a class="btn btn-ghost" href="mailto:hello@aevon.ca?subject=Cadre">Email us</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>Cadre is built by <a href="/">Aevon</a> · Lower Mainland, British Columbia</div>
+    <div style="display:flex;gap:22px;flex-wrap:wrap">
+      <a href="https://cadre-demo.web.app/dashboard" target="_blank" rel="noopener">Live demo</a>
+      <a href="mailto:hello@aevon.ca">hello@aevon.ca</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
