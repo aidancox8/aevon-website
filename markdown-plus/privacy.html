@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy | Mermaid, Markdown &amp; LaTeX for Confluence | Aevon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #09090B;
+      --bg2: #0A0F1E;
+      --border: rgba(99,102,241,0.12);
+      --accent: #6366F1;
+      --text: #F8FAFC;
+      --text2: #B4C2D0;
+      --text3: #6B7E94;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      height: 60px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      background: rgba(9,9,11,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 16px; font-weight: 700; color: var(--text); text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo-mark {
+      width: 28px; height: 28px; border-radius: 7px;
+      background: linear-gradient(135deg, #6366F1, #7C3AED);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 800; color: #fff;
+    }
+    .nav-back { font-size: 13px; color: var(--text3); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--text2); }
+
+    main { max-width: 720px; margin: 0 auto; padding: 72px 40px 120px; }
+
+    .page-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 14px;
+    }
+    h1 { font-size: 36px; font-weight: 800; letter-spacing: -0.035em; margin-bottom: 8px; }
+    .effective { font-size: 13px; color: var(--text3); margin-bottom: 56px; }
+
+    h2 { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; margin: 40px 0 10px; color: var(--text); }
+    p { font-size: 15px; color: var(--text2); margin-bottom: 14px; }
+    ul { padding-left: 20px; margin-bottom: 14px; }
+    ul li { font-size: 15px; color: var(--text2); margin-bottom: 6px; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 40px;
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--text3);
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      main { padding: 48px 20px 80px; }
+      h1 { font-size: 28px; }
+      footer { padding: 32px 20px; }
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9R5SHY2LD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-M9R5SHY2LD');
+  </script>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <div class="nav-logo-mark">A</div>
+    Aevon
+  </a>
+  <a href="../index.html" class="nav-back">&larr; Back to site</a>
+</nav>
+
+<main>
+  <div class="page-label">Legal</div>
+  <h1>Privacy Policy</h1>
+  <p class="effective">Mermaid, Markdown &amp; LaTeX for Confluence &middot; Effective 30 August 2026</p>
+
+<h2>Summary</h2>
+<p>This app does not collect, transmit, or store your data anywhere outside Atlassian. There is no server of ours for it to be sent to.</p>
+<h2>Where the app runs</h2>
+<p>The app is built on Atlassian Forge and runs entirely inside Atlassian's own infrastructure. It makes no network requests to any host outside Atlassian, and it declares no external egress permissions. This is verifiable: an app that requested outbound network access would have to declare it in its manifest, and Atlassian would show that on this listing.</p>
+<h2>What the app reads</h2>
+<p><strong>Macro content.</strong> When you insert the macro and type into it, what you type is stored by Confluence as part of your page, in the same way any other macro parameter is. The app reads it back to render it. It is never copied anywhere else.</p>
+<p><strong>Page content, only when you ask.</strong> The "Convert mermaid code blocks" action reads the page you run it on and writes a converted version back to that same page. It runs only when you explicitly choose it from the page menu. It reads nothing at any other time, and it touches no page other than the one you are on.</p>
+<p>The app requests two permissions, both narrowly for that feature:</p>
+<table style='width:100%;border-collapse:collapse;margin-bottom:14px'>
+<tr>
+<th style='text-align:left;padding:6px 10px;border-bottom:1px solid rgba(99,102,241,0.2);font-size:14px'>Permission</th>
+<th style='text-align:left;padding:6px 10px;border-bottom:1px solid rgba(99,102,241,0.2);font-size:14px'>Why</th>
+</tr>
+<tr><td style='padding:6px 10px;border-bottom:1px solid rgba(99,102,241,0.08);font-size:14px;color:#B4C2D0'><code style='background:rgba(99,102,241,0.12);padding:1px 5px;border-radius:3px;font-size:0.92em'>read:page:confluence</code></td><td style='padding:6px 10px;border-bottom:1px solid rgba(99,102,241,0.08);font-size:14px;color:#B4C2D0'>Read the current page to find mermaid code blocks</td></tr>
+<tr><td style='padding:6px 10px;border-bottom:1px solid rgba(99,102,241,0.08);font-size:14px;color:#B4C2D0'><code style='background:rgba(99,102,241,0.12);padding:1px 5px;border-radius:3px;font-size:0.92em'>write:page:confluence</code></td><td style='padding:6px 10px;border-bottom:1px solid rgba(99,102,241,0.08);font-size:14px;color:#B4C2D0'>Save the converted page as a new version</td></tr>
+</table>
+<h2>What the app does not do</h2>
+<ul><li>No analytics, telemetry, usage tracking, or crash reporting</li><li>No cookies and no browser storage</li><li>No third-party services in the rendering path</li><li>No account, no sign-up, and no personal data collected</li><li>Nothing sent to the developer, ever</li></ul>
+<p>Diagrams, Markdown, code and maths are all rendered in your own browser.</p>
+<h2>Data retention</h2>
+<p>The app retains nothing, because it stores nothing. All content stays in your Confluence instance under Atlassian's own data residency and retention terms. Uninstalling removes the app; your pages and their content are unaffected.</p>
+<h2>Sub-processors</h2>
+<p>None.</p>
+<h2>Changes</h2>
+<p>If this policy changes in a way that affects what the app reads or transmits, the listing will be updated before the change ships.</p>
+<h2>Contact</h2>
+<p>Aevon — <a href="mailto:hello@aevon.ca">hello@aevon.ca</a></p>
+<p>Questions about this policy, or about what the app reads, go to that address.</p>
+<hr />
+<p style='font-size:13.5px'><strong>About this page itself.</strong> The policy above describes the Confluence app. This website, aevon.ca, is separate and uses standard web analytics; see the <a href='../privacy.html'>site privacy policy</a> for that. The app collects nothing either way.</p>
+</main>
+
+<footer>&copy; 2026 Aevon &middot; <a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a> &middot; <a href="docs.html">Documentation</a></footer>
+
+</body>
+</html>

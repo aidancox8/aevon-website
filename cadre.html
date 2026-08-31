@@ -109,7 +109,7 @@
     /* ── nav ───────────────────────────────────────────────────────── */
     nav { border-bottom: 1px solid var(--line); background: var(--paper); position: sticky; top: 0; z-index: 40; }
     nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 20px; }
-    .brand { display: flex; align-items: center; gap: 9px; font-family: var(--f-display); font-weight: 700; font-size: 18px; letter-spacing: -0.02em; color: var(--ink); }
+    .brand { display: flex; align-items: center; gap: 9px; font-family: var(--f-display); font-weight: 700; font-size: 18px; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
     .brand img { width: 26px; height: 26px; }
     .brand .sep { color: var(--ink-3); font-weight: 400; }
     .navr { display: flex; align-items: center; gap: 26px; font-size: 15px; }
@@ -129,10 +129,10 @@
     @media (max-width: 860px) { .navr a:not(.btn) { display: none; } }
 
     /* ── hero: asymmetric, not centred ─────────────────────────────── */
-    .hero { padding: 72px 0 56px; }
-    .hero-grid { display: grid; grid-template-columns: minmax(0, 27rem) minmax(0, 1fr); gap: 56px; align-items: start; }
+    .hero { padding: 56px 0 48px; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 25rem) minmax(0, 1fr); gap: 48px; align-items: center; }
     @media (max-width: 1000px) { .hero-grid { grid-template-columns: 1fr; gap: 36px; } }
-    h1 { font-size: clamp(34px, 4.4vw, 52px); font-variation-settings: 'wdth' 92; }
+    h1 { font-size: clamp(31px, 3.6vw, 43px); font-variation-settings: 'wdth' 92; }
     .hero p.sub { margin-top: 20px; font-size: 18px; color: var(--ink-2); }
     .hero .cta { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
     .verify {
@@ -188,6 +188,19 @@
     details[open] summary::after { content: '−'; }
     details p { margin-top: 12px; color: var(--ink-2); font-size: 16px; max-width: 68ch; }
 
+    .fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .fgrid label { display: block; }
+    .opt { text-transform: none; letter-spacing: 0; }
+    .fld {
+      width: 100%; margin-top: 6px; padding: 11px 13px;
+      font-family: var(--f-body); font-size: 16px; color: var(--ink);
+      background: var(--card); border: 1px solid var(--line-2); border-radius: var(--radius);
+    }
+    .fld:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: var(--accent); }
+    .fld::placeholder { color: var(--ink-3); }
+    textarea.fld { resize: vertical; min-height: 92px; }
+    @media (max-width: 720px) { .fgrid { grid-template-columns: 1fr; } }
+
     footer { border-top: 1px solid var(--line); padding: 36px 0 44px; color: var(--ink-3); font-size: 14.5px; }
     footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
     footer a { color: var(--ink-3); text-decoration: none; }
@@ -211,7 +224,7 @@
       <a href="#problem">The problem</a>
       <a href="#what">What it does</a>
       <a href="#pricing">Pricing</a>
-      <a class="btn btn-primary" href="#pricing">See pricing</a>
+      <a class="btn btn-primary" href="#interested">I'm interested</a>
     </div>
   </div>
 </nav>
@@ -226,7 +239,7 @@
         system, so completing the course closes the expiry.
       </p>
       <div class="cta">
-        <a class="btn btn-primary" href="#pricing">See pricing</a>
+        <a class="btn btn-primary" href="#interested">I'm interested</a>
         <a class="btn btn-ghost" href="https://cadre-demo.web.app/dashboard" target="_blank" rel="noopener">Open the live demo</a>
       </div>
       <p class="verify">
@@ -417,15 +430,50 @@
   </div>
 </section>
 
-<section class="band p-md">
-  <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
-    <div>
-      <h2 style="font-size:clamp(24px,3vw,32px)">Open it and see.</h2>
-      <p style="margin-top:8px;color:var(--ink-2)">Ten minutes in the demo answers more than a call would.</p>
-    </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap">
-      <a class="btn btn-primary" href="https://cadre-demo.web.app/dashboard" target="_blank" rel="noopener">Open the live demo</a>
-      <a class="btn btn-ghost" href="mailto:hello@aevon.ca?subject=Cadre">Email us</a>
+<section class="band p-lg" id="interested">
+  <div class="wrap" style="max-width:940px">
+    <h2>Interested? Tell me where to reach you.</h2>
+    <p class="lede">
+      No pitch deck and no discovery call. I will come back with a flat monthly figure and answer
+      whatever you asked. If you would rather just book fifteen minutes,
+      <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">pick a time here</a>.
+    </p>
+
+    <form id="interest-form" style="margin-top:30px; max-width:640px" novalidate>
+      <div class="fgrid">
+        <label>
+          <span class="lbl">Name</span>
+          <input id="f-name" type="text" required autocomplete="name" class="fld" />
+        </label>
+        <label>
+          <span class="lbl">Email</span>
+          <input id="f-email" type="email" required autocomplete="email" class="fld" />
+        </label>
+        <label>
+          <span class="lbl">Phone <span class="opt">(optional)</span></span>
+          <input id="f-phone" type="tel" autocomplete="tel" class="fld" />
+        </label>
+        <label>
+          <span class="lbl">Headcount <span class="opt">(optional)</span></span>
+          <input id="f-size" type="text" placeholder="e.g. 60 staff, 2 sites" class="fld" />
+        </label>
+      </div>
+      <label style="display:block; margin-top:16px">
+        <span class="lbl">Question or comment <span class="opt">(optional)</span></span>
+        <textarea id="f-msg" rows="4" class="fld" placeholder="What do you track today, and what goes wrong with it?"></textarea>
+      </label>
+      <div style="display:flex; align-items:center; gap:16px; margin-top:18px; flex-wrap:wrap">
+        <button class="btn btn-primary" id="f-send" type="submit">Send</button>
+        <span id="f-err" style="color:var(--clay); font-size:14.5px"></span>
+      </div>
+    </form>
+
+    <div id="interest-done" hidden style="margin-top:30px; border:1px solid var(--line-2); border-radius:var(--radius); background:var(--card); padding:26px; max-width:640px">
+      <h3>Got it, thanks.</h3>
+      <p style="margin-top:8px; color:var(--ink-2)">
+        I will get back to you personally, usually the same day. If it is easier meanwhile,
+        <a href="mailto:hello@aevon.ca?subject=Cadre">hello@aevon.ca</a>.
+      </p>
     </div>
   </div>
 </section>
@@ -441,5 +489,55 @@
   </div>
 </footer>
 
+<script>
+  // Posts to our own edge function, NOT track-visit: that one only records against a known ?ref
+  // and silently writes nothing for an organic visitor. Verified before this form was built.
+  (function () {
+    var form = document.getElementById('interest-form');
+    if (!form) return;
+    var err = document.getElementById('f-err');
+    var btn = document.getElementById('f-send');
+    var ref = new URLSearchParams(location.search).get('ref') || '';
+    var EMAIL_RE = /^[^@\s]+@[^@\s.]+\.[^@\s]+$/;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      err.textContent = '';
+      var name = document.getElementById('f-name').value.trim();
+      var email = document.getElementById('f-email').value.trim();
+      if (!name || !email || !EMAIL_RE.test(email)) {
+        err.textContent = 'A name and a valid email, and I can reply.';
+        return;
+      }
+      var size = document.getElementById('f-size').value.trim();
+      var msg = document.getElementById('f-msg').value.trim();
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      fetch('https://qzxtfgzpyptvriorfhxw.supabase.co/functions/v1/interest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          phone: document.getElementById('f-phone').value.trim(),
+          message: [size ? 'Size: ' + size : '', msg].filter(Boolean).join('\n\n'),
+          page: location.pathname,
+          ref: ref
+        })
+      }).then(function (res) {
+        if (!res.ok) throw new Error('status ' + res.status);
+        form.hidden = true;
+        var done = document.getElementById('interest-done');
+        done.hidden = false;
+        done.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }).catch(function () {
+        btn.disabled = false;
+        btn.textContent = 'Send';
+        err.innerHTML = 'That did not send. Email <a href="mailto:hello@aevon.ca">hello@aevon.ca</a> and I will pick it up.';
+      });
+    });
+  })();
+</script>
 </body>
 </html>
