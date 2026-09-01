@@ -464,6 +464,10 @@
   function el(id) { return document.getElementById(id); }
 
   // ---------- data ----------
+  // The ordinary mail sitting in the inbox behind the demo. It reads as background,
+  // which is exactly why it has to be right: a BC prospect seeing ICBC and a strata
+  // notice reads as "this is my world", and a Washington prospect seeing the same
+  // three reads as "this was built for somebody else". A preset can override it.
   var FILLER = [
     { from: 'BC Assessment', sub: 'Your 2026 assessment notice', snip: 'Your annual property assessment is now available to view online', time: '8:12 AM' },
     { from: 'Strata Council', sub: 'Re: Parkade cleaning schedule', snip: 'Reminder that levels 1 and 2 will be closed Thursday morning for', time: '7:48 AM' },
@@ -765,6 +769,93 @@
       ]
     },
 
+    // Military relocation (PCS / VA). Built 2026-09-01 for a broker near JBLM whose
+    // leads come off Facebook and Google ads at every hour, get called by an ISA in
+    // business hours, and then wait. So every timestamp here is deliberately outside
+    // working hours: the point of the reel is that the reply goes out at 11:48 PM,
+    // not at 9am tomorrow. Qualification is the PCS-specific set a general tool does
+    // not know to ask for (report date, orders, entitlement), which is the whole
+    // argument for a build over an off-the-shelf product.
+    pcs: {
+      acct: 'you@yourrealty.com',
+      // US background mail. The BC default (BC Assessment, strata, ICBC) would tell a
+      // Washington broker at a glance that this was built for somebody else.
+      filler: [
+        { from: 'NWMLS', sub: 'Listing status change · 4412 Steilacoom Blvd', snip: 'A listing you are following has changed status to Pending', time: '8:12 AM' },
+        { from: 'Pierce County Assessor', sub: 'Property tax statement available', snip: 'Your annual statement is now available to view online', time: '7:48 AM' },
+        { from: 'Washington REALTORS', sub: 'CE deadline reminder', snip: 'Your continuing education hours are due before your renewal date', time: 'Aug 27' }
+      ],
+      labels: [['PCS buyers','#1a73e8'],['VA loans','#188038'],['Listings','#FB8C00'],['Hot leads','#d93025']],
+      desk: { tab: 'Client Desk · Pipeline', logo: 'Client Desk', search: 'Search clients, listings, tours',
+              rail: ['Clients','Listings','Tours','Offers & Docs'], title: 'Clients',
+              sub: 'every lead · sorted by report date · answered before you wake up' },
+      stages: ['New overnight','Qualified','Tour set','Under contract'],
+      stats0: [['9','active clients',0],['0','awaiting your approval',1],['3','tours this week',0],['0','answered overnight',1]],
+      seed: [
+        [ { n:'SSgt Alvarez', sub:'PCS in · report Dec 1', chips:[chip('PCS','blue'), chip('reply pending','amber')] },
+          { n:'K. Boateng', sub:'VA · pre-qual started', chips:[chip('VA','green'), chip('intro sent','blue')] } ],
+        [ { n:'The Delgados', sub:'Selling · PCS out in Oct', chips:[chip('Seller','orange'), chip('eval booked','green')] },
+          { n:'PO2 Lindqvist', sub:'Off-base · under $525k', chips:[chip('PCS','blue'), chip('★ Strong · 86','green')] } ],
+        [ { n:'CW2 Barrett', sub:'Tour · Sat 9:00 AM', chips:[chip('PCS','blue'), chip('confirmed ✓','green')] },
+          { n:'A. Whitfield', sub:'Tour · Sun 11:30 AM', chips:[chip('VA','green'), chip('confirmed ✓','green')] } ],
+        [ { n:'The Ferraros', sub:'Offer in · Lakewood', chips:[chip('PCS','blue'), chip('with sellers','amber')] },
+          { n:'SFC Nakamura', sub:'Counter expected today', chips:[chip('VA','green'), chip('negotiating','amber')] } ]
+      ],
+      inserts: [
+        { col: 2, n: 'SSG Marcus Ellison', sub: 'Report date Nov 3 · VA · off-base near gate',
+          chips: [chip('PCS','blue'), chip('★ Strong · 93','green'), chip('answered 11:48 PM','green'), chip('Sat 9:00 AM','green')],
+          stats: ['10','1','4','1'], rail: '10' },
+        { col: 1, n: 'Danielle Ruiz', sub: 'Spouse · PCS in Jan · no COE yet',
+          chips: [chip('PCS','blue'), chip('needs lender intro','amber'), chip('draft awaiting your OK','blue')],
+          stats: ['11','2','4','2'], rail: '11' },
+        { col: 1, n: 'The Okonkwos', sub: 'PCS out · must sell before Oct 15',
+          chips: [chip('Seller','orange'), chip('comparables sent','green'), chip('draft awaiting your OK','blue')],
+          stats: ['12','3','4','3'], rail: '12' }
+      ],
+      hudCRM: 'filing clients into your CRM...', crmDone: 'CRM updated · 3 clients filed and sorted',
+      endNums: [['3','qualified overnight',1],['3','drafts await your OK',0],['1','tour booked',0]],
+      endLine: 'Every one of these came in while you were asleep and was answered inside a minute.<br>You wake up to drafts and a booked tour. <b>Nothing ever sends without you.</b>',
+      leads: [
+        { from: 'SSG Marcus Ellison', email: 'm.ellison84@gmail.com', ava: '#1a73e8', init: 'M',
+          sub: 'PCSing to JBLM in November, house hunting', time: '11:47 PM',
+          body: 'Hi,\n\nJust got my orders today. Reporting to Lewis-McChord November 3rd, coming from Fort Campbell. My wife and I want to buy rather than rent this time.\n\nWe are planning to use my VA loan, first time using it. Looking off-base, ideally under 30 minutes from the gate, three bedrooms if we can get it.\n\nWe fly out for a house hunting trip the second week of October. Are you available then?\n\nSSG Marcus Ellison',
+          snip: 'Just got my orders today. Reporting to Lewis-McChord November 3rd, coming from Fort Campbell',
+          chips: [['report date Nov 3','g'], ['orders in hand','g'], ['VA · first use','g'], ['off-base · 30 min','c'], ['HHT week of Oct 6','c'], ['★ STRONG · 93/100','g']],
+          label: { t: '★ Strong buyer', bg: '#e6f4ea', fg: '#137333' },
+          brand: { t: 'PCS', bg: '#e8f0fe', fg: '#1967d2' },
+          book: { title: 'House hunting tour · SSG Ellison', when: 'Sat, Oct 10 · 9:00 to 11:00 AM' },
+          attach: [['JBLM-Area-Guide_off-base.pdf', '1.4 MB', '#d93025']],
+          attachMsg: 'attaching your JBLM area guide...',
+          draft: 'Hi Marcus,\n\nCongratulations on the orders. November is very doable if we start now.\n\nArea guide attached, it covers the neighborhoods inside thirty minutes of the gate with commute times to each one.\n\nStart your Certificate of Eligibility this week. Free, takes minutes, and it is what holds most people up later.\n\nSaturday October 10th at 9am is penciled in and the invite is sent.\n\nTalk soon' },
+        { from: 'Danielle Ruiz', email: 'dani.ruiz.pnw@gmail.com', ava: '#188038', init: 'D',
+          sub: 'Question about VA loans', time: '12:20 AM',
+          body: 'Hello,\n\nMy husband is being stationed at Lewis-McChord in January and we are starting to look. Everyone tells us to use the VA loan but honestly I do not understand it.\n\nDo we need money down? What is the certificate everyone keeps mentioning? We have never bought before.\n\nThank you,\nDanielle',
+          snip: 'My husband is being stationed at Lewis-McChord in January and we are starting to look',
+          chips: [['report date Jan','c'], ['no COE yet','a'], ['first-time buyer','c'], ['VA questions','c'], ['GOOD FIT · 71/100','c']],
+          label: { t: 'Qualified · needs lender', bg: '#e8f0fe', fg: '#1967d2' },
+          brand: { t: 'PCS', bg: '#e8f0fe', fg: '#1967d2' },
+          draft: 'Hi Danielle,\n\nYou are not behind at all, January gives us plenty of room.\n\nShort version: the VA loan usually means no down payment and no mortgage insurance. The certificate is the Certificate of Eligibility, it proves you have the benefit and you can request it online for free.\n\nI work with a lender who does nothing but VA files. Want an introduction?\n\nTalk soon' },
+        { from: 'The Okonkwos', email: 'chidi.okonkwo@outlook.com', ava: '#FB8C00', init: 'C',
+          sub: 'Need to sell before we PCS out', time: '6:05 AM',
+          body: 'Good morning,\n\nWe got orders to Fort Bragg and have to report October 15th. Our house here is a 2019 build in Lakewood, four bedrooms.\n\nWe are worried about carrying two payments. What would it realistically sell for and how fast can it move?\n\nChidi and Ada',
+          snip: 'We got orders to Fort Bragg and have to report October 15th. Our house here is a 2019 build',
+          chips: [['hard deadline Oct 15','a'], ['orders in hand','g'], ['4bd Lakewood 2019','c'], ['★ HOT seller','g']],
+          label: { t: 'Comparables sent', bg: '#e6f4ea', fg: '#137333' },
+          brand: { t: 'Seller', bg: '#fef3e0', fg: '#b06000' },
+          attach: [['Lakewood-comparables_last90days.pdf', '870 KB', '#d93025']],
+          attachMsg: 'pulling Lakewood comparables...',
+          draft: 'Hi Chidi and Ada,\n\nA hard report date is manageable as long as we list early rather than perfectly. Attached are the last ninety days of Lakewood comparables so you can see where a 2019 four bedroom lands.\n\nThere are a couple of ways to time the sale around October 15th so you never carry two payments.\n\nCan I walk through the house this week? Evenings are fine.\n\nTalk soon' },
+        { from: 'tyler', email: 'tyler.mcgrath22@gmail.com', ava: '#9e9e9e', init: 'T',
+          sub: 'housing', time: '7:12 AM',
+          body: 'hey\n\nwhats housing like around base, how much am i looking at\n\ntyler',
+          snip: 'whats housing like around base, how much am i looking at',
+          chips: [['no report date','a'], ['no budget given','a'], ['no branch or rank','a'], ['WEAK · 26/100','a']],
+          label: { t: 'Needs qualifying', bg: '#fef7e0', fg: '#b06000' },
+          brand: { t: 'PCS', bg: '#e8f0fe', fg: '#1967d2' },
+          draft: 'Hi Tyler,\n\nHappy to help, it varies a lot depending on how far out from the gate you go.\n\nTwo quick things so I can send you something useful instead of a guess: when do you report, and are you planning to use your VA benefit or go conventional?\n\nTalk soon' }
+      ]
+    },
+
     mortgage: {
       acct: 'you@yourmortgageco.ca',
       labels: [['Purchases','#1a73e8'],['Refinances','#8e24aa'],['Renewals','#FB8C00'],['Pre-approvals','#188038']],
@@ -1016,7 +1107,7 @@
       '<span class="rtime">' + m.time + '</span></div>';
   }
   function buildList() {
-    el('glist').innerHTML = FILLER.map(function (m, i) { return rowHtml(m, 'f' + i, false); }).join('');
+    el('glist').innerHTML = (V.filler || FILLER).map(function (m, i) { return rowHtml(m, 'f' + i, false); }).join('');
   }
 
   // ---------- cursor ----------
