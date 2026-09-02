@@ -790,7 +790,10 @@
               rail: ['Clients','Listings','Tours','Offers & Docs'], title: 'Clients',
               sub: 'every lead · sorted by report date · answered before you wake up' },
       stages: ['New overnight','Qualified','Tour set','Under contract'],
-      stats0: [['9','active clients',0],['0','awaiting your approval',1],['3','tours this week',0],['0','answered overnight',1]],
+      // The first figure MUST equal the number of seed cards below (8), because the rail badge
+      // is computed from the seed and the two sit inches apart. The inserts then count up from
+      // it as each lead is filed.
+      stats0: [['8','active clients',0],['0','awaiting your approval',1],['3','tours this week',0],['0','answered overnight',1]],
       seed: [
         [ { n:'SSgt Alvarez', sub:'PCS in · report Dec 1', chips:[chip('PCS','blue'), chip('reply pending','amber')] },
           { n:'K. Boateng', sub:'VA · pre-qual started', chips:[chip('VA','green'), chip('intro sent','blue')] } ],
@@ -804,16 +807,16 @@
       inserts: [
         { col: 2, n: 'SSG Marcus Ellison', sub: 'Report date Nov 3 · VA · off-base near gate',
           chips: [chip('PCS','blue'), chip('★ Strong · 93','green'), chip('answered 11:48 PM','green'), chip('Sat 9:00 AM','green')],
-          stats: ['10','1','4','1'], rail: '10' },
+          stats: ['9','1','4','1'], rail: '9' },
         { col: 1, n: 'Danielle Ruiz', sub: 'Spouse · PCS in Jan · no COE yet',
           chips: [chip('PCS','blue'), chip('needs lender intro','amber'), chip('draft awaiting your OK','blue')],
-          stats: ['11','2','4','2'], rail: '11' },
+          stats: ['10','2','4','2'], rail: '10' },
         { col: 1, n: 'The Okonkwos', sub: 'PCS out · must sell before Oct 15',
           chips: [chip('Seller','orange'), chip('comparables sent','green'), chip('draft awaiting your OK','blue')],
-          stats: ['12','3','4','3'], rail: '12' }
+          stats: ['11','3','4','3'], rail: '11' }
       ],
       hudCRM: 'filing clients into your CRM...', crmDone: 'CRM updated · 3 clients filed and sorted',
-      endNums: [['3','qualified overnight',1],['3','drafts await your OK',0],['1','tour booked',0]],
+      endNums: [['3','qualified overnight',1],['4','drafts await your OK',0],['1','tour booked',0]],
       endLine: 'Every one of these came in while you were asleep and was answered inside a minute.<br>You wake up to drafts and a booked tour. <b>Nothing ever sends without you.</b>',
       leads: [
         { from: 'SSG Marcus Ellison', email: 'm.ellison84@gmail.com', ava: '#1a73e8', init: 'M',
