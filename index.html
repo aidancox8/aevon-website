@@ -60,11 +60,11 @@
   <div class="wrap">
     <a class="brand" href="/"><img src="logo.svg" alt="" />Aevon</a>
     <div class="navr">
-      <a href="cadre.html">Cadre</a>
+      <a href="#how">What we do</a>
+      <a href="#cadre">Cadre</a>
       <a href="#built">Built to order</a>
-      <a href="#how">How we work</a>
       <a href="#contact">Contact</a>
-      <a class="btn btn-primary btn-sm" href="cadre.html">See Cadre</a>
+      <a class="btn btn-primary btn-sm" href="#contact">Contact</a>
     </div>
   </div>
 </nav>
@@ -80,8 +80,8 @@
       off-the-shelf platform, and end up running it on a spreadsheet instead.
     </p>
     <div class="cta">
-      <a class="btn btn-primary" href="cadre.html">See Cadre</a>
-      <a class="btn btn-ghost" href="https://cadre-demo.web.app/dashboard" target="_blank" rel="noopener">Open the live demo</a>
+      <a class="btn btn-primary" href="#contact">Talk to us</a>
+      <a class="btn btn-ghost" href="#cadre">See Cadre</a>
     </div>
   </div>
 </header>
@@ -96,25 +96,48 @@
   </div>
 </div>
 
-<section id="cadre">
+<section id="how">
+  <div class="wrap two">
+    <h2>What Aevon does</h2>
+    <div>
+      <p>
+        We build operational software for businesses that have outgrown a spreadsheet but are too
+        specific for the big platforms. Some of it becomes a product. Some of it is built for one
+        company and stays that way.
+      </p>
+      <p>
+        You deal with the person who writes the software. That is a genuine limit on how many
+        customers we can take, and it is also why what we build fits the way your business runs
+        rather than the way a category is supposed to work.
+      </p>
+      <p>
+        We publish a working demo of everything we sell, with nothing held back behind a sales
+        process. It is the fastest honest answer to "is this any good".
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="cadre" style="border-top:1px solid var(--line)">
   <div class="wrap">
     <div class="how">
       <div>
-        <span class="pill">Our product</span>
-        <h2 style="font-size:clamp(28px,3.6vw,42px);margin-top:16px">Cadre. Certification tracking for trades and transport.</h2>
-        <p style="margin-top:16px;color:var(--ink-2)">
-          Every ticket on the employee record, with the training that renews it in the same
-          system. Completing the course closes the expiry.
+        <span class="pill" style="border-color:var(--accent);color:var(--accent)">New from Aevon</span>
+        <h2 style="font-size:clamp(30px,4vw,46px);margin-top:16px">Cadre</h2>
+        <p style="margin-top:10px;font-size:19px;color:var(--ink);font-weight:500">
+          Certification tracking and HR records for trades, transport and manufacturing.
         </p>
-        <ol class="steps">
-          <li><div><h3>Every credential carries a real date</h3><p>Issue, renewal period and expiry, per person and per ticket.</p></div></li>
-          <li><div><h3>It warns the person, then their supervisor</h3><p>Email and Teams, before the date rather than after it.</p></div></li>
-          <li><div><h3>Completing the course closes the credential</h3><p>Training and certification are one record. Nothing is re-keyed.</p></div></li>
-          <li><div><h3>Who is current, on demand</h3><p>By site, ticket or status, as a CSV. An audit is a screen.</p></div></li>
-        </ol>
+        <p style="margin-top:14px;color:var(--ink-2)">
+          Every credential on the employee record with a real expiry. Automatic renewal
+          reminders to the person and their supervisor. Training that closes the certification
+          when it is completed. An audit-ready list of who is current, on demand.
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:18px">
+          <span class="pill">Compliance tracking</span><span class="pill">Renewal reminders</span><span class="pill">Training records</span><span class="pill">Onboarding</span><span class="pill">Audit-ready exports</span>
+        </div>
         <div class="cta" style="display:flex;gap:12px;margin-top:26px;flex-wrap:wrap">
-          <a class="btn btn-primary" href="cadre.html">Pricing and details</a>
-          <a class="btn btn-ghost" href="https://cadre-demo.web.app/renewals" target="_blank" rel="noopener">Open renewals in the demo</a>
+          <a class="btn btn-primary" href="cadre.html">Learn more</a>
+          <a class="btn btn-ghost" href="https://cadre-demo.web.app/dashboard" target="_blank" rel="noopener">Open the live demo</a>
         </div>
       </div>
       <figure class="shot glow">
@@ -143,29 +166,7 @@
   </div>
 </section>
 
-<section id="how" style="border-top:1px solid var(--line)">
-  <div class="wrap two">
-    <h2>How we work</h2>
-    <div>
-      <p>
-        One product at a time, built properly, sold to people we can actually support. Cadre is
-        what we are shipping now. If a second one earns its place it will be here too, and it will
-        have come from the same thing that produced this one: watching a real company do a job
-        badly with the tools it had.
-      </p>
-      <p>
-        You deal with the person who writes the software. That is a genuine limit on how many
-        customers we can take, and it is also why the product fits the way these businesses run
-        rather than the way a category is supposed to work.
-      </p>
-      <p>
-        We publish a working demo of everything we sell, with nothing held back behind a sales
-        process. It is the fastest honest answer to "is this any good", and it is the only kind of
-        proof a company our size has earned the right to offer.
-      </p>
-    </div>
-  </div>
-</section>
+
 
 <section id="contact" style="border-top:1px solid var(--line)">
   <div class="wrap" style="max-width:940px">
@@ -189,17 +190,9 @@
           <span class="lbl">Email</span>
           <input id="f-email" type="email" required autocomplete="email" class="fld" />
         </label>
-        <label>
-          <span class="lbl">Phone <span class="opt">(optional)</span></span>
-          <input id="f-phone" type="tel" autocomplete="tel" class="fld" />
-        </label>
-        <label>
-          <span class="lbl">Company <span class="opt">(optional)</span></span>
-          <input id="f-size" type="text" placeholder="e.g. 40 staff, Surrey" class="fld" />
-        </label>
       </div>
       <label style="display:block; margin-top:16px">
-        <span class="lbl">What is the job? <span class="opt">(optional)</span></span>
+        <span class="lbl">What is the job?</span>
         <textarea id="f-msg" rows="4" class="fld" placeholder="What does the spreadsheet do today, and what goes wrong with it?"></textarea>
       </label>
       <div style="display:flex; align-items:center; gap:16px; margin-top:18px; flex-wrap:wrap">
@@ -259,12 +252,12 @@
       var name = document.getElementById('f-name').value.trim();
       var email = document.getElementById('f-email').value.trim();
       if (!name || !email || !EMAIL_RE.test(email)) { err.textContent = 'A name and a valid email, and I can reply.'; return; }
-      var size = document.getElementById('f-size').value.trim();
+      var size = '';
       var msg = document.getElementById('f-msg').value.trim();
       btn.disabled = true; btn.textContent = 'Sending...';
       fetch('https://qzxtfgzpyptvriorfhxw.supabase.co/functions/v1/interest', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name, email: email, phone: document.getElementById('f-phone').value.trim(),
+        body: JSON.stringify({ name: name, email: email, phone: '',
           message: [size ? 'Company: ' + size : '', msg].filter(Boolean).join('\n\n'), page: location.pathname, ref: ref })
       }).then(function (res) {
         if (!res.ok) throw new Error('status ' + res.status);
