@@ -7,6 +7,7 @@
   <meta name="description" content="Aevon is a software company in the Lower Mainland, BC. We build operational software for businesses too specific for the big platforms. Our product is Cadre, certification tracking for trades and transport." />
   <link rel="canonical" href="https://aevon.ca/" />
   <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0C0E0D" />
   <meta name="geo.region" content="CA-BC" />
   <meta name="geo.placename" content="Vancouver, British Columbia" />
   <meta name="geo.position" content="49.2827;-123.1207" />
@@ -25,7 +26,8 @@
   <link rel="icon" type="image/svg+xml" href="logo.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..800&family=IBM+Plex+Sans:wght@400;500;600&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css?v=1" />
 
   <script type="application/ld+json">
   {
@@ -44,84 +46,6 @@
   }
   </script>
 
-  <style>
-    :root {
-      --paper:      #F2F4F1;
-      --card:       #FBFCFA;
-      --ink:        #1B211C;
-      --ink-2:      #3D453E;
-      --ink-3:      #666D64;
-      --accent:     #4C5E4E;
-      --accent-dk:  #3A4A3C;
-      --line:       #1b211c1a;
-      --line-2:     #1b211c33;
-      --radius:     3px;
-      --f-display: Archivo, 'Helvetica Neue', Arial, sans-serif;
-      --f-body:    'IBM Plex Sans', system-ui, sans-serif;
-      --f-mono:    'Martian Mono', ui-monospace, monospace;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--paper); color: var(--ink);
-      font-family: var(--f-body); font-size: 17px; line-height: 1.6;
-      -webkit-font-smoothing: antialiased; overflow-x: hidden;
-    }
-    a { color: var(--accent-dk); text-underline-offset: 3px; }
-    a:hover { color: var(--ink); }
-    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
-    img { max-width: 100%; display: block; }
-    h1, h2, h3 { font-family: var(--f-display); font-weight: 700; letter-spacing: -0.02em; line-height: 1.08; }
-    p { text-wrap: pretty; }
-    .lbl { font-family: var(--f-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-3); }
-
-    nav { border-bottom: 1px solid var(--line); }
-    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 20px; }
-    .brand { display: flex; align-items: center; gap: 9px; font-family: var(--f-display); font-weight: 700; font-size: 18px; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
-    .brand img { width: 26px; height: 26px; }
-    .navr { display: flex; align-items: center; gap: 26px; font-size: 15px; }
-    .navr a { color: var(--ink-2); text-decoration: none; }
-    .navr a.btn-primary { color: #F4F6F3; }
-    .navr a.btn-ghost { color: var(--ink); }
-    .btn { display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; padding: 12px 20px; border-radius: var(--radius); border: 1px solid transparent; text-decoration: none; transition: background 160ms ease, border-color 160ms ease; }
-    .btn-primary { background: var(--accent); color: #F4F6F3; }
-    .btn-primary:hover { background: var(--accent-dk); color: #F4F6F3; }
-    .btn-ghost { border-color: var(--line-2); color: var(--ink); }
-    .btn-ghost:hover { border-color: var(--ink-2); }
-    @media (max-width: 820px) { .navr a:not(.btn) { display: none; } }
-
-    /* hero: short. the company, in one breath. */
-    .hero { padding: 84px 0 64px; }
-    h1 { font-size: clamp(32px, 4.2vw, 50px); max-width: 19ch; font-variation-settings: 'wdth' 92; }
-    .hero p { margin-top: 20px; font-size: 18.5px; color: var(--ink-2); max-width: 60ch; }
-
-    /* the product block does the work */
-    .product { border-top: 1px solid var(--line); padding: 56px 0 72px; }
-    .product-grid { display: grid; grid-template-columns: minmax(0, 25rem) minmax(0, 1fr); gap: 52px; align-items: start; }
-    @media (max-width: 1000px) { .product-grid { grid-template-columns: 1fr; gap: 32px; } }
-    .product h2 { font-size: clamp(26px, 3.2vw, 34px); margin-top: 10px; }
-    .product p { margin-top: 16px; color: var(--ink-2); font-size: 17px; }
-    .facts { margin-top: 22px; display: grid; gap: 0; border-top: 1px solid var(--line); }
-    .fact { display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
-    .fact span:first-child { color: var(--ink-3); }
-    .fact span:last-child { font-family: var(--f-mono); font-size: 12.5px; letter-spacing: 0.02em; color: var(--ink); text-align: right; }
-    .cta { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
-    figure { border: 1px solid var(--line-2); border-radius: var(--radius); overflow: hidden; background: var(--card); }
-    figcaption { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-3); padding: 9px 12px; border-top: 1px solid var(--line); }
-
-    .band { border-top: 1px solid var(--line); padding: 64px 0; }
-    .two { display: grid; grid-template-columns: minmax(0, 20rem) minmax(0, 1fr); gap: 52px; }
-    @media (max-width: 940px) { .two { grid-template-columns: 1fr; gap: 24px; } }
-    .two h2 { font-size: clamp(24px, 2.8vw, 30px); }
-    .two p { color: var(--ink-2); font-size: 17px; }
-    .two p + p { margin-top: 14px; }
-
-    footer { border-top: 1px solid var(--line); padding: 34px 0 44px; color: var(--ink-3); font-size: 14.5px; }
-    footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-    footer a { color: var(--ink-3); text-decoration: none; }
-    footer a:hover { color: var(--ink-2); }
-  </style>
-
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9R5SHY2LD"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -137,62 +61,117 @@
     <a class="brand" href="/"><img src="logo.svg" alt="" />Aevon</a>
     <div class="navr">
       <a href="cadre.html">Cadre</a>
+      <a href="#built">Built to order</a>
       <a href="#how">How we work</a>
       <a href="mailto:hello@aevon.ca">Contact</a>
-      <a class="btn btn-primary" href="cadre.html">See Cadre</a>
+      <a class="btn btn-primary btn-sm" href="cadre.html">See Cadre</a>
     </div>
   </div>
 </nav>
 
 <header class="hero">
+  <!-- Replace the placeholder class with style="--hero-image:url(img/hero.jpg)" once the photo lands. -->
+  <div class="hero-bg placeholder" role="presentation"></div>
   <div class="wrap">
-    <h1>Software for the companies the big platforms skip.</h1>
-    <p>
-      Aevon is a software company in the Lower Mainland. We build operational systems for businesses
-      that run on something too specific for an off-the-shelf platform, and end up running it on a
-      spreadsheet instead.
+    <span class="lbl">Lower Mainland, British Columbia</span>
+    <h1 style="margin-top:14px">Software for the companies the big platforms skip.</h1>
+    <p class="sub">
+      Aevon builds operational systems for businesses that run on something too specific for an
+      off-the-shelf platform, and end up running it on a spreadsheet instead.
     </p>
+    <div class="cta">
+      <a class="btn btn-primary" href="cadre.html">See Cadre</a>
+      <a class="btn btn-ghost" href="https://cadre-demo.web.app/dashboard" target="_blank" rel="noopener">Open the live demo</a>
+    </div>
   </div>
 </header>
 
-<section class="product">
-  <div class="wrap product-grid">
-    <div>
-      <span class="lbl">Our product</span>
-      <h2>Cadre</h2>
-      <p>
-        Certification tracking software for trades and transport. It keeps every ticket, forklift,
-        first aid, fall protection, driver abstract, on the employee record, with the training that
-        renews it in the same system.
-      </p>
-      <div class="facts">
-        <div class="fact"><span>Built for</span><span>Trades · transport · plants</span></div>
-        <div class="fact"><span>Company size</span><span>15–150 staff</span></div>
-        <div class="fact"><span>Priced</span><span>Flat, per site</span></div>
-        <div class="fact"><span>In production at</span><span>1 organisation, 75 staff</span></div>
+<!-- Where a template puts a wall of customer logos. We have one deployment and say so lower down;
+     this strip is the credentials Cadre actually tracks, which is true and useful. -->
+<div class="strip">
+  <div class="wrap">
+    <span class="lbl">What Cadre keeps current</span>
+    <span>Forklift</span><span>First aid</span><span>Fall protection</span><span>WHMIS</span>
+    <span>Driver abstracts</span><span>Red Seal</span><span>Confined space</span><span>TDG</span>
+  </div>
+</div>
+
+<section id="cadre">
+  <div class="wrap">
+    <div class="how">
+      <div>
+        <span class="pill">Our product</span>
+        <h2 style="font-size:clamp(28px,3.6vw,42px);margin-top:16px">Cadre. Certification tracking for trades and transport.</h2>
+        <p style="margin-top:16px;color:var(--ink-2)">
+          Every ticket on the employee record, with the training that renews it in the same
+          system. Completing the course closes the expiry.
+        </p>
+        <ol class="steps">
+          <li><div><h3>Every credential carries a real date</h3><p>Issue, renewal period and expiry, per person and per ticket.</p></div></li>
+          <li><div><h3>It warns the person, then their supervisor</h3><p>Email and Teams, before the date rather than after it.</p></div></li>
+          <li><div><h3>Completing the course closes the credential</h3><p>Training and certification are one record. Nothing is re-keyed.</p></div></li>
+          <li><div><h3>Who is current, on demand</h3><p>By site, ticket or status, as a CSV. An audit is a screen.</p></div></li>
+        </ol>
+        <div class="cta" style="display:flex;gap:12px;margin-top:26px;flex-wrap:wrap">
+          <a class="btn btn-primary" href="cadre.html">Pricing and details</a>
+          <a class="btn btn-ghost" href="https://cadre-demo.web.app/renewals" target="_blank" rel="noopener">Open renewals in the demo</a>
+        </div>
       </div>
-      <div class="cta">
-        <a class="btn btn-primary" href="cadre.html">See Cadre</a>
-        <a class="btn btn-ghost" href="https://cadre-demo.web.app/dashboard" target="_blank" rel="noopener">Open the demo</a>
-      </div>
+      <figure class="shot glow">
+        <div class="shot-bar"><i></i><i></i><i></i><span>cadre-demo.web.app · renewals</span></div>
+        <img src="img/shots/cadre-renewals.jpg" width="1568" height="744" loading="lazy"
+             alt="The Cadre renewals screen: staff listed with credential, issue date, expiry date and a status of Expired or Expiring, with counts for expired and for 30, 60 and 90 days." />
+      </figure>
     </div>
-    <figure>
-      <img src="img/cadre-renewals.jpg" width="1568" height="698"
-           alt="The Cadre renewals screen, listing staff with their credential, issue date, expiry date and a status of Expired or Expiring." />
-      <figcaption>Cadre · renewals</figcaption>
-    </figure>
   </div>
 </section>
 
-<section class="band" id="how">
+<section id="built" class="tight" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="pill">Built to order</span>
+      <h2>Software shaped around one business.</h2>
+      <p class="lede">
+        Cadre came from watching one company do a job badly with the tools it had. The same
+        work is available for yours: an intake agent that answers and books your inquiries, a
+        scheduler for a room-constrained clinic, whatever the spreadsheet is standing in for.
+      </p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Examples of built-to-order work">
+      <button role="tab" aria-selected="true" aria-controls="tab-fd" id="tabbtn-fd"><b>01</b>Inbound intake, qualified and booked</button>
+      <button role="tab" aria-selected="false" aria-controls="tab-fd2" id="tabbtn-fd2"><b>02</b>What it pulled from one message</button>
+    </div>
+    <div class="tabpanel" id="tab-fd" role="tabpanel" aria-labelledby="tabbtn-fd">
+      <figure class="shot">
+        <div class="shot-bar"><i></i><i></i><i></i><span>pipeline · sample data</span></div>
+        <img src="img/shots/frontdesk-board.jpg" width="1568" height="744" loading="lazy"
+             alt="A lead pipeline board for a real estate broker: columns for ISA calling, handed to you and answered, qualified, tour set and under contract, with each lead card showing what the agent learned from their message." />
+      </figure>
+      <p class="cap">A broker's leads, sorted by how soon they need to move. The first column is a human caller's work. From the second on, every field was read out of the lead's own message by the agent, and the reply is waiting for a yes.</p>
+    </div>
+    <div class="tabpanel" id="tab-fd2" role="tabpanel" aria-labelledby="tabbtn-fd2" hidden>
+      <figure class="shot">
+        <div class="shot-bar"><i></i><i></i><i></i><span>lead detail · sample data</span></div>
+        <img src="img/shots/frontdesk-detail.jpg" width="1568" height="744" loading="lazy"
+             alt="A lead's detail panel: report date, financing, area and house to sell pulled from their message, the two facts still missing, the original message, and a drafted reply waiting for approval." />
+      </figure>
+      <p class="cap">Report date, financing, area, house to sell: read from a paragraph of text. The two things it did not find are what the draft asks for. Nothing sends until the owner says so.</p>
+    </div>
+    <p style="margin-top:28px;color:var(--ink-3);font-size:15px">
+      Scoped and priced per build. <a href="mailto:hello@aevon.ca?subject=Built%20to%20order">Describe the job</a> and you get a written scope before anything is built.
+    </p>
+  </div>
+</section>
+
+<section id="how" style="border-top:1px solid var(--line)">
   <div class="wrap two">
     <h2>How we work</h2>
     <div>
       <p>
-        One product at a time, built properly, sold to people we can actually support. Cadre is what
-        we are shipping now. If a second one earns its place it will be here too, and it will have
-        come from the same thing that produced this one: watching a real company do a job badly with
-        the tools it had.
+        One product at a time, built properly, sold to people we can actually support. Cadre is
+        what we are shipping now. If a second one earns its place it will be here too, and it will
+        have come from the same thing that produced this one: watching a real company do a job
+        badly with the tools it had.
       </p>
       <p>
         You deal with the person who writes the software. That is a genuine limit on how many
@@ -204,6 +183,12 @@
         process. It is the fastest honest answer to "is this any good", and it is the only kind of
         proof a company our size has earned the right to offer.
       </p>
+      <div class="facts" style="max-width:520px">
+        <div class="fact"><span>Built for</span><span>Trades · transport · plants</span></div>
+        <div class="fact"><span>Company size</span><span>15 to 150 staff</span></div>
+        <div class="fact"><span>Priced</span><span>Flat, per site</span></div>
+        <div class="fact"><span>In production at</span><span>1 organisation, 75 staff</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -220,5 +205,21 @@
   </div>
 </footer>
 
+<script>
+  // Tabs. Plain buttons, no library, keyboard reachable.
+  (function () {
+    var tabs = document.querySelectorAll('[role="tab"]');
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        tabs.forEach(function (o) {
+          o.setAttribute('aria-selected', 'false');
+          document.getElementById(o.getAttribute('aria-controls')).hidden = true;
+        });
+        t.setAttribute('aria-selected', 'true');
+        document.getElementById(t.getAttribute('aria-controls')).hidden = false;
+      });
+    });
+  })();
+</script>
 </body>
 </html>
