@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="site.css?v=2" />
+  <link rel="stylesheet" href="site.css?v=3" />
 
   <script type="application/ld+json">
   {
@@ -160,6 +160,12 @@
         scheduler for a room-constrained clinic, whatever the spreadsheet is standing in for.
       </p>
     </div>
+    <figure class="shot" style="margin-top:32px">
+      <div class="shot-bar"><i></i><i></i><i></i><span>intake agent · pipeline · sample data</span></div>
+      <img src="img/shots/frontdesk-board.jpg" width="1434" height="697" loading="lazy"
+           alt="A lead pipeline for a real estate broker: columns for caller working, handed to you and answered, and qualified, with a detail pane showing what the agent read from one lead's message and the reply drafted for approval." />
+    </figure>
+    <p class="cap" style="margin-top:18px;font-size:15px;color:var(--ink-2);max-width:70ch">A broker's inbound leads. The first column is a human caller's work. From the second on, every field was read out of the lead's own message by the agent, and the reply waits for a yes.</p>
     <p style="margin-top:28px;color:var(--ink-3);font-size:15px">
       Scoped and priced per build. <a href="#contact">Describe the job</a> and you get a written scope before anything is built.
     </p>
@@ -195,6 +201,16 @@
         <span class="lbl">What is the job?</span>
         <textarea id="f-msg" rows="4" class="fld" placeholder="What does the spreadsheet do today, and what goes wrong with it?"></textarea>
       </label>
+      <fieldset style="border:0;padding:0;margin:16px 0 0">
+        <legend class="lbl" style="margin-bottom:9px">What are you looking at? <span class="opt">(optional, pick any)</span></legend>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <label class="chk"><input type="checkbox" name="interest" value="Cadre, certification tracking"><span>Cadre</span></label>
+          <label class="chk"><input type="checkbox" name="interest" value="An intake agent for inquiries"><span>Intake agent</span></label>
+          <label class="chk"><input type="checkbox" name="interest" value="Replacing a spreadsheet"><span>Replacing a spreadsheet</span></label>
+          <label class="chk"><input type="checkbox" name="interest" value="Scheduling"><span>Scheduling</span></label>
+          <label class="chk"><input type="checkbox" name="interest" value="Not sure yet"><span>Not sure yet</span></label>
+        </div>
+      </fieldset>
       <div style="display:flex; align-items:center; gap:16px; margin-top:18px; flex-wrap:wrap">
         <button class="btn btn-primary" id="f-send" type="submit">Send</button>
         <span id="f-err" style="color:var(--danger); font-size:14.5px"></span>
@@ -252,13 +268,13 @@
       var name = document.getElementById('f-name').value.trim();
       var email = document.getElementById('f-email').value.trim();
       if (!name || !email || !EMAIL_RE.test(email)) { err.textContent = 'A name and a valid email, and I can reply.'; return; }
-      var size = '';
+      var size = Array.from(document.querySelectorAll('input[name=interest]:checked')).map(function (c) { return c.value; }).join(', ');
       var msg = document.getElementById('f-msg').value.trim();
       btn.disabled = true; btn.textContent = 'Sending...';
       fetch('https://qzxtfgzpyptvriorfhxw.supabase.co/functions/v1/interest', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name, email: email, phone: '',
-          message: [size ? 'Company: ' + size : '', msg].filter(Boolean).join('\n\n'), page: location.pathname, ref: ref })
+          message: [size ? 'Interested in: ' + size : '', msg].filter(Boolean).join('\n\n'), page: location.pathname, ref: ref })
       }).then(function (res) {
         if (!res.ok) throw new Error('status ' + res.status);
         form.hidden = true;

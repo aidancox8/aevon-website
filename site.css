@@ -144,7 +144,7 @@ section.tight { padding: 72px 0; }
 .tabs button:hover { color: var(--ink); }
 .tabpanel { margin-top: 36px; }
 .tabpanel[hidden] { display: none; }
-.tabpanel .cap { margin-top: 18px; font-size: 15px; color: var(--ink-2); max-width: 70ch; }
+.cap, .tabpanel .cap { margin-top: 18px; font-size: 15px; color: var(--ink-2); max-width: 70ch; }
 
 /* three cards, not rounded blobs: flat, ruled, same ground */
 .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; margin-top: 36px; }
@@ -194,6 +194,12 @@ label .lbl { display: block; margin-bottom: 7px; }
 .fld:focus { outline: none; border-color: var(--accent); }
 textarea.fld { resize: vertical; min-height: 110px; }
 .done { border: 1px solid var(--line-2); border-radius: var(--radius-lg); background: var(--surface); padding: 26px; max-width: 640px; }
+
+/* checkbox chips on the contact form */
+.chk { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line-2); border-radius: 999px; padding: 8px 14px 8px 11px; font-size: 14px; color: var(--ink-2); cursor: pointer; background: var(--surface); }
+.chk:has(input:checked) { border-color: var(--accent); color: var(--ink); background: rgba(157,191,161,.10); }
+.chk input { accent-color: var(--accent); width: 15px; height: 15px; margin: 0; }
+.chk:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* footer */
 footer { border-top: 1px solid var(--line); padding: 36px 0 48px; color: var(--ink-3); font-size: 14.5px; }
