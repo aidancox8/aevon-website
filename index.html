@@ -63,7 +63,7 @@
       <a href="cadre.html">Cadre</a>
       <a href="#built">Built to order</a>
       <a href="#how">How we work</a>
-      <a href="mailto:hello@aevon.ca">Contact</a>
+      <a href="#contact">Contact</a>
       <a class="btn btn-primary btn-sm" href="cadre.html">See Cadre</a>
     </div>
   </div>
@@ -137,28 +137,8 @@
         scheduler for a room-constrained clinic, whatever the spreadsheet is standing in for.
       </p>
     </div>
-    <div class="tabs" role="tablist" aria-label="Examples of built-to-order work">
-      <button role="tab" aria-selected="true" aria-controls="tab-fd" id="tabbtn-fd"><b>01</b>Inbound intake, qualified and booked</button>
-      <button role="tab" aria-selected="false" aria-controls="tab-fd2" id="tabbtn-fd2"><b>02</b>What it pulled from one message</button>
-    </div>
-    <div class="tabpanel" id="tab-fd" role="tabpanel" aria-labelledby="tabbtn-fd">
-      <figure class="shot">
-        <div class="shot-bar"><i></i><i></i><i></i><span>pipeline · sample data</span></div>
-        <img src="img/shots/frontdesk-board.jpg" width="1568" height="744" loading="lazy"
-             alt="A lead pipeline board for a real estate broker: columns for ISA calling, handed to you and answered, qualified, tour set and under contract, with each lead card showing what the agent learned from their message." />
-      </figure>
-      <p class="cap">A broker's leads, sorted by how soon they need to move. The first column is a human caller's work. From the second on, every field was read out of the lead's own message by the agent, and the reply is waiting for a yes.</p>
-    </div>
-    <div class="tabpanel" id="tab-fd2" role="tabpanel" aria-labelledby="tabbtn-fd2" hidden>
-      <figure class="shot">
-        <div class="shot-bar"><i></i><i></i><i></i><span>lead detail · sample data</span></div>
-        <img src="img/shots/frontdesk-detail.jpg" width="1568" height="744" loading="lazy"
-             alt="A lead's detail panel: report date, financing, area and house to sell pulled from their message, the two facts still missing, the original message, and a drafted reply waiting for approval." />
-      </figure>
-      <p class="cap">Report date, financing, area, house to sell: read from a paragraph of text. The two things it did not find are what the draft asks for. Nothing sends until the owner says so.</p>
-    </div>
     <p style="margin-top:28px;color:var(--ink-3);font-size:15px">
-      Scoped and priced per build. <a href="mailto:hello@aevon.ca?subject=Built%20to%20order">Describe the job</a> and you get a written scope before anything is built.
+      Scoped and priced per build. <a href="#contact">Describe the job</a> and you get a written scope before anything is built.
     </p>
   </div>
 </section>
@@ -183,12 +163,56 @@
         process. It is the fastest honest answer to "is this any good", and it is the only kind of
         proof a company our size has earned the right to offer.
       </p>
-      <div class="facts" style="max-width:520px">
-        <div class="fact"><span>Built for</span><span>Trades · transport · plants</span></div>
-        <div class="fact"><span>Company size</span><span>15 to 150 staff</span></div>
-        <div class="fact"><span>Priced</span><span>Flat, per site</span></div>
-        <div class="fact"><span>In production at</span><span>1 organisation, 75 staff</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="border-top:1px solid var(--line)">
+  <div class="wrap" style="max-width:940px">
+    <div class="sec-head">
+      <span class="pill">Contact</span>
+      <h2>Tell me what you are running on a spreadsheet.</h2>
+      <p class="lede">
+        A reply from the person who writes the software, usually the same day. If you would rather
+        just book fifteen minutes,
+        <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">pick a time here</a>.
+      </p>
+    </div>
+
+    <form id="interest-form" style="margin-top:30px; max-width:640px" novalidate>
+      <div class="fgrid">
+        <label>
+          <span class="lbl">Name</span>
+          <input id="f-name" type="text" required autocomplete="name" class="fld" />
+        </label>
+        <label>
+          <span class="lbl">Email</span>
+          <input id="f-email" type="email" required autocomplete="email" class="fld" />
+        </label>
+        <label>
+          <span class="lbl">Phone <span class="opt">(optional)</span></span>
+          <input id="f-phone" type="tel" autocomplete="tel" class="fld" />
+        </label>
+        <label>
+          <span class="lbl">Company <span class="opt">(optional)</span></span>
+          <input id="f-size" type="text" placeholder="e.g. 40 staff, Surrey" class="fld" />
+        </label>
       </div>
+      <label style="display:block; margin-top:16px">
+        <span class="lbl">What is the job? <span class="opt">(optional)</span></span>
+        <textarea id="f-msg" rows="4" class="fld" placeholder="What does the spreadsheet do today, and what goes wrong with it?"></textarea>
+      </label>
+      <div style="display:flex; align-items:center; gap:16px; margin-top:18px; flex-wrap:wrap">
+        <button class="btn btn-primary" id="f-send" type="submit">Send</button>
+        <span id="f-err" style="color:var(--danger); font-size:14.5px"></span>
+      </div>
+    </form>
+
+    <div id="interest-done" hidden class="done" style="margin-top:30px">
+      <h3>Got it, thanks.</h3>
+      <p style="margin-top:8px; color:var(--ink-2)">
+        I will get back to you personally, usually the same day.
+      </p>
     </div>
   </div>
 </section>
@@ -217,6 +241,39 @@
         });
         t.setAttribute('aria-selected', 'true');
         document.getElementById(t.getAttribute('aria-controls')).hidden = false;
+      });
+    });
+  })();
+
+  // Same endpoint as the Cadre page. page: location.pathname says which form it came from.
+  (function () {
+    var form = document.getElementById('interest-form');
+    if (!form) return;
+    var err = document.getElementById('f-err');
+    var btn = document.getElementById('f-send');
+    var ref = new URLSearchParams(location.search).get('ref') || '';
+    var EMAIL_RE = /^[^@\s]+@[^@\s.]+\.[^@\s]+$/;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      err.textContent = '';
+      var name = document.getElementById('f-name').value.trim();
+      var email = document.getElementById('f-email').value.trim();
+      if (!name || !email || !EMAIL_RE.test(email)) { err.textContent = 'A name and a valid email, and I can reply.'; return; }
+      var size = document.getElementById('f-size').value.trim();
+      var msg = document.getElementById('f-msg').value.trim();
+      btn.disabled = true; btn.textContent = 'Sending...';
+      fetch('https://qzxtfgzpyptvriorfhxw.supabase.co/functions/v1/interest', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, email: email, phone: document.getElementById('f-phone').value.trim(),
+          message: [size ? 'Company: ' + size : '', msg].filter(Boolean).join('\n\n'), page: location.pathname, ref: ref })
+      }).then(function (res) {
+        if (!res.ok) throw new Error('status ' + res.status);
+        form.hidden = true;
+        var done = document.getElementById('interest-done'); done.hidden = false;
+        done.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }).catch(function () {
+        btn.disabled = false; btn.textContent = 'Send';
+        err.innerHTML = 'That did not send. Email <a href="mailto:hello@aevon.ca">hello@aevon.ca</a> and I will pick it up.';
       });
     });
   })();
