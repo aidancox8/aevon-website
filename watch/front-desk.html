@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aevon Front Desk, 90 seconds</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/svg+xml" href="../logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../site.css" />
+  <style>
+    body { min-height: 100vh; display: flex; flex-direction: column; }
+    .top { padding: 22px 0; }
+    .top .wrap { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+    .top img { width: 22px; height: 22px; }
+    main { flex: 1; display: flex; align-items: center; }
+    .player { width: min(100%, 1120px); margin: 0 auto; padding: 0 22px 40px; }
+    video { display: block; width: 100%; border-radius: var(--radius-lg); background: #000; border: 1px solid var(--line); }
+    .under { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 18px; color: var(--ink-2); font-size: 15px; }
+    .under a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="top"><div class="wrap"><img src="../logo.svg" alt="" /> Aevon</div></div>
+  <main>
+    <div class="player">
+      <video id="v" controls playsinline preload="metadata" src="../video/aevon-front-desk.mp4"></video>
+      <div class="under">
+        <span>Your number, your calendar, your voice. Nothing sends without your ok.</span>
+        <a href="mailto:aidan@aevon.ca?subject=Front%20Desk">Reply with a time and I will walk you through it</a>
+      </div>
+    </div>
+  </main>
+  <script>
+    // Playback beacons. The link carries ?t=<token>; without one nothing is recorded, so Aidan
+    // can open the page himself without polluting a prospect's row.
+    (function () {
+      var t = new URLSearchParams(location.search).get('t');
+      if (!t) return;
+      var v = document.getElementById('v');
+      var s = Math.random().toString(36).slice(2, 10);
+      var sent = {};
+      function beacon(e) {
+        var body = JSON.stringify({ t: t, v: 'front-desk', e: e, s: s, p: v.currentTime, d: v.duration || 0 });
+        var url = 'https://qzxtfgzpyptvriorfhxw.supabase.co/functions/v1/watch';
+        try {
+          if (navigator.sendBeacon) navigator.sendBeacon(url, new Blob([body], { type: 'text/plain' }));
+          else fetch(url, { method: 'POST', body: body, keepalive: true, mode: 'no-cors' });
+        } catch (err) {}
+      }
+      beacon('open');
+      v.addEventListener('play', function () { beacon('play'); });
+      v.addEventListener('pause', function () { if (!v.ended) beacon('pause'); });
+      v.addEventListener('ended', function () { beacon('ended'); });
+      v.addEventListener('timeupdate', function () {
+        if (!v.duration) return;
+        var q = Math.floor((v.currentTime / v.duration) * 4);
+        [1, 2, 3].forEach(function (k) { if (q >= k && !sent[k]) { sent[k] = 1; beacon('q' + k); } });
+      });
+      setInterval(function () { if (!v.paused && !v.ended) beacon('heartbeat'); }, 10000);
+      document.addEventListener('visibilitychange', function () { if (document.hidden && !v.paused) beacon('hidden'); });
+    })();
+  </script>
+</body>
+</html>
