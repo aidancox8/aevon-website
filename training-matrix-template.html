@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Training Matrix Template (Excel, Free) | Aevon</title>
+  <meta name="description" content="A free Excel training matrix template that colours expired and expiring certificates, plus a checker that reads your filled-in file in the browser. No email required." />
+  <link rel="canonical" href="https://aevon.ca/training-matrix-template.html" />
+  <!-- noindex until reviewed; flip to "index, follow" and add to sitemap.xml when approved -->
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#0C0E0D" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aevon.ca/training-matrix-template.html" />
+  <meta property="og:site_name" content="Aevon" />
+  <meta property="og:title" content="Training Matrix Template (Excel, Free)" />
+  <meta property="og:description" content="Free Excel training matrix: expired certificates in red, expiring in orange and yellow. Check your filled-in copy in the browser." />
+  <meta property="og:locale" content="en_CA" />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css?v=3" />
+  <style>
+    nav { position: static; border-bottom: 1px solid var(--line); }
+    main section { padding: 56px 0; }
+    main section + section { border-top: 1px solid var(--line); }
+    h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.1; margin: 14px 0 12px; }
+    .sub { max-width: 640px; }
+    .dl { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-top: 26px; }
+    .meta { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+    .legend { display: flex; gap: 18px; flex-wrap: wrap; margin: 18px 0 0; padding: 0; list-style: none; }
+    .legend li { display: flex; align-items: center; gap: 8px; color: var(--ink-2); }
+    .sw { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+    ol.use { color: var(--ink-2); max-width: 720px; padding-left: 20px; line-height: 1.7; }
+    .drop { margin-top: 20px; border: 1px dashed var(--line-2); border-radius: var(--radius); padding: 28px; text-align: center; color: var(--ink-2); cursor: pointer; }
+    .drop.over { border-color: var(--accent); background: var(--surface); }
+    .drop input { display: none; }
+    .counts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 22px; }
+    .counts div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+    .counts b { display: block; font-size: 28px; color: var(--ink); }
+    .tbl-wrap { overflow-x: auto; margin-top: 18px; }
+    table { border-collapse: collapse; width: 100%; font-size: 15px; }
+    th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    th { color: var(--ink-3); font-weight: 500; }
+    .st { font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; padding: 3px 7px; border-radius: 3px; }
+    .st-x { background: rgba(227,150,138,.18); color: var(--danger); }
+    .st-30 { background: rgba(240,180,90,.16); color: #E9B866; }
+    .st-90 { background: rgba(240,220,120,.12); color: #E5D58A; }
+    .note { color: var(--ink-3); font-size: 14px; margin-top: 12px; }
+    .err { color: var(--danger); margin-top: 14px; }
+    @media (max-width: 600px) { main section { padding: 40px 0; } .drop { padding: 20px; } }
+  </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9R5SHY2LD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-M9R5SHY2LD');
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/"><img src="logo.svg" alt="" />Aevon</a>
+    <div class="navr">
+      <a href="#check">Check your file</a>
+      <a href="cadre.html">Cadre</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section>
+  <div class="wrap">
+    <span class="lbl">Free download</span>
+    <h1>Training matrix template for Excel</h1>
+    <p class="sub">One row per person, one column per certification, the expiry date in each cell. Expired certificates turn red, anything due within 30 days turns orange, within 90 days yellow. A summary sheet counts them per certification. No email, no signup.</p>
+    <div class="dl">
+      <a class="btn btn-primary" href="files/training-matrix-template.xlsx" download onclick="gtag && gtag('event','template_download')">Download the template (.xlsx)</a>
+      <span class="meta">Excel and Google Sheets · 11 KB</span>
+    </div>
+    <ul class="legend" aria-label="Colour key">
+      <li><span class="sw" style="background:#F4C7C3"></span>Expired</li>
+      <li><span class="sw" style="background:#FBE3B6"></span>Expires within 30 days</li>
+      <li><span class="sw" style="background:#FFF6CC"></span>Expires within 90 days</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>How to use it</h2>
+    <ol class="use">
+      <li>Delete the three example rows on the Matrix sheet and add one row per person.</li>
+      <li>Rename the certification columns to the ones your people need: first aid, forklift, fall protection, WHMIS, driver abstract, or anything else. Add columns if you need more.</li>
+      <li>Type the <strong>expiry</strong> date in each cell, not the date the course was taken. Leave a cell blank if that certification does not apply to that person.</li>
+      <li>Open the file again next week. The colours follow today's date, so nothing needs updating by hand except new certificates.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="check">
+  <div class="wrap">
+    <h2>Check a filled-in file</h2>
+    <p class="sub">Drop your training matrix here to list every certificate that has expired or expires in the next 90 days. It works with this template or any sheet with names in the first column and expiry dates in the others. The file is read in your browser and is never uploaded.</p>
+    <label class="drop" id="drop">
+      <input type="file" id="file" accept=".xlsx,.xls,.csv" />
+      <span id="dropText">Choose a file or drop it here (.xlsx or .csv)</span>
+    </label>
+    <div id="out" hidden>
+      <div class="counts" id="counts"></div>
+      <div class="tbl-wrap"><table id="tbl"><thead><tr><th>Person</th><th>Certification</th><th>Expiry</th><th>Status</th></tr></thead><tbody></tbody></table></div>
+      <p class="note" id="note"></p>
+    </div>
+    <p class="err" id="err" hidden></p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>When the spreadsheet stops being enough</h2>
+    <p class="sub">A spreadsheet only knows what somebody typed into it, and it cannot remind anyone. <a href="cadre.html">Cadre</a> keeps each certification on the employee record, with the training that renews it in the same system, and flags renewals before they lapse. There is a <a href="https://cadre-demo.web.app/dashboard" target="_blank" rel="noopener">live demo</a> with sample data, no signup.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>Made by <a href="/">Aevon</a> · Canada</div>
+    <div style="display:flex;gap:22px;flex-wrap:wrap">
+      <a href="cadre.html">Cadre</a>
+      <a href="mailto:hello@aevon.ca">hello@aevon.ca</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" defer></script>
+<script>
+(function () {
+  var drop = document.getElementById('drop'), input = document.getElementById('file');
+  var out = document.getElementById('out'), err = document.getElementById('err');
+  var DAY = 864e5;
+  function today() { var d = new Date(); d.setHours(0, 0, 0, 0); return d; }
+  function toDate(v) {
+    if (v instanceof Date && !isNaN(v)) return v;
+    if (typeof v === 'number' && v > 20000 && v < 80000) return new Date(Math.round((v - 25569) * DAY));   // Excel serial
+    if (typeof v === 'string') {
+      var s = v.trim();
+      if (!/\d{4}|\d{1,2}[\/\-.]\d{1,2}[\/\-.]\d{2,4}/.test(s)) return null;
+      var d = new Date(s);
+      return isNaN(d) ? null : d;
+    }
+    return null;
+  }
+  function fmt(d) { return d.toISOString().slice(0, 10); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function fail(msg) { out.hidden = true; err.hidden = false; err.textContent = msg; }
+
+  function analyse(rows) {
+    if (!rows.length) return fail('That sheet looks empty.');
+    var head = rows[0].map(function (h) { return String(h == null ? '' : h).trim(); });
+    var now = today(), items = [], checked = 0, people = 0;
+    for (var r = 1; r < rows.length; r++) {
+      var row = rows[r] || [], name = String(row[0] == null ? '' : row[0]).trim();
+      if (!name || /^example:/i.test(name)) continue;
+      people++;
+      for (var c = 1; c < row.length; c++) {
+        var d = toDate(row[c]);
+        if (!d) continue;
+        checked++;
+        var days = Math.round((d - now) / DAY);
+        if (days <= 90) items.push({ name: name, cred: head[c] || ('Column ' + (c + 1)), date: d, days: days });
+      }
+    }
+    if (!checked) return fail('No dates found. The checker expects names in the first column and expiry dates in the columns after it.');
+    items.sort(function (a, b) { return a.days - b.days; });
+    var x = items.filter(function (i) { return i.days < 0; }).length;
+    var d30 = items.filter(function (i) { return i.days >= 0 && i.days <= 30; }).length;
+    var d90 = items.length - x - d30;
+    document.getElementById('counts').innerHTML =
+      '<div><b>' + x + '</b>expired</div><div><b>' + d30 + '</b>expire within 30 days</div><div><b>' + d90 + '</b>expire in 31 to 90 days</div><div><b>' + checked + '</b>dates checked, ' + people + ' people</div>';
+    document.querySelector('#tbl tbody').innerHTML = items.map(function (i) {
+      var st = i.days < 0 ? '<span class="st st-x">Expired ' + (-i.days) + 'd ago</span>' : i.days <= 30 ? '<span class="st st-30">In ' + i.days + 'd</span>' : '<span class="st st-90">In ' + i.days + 'd</span>';
+      return '<tr><td>' + esc(i.name) + '</td><td>' + esc(i.cred) + '</td><td>' + fmt(i.date) + '</td><td>' + st + '</td></tr>';
+    }).join('') || '<tr><td colspan="4">Nothing expired or due in the next 90 days.</td></tr>';
+    document.getElementById('note').textContent = 'Rows starting with "Example:" were skipped. Only the first sheet was read.';
+    err.hidden = true; out.hidden = false;
+    if (window.gtag) gtag('event', 'matrix_checked', { dates: checked });
+  }
+
+  function read(file) {
+    if (!file) return;
+    if (!window.XLSX) return fail('The reader is still loading. Try again in a second.');
+    var fr = new FileReader();
+    fr.onload = function (e) {
+      try {
+        var wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array', cellDates: true });
+        var ws = wb.Sheets[wb.SheetNames[0]];
+        analyse(XLSX.utils.sheet_to_json(ws, { header: 1, raw: true, defval: null }));
+      } catch (ex) { fail('Could not read that file. Is it an .xlsx or .csv?'); }
+    };
+    fr.readAsArrayBuffer(file);
+    document.getElementById('dropText').textContent = file.name;
+  }
+  input.addEventListener('change', function () { read(input.files[0]); });
+  ['dragenter', 'dragover'].forEach(function (t) { drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave', 'drop'].forEach(function (t) { drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop', function (e) { read(e.dataTransfer.files[0]); });
+})();
+</script>
+</body>
+</html>
