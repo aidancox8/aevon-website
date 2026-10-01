@@ -1,0 +1,16 @@
+# Aevon
+
+> Aevon is a Canadian software company. Its product is Cadre: HR and certification tracking software for trades, transport and manufacturing employers.
+
+Cadre keeps every employee certification (forklift, first aid, fall protection, driver abstracts and others) on the employee record with an issue date, renewal period and expiry, next to that person's onboarding, performance reviews, signed policies and place in the org chart. It notifies the employee and then their supervisor by email and Microsoft Teams before a certificate expires. Pricing is one flat monthly fee per site with unlimited employees and every module included, month to month, quoted by email.
+
+## Pages
+
+- [Cadre](https://aevon.ca/cadre.html): what Cadre does, pricing model, and questions answered
+- [Training matrix template](https://aevon.ca/training-matrix-template.html): free Excel training matrix with expiry colours, and an in-browser checker for a filled-in file
+- [Live demo](https://cadre-demo.web.app/dashboard): the real product with a sample company loaded, no signup
+- [Privacy](https://aevon.ca/privacy.html)
+
+## Contact
+
+- hello@aevon.ca
