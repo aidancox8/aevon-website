@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COR Certification Tracking for BC Construction | Aevon</title>
+  <meta name="description" content="Keep training and certification records COR-ready in BC construction. Free readiness checklist, plus the COR facts that matter: audits, scores and the WorkSafeBC incentive." />
+  <link rel="canonical" href="https://aevon.ca/cor-certification-tracking.html" />
+  <!-- noindex until reviewed; flip to "index, follow" and add to sitemap.xml when approved -->
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#0C0E0D" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aevon.ca/cor-certification-tracking.html" />
+  <meta property="og:site_name" content="Aevon" />
+  <meta property="og:title" content="COR Certification Tracking for BC Construction" />
+  <meta property="og:description" content="A free readiness checklist for the training and certification records a COR audit looks at." />
+  <meta property="og:locale" content="en_CA" />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css?v=3" />
+  <style>
+    nav { position: static; border-bottom: 1px solid var(--line); }
+    main section { padding: 56px 0; }
+    main section + section { border-top: 1px solid var(--line); }
+    h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.1; margin: 14px 0 12px; }
+    .sub { max-width: 640px; }
+    .dl { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-top: 26px; }
+    .meta { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+    .legend { display: flex; gap: 18px; flex-wrap: wrap; margin: 18px 0 0; padding: 0; list-style: none; }
+    .legend li { display: flex; align-items: center; gap: 8px; color: var(--ink-2); }
+    .sw { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+    ol.use { color: var(--ink-2); max-width: 720px; padding-left: 20px; line-height: 1.7; }
+    .drop { margin-top: 20px; border: 1px dashed var(--line-2); border-radius: var(--radius); padding: 28px; text-align: center; color: var(--ink-2); cursor: pointer; }
+    .drop.over { border-color: var(--accent); background: var(--surface); }
+    .drop input { display: none; }
+    .counts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 22px; }
+    .counts div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+    .counts b { display: block; font-size: 28px; color: var(--ink); }
+    .tbl-wrap { overflow-x: auto; margin-top: 18px; }
+    table { border-collapse: collapse; width: 100%; font-size: 15px; }
+    th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    th { color: var(--ink-3); font-weight: 500; }
+    .st { font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; padding: 3px 7px; border-radius: 3px; }
+    .st-x { background: rgba(227,150,138,.18); color: var(--danger); }
+    .st-30 { background: rgba(240,180,90,.16); color: #E9B866; }
+    .st-90 { background: rgba(240,220,120,.12); color: #E5D58A; }
+    .note { color: var(--ink-3); font-size: 14px; margin-top: 12px; }
+    .err { color: var(--danger); margin-top: 14px; }
+    @media (max-width: 600px) { main section { padding: 40px 0; } .drop { padding: 20px; } }
+  </style>
+  <style>
+    .faq details { border-bottom: 1px solid var(--line); padding: 14px 0; max-width: 820px; }
+    .faq summary { cursor: pointer; font-weight: 600; color: var(--ink); }
+    .faq p { color: var(--ink-2); margin: 10px 0 0; }
+    .chk-list { list-style: none; padding: 0; max-width: 820px; margin-top: 18px; }
+    .chk-list li { border-bottom: 1px solid var(--line); padding: 12px 0; }
+    .chk-list label { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; color: var(--ink-2); }
+    .chk-list input { margin-top: 5px; width: 18px; height: 18px; accent-color: var(--accent); flex: none; }
+    .score { margin-top: 18px; font-size: 18px; color: var(--ink); }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What is COR in BC construction?", "acceptedAnswer": { "@type": "Answer", "text": "COR (Certificate of Recognition) verifies that an employer has a fully implemented health and safety management system that meets national standards. WorkSafeBC issues it, and the BC Construction Safety Alliance (BCCSA) administers the program as the certifying partner for BC construction." } },
+      { "@type": "Question", "name": "Is COR mandatory?", "acceptedAnswer": { "@type": "Answer", "text": "No. COR is voluntary, but some general contractors require it as a bid prequalification, so for many contractors it decides which work they can bid on." } },
+      { "@type": "Question", "name": "What is the difference between Small COR and Large COR?", "acceptedAnswer": { "@type": "Answer", "text": "Per BCCSA, Small COR is for companies with 19 or fewer employees and Large COR is for companies with 20 or more." } },
+      { "@type": "Question", "name": "How often are COR audits?", "acceptedAnswer": { "@type": "Answer", "text": "One audit per calendar year over a three-year cycle: a certification or recertification audit in year one, then maintenance audits in years two and three." } },
+      { "@type": "Question", "name": "What score passes a COR audit?", "acceptedAnswer": { "@type": "Answer", "text": "BCCSA states a minimum of 80% overall and at least 50% in each element." } },
+      { "@type": "Question", "name": "Is there a financial incentive?", "acceptedAnswer": { "@type": "Answer", "text": "Certified employers may receive 10% in annual incentive payments from WorkSafeBC, unless an exception applies, such as convictions or unpaid payroll, per BCCSA." } }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9R5SHY2LD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-M9R5SHY2LD');
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/"><img src="logo.svg" alt="" />Aevon</a>
+    <div class="navr">
+      <a href="#checklist">Readiness checklist</a>
+      <a href="cadre.html">Cadre</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section>
+  <div class="wrap">
+    <span class="lbl">BC construction · COR</span>
+    <h1>COR certification tracking for BC construction</h1>
+    <p class="sub">A COR audit happens every year, and the training and certification records behind it are the part that slips between audits: tickets expire, crews change, new hires start before their orientation is written down. This page has a free readiness checklist for those records and the COR facts that matter, taken from BCCSA.</p>
+    <div class="dl">
+      <a class="btn btn-primary" href="#checklist">Run the readiness checklist</a>
+      <a class="btn btn-ghost" href="training-matrix-template.html">Free training matrix template</a>
+    </div>
+  </div>
+</section>
+
+<section id="checklist">
+  <div class="wrap">
+    <h2>Training and certification records: readiness checklist</h2>
+    <p class="sub">Our own working checklist for the records side of COR, not the official audit tool. Use BCCSA's audit documents and your auditor for the real thing. Tick what is true today.</p>
+    <ul class="chk-list" id="chk">
+      <li><label><input type="checkbox" /> Every worker on payroll is also in your training records, with role and start date.</label></li>
+      <li><label><input type="checkbox" /> Each role has a defined list of the tickets and training it needs.</label></li>
+      <li><label><input type="checkbox" /> Every certification is recorded with an issue date and an expiry date, not just "current".</label></li>
+      <li><label><input type="checkbox" /> You can see at a glance what has expired and what expires in the next 30, 60 and 90 days.</label></li>
+      <li><label><input type="checkbox" /> Someone owns updating the record when a ticket is renewed, and it happens within a week.</label></li>
+      <li><label><input type="checkbox" /> New-worker orientation is recorded with the date and who delivered it.</label></li>
+      <li><label><input type="checkbox" /> In the seven compulsory trades, each worker's status (journeyperson, apprentice or trade qualifier) is recorded and crews stay within 2:1.</label></li>
+      <li><label><input type="checkbox" /> Records for workers who have left are kept, not deleted.</label></li>
+      <li><label><input type="checkbox" /> You can hand an auditor the records for a site or a role in minutes, not an afternoon.</label></li>
+      <li><label><input type="checkbox" /> The records live somewhere more than one person can reach, not in one person's spreadsheet.</label></li>
+    </ul>
+    <p class="score" id="score">0 of 10 in place.</p>
+    <p class="note" id="advice"></p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <h2>COR in BC, in short</h2>
+    <div class="faq">
+      <details><summary>What is COR in BC construction?</summary><p>COR (Certificate of Recognition) verifies that an employer has a fully implemented health and safety management system that meets national standards. WorkSafeBC issues it, and the BC Construction Safety Alliance (BCCSA) administers the program as the certifying partner for BC construction.</p></details>
+      <details><summary>Is COR mandatory?</summary><p>No. COR is voluntary, but some general contractors require it as a bid prequalification, so for many contractors it decides which work they can bid on.</p></details>
+      <details><summary>What is the difference between Small COR and Large COR?</summary><p>Per BCCSA, Small COR is for companies with 19 or fewer employees and Large COR is for companies with 20 or more.</p></details>
+      <details><summary>How often are COR audits?</summary><p>One audit per calendar year over a three-year cycle: a certification or recertification audit in year one, then maintenance audits in years two and three.</p></details>
+      <details><summary>What score passes a COR audit?</summary><p>BCCSA states a minimum of 80% overall and at least 50% in each element.</p></details>
+      <details><summary>Is there a financial incentive?</summary><p>Certified employers may receive 10% in annual incentive payments from WorkSafeBC, unless an exception applies, such as convictions or unpaid payroll, per BCCSA.</p></details>
+    </div>
+    <p class="note">Source: BCCSA, <a href="https://www.bccsa.ca/cor_faqs.php" target="_blank" rel="noopener">COR FAQs</a>. Contact BCCSA's COR program for current requirements. This page is a working aid, not official guidance.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Related free tools</h2>
+    <p class="sub"><a href="skilled-trades-certification-checker.html">Skilled Trades Certification checker</a>: upload a crew list and find unregistered workers and crews over the 2:1 apprentice ratio. <a href="training-matrix-template.html">Training matrix template</a>: an Excel matrix that colours expired and expiring tickets.</p>
+    <p class="sub" style="margin-top:14px"><a href="cadre.html">Cadre</a> keeps each worker's certifications on their employee record, warns the worker and their supervisor before anything lapses, and exports who is current for an auditor. It is built to sync the roster from the HR or payroll system you already run, so nobody retypes the staff list.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>Made by <a href="/">Aevon</a> · Canada</div>
+    <div style="display:flex;gap:22px;flex-wrap:wrap">
+      <a href="cadre.html">Cadre</a>
+      <a href="mailto:hello@aevon.ca">hello@aevon.ca</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var boxes = document.querySelectorAll('#chk input');
+  function update() {
+    var n = 0; boxes.forEach(function (b) { if (b.checked) n++; });
+    document.getElementById('score').textContent = n + ' of ' + boxes.length + ' in place.';
+    document.getElementById('advice').textContent =
+      n === boxes.length ? 'Your records side looks ready. The audit covers far more than records, so check the full BCCSA audit tool too.'
+      : n >= 7 ? 'Close. The unticked items are the ones an auditor is most likely to ask about first.'
+      : n > 0 ? 'Start with expiry dates and the payroll match. Those two make every other item easier.'
+      : '';
+    if (window.gtag && n > 0) gtag('event', 'cor_checklist', { ticked: n });
+  }
+  boxes.forEach(function (b) { b.addEventListener('change', update); });
+})();
+</script>
+</body>
+</html>
