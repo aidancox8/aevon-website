@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BC Skilled Trades Certification Checker | Aevon</title>
+  <meta name="description" content="Free checker for BC contractors: upload a crew list to see who isn't registered for a compulsory trade and which crews break the 2:1 apprentice ratio." />
+  <link rel="canonical" href="https://aevon.ca/skilled-trades-certification-checker.html" />
+  <!-- noindex until reviewed; flip to "index, follow" and add to sitemap.xml when approved -->
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#0C0E0D" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aevon.ca/skilled-trades-certification-checker.html" />
+  <meta property="og:site_name" content="Aevon" />
+  <meta property="og:title" content="BC Skilled Trades Certification Checker" />
+  <meta property="og:description" content="Upload a crew list, see unregistered workers in compulsory trades and crews over the 2:1 apprentice ratio. Free, read in your browser." />
+  <meta property="og:locale" content="en_CA" />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css?v=3" />
+  <style>
+    nav { position: static; border-bottom: 1px solid var(--line); }
+    main section { padding: 56px 0; }
+    main section + section { border-top: 1px solid var(--line); }
+    h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.1; margin: 14px 0 12px; }
+    .sub { max-width: 640px; }
+    .dl { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-top: 26px; }
+    .meta { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+    .legend { display: flex; gap: 18px; flex-wrap: wrap; margin: 18px 0 0; padding: 0; list-style: none; }
+    .legend li { display: flex; align-items: center; gap: 8px; color: var(--ink-2); }
+    .sw { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+    ol.use { color: var(--ink-2); max-width: 720px; padding-left: 20px; line-height: 1.7; }
+    .drop { margin-top: 20px; border: 1px dashed var(--line-2); border-radius: var(--radius); padding: 28px; text-align: center; color: var(--ink-2); cursor: pointer; }
+    .drop.over { border-color: var(--accent); background: var(--surface); }
+    .drop input { display: none; }
+    .counts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 22px; }
+    .counts div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+    .counts b { display: block; font-size: 28px; color: var(--ink); }
+    .tbl-wrap { overflow-x: auto; margin-top: 18px; }
+    table { border-collapse: collapse; width: 100%; font-size: 15px; }
+    th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    th { color: var(--ink-3); font-weight: 500; }
+    .st { font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; padding: 3px 7px; border-radius: 3px; }
+    .st-x { background: rgba(227,150,138,.18); color: var(--danger); }
+    .st-30 { background: rgba(240,180,90,.16); color: #E9B866; }
+    .st-90 { background: rgba(240,220,120,.12); color: #E5D58A; }
+    .note { color: var(--ink-3); font-size: 14px; margin-top: 12px; }
+    .err { color: var(--danger); margin-top: 14px; }
+    @media (max-width: 600px) { main section { padding: 40px 0; } .drop { padding: 20px; } }
+  </style>
+  <style>
+    .faq details { border-bottom: 1px solid var(--line); padding: 14px 0; max-width: 820px; }
+    .faq summary { cursor: pointer; font-weight: 600; color: var(--ink); }
+    .faq p { color: var(--ink-2); margin: 10px 0 0; }
+    h3 { font-size: 18px; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Which trades are compulsory under BC Skilled Trades Certification?", "acceptedAnswer": { "@type": "Answer", "text": "Seven: Construction Electrician, Industrial Electrician, Powerline Technician, Steamfitter/Pipefitter, Refrigeration and Air Conditioning Mechanic, Gasfitter Class A and Class B, and Sheet Metal Worker. SkilledTradesBC lists Mobile Crane Operator and Tower Crane Operator as taking effect July 5, 2027." } },
+      { "@type": "Question", "name": "Who can legally do work in a compulsory trade?", "acceptedAnswer": { "@type": "Answer", "text": "A certified journeyperson, a registered apprentice working under the supervision of a certified journeyperson, or a SkilledTradesBC designated Trade Qualifier or Uncertified Experienced Worker." } },
+      { "@type": "Question", "name": "What is the apprentice supervision ratio?", "acceptedAnswer": { "@type": "Answer", "text": "SkilledTradesBC sets a maximum supervision ratio of two apprentices to every one journeyperson (2:1)." } },
+      { "@type": "Question", "name": "What do employers have to do?", "acceptedAnswer": { "@type": "Answer", "text": "Verify that workers in compulsory trades are registered apprentices, trade qualifiers or certified journeypersons, keep documentation of their qualifications, keep within the 2:1 supervision ratio, and complete the Employer Workforce Submission in the SkilledTradesBC Portal." } },
+      { "@type": "Question", "name": "How is it enforced?", "acceptedAnswer": { "@type": "Answer", "text": "SkilledTradesBC randomly selects employers for on-premises spot checks, reviewing records such as redacted payroll and certifications, and uses a graduated approach of remediation action plans, written warnings, compliance orders and administrative monetary penalties." } },
+      { "@type": "Question", "name": "Does this checker send my crew list anywhere?", "acceptedAnswer": { "@type": "Answer", "text": "No. The file is read in your browser and never uploaded. It is a working aid, not legal advice; SkilledTradesBC's requirements are the authority." } }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9R5SHY2LD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-M9R5SHY2LD');
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/"><img src="logo.svg" alt="" />Aevon</a>
+    <div class="navr">
+      <a href="#check">Check your crew</a>
+      <a href="cadre.html">Cadre</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section>
+  <div class="wrap">
+    <span class="lbl">Free checker · BC contractors</span>
+    <h1>Skilled Trades Certification checker for BC contractors</h1>
+    <p class="sub">In BC's seven compulsory trades, every worker has to be a certified journeyperson, a registered apprentice or an approved trade qualifier, and apprentices can't outnumber journeypersons more than two to one. Upload your crew list to see who isn't registered and which crews are over the ratio. No email, no signup.</p>
+    <div class="dl">
+      <a class="btn btn-primary" href="#check">Check a crew list</a>
+      <a class="btn btn-ghost" href="files/stc-crew-list-template.xlsx" download onclick="window.gtag && gtag('event','stc_template_download')">Download the crew list template (.xlsx)</a>
+    </div>
+  </div>
+</section>
+
+<section id="check">
+  <div class="wrap">
+    <h2>Check a crew list</h2>
+    <p class="sub">Use the template, or any sheet with columns for name, trade, status and crew or site. The file is read in your browser and never uploaded.</p>
+    <label class="drop" id="drop">
+      <input type="file" id="file" accept=".xlsx,.xls,.csv" />
+      <span id="dropText">Choose a file or drop it here (.xlsx or .csv)</span>
+    </label>
+    <div id="out" hidden>
+      <div class="counts" id="counts"></div>
+      <h3 style="margin-top:28px">Workers who can't do compulsory-trade work as listed</h3>
+      <div class="tbl-wrap"><table id="tblW"><thead><tr><th>Worker</th><th>Trade</th><th>Status on your list</th><th>Crew or site</th></tr></thead><tbody></tbody></table></div>
+      <h3 style="margin-top:28px">Crews over the 2:1 apprentice ratio</h3>
+      <div class="tbl-wrap"><table id="tblR"><thead><tr><th>Crew or site</th><th>Trade</th><th>Journeypersons</th><th>Apprentices</th><th>Apprentices allowed</th></tr></thead><tbody></tbody></table></div>
+      <p class="note" id="note"></p>
+    </div>
+    <p class="err" id="err" hidden></p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <h2>The rules, in short</h2>
+    <div class="faq">
+      <details><summary>Which trades are compulsory under BC Skilled Trades Certification?</summary><p>Seven: Construction Electrician, Industrial Electrician, Powerline Technician, Steamfitter/Pipefitter, Refrigeration and Air Conditioning Mechanic, Gasfitter Class A and Class B, and Sheet Metal Worker. SkilledTradesBC lists Mobile Crane Operator and Tower Crane Operator as taking effect July 5, 2027.</p></details>
+      <details><summary>Who can legally do work in a compulsory trade?</summary><p>A certified journeyperson, a registered apprentice working under the supervision of a certified journeyperson, or a SkilledTradesBC designated Trade Qualifier or Uncertified Experienced Worker.</p></details>
+      <details><summary>What is the apprentice supervision ratio?</summary><p>SkilledTradesBC sets a maximum supervision ratio of two apprentices to every one journeyperson (2:1).</p></details>
+      <details><summary>What do employers have to do?</summary><p>Verify that workers in compulsory trades are registered apprentices, trade qualifiers or certified journeypersons, keep documentation of their qualifications, keep within the 2:1 supervision ratio, and complete the Employer Workforce Submission in the SkilledTradesBC Portal.</p></details>
+      <details><summary>How is it enforced?</summary><p>SkilledTradesBC randomly selects employers for on-premises spot checks, reviewing records such as redacted payroll and certifications, and uses a graduated approach of remediation action plans, written warnings, compliance orders and administrative monetary penalties.</p></details>
+      <details><summary>Does this checker send my crew list anywhere?</summary><p>No. The file is read in your browser and never uploaded. It is a working aid, not legal advice; SkilledTradesBC's requirements are the authority.</p></details>
+    </div>
+    <p class="note">Sources: SkilledTradesBC, <a href="https://skilledtradesbc.ca/skilledtradescertification" target="_blank" rel="noopener">Skilled Trades Certification</a> and <a href="https://skilledtradesbc.ca/stc-compliance" target="_blank" rel="noopener">compliance and enforcement</a>. This page is a working aid, not legal advice.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Checking it once is easy. Keeping it true is the job.</h2>
+    <p class="sub">Apprentices finish, tickets lapse and crews change every week. <a href="cadre.html">Cadre</a> keeps each worker's certifications on their employee record and warns before anything lapses. If you want to hear when Cadre checks trade status and the 2:1 ratio for you, email <a href="mailto:hello@aevon.ca?subject=Skilled%20Trades%20Certification">hello@aevon.ca</a>.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>Made by <a href="/">Aevon</a> · Canada</div>
+    <div style="display:flex;gap:22px;flex-wrap:wrap">
+      <a href="cadre.html">Cadre</a>
+      <a href="mailto:hello@aevon.ca">hello@aevon.ca</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" defer></script>
+<script>
+(function () {
+  var drop = document.getElementById('drop'), input = document.getElementById('file');
+  var out = document.getElementById('out'), err = document.getElementById('err');
+  // Order matters: Class B before the generic gasfitter match.
+  var COMPULSORY = [
+    [/construction electrician/i, 'Construction Electrician'], [/industrial electrician/i, 'Industrial Electrician'],
+    [/powerline/i, 'Powerline Technician'], [/steamfitter|pipefitter/i, 'Steamfitter/Pipefitter'],
+    [/refrigeration|air conditioning/i, 'Refrigeration and Air Conditioning Mechanic'],
+    [/gas ?fitter.*(class )?b\b/i, 'Gasfitter Class B'], [/gas ?fitter/i, 'Gasfitter Class A'],
+    [/sheet ?metal/i, 'Sheet Metal Worker'], [/^electrician$/i, 'Construction Electrician']
+  ];
+  function tradeOf(t) {
+    t = String(t || '').trim();
+    if (/other|not compulsory/i.test(t)) return null;
+    for (var i = 0; i < COMPULSORY.length; i++) if (COMPULSORY[i][0].test(t)) return COMPULSORY[i][1];
+    return null;
+  }
+  // 'jp' journeyperson, 'tq' trade qualifier / uncertified experienced worker, 'ap' apprentice, 'none'.
+  function statusOf(s) {
+    s = String(s || '').toLowerCase();
+    if (/not registered|unregistered|^\s*none\s*$|no status/.test(s)) return 'none';
+    if (/qualifier|\btq\b|uncertified experienced/.test(s)) return 'tq';
+    if (/journey|certified|red seal|\bjp\b/.test(s)) return 'jp';
+    if (/apprentice|\bapp\b/.test(s)) return 'ap';
+    return 'none';
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function fail(m) { out.hidden = true; err.hidden = false; err.textContent = m; }
+  function col(head, re) { for (var i = 0; i < head.length; i++) if (re.test(head[i])) return i; return -1; }
+
+  function analyse(rows) {
+    if (!rows.length) return fail('That sheet looks empty.');
+    var head = rows[0].map(function (h) { return String(h == null ? '' : h).trim().toLowerCase(); });
+    var cN = col(head, /name|worker|employee/), cT = col(head, /trade/), cS = col(head, /status|cert|registration/), cC = col(head, /crew|site|job|project/);
+    if (cN < 0 || cT < 0 || cS < 0) return fail('Could not find Name, Trade and Status columns. The template has the expected headings.');
+    var bad = [], groups = {}, total = 0, inScope = 0;
+    for (var r = 1; r < rows.length; r++) {
+      var row = rows[r] || [], name = String(row[cN] == null ? '' : row[cN]).trim();
+      if (!name || /^example:/i.test(name)) continue;
+      total++;
+      var trade = tradeOf(row[cT]);
+      if (!trade) continue;
+      inScope++;
+      var raw = String(row[cS] == null ? '' : row[cS]);
+      var st = statusOf(raw);
+      var crew = cC >= 0 ? (String(row[cC] == null ? '' : row[cC]).trim() || '(no crew given)') : '(whole list)';
+      if (st === 'none') bad.push({ name: name, trade: trade, status: raw, crew: crew });
+      var k = crew + '||' + trade;
+      groups[k] = groups[k] || { crew: crew, trade: trade, jp: 0, ap: 0 };
+      if (st === 'jp' || st === 'tq') groups[k].jp++; else if (st === 'ap') groups[k].ap++;
+    }
+    if (!total) return fail('No workers found. Rows starting with "Example:" are skipped.');
+    var over = Object.keys(groups).map(function (k) { return groups[k]; }).filter(function (g) { return g.ap > 2 * g.jp; });
+    document.getElementById('counts').innerHTML =
+      '<div><b>' + inScope + '</b>workers in compulsory trades</div>' +
+      '<div><b>' + bad.length + '</b>not registered or status unclear</div>' +
+      '<div><b>' + over.length + '</b>crews over the 2:1 ratio</div>' +
+      '<div><b>' + total + '</b>workers checked</div>';
+    document.querySelector('#tblW tbody').innerHTML = bad.map(function (b) {
+      return '<tr><td>' + esc(b.name) + '</td><td>' + esc(b.trade) + '</td><td>' + esc(b.status || '(blank)') + '</td><td>' + esc(b.crew) + '</td></tr>';
+    }).join('') || '<tr><td colspan="4">None found.</td></tr>';
+    document.querySelector('#tblR tbody').innerHTML = over.map(function (g) {
+      return '<tr><td>' + esc(g.crew) + '</td><td>' + esc(g.trade) + '</td><td>' + g.jp + '</td><td>' + g.ap + '</td><td>' + (2 * g.jp) + '</td></tr>';
+    }).join('') || '<tr><td colspan="5">None found.</td></tr>';
+    document.getElementById('note').textContent = 'The ratio is counted per crew and trade. Trade qualifiers are counted with journeypersons; whether a given qualifier may supervise depends on their authorization, so check those cases. Rows starting with "Example:" were skipped.';
+    err.hidden = true; out.hidden = false;
+    if (window.gtag) gtag('event', 'stc_checked', { workers: total });
+  }
+  function read(file) {
+    if (!file) return;
+    if (!window.XLSX) return fail('The reader is still loading. Try again in a second.');
+    var fr = new FileReader();
+    fr.onload = function (e) {
+      try {
+        var wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array' });
+        analyse(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, raw: false, defval: null }));
+      } catch (ex) { fail('Could not read that file. Is it an .xlsx or .csv?'); }
+    };
+    fr.readAsArrayBuffer(file);
+    document.getElementById('dropText').textContent = file.name;
+  }
+  input.addEventListener('change', function () { read(input.files[0]); });
+  ['dragenter', 'dragover'].forEach(function (t) { drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave', 'drop'].forEach(function (t) { drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop', function (e) { read(e.dataTransfer.files[0]); });
+})();
+</script>
+</body>
+</html>
