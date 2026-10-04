@@ -9,6 +9,7 @@ Cadre keeps every employee certification (forklift, first aid, fall protection, 
 - [Cadre](https://aevon.ca/cadre.html): what Cadre does, pricing model, and questions answered
 - [Training matrix template](https://aevon.ca/training-matrix-template.html): free Excel training matrix with expiry colours, and an in-browser checker for a filled-in file
 - [BC Skilled Trades Certification checker](https://aevon.ca/skilled-trades-certification-checker.html): free checker for BC contractors; upload a crew list to find workers not registered in a compulsory trade and crews over the 2:1 apprentice ratio
+- [COR certification tracking](https://aevon.ca/cor-certification-tracking.html): BC construction COR facts and a free readiness checklist for training and certification records
 - [Live demo](https://cadre-demo.web.app/dashboard): the real product with a sample company loaded, no signup
 - [Privacy](https://aevon.ca/privacy.html)
 
