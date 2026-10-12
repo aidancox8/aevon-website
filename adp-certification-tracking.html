@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ADP Certification Tracking | Cadre by Aevon</title>
-  <meta name="description" content="Track employee certifications against your ADP staff list. Cadre's ADP sync is in pilot: new hires, changes and leavers flow from ADP, so nobody retypes the roster." />
+  <meta name="description" content="Track employee certifications against your ADP staff list. Cadre's ADP sync is built and looking for its first pilot: new hires, changes and leavers flow from ADP, so nobody retypes the roster." />
   <link rel="canonical" href="https://aevon.ca/adp-certification-tracking.html" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0C0E0D" />
@@ -12,7 +12,7 @@
   <meta property="og:url" content="https://aevon.ca/adp-certification-tracking.html" />
   <meta property="og:site_name" content="Aevon" />
   <meta property="og:title" content="ADP Certification Tracking" />
-  <meta property="og:description" content="Certification and training tracking with an ADP staff-list sync, now in pilot." />
+  <meta property="og:description" content="Certification and training tracking with an ADP staff-list sync, looking for its first pilot." />
   <meta property="og:locale" content="en_CA" />
   <link rel="icon" type="image/svg+xml" href="logo.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -42,8 +42,8 @@
       { "@type": "Question", "name": "Does Cadre replace ADP?", "acceptedAnswer": { "@type": "Answer", "text": "No. ADP stays your payroll and staff list. Cadre reads it and adds certification, training and compliance tracking on top, so nobody retypes employees into a second system." } },
       { "@type": "Question", "name": "What does Cadre read from ADP?", "acceptedAnswer": { "@type": "Answer", "text": "Each employee's name, work email, job title, department, hire date and employment status. Cadre does not change anything in ADP." } },
       { "@type": "Question", "name": "What happens when someone leaves?", "acceptedAnswer": { "@type": "Answer", "text": "When ADP shows them as terminated, Cadre marks them as left on the next sync, so they stop getting renewal reminders and drop off the current list. Nobody is deleted." } },
-      { "@type": "Question", "name": "How do I connect it?", "acceptedAnswer": { "@type": "Answer", "text": "The ADP integration is in pilot. Pilot customers connect it in Cadre under Settings, then Integrations: choose ADP, approve the connection, and Cadre shows a preview of every change before anything is applied." } },
-      { "@type": "Question", "name": "Is the ADP sync proven in production?", "acceptedAnswer": { "@type": "Answer", "text": "Not yet. The ADP connection is in pilot with early customers and has not run against a live ADP account. Ask about joining the pilot." } },
+      { "@type": "Question", "name": "How do I connect it?", "acceptedAnswer": { "@type": "Answer", "text": "It needs ADP API Central, a paid add-on sold by ADP. Your ADP administrator creates a project there and issues a client ID, secret and certificate, which go into Cadre under Settings, then Integrations, then ADP. Cadre shows a preview of every change before anything is applied." } },
+      { "@type": "Question", "name": "Is the ADP sync proven in production?", "acceptedAnswer": { "@type": "Answer", "text": "Not yet. The ADP connection is built but has not run against a live ADP account, and no customer uses it yet. Ask about joining the pilot." } },
       { "@type": "Question", "name": "Do I need to change how I run payroll?", "acceptedAnswer": { "@type": "Answer", "text": "No. Payroll keeps running exactly as it does today. Cadre only reads the staff list; it never touches pay, tax or banking data." } }
     ]
   }
@@ -74,7 +74,7 @@
     <span class="lbl">Cadre integration · ADP</span>
     <h1>Certification tracking for ADP</h1>
     <p class="sub">ADP knows who works for you. It doesn't track whether each person's forklift ticket, first aid or fall protection is still current. Cadre adds that, and its ADP sync keeps the staff list matched to ADP so new hires, changes and leavers show up without anyone retyping them.</p>
-    <p class="sub" style="margin-top:12px"><strong>Pilot:</strong> the ADP connection is being tested with early customers and has not yet run against a live ADP account. <a href="mailto:hello@aevon.ca?subject=Cadre%20ADP%20pilot">Ask about joining the pilot</a>.</p>
+    <p class="sub" style="margin-top:12px"><strong>Pilot:</strong> the ADP connection is built but has not yet run against a live ADP account, and no customer uses it yet. It needs ADP API Central, a paid ADP add-on. <a href="mailto:hello@aevon.ca?subject=Cadre%20ADP%20pilot">Ask about joining the pilot</a>.</p>
     <div class="dl">
       <a class="btn btn-primary" href="mailto:hello@aevon.ca?subject=Cadre%20with%20ADP">Ask about Cadre with ADP</a>
       <a class="btn btn-ghost" href="https://cadre-demo.web.app/settings/integrations" target="_blank" rel="noopener">Open the live demo</a>
@@ -98,17 +98,18 @@
 <section>
   <div class="wrap">
     <h2>Why this matters for certification tracking</h2>
-    <p class="sub">Most expired tickets are not a training problem. They are a roster problem: the new hire who started before anyone added them to the tracking sheet, the transfer whose old tickets nobody checked, the leaver still getting reminders. When the staff list comes from ADP instead of a second spreadsheet, those three gaps close by themselves, and what is left is just booking the renewals on time.</p>
+    <p class="sub">A lot of expired tickets are not a training problem. They are a roster problem: the new hire who started before anyone added them to the tracking sheet, the transfer whose old tickets nobody checked, the leaver still getting reminders. When the staff list comes from ADP instead of a second spreadsheet, those three gaps close by themselves, and what is left is just booking the renewals on time.</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
     <h2>Connecting it</h2>
-    <p class="sub">The ADP integration is in pilot and not yet generally available. Pilot customers connect it like this:</p>
+    <p class="sub">The ADP integration is looking for its first pilot. Connecting it takes:</p>
     <ol class="use" style="color:var(--ink-2);max-width:780px;line-height:1.7">
-      <li>In Cadre, open Settings, then Integrations.</li>
-      <li>Choose ADP and approve the connection.</li>
+      <li>ADP API Central on your ADP account (a paid add-on from ADP).</li>
+      <li>Your ADP administrator creates a project there and issues a client ID, secret and certificate.</li>
+      <li>In Cadre, open Settings, then Integrations, then ADP, and enter them.</li>
       <li>Press Preview, check the list of changes, then Apply.</li>
     </ol>
   </div>
@@ -121,8 +122,8 @@
       <details><summary>Does Cadre replace ADP?</summary><p>No. ADP stays your payroll and staff list. Cadre reads it and adds certification, training and compliance tracking on top, so nobody retypes employees into a second system.</p></details>
       <details><summary>What does Cadre read from ADP?</summary><p>Each employee's name, work email, job title, department, hire date and employment status. Cadre does not change anything in ADP.</p></details>
       <details><summary>What happens when someone leaves?</summary><p>When ADP shows them as terminated, Cadre marks them as left on the next sync, so they stop getting renewal reminders and drop off the current list. Nobody is deleted.</p></details>
-      <details><summary>How do I connect it?</summary><p>The ADP integration is in pilot. Pilot customers connect it in Cadre under Settings, then Integrations: choose ADP, approve the connection, and Cadre shows a preview of every change before anything is applied.</p></details>
-      <details><summary>Is the ADP sync proven in production?</summary><p>Not yet. The ADP connection is in pilot with early customers and has not run against a live ADP account. <a href="mailto:hello@aevon.ca?subject=Cadre%20ADP%20pilot">Ask about joining the pilot</a>.</p></details>
+      <details><summary>How do I connect it?</summary><p>It needs ADP API Central, a paid add-on sold by ADP. Your ADP administrator creates a project there and issues a client ID, secret and certificate, which go into Cadre under Settings, then Integrations, then ADP. Cadre shows a preview of every change before anything is applied.</p></details>
+      <details><summary>Is the ADP sync proven in production?</summary><p>Not yet. The ADP connection is built but has not run against a live ADP account, and no customer uses it yet. <a href="mailto:hello@aevon.ca?subject=Cadre%20ADP%20pilot">Ask about joining the pilot</a>.</p></details>
       <details><summary>Do I need to change how I run payroll?</summary><p>No. Payroll keeps running exactly as it does today. Cadre only reads the staff list; it never touches pay, tax or banking data.</p></details>
     </div>
   </div>
