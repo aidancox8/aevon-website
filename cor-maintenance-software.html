@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Software to Maintain COR Certification | Aevon</title>
+  <meta name="description" content="COR is audited every year, but the work between audits is keeping training and certification records current. Free expiry calculator plus what maintenance software should do." />
+  <link rel="canonical" href="https://aevon.ca/cor-maintenance-software.html" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0C0E0D" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aevon.ca/cor-maintenance-software.html" />
+  <meta property="og:site_name" content="Aevon" />
+  <meta property="og:title" content="Software to Maintain COR Certification" />
+  <meta property="og:description" content="Keep the training and certification records behind COR current all year, not just at audit time. Free expiry calculator." />
+  <meta property="og:locale" content="en_CA" />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css?v=3" />
+  <style>
+    nav { position: static; border-bottom: 1px solid var(--line); }
+    main section { padding: 56px 0; }
+    main section + section { border-top: 1px solid var(--line); }
+    h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.1; margin: 14px 0 12px; }
+    .sub { max-width: 640px; }
+    .dl { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-top: 26px; }
+    .note { color: var(--ink-3); font-size: 14px; margin-top: 12px; }
+    .err { color: var(--danger); margin-top: 14px; }
+    ol.use, ul.use { color: var(--ink-2); max-width: 720px; padding-left: 20px; line-height: 1.7; }
+    ol.use li, ul.use li { margin-bottom: 6px; }
+    .calc { margin-top: 22px; max-width: 720px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+    .calc .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 14px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .04em; font-family: var(--f-mono); }
+    .field input, .field select {
+      background: var(--bg); border: 1px solid var(--line-2); color: var(--ink);
+      border-radius: var(--radius); padding: 10px 12px; font: inherit; font-size: 15px; min-width: 0;
+    }
+    .field input:focus, .field select:focus { outline: none; border-color: var(--accent); }
+    .result { margin-top: 6px; }
+    .result .big { font-size: 26px; color: var(--ink); font-weight: 700; }
+    .result ul { list-style: none; padding: 0; margin: 14px 0 0; }
+    .result li { padding: 8px 0; border-bottom: 1px solid var(--line); color: var(--ink-2); }
+    .result li b { color: var(--ink); }
+    @media (max-width: 600px) { main section { padding: 40px 0; } }
+  </style>
+  <style>
+    .faq details { border-bottom: 1px solid var(--line); padding: 14px 0; max-width: 820px; }
+    .faq summary { cursor: pointer; font-weight: 600; color: var(--ink); }
+    .faq p { color: var(--ink-2); margin: 10px 0 0; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Is there software that maintains COR certification?", "acceptedAnswer": { "@type": "Answer", "text": "Software cannot certify you; an auditor does that. What software can do is keep the training and certification records behind COR current all year, so the audit is a review rather than a scramble. That is the records side this page covers." } },
+      { "@type": "Question", "name": "Does records software replace the COR auditor?", "acceptedAnswer": { "@type": "Answer", "text": "No. The audit itself is done by a certified auditor against the BCCSA audit tool. Records software makes sure the evidence the auditor asks for exists and is easy to hand over." } },
+      { "@type": "Question", "name": "What records does COR maintenance come down to?", "acceptedAnswer": { "@type": "Answer", "text": "Which tickets each role needs, the issue and expiry date of every certificate, renewals booked before expiry, orientation records for new hires, and records kept for workers who have left. If those five are current, the records side of an audit is straightforward." } },
+      { "@type": "Question", "name": "How is this different from the COR readiness checklist?", "acceptedAnswer": { "@type": "Answer", "text": "The readiness checklist is a point-in-time check of where your records stand today. Maintenance software keeps them current continuously: expiry dates tracked, renewals reminded, leavers handled, exports ready on demand." } }
+    ]
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9R5SHY2LD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-M9R5SHY2LD');
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/"><img src="logo.svg" alt="" />Aevon</a>
+    <div class="navr">
+      <a href="#calculator">Expiry calculator</a>
+      <a href="cadre.html">Cadre</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section>
+  <div class="wrap">
+    <span class="lbl">BC construction · COR</span>
+    <h1>Software to maintain COR certification</h1>
+    <p class="sub">COR is audited every year, but nobody fails an audit in the audit. They fail in the eleven months before it: a ticket lapses, a new hire's orientation never gets written down, a leaver stays on the list. Maintaining COR is a records job, and records are what software is for. This page has a free expiry calculator and what maintenance software should actually do.</p>
+    <div class="dl">
+      <a class="btn btn-primary" href="#calculator">Calculate an expiry date</a>
+      <a class="btn btn-ghost" href="cor-certification-tracking.html">COR readiness checklist</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What slips between audits</h2>
+    <ul class="use">
+      <li><strong>Expiries nobody booked.</strong> The ticket lapsed before anyone noticed, because the only reminder was the date on the card in someone's wallet.</li>
+      <li><strong>New hires with no record.</strong> The person started, did the orientation, and nobody wrote it down. At audit time there is no evidence it happened.</li>
+      <li><strong>Leavers still on the list.</strong> The crew list says 40 people and payroll says 34. An auditor notices the gap before you do.</li>
+      <li><strong>Renewals that were never filed.</strong> The course was taken and the new card exists, but the record still shows the old expiry.</li>
+    </ul>
+    <p class="note">Four failure modes, and every one of them is a system problem, not a people problem. That is why a checklist helps once and software helps all year.</p>
+  </div>
+</section>
+
+<section id="calculator">
+  <div class="wrap">
+    <h2>Certification expiry calculator</h2>
+    <p class="sub">Enter when the certificate was issued and how long it is valid for. You get the expiry date and the dates to start booking the renewal. Nothing is uploaded.</p>
+    <div class="calc">
+      <div class="row">
+        <div class="field">
+          <label for="cname">Certification (optional)</label>
+          <input id="cname" type="text" placeholder="e.g. Fall protection" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="issued">Issue date</label>
+          <input id="issued" type="date" />
+        </div>
+        <div class="field">
+          <label for="validN">Valid for</label>
+          <input id="validN" type="number" min="1" max="120" value="3" style="width:90px" />
+        </div>
+        <div class="field">
+          <label for="validU">&nbsp;</label>
+          <select id="validU">
+            <option value="years" selected>years</option>
+            <option value="months">months</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>&nbsp;</label>
+          <button class="btn btn-primary" id="calcBtn" type="button">Calculate</button>
+        </div>
+      </div>
+      <p class="err" id="cerr" hidden></p>
+      <div class="result" id="cresult" hidden>
+        <div class="big" id="expiryOut"></div>
+        <ul id="remindOut"></ul>
+        <p class="note" id="daysOut"></p>
+      </div>
+    </div>
+    <p class="note">Use the validity period printed on the certificate or set by the issuer, not a rule of thumb. If a ticket has no expiry, this calculator does not apply to it.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What the software should do</h2>
+    <p class="sub">If you are comparing options for keeping COR records current, these are the five things that matter. In that order.</p>
+    <ol class="use">
+      <li><strong>Every certificate carries a real expiry date.</strong> Issue date, renewal period, expiry, per person and per ticket. Not a text field somebody types "current" into.</li>
+      <li><strong>It reminds people before the date, not after.</strong> The worker first, then their supervisor, with enough time left to book the course.</li>
+      <li><strong>The roster matches reality.</strong> New hires appear, leavers are marked as left, and nobody has to retype the staff list into a second system. <a href="cadre.html">Cadre</a> syncs the roster from the HR or payroll system you already run.</li>
+      <li><strong>Renewing closes the loop.</strong> The training record and the certification are the same record, so completing the course clears the reminder instead of creating a second entry to reconcile.</li>
+      <li><strong>An auditor gets an export, not an afternoon.</strong> Who is current, filtered by ticket, status or department, as a CSV, on demand.</li>
+    </ol>
+    <p class="sub" style="margin-top:18px"><a href="https://cadre-demo.web.app/dashboard" target="_blank" rel="noopener">Open the live demo</a> to see the renewals screen an auditor would be shown: expired first, then 30, 60 and 90 days, filterable and exportable. No signup.</p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <h2>Questions</h2>
+    <div class="faq">
+      <details><summary>Is there software that maintains COR certification?</summary><p>Software cannot certify you; an auditor does that. What software can do is keep the training and certification records behind COR current all year, so the audit is a review rather than a scramble. That is the records side this page covers.</p></details>
+      <details><summary>Does records software replace the COR auditor?</summary><p>No. The audit itself is done by a certified auditor against the BCCSA audit tool. Records software makes sure the evidence the auditor asks for exists and is easy to hand over.</p></details>
+      <details><summary>What records does COR maintenance come down to?</summary><p>Which tickets each role needs, the issue and expiry date of every certificate, renewals booked before expiry, orientation records for new hires, and records kept for workers who have left. If those five are current, the records side of an audit is straightforward.</p></details>
+      <details><summary>How is this different from the COR readiness checklist?</summary><p>The <a href="cor-certification-tracking.html">readiness checklist</a> is a point-in-time check of where your records stand today. Maintenance software keeps them current continuously: expiry dates tracked, renewals reminded, leavers handled, exports ready on demand.</p></details>
+    </div>
+    <p class="note">COR facts: BCCSA. This page is a working aid, not official guidance.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Related free tools</h2>
+    <p class="sub"><a href="cor-certification-tracking.html">COR readiness checklist</a>: the ten-point records check. <a href="construction-training-matrix.html">Construction training matrix builder</a>: the crew grid behind the records. <a href="training-matrix-template.html">Training matrix template</a>: the same idea as an Excel download.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>Made by <a href="/">Aevon</a> · Canada</div>
+    <div style="display:flex;gap:22px;flex-wrap:wrap">
+      <a href="cadre.html">Cadre</a>
+      <a href="mailto:hello@aevon.ca">hello@aevon.ca</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var DAY = 864e5;
+  function parseDate(v) {
+    var d = new Date(v + 'T00:00:00');
+    return isNaN(d.getTime()) ? null : d;
+  }
+  function fmt(d) {
+    return d.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+  function addMonths(d, m) {
+    var n = new Date(d.getTime());
+    n.setMonth(n.getMonth() + m);
+    return n;
+  }
+  function fail(msg) {
+    var e = document.getElementById('cerr');
+    e.hidden = false; e.textContent = msg;
+    document.getElementById('cresult').hidden = true;
+  }
+  document.getElementById('calcBtn').addEventListener('click', function () {
+    document.getElementById('cerr').hidden = true;
+    var name = document.getElementById('cname').value.trim();
+    var issued = parseDate(document.getElementById('issued').value);
+    var n = parseInt(document.getElementById('validN').value, 10);
+    var unit = document.getElementById('validU').value;
+    if (!issued) return fail('Pick the issue date first.');
+    if (!n || n < 1) return fail('Enter how long the certificate is valid for.');
+    var months = unit === 'years' ? n * 12 : n;
+    var expiry = addMonths(issued, months);
+    var now = new Date(); now.setHours(0, 0, 0, 0);
+    var daysLeft = Math.round((expiry - now) / DAY);
+    document.getElementById('expiryOut').textContent =
+      (name ? name + ' expires ' : 'Expiry date: ') + fmt(expiry);
+    var items = [[90, 'Start booking the renewal'], [60, 'Renewal should be scheduled'], [30, 'Last call: book it now']];
+    document.getElementById('remindOut').innerHTML = items.map(function (it) {
+      var rd = new Date(expiry.getTime() - it[0] * DAY);
+      return '<li><b>' + fmt(rd) + '</b>: ' + it[1] + ' (' + it[0] + ' days before expiry)</li>';
+    }).join('');
+    document.getElementById('daysOut').textContent = daysLeft < 0
+      ? 'That date is ' + (-daysLeft) + ' days in the past. If this is a real certificate, it has expired.'
+      : daysLeft === 0
+      ? 'That date is today.'
+      : 'That is ' + daysLeft + ' days from today.';
+    document.getElementById('cresult').hidden = false;
+    if (window.gtag) gtag('event', 'expiry_calculated');
+  });
+})();
+</script>
+</body>
+</html>
