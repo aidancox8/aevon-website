@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Automation for Medical Clinics | Aevon Health</title>
-  <meta name="description" content="Aevon builds automations on top of your EMR that handle the follow-up your front desk has no time for: unanswered referrals and empty short-notice slots. For clinics in BC and Ontario." />
+  <meta name="description" content="Aevon Health is building admin automation that connects to your clinic's EMR: a morning list of unanswered referrals, and texts that fill cancelled slots from your own waitlist. For clinics in BC and Ontario. In development." />
   <link rel="canonical" href="https://aevon.ca/health.html" />
   <!-- Pre-launch: kept out of search until the page is approved. Change to "index, follow" and add
        it to sitemap.xml and llms.txt when outreach starts. -->
@@ -15,7 +15,7 @@
   <meta property="og:url" content="https://aevon.ca/health.html" />
   <meta property="og:site_name" content="Aevon" />
   <meta property="og:title" content="Admin Automation for Medical Clinics | Aevon Health" />
-  <meta property="og:description" content="Automations on top of your EMR for the follow-up your front desk has no time for. For clinics in BC and Ontario." />
+  <meta property="og:description" content="In development: automation that connects to your EMR and handles unanswered referrals and cancelled slots. For clinics in BC and Ontario." />
   <meta property="og:locale" content="en_CA" />
   <meta name="twitter:card" content="summary" />
 
@@ -33,46 +33,167 @@
     gtag('config', 'G-M9R5SHY2LD');
   </script>
   <style>
-    /* Page-local pieces only. Everything else comes from site.css. */
-    .offers { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; margin-top: 36px; }
-    @media (max-width: 900px) { .offers { grid-template-columns: 1fr; } }
-    .offer { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 30px 30px 28px; }
-    .offer h3 { font-size: 22px; margin-top: 14px; }
-    .offer p { margin-top: 12px; color: var(--ink-2); }
-    .offer ul { margin: 16px 0 0; padding: 0; list-style: none; }
-    .offer li { padding: 9px 0; border-top: 1px solid var(--line); font-size: 15.5px; color: var(--ink-2); }
-    .roadmap { margin-top: 28px; color: var(--ink-3); font-size: 15px; max-width: 72ch; }
-    .emr { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 32px; }
-    @media (max-width: 760px) { .emr { grid-template-columns: 1fr; } }
-    .emr > div { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 20px 22px; }
-    .emr b { display: block; font-size: 18px; color: var(--ink); }
-    .emr span { font-size: 14.5px; color: var(--ink-3); }
-    /* Product illustration: built in HTML with sample data, because the product is in development
-       and there is no real screenshot to show yet. Labelled as an illustration on the page. */
-    .mock { padding: 6px 18px 14px; }
-    .mock-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 14px 0 12px; }
-    .mock-head b { font-size: 16px; color: var(--ink); }
-    .mock-head span { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-3); text-transform: uppercase; }
-    .mock-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 14px; padding: 12px 0; border-top: 1px solid var(--line); }
-    .mock-row b { font-size: 15px; font-weight: 600; color: var(--ink); }
-    .mock-row small { grid-column: 1; font-size: 13.5px; color: var(--ink-3); }
-    .mock-row em { grid-row: 1 / span 2; grid-column: 2; align-self: center; font-style: normal; font-family: var(--f-mono); font-size: 11.5px; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--ink-2); white-space: nowrap; }
-    .mock-row em.late { border-color: var(--danger); color: var(--danger); }
-    .mock-foot { border-top: 1px solid var(--line); padding-top: 12px; font-size: 13.5px; color: var(--ink-3); }
-    .shot-cap { margin-top: 14px; font-size: 13.5px; color: var(--ink-3); }
-    .band { margin-top: 44px; padding: 26px 28px; border: 1px solid var(--line-2); border-radius: var(--radius-lg); background: var(--surface); display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; justify-content: space-between; }
-    .band p { color: var(--ink); font-size: 18px; font-weight: 500; max-width: 46ch; }
-    .emr-lbl { display: block; margin-top: 48px; }
-    .emr { margin-top: 14px; }
+    /* Page-local pieces only. Everything else comes from site.css.
+
+       Every product visual on this page is an HTML and CSS illustration with sample data, because
+       the product is in development and no real screenshot exists. Each one is labelled as an
+       illustration in its caption. Chart numbers only, never names. */
+
+    .skip { position: absolute; left: 12px; top: -60px; z-index: 10; background: var(--accent); color: var(--on-accent); font-weight: 600; font-size: 15px; padding: 10px 16px; border-radius: 999px; text-decoration: none; }
+    .skip:focus { top: 12px; color: var(--on-accent); }
+    .bt { border-top: 1px solid var(--line); }
+    .h2 { font-size: clamp(28px, 3.6vw, 42px); margin-top: 12px; }
+    .pill.accent { border-color: var(--accent); color: var(--accent); }
+
+    /* ---- hero: the site's centred hero, with the product illustration directly under it ---- */
+    .hero { padding-bottom: 72px; }
+    .hero h1 { font-size: clamp(36px, 5.4vw, 62px); margin-top: 14px; }
+    .hero .verify { color: var(--ink-2); text-shadow: 0 1px 10px rgba(0,0,0,.6); }
+    .hero .verify b { color: var(--ink); }
+    /* This hero is taller than the others because the illustration sits in it, so the photo is
+       darkened sooner: the type stays legible and the illustration lands on the page ground. */
+    .hero-bg::after { background: linear-gradient(180deg, rgba(12,14,13,.66) 0%, rgba(12,14,13,.62) 26%, rgba(12,14,13,.86) 50%, var(--bg) 74%); }
+    figure.hero-art { width: 100%; max-width: 1000px; margin: 64px auto 0; padding: 0 28px; text-align: left; }
+    .hero-stage { display: grid; grid-template-columns: minmax(0, 1fr) 252px; gap: 28px; align-items: end; }
+    .hero-art figcaption { text-align: center; }
+
+    /* ---- illustration parts ---- */
+    .ill { margin: 0; }
+    .ill figcaption { margin-top: 14px; font-size: 13.5px; color: var(--ink-3); }
+
+    /* task list, as it would sit in an EMR task queue */
+    .tl-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 16px 18px 13px; }
+    .tl-head b { font-size: 16px; font-weight: 600; color: var(--ink); }
+    .tl-head span { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; }
+    .tl-row { display: grid; grid-template-columns: 15px minmax(0, 1fr) auto; gap: 1px 12px; align-items: center; padding: 12px 18px; border-top: 1px solid var(--line); }
+    .tl-row i { grid-row: 1 / span 2; width: 15px; height: 15px; border: 1.5px solid var(--line-2); border-radius: 3px; }
+    .tl-row b { grid-column: 2; font-size: 15px; font-weight: 600; color: var(--ink); }
+    .tl-row small { grid-column: 2; font-size: 13px; color: var(--ink-3); }
+    .tl-row em { grid-column: 3; grid-row: 1 / span 2; font-style: normal; font-family: var(--f-mono); font-size: 11px; padding: 5px 9px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--ink-2); white-space: nowrap; }
+    .tl-row em.late { border-color: var(--danger); color: var(--danger); }
+    .tl-sum { display: flex; flex-wrap: wrap; gap: 4px 18px; align-items: baseline; padding: 12px 18px 14px; border-top: 1px solid var(--line); background: var(--bg-2); font-size: 13.5px; color: var(--ink-2); }
+    .tl-sum .lbl { width: 100%; font-size: 10.5px; }
+
+    /* phone with a text thread */
+    .phone { width: 252px; max-width: 100%; padding: 9px; border: 1px solid var(--line-2); border-radius: 32px; background: var(--raised); box-shadow: 0 30px 80px rgba(0,0,0,.5), 0 2px 6px rgba(0,0,0,.4); }
+    .phone-in { border-radius: 24px; background: var(--bg); border: 1px solid var(--line); padding: 0 12px 18px; overflow: hidden; }
+    .phone-top { margin: 0 -12px 14px; padding: 15px 12px 11px; border-bottom: 1px solid var(--line); text-align: center; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); }
+    .msg { width: fit-content; max-width: 90%; margin-top: 8px; padding: 9px 12px; border-radius: 15px; font-size: 13.5px; line-height: 1.42; }
+    .msg.in { background: var(--raised); color: var(--ink); border-bottom-left-radius: 4px; }
+    .msg.out { margin-left: auto; background: var(--accent); color: var(--on-accent); font-weight: 700; border-bottom-right-radius: 4px; }
+
+    /* one open slot, start to filled */
+    .slot-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 18px 14px; border-bottom: 1px solid var(--line); }
+    .slot-head b { display: block; font-size: 16px; font-weight: 600; color: var(--ink); }
+    .slot-head small { font-size: 13px; color: var(--ink-3); }
+    .tag { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--accent); color: var(--accent); white-space: nowrap; }
+    .trail { list-style: none; padding: 16px 18px 18px; }
+    .trail li { position: relative; padding: 0 0 16px 28px; font-size: 14.5px; line-height: 1.4; color: var(--ink); }
+    .trail li:last-child { padding-bottom: 0; }
+    .trail li small { display: block; font-size: 13px; color: var(--ink-3); }
+    .trail li::before { content: ""; position: absolute; left: 0; top: 3px; width: 13px; height: 13px; border-radius: 50%; border: 1.5px solid var(--accent); background: var(--surface); }
+    .trail li::after { content: ""; position: absolute; left: 7px; top: 20px; bottom: 1px; width: 1px; background: var(--line-2); }
+    .trail li:last-child::after { display: none; }
+    .trail li.ok::before { background: var(--accent); }
+    .backfill { display: grid; grid-template-columns: minmax(0, 1fr) 232px; gap: 20px; align-items: center; }
+    .backfill .phone { width: 232px; }
+
+    /* the daily run: connection, rule, result, audit log */
+    .run-row { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; gap: 4px 14px; align-items: start; padding: 14px 18px; border-top: 1px solid var(--line); }
+    .run-row:first-child { border-top: 0; }
+    .run-row .lbl { padding-top: 4px; }
+    .run-row b { display: block; font-size: 15px; font-weight: 600; color: var(--ink); }
+    .run-row small { display: block; font-size: 13px; color: var(--ink-3); }
+    .log { padding: 14px 18px 16px; border-top: 1px solid var(--line); background: var(--bg-2); font-family: var(--f-mono); font-size: 11px; line-height: 1.9; color: var(--ink-2); }
+    .log .lbl { display: block; margin-bottom: 4px; font-size: 10.5px; }
+    .log div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .log div span { color: var(--accent); display: inline-block; width: 5.5ch; margin-left: 1ch; }
+
+    /* ---- the two offers: text beside its illustration, second row mirrored ---- */
+    .feature { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 56px; align-items: center; padding: 56px 0; border-top: 1px solid var(--line); }
+    .sec-head + .feature { margin-top: 12px; border-top: 0; }
+    .feature.flip { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); }
+    .feature.flip > :first-child { order: 2; }
+    .how > * { min-width: 0; }
+    .feature h3 { font-size: clamp(24px, 2.6vw, 30px); margin-top: 16px; }
+    .feature p { margin-top: 12px; color: var(--ink-2); max-width: 46ch; }
+    .feature .price-list { margin-top: 20px; }
+
+    /* roadmap: dashed, so it does not read as shipped */
+    .road { margin-top: 8px; padding-top: 48px; border-top: 1px solid var(--line); }
+    .road h3 { font-size: 22px; }
+    .road > p.after { margin-top: 20px; }
+    .road > p { margin-top: 8px; color: var(--ink-2); font-size: 16px; max-width: 64ch; }
+    .road ul { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+    .road li { border: 1px dashed var(--line-2); border-radius: var(--radius-lg); padding: 16px 18px 18px; font-weight: 600; font-size: 16px; line-height: 1.35; color: var(--ink-2); }
+    .road li .lbl { display: block; margin-bottom: 10px; }
+
+    .band { margin-top: 48px; padding: 28px 30px; border: 1px solid var(--line-2); border-radius: var(--radius-lg); background: var(--surface); display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; justify-content: space-between; }
+    .band p { color: var(--ink); font-size: 19px; font-weight: 500; max-width: 46ch; }
+
+    /* EMRs */
+    .emr { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; margin-top: 32px; }
+    .emr li { background: var(--bg-2); padding: 22px 24px 24px; }
+    .emr b { display: block; font-family: var(--f-display); font-size: 22px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
+    .emr span { display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+    .emr span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--ink-3); }
+    .emr li.now span { color: var(--accent); }
+    .emr li.now span::before { border-color: var(--accent); background: var(--accent); }
+    .after { margin-top: 20px; color: var(--ink-3); font-size: 15px; max-width: 72ch; }
+
+    /* privacy: eight commitments, ruled */
+    .commit { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
+    .commit li { background: var(--bg-2); padding: 20px 22px 22px; }
+    .commit h3 { font-size: 16.5px; font-weight: 600; line-height: 1.3; padding-left: 22px; position: relative; }
+    .commit h3::before { content: ""; position: absolute; left: 1px; top: 4px; width: 10px; height: 5px; border-left: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg); }
+    .commit p { margin-top: 6px; padding-left: 22px; font-size: 15px; color: var(--ink-2); }
+
+    /* founding */
+    .price-box .lbl { display: block; }
+    .founder { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 16px; }
+
+    .close { text-align: center; }
+    .close h2 { font-size: clamp(28px, 3.6vw, 42px); max-width: 20ch; margin: 0 auto; }
+    .close p { margin: 16px auto 0; color: var(--ink-2); max-width: 52ch; }
+    .close .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+
+    @media (max-width: 980px) {
+      .feature, .feature.flip { grid-template-columns: 1fr; gap: 32px; padding: 44px 0; }
+      .feature.flip > :first-child { order: 0; }
+      .road ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px) {
+      figure.hero-art { margin-top: 44px; padding: 0 20px; }
+      .hero-stage { grid-template-columns: 1fr; gap: 16px; }
+      .hero-stage .phone { margin: 0 auto; }
+      .emr { grid-template-columns: 1fr; }
+      .commit { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding-bottom: 48px; }
+      .backfill { grid-template-columns: 1fr; gap: 16px; }
+      .backfill .phone { margin: 0 auto; }
+      .tl-head, .tl-row, .tl-sum, .slot-head, .run-row, .log { padding-left: 14px; padding-right: 14px; }
+      .trail { padding-left: 14px; padding-right: 14px; }
+      .run-row { grid-template-columns: minmax(0, 1fr) auto; }
+      .run-row .lbl { grid-column: 1 / -1; padding-top: 0; }
+      .band { padding: 22px 20px; }
+      .band .btn, .close .cta .btn { flex: 1 1 100%; }
+    }
+    @media (max-width: 420px) {
+      .road ul { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
-<nav>
+<a class="skip" href="#main">Skip to content</a>
+
+<nav aria-label="Main">
   <div class="wrap">
     <a class="brand" href="/"><img src="logo.svg" alt="" />Aevon</a>
     <div class="navr">
-      <a href="#what">What we build</a>
+      <a href="#what">What we're building</a>
       <a href="#privacy">Privacy</a>
       <a href="#founding">Founding clinics</a>
       <a href="#questions">Questions</a>
@@ -82,21 +203,53 @@
 </nav>
 
 <header class="hero">
-  <div class="hero-bg placeholder" role="presentation"></div>
+  <div class="hero-bg" style="--hero-image:url(img/hero.jpg)" role="presentation"></div>
   <div class="wrap">
-    <span class="lbl accent">Aevon Health · for medical clinics in BC and Ontario</span>
-    <h1>Admin work your front desk shouldn't have to chase.</h1>
+    <span class="lbl">Aevon Health · for medical clinics in BC and Ontario</span>
+    <h1>Unanswered referrals and empty slots, handled inside your EMR.</h1>
     <p class="sub">
-      Aevon builds automations that sit on top of your EMR and handle the follow-up that slips:
-      referrals nobody answered, and short-notice slots that go empty while the waitlist grows.
+      We are building admin automation that connects to your EMR through its official API and
+      does the chasing your front desk has no time for.
     </p>
     <div class="cta">
       <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 20-minute call</a>
-      <a class="btn btn-ghost" href="#what">See what we're building</a>
     </div>
-    <p class="verify">Now working with <b>founding clinics</b>. In development, not yet generally available.</p>
+    <p class="verify"><b>In development.</b> Now taking on founding clinics, with a 60-day pilot at no charge.</p>
   </div>
+
+  <figure class="hero-art ill">
+    <div class="hero-stage" role="img" aria-label="Illustration with sample data. On the left, a task list inside an EMR titled Referrals to chase, with three referrals identified by chart number that have had no response for 24, 19 and 14 days. On the right, a phone showing a text that offers an open appointment on Thursday at 10:40 am, the reply YES, and a booking confirmation.">
+      <div class="shot">
+        <div class="shot-bar"><i></i><i></i><i></i><span>EMR tasks · front desk · sample data</span></div>
+        <div class="tl-head"><b>Referrals to chase</b><span>Mon · 3 tasks</span></div>
+        <div class="tl-row"><i></i><b>Cardiology referral</b><small>Chart 10482 · no response</small><em class="late">24 days</em></div>
+        <div class="tl-row"><i></i><b>Dermatology referral</b><small>Chart 20917 · no response</small><em class="late">19 days</em></div>
+        <div class="tl-row"><i></i><b>Orthopaedics referral</b><small>Chart 30264 · no response</small><em>14 days</em></div>
+      </div>
+      <div class="phone">
+        <div class="phone-in">
+          <div class="phone-top">Text from your clinic</div>
+          <div class="msg in">An appointment has opened on Thursday at 10:40 am. Reply YES to take it.</div>
+          <div class="msg out">YES</div>
+          <div class="msg in">You are booked for Thursday at 10:40 am.</div>
+        </div>
+      </div>
+    </div>
+    <figcaption>Illustration with sample data. The product is in development, so this is not a screenshot.</figcaption>
+  </figure>
 </header>
+
+<main id="main">
+
+<!-- Where a template puts customer logos. There are no clinic customers yet, so this strip carries
+     four of the privacy commitments instead. The full list is in #privacy. -->
+<div class="strip">
+  <div class="wrap">
+    <span class="lbl">How it is built</span>
+    <span>Official EMR APIs only</span><span>Patient information hosted in Canada</span>
+    <span>Administrative tasks only</span><span>No AI training on clinic data</span>
+  </div>
+</div>
 
 <section id="problem" class="tight">
   <div class="wrap">
@@ -108,156 +261,204 @@
     <div class="grid3">
       <div>
         <h3>The referral that went quiet</h3>
-        <p>A referral goes out and nothing comes back. Someone has to remember to chase it, usually from memory or a spreadsheet, and some slip through.</p>
+        <p>A referral goes out and nothing comes back. Chasing it depends on someone remembering, or on a spreadsheet. Some slip through.</p>
       </div>
       <div>
         <h3>The slot that stayed empty</h3>
-        <p>A consult cancels the day before. Nobody has an hour to phone down the list, so the slot sits empty while the waitlist runs for months.</p>
+        <p>A consult cancels the day before. Nobody has an hour to phone down the waitlist, so the slot goes unused.</p>
       </div>
       <div>
-        <h3>The pattern nobody saw</h3>
-        <p>Cancellations, no-shows and rebookings pile up through the week. By the time anyone looks, the week is over.</p>
+        <h3>The week nobody saw</h3>
+        <p>Cancellations and schedule changes pile up. By the time anyone adds them up, the week is over.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="how" style="border-top:1px solid var(--line)">
+<section id="how" class="bt">
   <div class="wrap">
     <div class="how">
       <div>
         <span class="pill">How it works</span>
-        <h2 style="font-size:clamp(28px,3.6vw,42px);margin-top:12px">A short list, inside the EMR you already use.</h2>
+        <h2 class="h2">Three steps. Nothing new to log into.</h2>
         <ol class="steps">
-          <li><div><h3>We connect to your EMR</h3><p>Through its official API, using a dedicated account your clinic creates and controls. No screen scraping and no shared staff logins.</p></div></li>
+          <li><div><h3>We connect to your EMR</h3><p>Through its official API, using one dedicated account that your clinic creates and controls. No screen scraping and no shared staff logins.</p></div></li>
           <li><div><h3>The automation does the checking</h3><p>Each day it looks for what you asked it to watch, such as referrals with no response after a number of days you set.</p></div></li>
-          <li><div><h3>Your staff get a short list</h3><p>As tasks in the EMR, with nothing new to log into. Anything uncertain goes to a person. The automation does not guess.</p></div></li>
+          <li><div><h3>Your staff get a short list</h3><p>As tasks inside the EMR. Anything uncertain goes to a person. The automation does not guess.</p></div></li>
         </ol>
       </div>
-      <div>
-        <figure class="shot glow" aria-label="Illustration of a morning referral chase list with sample data">
-          <div class="shot-bar"><i></i><i></i><i></i><span>EMR tasks · front desk · sample data</span></div>
-          <div class="mock">
-            <div class="mock-head"><b>Referrals to chase</b><span>Mon 8:00 · 4 items</span></div>
-            <div class="mock-row"><b>Cardiology referral</b><small>Chart 10482 · sent 24 days ago · no acknowledgement</small><em class="late">24 days</em></div>
-            <div class="mock-row"><b>Dermatology referral</b><small>Chart 20917 · sent 19 days ago · no acknowledgement</small><em class="late">19 days</em></div>
-            <div class="mock-row"><b>Gastroenterology referral</b><small>Chart 11305 · acknowledged, no appointment date yet</small><em>15 days</em></div>
-            <div class="mock-row"><b>Orthopaedics referral</b><small>Chart 30264 · sent 14 days ago · no acknowledgement</small><em>14 days</em></div>
-            <div class="mock-foot">Yesterday: 3 cancellations, 1 no-show, 2 rebooked.</div>
+      <figure class="ill">
+        <div class="shot glow" role="img" aria-label="Illustration with sample data of one daily run. Connection: OSCAR through its official API, using one account controlled by the clinic. Rule: referral sent, no response after 14 days. Result: 4 tasks added for the front desk. Below is an audit log listing one read of referrals and four task writes, each with a chart number.">
+          <div class="shot-bar"><i></i><i></i><i></i><span>Daily run · sample data</span></div>
+          <div class="run-row"><span class="lbl accent">01 Connect</span><div><b>OSCAR, official API</b><small>One account, created and controlled by your clinic</small></div></div>
+          <div class="run-row"><span class="lbl accent">02 Check</span><div><b>Referral sent, no response after 14 days</b><small>The number of days is yours to set</small></div></div>
+          <div class="run-row"><span class="lbl accent">03 List</span><div><b>4 tasks added for the front desk</b><small>Inside the EMR task list</small></div></div>
+          <div class="log">
+            <span class="lbl">Audit log</span>
+            <div>07:30 <span>READ</span> referrals, sent, no response</div>
+            <div>07:30 <span>WRITE</span> task, chart 10482</div>
+            <div>07:30 <span>WRITE</span> task, chart 20917</div>
+            <div>07:30 <span>WRITE</span> task, chart 11305</div>
+            <div>07:30 <span>WRITE</span> task, chart 30264</div>
           </div>
-        </figure>
-        <p class="shot-cap">An illustration with sample data. The product is in development, so this is not a screenshot.</p>
-      </div>
+        </div>
+        <figcaption>Illustration with sample data, not a screenshot.</figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
-<section id="what" style="border-top:1px solid var(--line)">
+<section id="what" class="bt">
   <div class="wrap">
     <div class="sec-head">
       <span class="pill">What we're building first</span>
       <h2>Two jobs, done properly.</h2>
-      <p class="lede">Both are in development with founding clinics. We would rather do two things well than promise ten.</p>
+      <p class="lede">Both are in development. We would rather do two things well than promise ten.</p>
     </div>
-    <div class="offers">
-      <div class="offer">
-        <span class="pill" style="border-color:var(--accent);color:var(--accent)">For family practices</span>
+
+    <div class="feature">
+      <div>
+        <span class="pill accent">For family practices</span>
         <h3>Referral chase list</h3>
-        <p>Each morning, a list of outgoing referrals that have had no response, waiting for your front desk as tasks in the EMR.</p>
-        <ul>
+        <p>Each morning, outgoing referrals with no response are waiting for your front desk as tasks inside the EMR.</p>
+        <ul class="price-list">
           <li>You set how many days counts as "no response"</li>
           <li>A short daily summary of cancellations and schedule changes</li>
           <li>Staff-facing only. Nothing is sent to patients</li>
         </ul>
       </div>
-      <div class="offer">
-        <span class="pill" style="border-color:var(--accent);color:var(--accent)">For specialist clinics</span>
+      <figure class="ill">
+        <div class="shot glow" role="img" aria-label="Illustration with sample data of the referral chase list as tasks in an EMR. Four referrals identified by chart number, for cardiology, dermatology, gastroenterology and orthopaedics, with no response for 24, 19, 15 and 14 days. Below is a daily summary: 3 cancellations and 2 schedule changes yesterday.">
+          <div class="shot-bar"><i></i><i></i><i></i><span>EMR tasks · front desk · sample data</span></div>
+          <div class="tl-head"><b>Referrals to chase</b><span>Mon · 4 tasks</span></div>
+          <div class="tl-row"><i></i><b>Cardiology referral</b><small>Chart 10482 · no response</small><em class="late">24 days</em></div>
+          <div class="tl-row"><i></i><b>Dermatology referral</b><small>Chart 20917 · no response</small><em class="late">19 days</em></div>
+          <div class="tl-row"><i></i><b>Gastroenterology referral</b><small>Chart 11305 · no response</small><em>15 days</em></div>
+          <div class="tl-row"><i></i><b>Orthopaedics referral</b><small>Chart 30264 · no response</small><em>14 days</em></div>
+          <div class="tl-sum"><span class="lbl">Daily summary · yesterday</span><span>3 cancellations</span><span>2 schedule changes</span></div>
+        </div>
+        <figcaption>Illustration with sample data, not a screenshot.</figcaption>
+      </figure>
+    </div>
+
+    <div class="feature flip">
+      <div>
+        <span class="pill accent">For specialist clinics</span>
         <h3>Cancellation backfill</h3>
         <p>When a slot opens, patients on your own waitlist get a text. The first to say yes is booked into the schedule.</p>
-        <ul>
+        <ul class="price-list">
           <li>Your staff can approve each booking, or let it run</li>
           <li>Messages contain no health details</li>
           <li>A monthly count of slots filled</li>
         </ul>
       </div>
+      <figure class="ill">
+        <div class="backfill" role="img" aria-label="Illustration with sample data of one cancelled slot being filled. The slot on Thursday at 10:40 am opens after a cancellation. A text goes to three patients on the clinic's waitlist. Chart 20917 replies YES first. The front desk approves, and the slot is booked into the schedule. Beside it, a phone shows the text the patient receives: an appointment has opened on Thursday at 10:40 am, reply YES to take it. The patient replies YES and is told they are booked.">
+          <div class="shot glow">
+            <div class="shot-bar"><i></i><i></i><i></i><span>Open slot · sample data</span></div>
+            <div class="slot-head"><div><b>Thursday, 10:40 am</b><small>Opened by a cancellation</small></div><span class="tag">Filled</span></div>
+            <ol class="trail">
+              <li class="ok">Text sent to 3 on your waitlist<small>No health details in the message</small></li>
+              <li class="ok">Chart 20917 replied YES first</li>
+              <li class="ok">Approved by the front desk<small>Optional step</small></li>
+              <li class="ok">Booked into the schedule</li>
+            </ol>
+          </div>
+          <div class="phone">
+            <div class="phone-in">
+              <div class="phone-top">Text from your clinic</div>
+              <div class="msg in">An appointment has opened on Thursday at 10:40 am. Reply YES to take it.</div>
+              <div class="msg out">YES</div>
+              <div class="msg in">You are booked for Thursday at 10:40 am.</div>
+            </div>
+          </div>
+        </div>
+        <figcaption>Illustration with sample data, not a screenshot.</figcaption>
+      </figure>
     </div>
-    <p class="roadmap">
-      On the roadmap, not yet available: recall and reactivation, no-show follow-up, intake
-      preparation, and WorkSafeBC and ICBC form preparation. Need something else automated?
-      We build custom work too. <a href="mailto:hello@aevon.ca">Tell us what eats your front desk's time.</a>
-    </p>
+
+    <div class="road">
+      <h3>On the roadmap</h3>
+      <p>Not built and not available yet. Listed so you know where this is going.</p>
+      <ul>
+        <li><span class="lbl">Not yet available</span>Recall and reactivation</li>
+        <li><span class="lbl">Not yet available</span>No-show follow-up</li>
+        <li><span class="lbl">Not yet available</span>Intake preparation</li>
+        <li><span class="lbl">Not yet available</span>WorkSafeBC and ICBC form preparation</li>
+      </ul>
+      <p class="after">Need something else automated? This is sold as a custom service first. <a href="mailto:hello@aevon.ca">Tell us what eats your front desk's time.</a></p>
+    </div>
 
     <div class="band">
       <p>Is one of these the thing your front desk keeps losing time to?</p>
       <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 20-minute call</a>
     </div>
-
-    <span class="lbl emr-lbl">EMRs</span>
-    <div class="emr">
-      <div><b>OSCAR</b><span>Building for it now</span></div>
-      <div><b>Accuro</b><span>Planned</span></div>
-      <div><b>TELUS CHR</b><span>Planned</span></div>
-    </div>
-    <p class="roadmap">On a different EMR? Ask us. If it has an official API, we can likely work with it.</p>
   </div>
 </section>
 
-<section id="privacy" style="border-top:1px solid var(--line)">
+<section id="emrs" class="tight bt">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="pill">EMRs</span>
+      <h2>One EMR at a time.</h2>
+      <p class="lede">We connect through the EMR's official API, so each one is its own piece of work.</p>
+    </div>
+    <ul class="emr">
+      <li class="now"><b>OSCAR</b><span>Building for it now</span></li>
+      <li><b>Accuro</b><span>Planned</span></li>
+      <li><b>TELUS CHR</b><span>Planned</span></li>
+    </ul>
+    <p class="after">On a different EMR? <a href="mailto:hello@aevon.ca">Tell us which one.</a></p>
+  </div>
+</section>
+
+<section id="privacy" class="bt">
   <div class="wrap two">
     <div>
-      <h2>Privacy and security</h2>
-      <p style="margin-top:16px;color:var(--ink-2)">
-        Built by someone who has done clinic privacy work, for the person at your clinic who has
-        to sign off on it.
-      </p>
+      <span class="pill">Privacy and security</span>
+      <h2 style="margin-top:12px">Eight commitments.</h2>
+      <p style="margin-top:16px">Written for the person at your clinic who has to sign off on this.</p>
     </div>
-    <div>
-      <div class="facts" style="margin-top:0">
-        <div class="fact"><span>How we connect</span><span>Official EMR APIs only</span></div>
-        <div class="fact"><span>Where patient information lives</span><span>Hosted in Canada</span></div>
-        <div class="fact"><span>What we store</span><span>Record IDs and minimum fields</span></div>
-        <div class="fact"><span>Audit trail</span><span>Every EMR read and write logged</span></div>
-        <div class="fact"><span>Privacy impact assessment</span><span>Prepared for you</span></div>
-        <div class="fact"><span>Scope</span><span>Administrative tasks only</span></div>
-        <div class="fact"><span>AI training on your data</span><span>Never</span></div>
-        <div class="fact"><span>Turning it off</span><span>Disable one EMR account</span></div>
-      </div>
-      <p style="margin-top:18px;color:var(--ink-3);font-size:15px">
-        Every service that touches patient information, and the region it runs in, is listed in
-        your privacy impact assessment before anything goes live. No triage, diagnosis or
-        treatment suggestions, ever.
-      </p>
-    </div>
+    <ul class="commit">
+      <li><h3>Official EMR APIs only</h3><p>We connect through your EMR's official API and nothing else.</p></li>
+      <li><h3>Hosted in Canada</h3><p>Patient information is hosted in Canada.</p></li>
+      <li><h3>Minimal data stored</h3><p>We store the minimum the task needs.</p></li>
+      <li><h3>Full audit log</h3><p>Every read from your EMR and every write to it is logged.</p></li>
+      <li><h3>Privacy impact assessment</h3><p>We prepare one for your clinic.</p></li>
+      <li><h3>Administrative tasks only</h3><p>No triage, diagnosis or treatment. Clinical decisions stay with your physicians.</p></li>
+      <li><h3>No AI training on clinic data</h3><p>Your clinic's data is not used to train AI models.</p></li>
+      <li><h3>One account ends it</h3><p>Disable one EMR account and our access ends.</p></li>
+    </ul>
   </div>
 </section>
 
-<section id="founding" style="border-top:1px solid var(--line)">
+<section id="founding" class="bt">
   <div class="wrap">
     <div class="price-grid" style="margin-top:0">
       <div>
         <span class="pill">Founding clinic program</span>
-        <h2 style="font-size:clamp(28px,3.6vw,42px);margin-top:12px">Help shape it, and start free.</h2>
+        <h2 class="h2">Help shape it, and start free.</h2>
         <p style="margin-top:16px;color:var(--ink-2)">
-          We are working closely with a small number of clinics to build these properly. In return
-          we ask for honest feedback, one named staff contact, and, if it works, permission to
-          share the results.
+          We are taking on a small number of founding clinics to build these with. In return we
+          ask for honest feedback, one named staff contact and, if it works, permission to share
+          the results.
         </p>
-        <p style="margin-top:14px;color:var(--ink-2)">
-          Aevon builds custom software and automation for small and medium businesses. Aevon Health
-          is led by Aidan Cox, whose background is medical clinic IT and privacy.
+        <p class="founder">
+          Aevon Health is led by Aidan Cox, whose background is medical clinic IT and privacy.
         </p>
       </div>
       <div class="price-box">
-        <div class="price-num">60 days</div>
-        <p style="color:var(--ink-2);margin-top:4px">pilot at no charge</p>
+        <span class="lbl">Founding clinics</span>
+        <div class="price-num" style="margin-top:8px">60 days</div>
+        <p style="color:var(--ink-2);margin-top:2px">pilot at no charge</p>
         <ul class="price-list">
           <li>EMR connection handled for you</li>
-          <li>Privacy impact assessment prepared for your privacy officer</li>
-          <li>One agreed number to judge it by</li>
+          <li>Privacy impact assessment handled for you</li>
+          <li>One agreed success number to judge it by</li>
           <li>A 15-minute check-in each week</li>
           <li>Founding pricing afterwards</li>
         </ul>
-        <div style="margin-top:22px">
+        <div style="margin-top:24px">
           <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Ask about a founding spot</a>
         </div>
       </div>
@@ -265,11 +466,15 @@
   </div>
 </section>
 
-<section id="questions" class="tight" style="border-top:1px solid var(--line)">
+<section id="questions" class="tight bt">
   <div class="wrap" style="max-width:860px">
     <h2 style="font-size:clamp(26px,3vw,34px)">Questions</h2>
     <div style="margin-top:26px">
       <details open>
+        <summary>Is it available now?</summary>
+        <p>Not yet. Both automations are in development. We are taking on founding clinics to build them with, starting on OSCAR.</p>
+      </details>
+      <details>
         <summary>Does this replace our EMR or booking tool?</summary>
         <p>No. It works alongside them. If you use an online booking tool, it keeps doing its job.</p>
       </details>
@@ -278,32 +483,41 @@
         <p>No. The chase list shows up as tasks inside your EMR.</p>
       </details>
       <details>
-        <summary>Where is patient information stored?</summary>
-        <p>In Canada. We store as little as possible, and your privacy impact assessment lists exactly what is stored and where before anything goes live.</p>
+        <summary>Do patients get messages from it?</summary>
+        <p>Only with cancellation backfill, and only patients on your own waitlist. The texts contain no health details, and your staff can approve each booking. The referral chase list is staff-facing only.</p>
       </details>
       <details>
-        <summary>Who can see our data?</summary>
-        <p>Only the people named in your privacy impact assessment, using logged, multi-factor access.</p>
+        <summary>Where is patient information stored?</summary>
+        <p>In Canada, and we store as little as possible.</p>
       </details>
       <details>
         <summary>What does it cost?</summary>
-        <p>Pricing is per physician per month, plus a one-time setup fee. Founding clinics start with a 60-day pilot at no charge. You get a number on the call.</p>
+        <p>Pricing is per physician per month, plus a one-time setup fee. Founding clinics start with a 60-day pilot at no charge.</p>
       </details>
       <details>
         <summary>What if we want to stop?</summary>
-        <p>You disable the EMR account and access ends that day. We delete your data and confirm in writing.</p>
+        <p>Your clinic disables the one EMR account we use, and our access ends.</p>
       </details>
       <details>
         <summary>Is this AI making decisions about patients?</summary>
-        <p>No. These automations follow rules you set and handle administrative follow-up only. Clinical decisions stay with your physicians.</p>
+        <p>No. The automations follow rules you set and handle administrative follow-up only. There is no triage, diagnosis or treatment. Clinical decisions stay with your physicians.</p>
       </details>
     </div>
-    <div style="margin-top:40px;display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+  </div>
+</section>
+
+<section class="close bt">
+  <div class="wrap">
+    <h2>Twenty minutes, to see if it fits your clinic.</h2>
+    <p>Tell us which EMR you are on and what your front desk keeps chasing. We will tell you plainly whether we can help yet.</p>
+    <div class="cta">
       <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 20-minute call</a>
       <a class="btn btn-ghost" href="mailto:hello@aevon.ca">hello@aevon.ca</a>
     </div>
   </div>
 </section>
+
+</main>
 
 <footer>
   <div class="wrap">
