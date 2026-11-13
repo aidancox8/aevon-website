@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Automation for Medical Clinics | Aevon Health</title>
+  <meta name="description" content="Aevon builds automations on top of your EMR that handle the follow-up your front desk has no time for: unanswered referrals and empty short-notice slots. For clinics in BC and Ontario." />
+  <link rel="canonical" href="https://aevon.ca/health.html" />
+  <!-- Pre-launch: kept out of search until the page is approved. Change to "index, follow" and add
+       it to sitemap.xml and llms.txt when outreach starts. -->
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#0C0E0D" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aevon.ca/health.html" />
+  <meta property="og:site_name" content="Aevon" />
+  <meta property="og:title" content="Admin Automation for Medical Clinics | Aevon Health" />
+  <meta property="og:description" content="Automations on top of your EMR for the follow-up your front desk has no time for. For clinics in BC and Ontario." />
+  <meta property="og:locale" content="en_CA" />
+  <meta name="twitter:card" content="summary" />
+
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css?v=3" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9R5SHY2LD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-M9R5SHY2LD');
+  </script>
+  <style>
+    /* Page-local pieces only. Everything else comes from site.css. */
+    .offers { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; margin-top: 36px; }
+    @media (max-width: 900px) { .offers { grid-template-columns: 1fr; } }
+    .offer { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 30px 30px 28px; }
+    .offer h3 { font-size: 22px; margin-top: 14px; }
+    .offer p { margin-top: 12px; color: var(--ink-2); }
+    .offer ul { margin: 16px 0 0; padding: 0; list-style: none; }
+    .offer li { padding: 9px 0; border-top: 1px solid var(--line); font-size: 15.5px; color: var(--ink-2); }
+    .roadmap { margin-top: 28px; color: var(--ink-3); font-size: 15px; max-width: 72ch; }
+    .emr { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 32px; }
+    @media (max-width: 760px) { .emr { grid-template-columns: 1fr; } }
+    .emr > div { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 20px 22px; }
+    .emr b { display: block; font-size: 18px; color: var(--ink); }
+    .emr span { font-size: 14.5px; color: var(--ink-3); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/"><img src="logo.svg" alt="" />Aevon</a>
+    <div class="navr">
+      <a href="#what">What we build</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#founding">Founding clinics</a>
+      <a href="#questions">Questions</a>
+      <a class="btn btn-primary btn-sm" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a call</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-bg placeholder" role="presentation"></div>
+  <div class="wrap">
+    <span class="lbl accent">Aevon Health · for medical clinics in BC and Ontario</span>
+    <h1>Admin work your front desk shouldn't have to chase.</h1>
+    <p class="sub">
+      Aevon builds automations that sit on top of your EMR and handle the follow-up that slips:
+      referrals nobody answered, and short-notice slots that go empty while the waitlist grows.
+    </p>
+    <div class="cta">
+      <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 20-minute call</a>
+      <a class="btn btn-ghost" href="#what">See what we're building</a>
+    </div>
+    <p class="verify">Now working with <b>founding clinics</b>. In development, not yet generally available.</p>
+  </div>
+</header>
+
+<section id="problem" class="tight">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="pill">The problem</span>
+      <h2>Your staff already know what falls through.</h2>
+      <p class="lede">None of it is hard. There just isn't time.</p>
+    </div>
+    <div class="grid3">
+      <div>
+        <h3>The referral that went quiet</h3>
+        <p>A referral goes out and nothing comes back. Someone has to remember to chase it, usually from memory or a spreadsheet, and some slip through.</p>
+      </div>
+      <div>
+        <h3>The slot that stayed empty</h3>
+        <p>A consult cancels the day before. Nobody has an hour to phone down the list, so the slot sits empty while the waitlist runs for months.</p>
+      </div>
+      <div>
+        <h3>The pattern nobody saw</h3>
+        <p>Cancellations, no-shows and rebookings pile up through the week. By the time anyone looks, the week is over.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" style="border-top:1px solid var(--line)">
+  <div class="wrap two">
+    <h2>How it works</h2>
+    <div>
+      <ol class="steps">
+        <li><div><h3>We connect to your EMR</h3><p>Through its official API, using a dedicated account your clinic creates and controls. No screen scraping and no shared staff logins.</p></div></li>
+        <li><div><h3>The automation does the checking</h3><p>Each day it looks for what you asked it to watch, such as referrals with no response after a number of days you set.</p></div></li>
+        <li><div><h3>Your staff get a short list</h3><p>As tasks inside the EMR they already use. There is nothing new to log into. Anything uncertain goes to a person. The automation does not guess.</p></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="what" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="pill">What we're building first</span>
+      <h2>Two jobs, done properly.</h2>
+      <p class="lede">Both are in development with founding clinics. We would rather do two things well than promise ten.</p>
+    </div>
+    <div class="offers">
+      <div class="offer">
+        <span class="pill" style="border-color:var(--accent);color:var(--accent)">For family practices</span>
+        <h3>Referral chase list</h3>
+        <p>Each morning, a list of outgoing referrals that have had no response, waiting for your front desk as tasks in the EMR.</p>
+        <ul>
+          <li>You set how many days counts as "no response"</li>
+          <li>A short daily summary of cancellations and schedule changes</li>
+          <li>Staff-facing only. Nothing is sent to patients</li>
+        </ul>
+      </div>
+      <div class="offer">
+        <span class="pill" style="border-color:var(--accent);color:var(--accent)">For specialist clinics</span>
+        <h3>Cancellation backfill</h3>
+        <p>When a slot opens, patients on your own waitlist get a text. The first to say yes is booked into the schedule.</p>
+        <ul>
+          <li>Your staff can approve each booking, or let it run</li>
+          <li>Messages contain no health details</li>
+          <li>A monthly count of slots filled</li>
+        </ul>
+      </div>
+    </div>
+    <p class="roadmap">
+      On the roadmap, not yet available: recall and reactivation, no-show follow-up, intake
+      preparation, and WorkSafeBC and ICBC form preparation. Need something else automated?
+      We build custom work too. <a href="mailto:hello@aevon.ca">Tell us what eats your front desk's time.</a>
+    </p>
+
+    <div class="emr">
+      <div><b>OSCAR</b><span>Building for it now</span></div>
+      <div><b>Accuro</b><span>Planned</span></div>
+      <div><b>TELUS CHR</b><span>Planned</span></div>
+    </div>
+    <p class="roadmap">On a different EMR? Ask us. If it has an official API, we can likely work with it.</p>
+  </div>
+</section>
+
+<section id="privacy" style="border-top:1px solid var(--line)">
+  <div class="wrap two">
+    <div>
+      <h2>Privacy and security</h2>
+      <p style="margin-top:16px;color:var(--ink-2)">
+        Built by someone who has done clinic privacy work, for the person at your clinic who has
+        to sign off on it.
+      </p>
+    </div>
+    <div>
+      <div class="facts" style="margin-top:0">
+        <div class="fact"><span>How we connect</span><span>Official EMR APIs only</span></div>
+        <div class="fact"><span>Where patient information lives</span><span>Hosted in Canada</span></div>
+        <div class="fact"><span>What we store</span><span>Record IDs and minimum fields</span></div>
+        <div class="fact"><span>Audit trail</span><span>Every EMR read and write logged</span></div>
+        <div class="fact"><span>Privacy impact assessment</span><span>Prepared for you</span></div>
+        <div class="fact"><span>Scope</span><span>Administrative tasks only</span></div>
+        <div class="fact"><span>AI training on your data</span><span>Never</span></div>
+        <div class="fact"><span>Turning it off</span><span>Disable one EMR account</span></div>
+      </div>
+      <p style="margin-top:18px;color:var(--ink-3);font-size:15px">
+        Every service that touches patient information, and the region it runs in, is listed in
+        your privacy impact assessment before anything goes live. No triage, diagnosis or
+        treatment suggestions, ever.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="founding" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="price-grid" style="margin-top:0">
+      <div>
+        <span class="pill">Founding clinic program</span>
+        <h2 style="font-size:clamp(28px,3.6vw,42px);margin-top:12px">Help shape it, and start free.</h2>
+        <p style="margin-top:16px;color:var(--ink-2)">
+          We are working closely with a small number of clinics to build these properly. In return
+          we ask for honest feedback, one named staff contact, and, if it works, permission to
+          share the results.
+        </p>
+        <p style="margin-top:14px;color:var(--ink-2)">
+          Aevon builds custom software and automation for small and medium businesses. Aevon Health
+          is led by Aidan Cox, whose background is medical clinic IT and privacy.
+        </p>
+      </div>
+      <div class="price-box">
+        <div class="price-num">60 days</div>
+        <p style="color:var(--ink-2);margin-top:4px">pilot at no charge</p>
+        <ul class="price-list">
+          <li>EMR connection handled for you</li>
+          <li>Privacy impact assessment prepared for your privacy officer</li>
+          <li>One agreed number to judge it by</li>
+          <li>A 15-minute check-in each week</li>
+          <li>Founding pricing afterwards</li>
+        </ul>
+        <div style="margin-top:22px">
+          <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Ask about a founding spot</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="questions" class="tight" style="border-top:1px solid var(--line)">
+  <div class="wrap" style="max-width:860px">
+    <h2 style="font-size:clamp(26px,3vw,34px)">Questions</h2>
+    <div style="margin-top:26px">
+      <details open>
+        <summary>Does this replace our EMR or booking tool?</summary>
+        <p>No. It works alongside them. If you use an online booking tool, it keeps doing its job.</p>
+      </details>
+      <details>
+        <summary>Do staff need to learn new software?</summary>
+        <p>No. The chase list shows up as tasks inside your EMR.</p>
+      </details>
+      <details>
+        <summary>Where is patient information stored?</summary>
+        <p>In Canada. We store as little as possible, and your privacy impact assessment lists exactly what is stored and where before anything goes live.</p>
+      </details>
+      <details>
+        <summary>Who can see our data?</summary>
+        <p>Only the people named in your privacy impact assessment, using logged, multi-factor access.</p>
+      </details>
+      <details>
+        <summary>What does it cost?</summary>
+        <p>Pricing is per physician per month, plus a one-time setup fee. Founding clinics start with a 60-day pilot at no charge. You get a number on the call.</p>
+      </details>
+      <details>
+        <summary>What if we want to stop?</summary>
+        <p>You disable the EMR account and access ends that day. We delete your data and confirm in writing.</p>
+      </details>
+      <details>
+        <summary>Is this AI making decisions about patients?</summary>
+        <p>No. These automations follow rules you set and handle administrative follow-up only. Clinical decisions stay with your physicians.</p>
+      </details>
+    </div>
+    <div style="margin-top:40px;display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 20-minute call</a>
+      <a class="btn btn-ghost" href="mailto:hello@aevon.ca">hello@aevon.ca</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Aevon · Canada</div>
+    <div style="display:flex;gap:22px;flex-wrap:wrap">
+      <a href="/">Aevon</a>
+      <a href="mailto:hello@aevon.ca">hello@aevon.ca</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
