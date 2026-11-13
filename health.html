@@ -47,6 +47,23 @@
     .emr > div { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 20px 22px; }
     .emr b { display: block; font-size: 18px; color: var(--ink); }
     .emr span { font-size: 14.5px; color: var(--ink-3); }
+    /* Product illustration: built in HTML with sample data, because the product is in development
+       and there is no real screenshot to show yet. Labelled as an illustration on the page. */
+    .mock { padding: 6px 18px 14px; }
+    .mock-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 14px 0 12px; }
+    .mock-head b { font-size: 16px; color: var(--ink); }
+    .mock-head span { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-3); text-transform: uppercase; }
+    .mock-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 14px; padding: 12px 0; border-top: 1px solid var(--line); }
+    .mock-row b { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .mock-row small { grid-column: 1; font-size: 13.5px; color: var(--ink-3); }
+    .mock-row em { grid-row: 1 / span 2; grid-column: 2; align-self: center; font-style: normal; font-family: var(--f-mono); font-size: 11.5px; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--ink-2); white-space: nowrap; }
+    .mock-row em.late { border-color: var(--danger); color: var(--danger); }
+    .mock-foot { border-top: 1px solid var(--line); padding-top: 12px; font-size: 13.5px; color: var(--ink-3); }
+    .shot-cap { margin-top: 14px; font-size: 13.5px; color: var(--ink-3); }
+    .band { margin-top: 44px; padding: 26px 28px; border: 1px solid var(--line-2); border-radius: var(--radius-lg); background: var(--surface); display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; justify-content: space-between; }
+    .band p { color: var(--ink); font-size: 18px; font-weight: 500; max-width: 46ch; }
+    .emr-lbl { display: block; margin-top: 48px; }
+    .emr { margin-top: 14px; }
   </style>
 </head>
 <body>
@@ -106,14 +123,31 @@
 </section>
 
 <section id="how" style="border-top:1px solid var(--line)">
-  <div class="wrap two">
-    <h2>How it works</h2>
-    <div>
-      <ol class="steps">
-        <li><div><h3>We connect to your EMR</h3><p>Through its official API, using a dedicated account your clinic creates and controls. No screen scraping and no shared staff logins.</p></div></li>
-        <li><div><h3>The automation does the checking</h3><p>Each day it looks for what you asked it to watch, such as referrals with no response after a number of days you set.</p></div></li>
-        <li><div><h3>Your staff get a short list</h3><p>As tasks inside the EMR they already use. There is nothing new to log into. Anything uncertain goes to a person. The automation does not guess.</p></div></li>
-      </ol>
+  <div class="wrap">
+    <div class="how">
+      <div>
+        <span class="pill">How it works</span>
+        <h2 style="font-size:clamp(28px,3.6vw,42px);margin-top:12px">A short list, inside the EMR you already use.</h2>
+        <ol class="steps">
+          <li><div><h3>We connect to your EMR</h3><p>Through its official API, using a dedicated account your clinic creates and controls. No screen scraping and no shared staff logins.</p></div></li>
+          <li><div><h3>The automation does the checking</h3><p>Each day it looks for what you asked it to watch, such as referrals with no response after a number of days you set.</p></div></li>
+          <li><div><h3>Your staff get a short list</h3><p>As tasks in the EMR, with nothing new to log into. Anything uncertain goes to a person. The automation does not guess.</p></div></li>
+        </ol>
+      </div>
+      <div>
+        <figure class="shot glow" aria-label="Illustration of a morning referral chase list with sample data">
+          <div class="shot-bar"><i></i><i></i><i></i><span>EMR tasks · front desk · sample data</span></div>
+          <div class="mock">
+            <div class="mock-head"><b>Referrals to chase</b><span>Mon 8:00 · 4 items</span></div>
+            <div class="mock-row"><b>Cardiology referral</b><small>Chart 10482 · sent 24 days ago · no acknowledgement</small><em class="late">24 days</em></div>
+            <div class="mock-row"><b>Dermatology referral</b><small>Chart 20917 · sent 19 days ago · no acknowledgement</small><em class="late">19 days</em></div>
+            <div class="mock-row"><b>Gastroenterology referral</b><small>Chart 11305 · acknowledged, no appointment date yet</small><em>15 days</em></div>
+            <div class="mock-row"><b>Orthopaedics referral</b><small>Chart 30264 · sent 14 days ago · no acknowledgement</small><em>14 days</em></div>
+            <div class="mock-foot">Yesterday: 3 cancellations, 1 no-show, 2 rebooked.</div>
+          </div>
+        </figure>
+        <p class="shot-cap">An illustration with sample data. The product is in development, so this is not a screenshot.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -153,6 +187,12 @@
       We build custom work too. <a href="mailto:hello@aevon.ca">Tell us what eats your front desk's time.</a>
     </p>
 
+    <div class="band">
+      <p>Is one of these the thing your front desk keeps losing time to?</p>
+      <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 20-minute call</a>
+    </div>
+
+    <span class="lbl emr-lbl">EMRs</span>
     <div class="emr">
       <div><b>OSCAR</b><span>Building for it now</span></div>
       <div><b>Accuro</b><span>Planned</span></div>
