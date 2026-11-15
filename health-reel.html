@@ -11,27 +11,29 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
-/* Aevon Health reel: cancellation backfill. An illustration with sample data, drawn in HTML and CSS.
-   Palette and type follow site.css (dark ground, fern accent, Manrope and Martian Mono).
-   One shared layout; the ?emr= query parameter swaps wording only. */
+/* Aevon Health reel: cancellation backfill. An illustration with fictional names, drawn in HTML and CSS.
+   The page, captions and controls follow site.css (dark ground, fern accent, Manrope).
+   The EMR window and the phone are original, generic drawings and sit on the dark stage as light surfaces. */
 :root {
   --bg: #0C0E0D; --bg-2: #111413; --surface: #161A18; --raised: #1D2220;
   --ink: #ECEEEA; --ink-2: #B7BDB5; --ink-3: #858C84;
   --line: rgba(236,238,234,.09); --line-2: rgba(236,238,234,.16);
   --accent: #9DBFA1; --accent-2: #7FA884; --on-accent: #0C0E0D; --danger: #E3968A;
   --f-body: Manrope, system-ui, sans-serif; --f-mono: 'Martian Mono', ui-monospace, monospace;
+  /* EMR window */
+  --e-font: Tahoma, Verdana, "Segoe UI", Arial, sans-serif;
+  --e-band: #1f5b87; --e-tool: #e1e7ee; --e-bar: #f2f4f7; --e-line: #b9c1cc; --e-line2: #dde2e8;
+  --e-ink: #1b222c; --e-ink2: #465162; --e-sel: #cfe0f1;
   color-scheme: dark;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { background: var(--bg); color: var(--ink); font-family: var(--f-body); -webkit-font-smoothing: antialiased; }
 body { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; padding: 12px 16px 14px; overflow-x: hidden; }
-body.embed { min-height: 0; }
-body.embed .reel { max-width: 1040px; }
+body.embed { min-height: 0; padding: 0; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
 .reel { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 1400px; margin: 0 auto; }
-.top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; min-height: 30px; }
-.chip { font-family: var(--f-mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); border-radius: 999px; padding: 5px 11px; white-space: nowrap; }
+.top { display: flex; align-items: center; min-height: 26px; }
 .note { font-size: 13.5px; color: var(--ink-2); }
 .stagewrap { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
 .stage { position: relative; overflow: hidden; border: 1px solid var(--line-2); border-radius: 12px; background: var(--bg); box-shadow: 0 24px 60px rgba(0,0,0,.45); flex: none; }
@@ -46,196 +48,262 @@ body.embed .reel { max-width: 1040px; }
 .bar { flex: 1; height: 4px; border-radius: 2px; background: var(--line-2); overflow: hidden; min-width: 40px; }
 .bar i { display: block; height: 100%; width: 0; background: var(--accent); }
 .time { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); white-space: nowrap; }
-@media (max-width: 520px) { .cbtn span { display: none; } .cbtn { padding: 0; width: 44px; } .time { display: none; } }
+@media (max-width: 639px) { .cbtn span { display: none; } .cbtn { padding: 0; width: 44px; } .time { display: none; } }
 
-/* ---------- stage content (logical size 1280x720, or 480x270 when compact) ---------- */
+/* Embedded in the page: fixed chrome heights, so the page can reserve the final height up front. */
+body.embed .reel { max-width: none; gap: 0; padding: 10px 0 12px; }
+body.embed .top { height: 24px; overflow: hidden; padding: 0 14px; margin-bottom: 10px; }
+body.embed .stagewrap { flex: none; display: block; }
+body.embed .stage { border: 0; border-radius: 0; box-shadow: none; }
+body.embed .caption { height: 58px; min-height: 0; margin-top: 10px; padding: 0 14px; }
+body.embed .controls { margin-top: 10px; padding: 0 14px; height: 44px; }
+@media (max-width: 639px) {
+  body.embed .top { height: 58px; align-items: flex-start; }
+  body.embed .top .note { line-height: 1.35; }
+  body.embed .caption { height: 70px; font-size: 17px; }
+}
+
+/* ---------- stage content: logical 1280x720 on wide screens, the real pixel size on narrow ones ---------- */
 .inner { position: absolute; left: 0; top: 0; transform-origin: 0 0; font-size: 22px; line-height: 1.3; overflow: hidden;
-  --pad: 48px; background: radial-gradient(70% 60% at 50% 38%, rgba(157,191,161,.07), transparent 70%), var(--bg); }
-.inner.compact { font-size: 16px; --pad: 18px; }
+  background: radial-gradient(70% 60% at 50% 38%, rgba(157,191,161,.07), transparent 70%), var(--bg); }
 .inner.nt, .inner.nt * { transition: none !important; animation: none !important; }
-.sc { position: absolute; inset: 0; padding: var(--pad); display: flex; flex-direction: column; justify-content: center; opacity: 0; transition: opacity .5s ease; pointer-events: none; }
+.sc { position: absolute; inset: 0; padding: 40px; display: flex; flex-direction: column; justify-content: center; opacity: 0; transition: opacity .5s ease; pointer-events: none; }
 .sc.on { opacity: 1; }
+.narrow .sc { padding: 12px; }
 .a { opacity: 0; transform: translateY(10px); transition: opacity .6s ease, transform .6s ease; }
 .sc.on .a { opacity: 1; transform: none; transition-delay: var(--d, .25s); }
 .rv { opacity: 0; transform: translateY(8px); transition: opacity .45s ease, transform .45s ease; }
 .rv.on { opacity: 1; transform: none; }
-.lbl { font-family: var(--f-mono); font-size: .56em; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.rvr { opacity: 0; transition: opacity .45s ease; }
+.rvr.on { opacity: 1; }
+.lbl { font-family: var(--f-mono); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
 .lbl.acc { color: var(--accent); }
-.win { border: 1px solid var(--line-2); border-radius: .6em; background: var(--surface); overflow: hidden; display: flex; flex-direction: column; min-height: 0; box-shadow: 0 1em 3em rgba(0,0,0,.4); }
-.win-bar { display: flex; align-items: center; gap: .6em; padding: .5em .9em; background: var(--raised); border-bottom: 1px solid var(--line); font-size: .78em; }
-.win-bar .dots { display: flex; gap: .35em; } .win-bar .dots i { width: .6em; height: .6em; border-radius: 50%; background: var(--line-2); display: block; }
-.win-bar b { font-weight: 600; } .win-bar span.r { margin-left: auto; color: var(--ink-3); }
-.compact .win-bar .dots { display: none; }
+.narrow .lbl { font-size: 12px; }
 
 /* 1 title / 8 end */
 .t1, .end { text-align: center; margin: auto; }
-.t1 .lbl, .end .lbl { font-size: .62em; }
 .t1 h2, .end h2 { font-weight: 600; letter-spacing: -.03em; line-height: 1.06; text-wrap: balance; }
-.t1 h2 { font-size: 3.5em; margin-top: .4em; } .compact .t1 h2 { font-size: 2.1em; }
-.t1 .sub { margin: .9em auto 0; font-size: 1.2em; color: var(--ink-2); max-width: 30em; }
-.compact .t1 .sub { max-width: 20em; }
-.t1 .rule { width: 3.5em; height: 2px; background: var(--accent); margin: 1.2em auto 0; }
-.end { padding-bottom: 6em; } .compact .end { padding-bottom: 4.5em; }
-.end h2 { font-size: 2.7em; max-width: 14em; margin: .4em auto 0; } .compact .end h2 { font-size: 1.6em; }
-.end .sub { margin-top: .9em; font-size: 1.05em; color: var(--ink-2); }
+.t1 h2 { font-size: 78px; margin-top: 18px; }
+.t1 .sub { margin: 24px auto 0; font-size: 26px; color: var(--ink-2); max-width: 30em; }
+.t1 .rule { width: 76px; height: 2px; background: var(--accent); margin: 26px auto 0; }
+.end { padding-bottom: 120px; }
+.end h2 { font-size: 60px; max-width: 14em; margin: 18px auto 0; }
+.end .sub { margin-top: 20px; font-size: 23px; color: var(--ink-2); }
+.narrow .t1 h2 { font-size: 40px; } .narrow .t1 .sub { font-size: 18px; margin-top: 16px; } .narrow .t1 .rule { margin-top: 18px; }
+.narrow .end { padding-bottom: 90px; } .narrow .end h2 { font-size: 32px; } .narrow .end .sub { font-size: 16px; }
 .cta-layer { position: absolute; left: 0; right: 0; bottom: 11%; display: flex; justify-content: center; opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity .5s ease, transform .5s ease, visibility 0s linear .5s; }
 .cta-layer.on { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
 .cta { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 26px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font: 700 16px/1 var(--f-body); text-decoration: none; }
 .cta:hover { background: var(--ink); }
 
-/* 2 schedule */
-.sched { flex: 1; }
-.grid { flex: 1; min-height: 0; display: grid; grid-template-columns: 3.4em 1fr 1fr; grid-template-rows: auto 1fr; }
-.colh { padding: .5em .6em; font-weight: 600; font-size: .85em; text-align: center; border-bottom: 1px solid var(--line); border-left: 1px solid var(--line); }
-.colh.first { border-left: 0; }
-.axis { position: relative; }
-.axis span { position: absolute; left: 0; right: .5em; text-align: right; font-family: var(--f-mono); font-size: .56em; color: var(--ink-3); padding-top: .3em; }
-.lane { position: relative; border-left: 1px solid var(--line); background-image: linear-gradient(var(--line) 1px, transparent 1px); background-size: 100% 33.3334%; }
-.blk { position: absolute; left: .4em; right: .4em; display: flex; flex-direction: column; justify-content: center; gap: .15em; padding: .25em .65em; border-radius: .4em; background: var(--raised); border: 1px solid var(--line-2); overflow: hidden; opacity: 0; transform: translateY(6px); transition: opacity .45s ease, transform .45s ease, background .4s ease, border-color .4s ease, color .4s ease; }
-.lane.on .blk { opacity: 1; transform: none; transition-delay: var(--d, 0s); }
-.blk .who { font-weight: 600; font-size: .85em; white-space: nowrap; }
-.blk .tm { font-family: var(--f-mono); font-weight: 400; font-size: .72em; color: var(--ink-3); margin-right: .5em; }
-.mk { display: inline-flex; align-items: center; gap: .45em; font-family: var(--f-mono); font-size: .56em; letter-spacing: .02em; color: var(--ink-2); white-space: nowrap; }
-.mk .sh { width: 1.05em; height: 1.05em; flex: none; }
-.st-b { display: none; } .blk.cx .st-a { display: none; } .blk.cx .st-b { display: inline-flex; color: var(--danger); }
-.lane.on .blk.cx { background: transparent; border: 1px dashed var(--line-2); transition-delay: 0s; }
-.blk.cx .who { text-decoration: line-through; color: var(--ink-3); font-weight: 500; } .blk.cx .tm { text-decoration: line-through; }
-.blk.cx .who, .blk.cx .tm { text-decoration-thickness: 2px; }
-.lane.on .blk.cx { opacity: .85; background: var(--bg); }
-.blk.n { border-color: var(--accent); background: rgba(157,191,161,.13); }
-.blk.n .mk { color: var(--accent); }
-.lane.on .blk.n { opacity: 0; transform: scale(.96); transition-delay: 0s; }
-.lane.on .blk.n.on { opacity: 1; transform: none; }
-.lane.on .blk.t.gone { opacity: 0; }
-.legend { display: flex; flex-wrap: wrap; gap: .3em 1.3em; padding: .55em .9em; border-top: 1px solid var(--line); background: var(--bg-2); }
-.compact .legend { display: none; }
-.compact .blk { padding: .1em .5em; gap: 0; }
-.compact .blk .who { font-size: .82em; line-height: 1.15; } .compact .blk .mk { line-height: 1; } .compact .blk { min-height: 0; } .compact .blk .mk { font-size: .62em; }
-.compact .grid { grid-template-columns: 2.6em 1fr 1fr; } .compact .colh { padding: .3em .4em; }
+/* ---------- the OSCAR window: drawn from OSCAR's published look, in my own CSS ---------- */
+.emr { display: flex; flex-direction: column; min-height: 0; background: #fff; color: #15120B; border: 1px solid #5d6f99; overflow: hidden; font-family: Verdana, Tahoma, Arial, sans-serif; font-size: 12px; line-height: 1.25; box-shadow: 0 16px 48px rgba(0,0,0,.55); }
+.emr * { font-family: inherit; }
+.e-title { flex: none; display: flex; align-items: center; height: 24px; padding: 0 10px; background: #003399; color: #fff; font-size: 12px; font-weight: 700; }
+.e-title .r { margin-left: auto; font-weight: 400; }
+.e-link { flex: none; display: flex; align-items: center; height: 26px; padding: 0 8px; background: #fff; border-bottom: 1px solid #c0c0c0; white-space: nowrap; overflow: hidden; }
+.e-link a, .e-link span.l { display: inline-block; padding: 5px 5px; font-weight: 700; color: #00283c; text-decoration: none; font-size: 12px; }
+.e-link .l.hv { color: #fff; background: #486ebd; }
+.e-link .r { margin-left: auto; font-size: 12px; color: #00283c; font-weight: 700; padding-left: 10px; }
+.e-ivory { flex: none; display: flex; align-items: center; gap: 8px; min-height: 26px; padding: 0 10px; background: whitesmoke; border-bottom: 1px solid #c0c0c0; font-size: 12px; white-space: nowrap; overflow: hidden; }
+.e-ivory b { font-size: 14px; color: #00283c; }
+.e-ivory .lk { font-weight: 700; color: #00283c; }
+.e-ivory .lk u { text-decoration: underline; }
+.e-ivory .sp { margin-left: auto; font-weight: 700; color: #00283c; }
+.arw { display: inline-block; width: 0; height: 0; border: 5px solid transparent; }
+.arw.lf { border-right: 8px solid #00283c; border-left: 0; } .arw.rt { border-left: 8px solid #00283c; border-right: 0; }
+.e-foot { flex: none; display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; padding: 5px 10px; background: whitesmoke; border-top: 1px solid #c0c0c0; font-size: 12px; color: #15120B; }
+.sw { display: inline-block; width: 12px; height: 12px; border: 1px solid #486ebd; vertical-align: -2px; margin-right: 5px; }
 
-/* 3 automation */
-.split { font-size: 1.15em; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 1.4em; align-items: center; }
-.compact .split { font-size: 1em; grid-template-columns: 1fr; gap: .7em; }
-.slotcard { border: 1px dashed var(--accent); border-radius: .7em; padding: 1.2em 1.3em; background: rgba(157,191,161,.06); }
-.slotcard .big { font-size: 2.2em; font-weight: 600; letter-spacing: -.02em; margin-top: .25em; line-height: 1.1; }
-.slotcard p { margin-top: .4em; color: var(--ink-2); font-size: .85em; }
-.compact .slotcard { padding: .55em .8em; display: flex; flex-wrap: wrap; align-items: baseline; gap: .1em .9em; }
-.compact .slotcard .big { font-size: 1.4em; margin: 0; } .compact .slotcard p { margin: 0; }
-.panel-h { display: flex; align-items: center; gap: .6em; padding: .7em 1em; border-bottom: 1px solid var(--line); background: var(--raised); font-weight: 600; font-size: .85em; }
-.live { width: .55em; height: .55em; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 .25em rgba(157,191,161,.2); }
-.lines { padding: .5em 1em .8em; display: grid; }
-.line { display: flex; align-items: center; gap: .8em; padding: .7em 0; border-top: 1px solid var(--line); font-size: .95em; }
+/* provider schedule day view */
+.sched { flex: 1; min-height: 0; }
+.sgrid { flex: 1; min-height: 0; display: grid; grid-template-columns: 50px 1fr 50px 1fr; grid-template-rows: auto 1fr; background: #486ebd; gap: 0; }
+.colh { grid-column: span 2; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 4px 6px; font-weight: 700; font-size: 12px; text-align: center; color: #15120B; background: #bfefff; border: 1px solid #486ebd; }
+.colh.alt { background: silver; }
+.colh .wb { display: inline-block; padding: 0 4px; font-size: 12px; background: #f4ead7; border: 1px solid #0097cf; }
+.axis { display: flex; flex-direction: column; }
+.axis span { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; background: #00A488; border-bottom: 1px solid #486ebd; }
+.axis span.h { background: #3EA4E1; }
+.lane { position: relative; background: #fff;
+  background-image: linear-gradient(#486ebd 1px, transparent 1px); background-size: 100% calc(100% / var(--rows)); border-left: 2px solid #486ebd; border-right: 2px solid #486ebd; }
+.ap { position: absolute; left: 0; right: 0; display: flex; align-items: center; gap: 6px; padding: 2px 6px; border: 2px solid #486ebd; overflow: hidden; white-space: nowrap; opacity: 0; transition: opacity .45s ease, background .35s ease; }
+.lane.on .ap { opacity: 1; transition-delay: var(--d, 0s); }
+.ap .ic2 { flex: none; width: 17px; height: 17px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; line-height: 1; color: #fff; background: #00283c; border-radius: 2px; }
+.ap .nm { font-size: 12px; font-weight: 700; color: #00283c; }
+.ap .lks { margin-left: 6px; font-size: 12px; font-weight: 700; color: #00283c; letter-spacing: .02em; }
+.ap .lks i { font-style: normal; text-decoration: underline; margin-right: 5px; }
+.ap.td { background: #FDFEC7; } .ap.hr { background: #00ee00; } .ap.pk { background: #FFBBFF; } .ap.ns { background: #cccccc; } .ap.cx, .ap.cxs { background: #999999; } .ap.bd { background: #3ea4e1; }
+.ap.bd .nm, .ap.cx .nm, .ap.cxs .nm { color: #00283c; }
+.lane.on .ap.n { opacity: 0; outline: 3px solid #d9534f; outline-offset: -3px; transition-delay: 0s; }
+.lane.on .ap.n.on { opacity: 1; }
+.lane.on .ap.t.gone { opacity: 0; }
+.narrow .q-col { display: none; }
+.narrow .sgrid { grid-template-columns: 46px 1fr; }
+.narrow .colh { grid-column: span 2; }
+.narrow .legend { display: none; }
+.narrow .ap .lks { margin-left: 2px; } 
+
+/* tickler manager (Bootstrap 3 look) and waiting list */
+.tk { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+.tk * { font-family: inherit; }
+.tk-body { flex: 1; min-height: 0; padding: 10px 14px; background: #fff; display: flex; flex-direction: column; gap: 10px; }
+.tk h2 { font-size: 22px; font-weight: 500; line-height: 1.1; color: #333; }
+.tk-f { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font-size: 12px; color: #333; }
+.tk-f label { display: inline-flex; align-items: center; gap: 5px; }
+.tk-sel { display: inline-block; min-width: 70px; padding: 3px 8px; font-size: 12px; background: #F4EaD7; border: 1px solid #0097cf; border-radius: 2px; color: #333; }
+.btn3 { display: inline-flex; align-items: center; justify-content: center; padding: 4px 10px; font-size: 12px; line-height: 1.2; color: #333; background: #fff; border: 1px solid #ccc; border-radius: 4px; white-space: nowrap; transition: background .3s, color .3s; }
+.btn3.pri { color: #fff; background: #428bca; border-color: #357ebd; }
+.btn3.dng { color: #fff; background: #d9534f; border-color: #d43f3a; }
+.btn3.lnk { border-color: transparent; color: #428bca; background: transparent; }
+.btn3.dis { opacity: .65; }
+.btn3.go { opacity: 1; }
+.tktbl { width: 100%; border-collapse: collapse; font-size: 12px; color: #333; }
+.tktbl th { text-align: left; padding: 5px 8px; font-weight: 700; border-bottom: 2px solid #ddd; white-space: nowrap; }
+.tktbl td { padding: 5px 8px; border-top: 1px solid lightgrey; white-space: nowrap; transition: background .3s; }
+.tktbl tbody tr:nth-child(odd) td { background: #f9f9f9; }
+.tktbl tr.sel td { background: #d9edf7 !important; }
+.tktbl .cb { display: inline-block; width: 12px; height: 12px; border: 1px solid #777; background: #fff; vertical-align: -2px; position: relative; }
+.tktbl tr.sel .cb::after { content: ""; position: absolute; left: 3px; top: 0; width: 3px; height: 7px; border: solid #222; border-width: 0 2px 2px 0; transform: rotate(40deg); }
+.tktbl .pen { display: inline-block; width: 10px; height: 10px; border-bottom: 2px solid #555; transform: skew(-30deg); }
+.tktbl .s2 { display: none; } .tktbl tr.dn .s2 { display: inline; } .tktbl tr.dn .s1 { display: none; }
+.tktbl tr.rvr.on, .tktbl tr.rvr { }
+.tk-act { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.narrow .hn { display: none; }
+.tasks { height: 470px; }
+.narrow .tasks { height: auto; }
+.narrow .tktbl td { white-space: normal; padding: 5px 4px; } .narrow .tktbl th { padding: 5px 4px; } .narrow .tk h2 { font-size: 18px; } .narrow .tk-body { padding: 8px 8px; }
+
+.pnl { background: #fff; color: #15120B; border: 1px solid #5d6f99; overflow: hidden; font-family: Verdana, Tahoma, Arial, sans-serif; font-size: 12px; box-shadow: 0 12px 36px rgba(0,0,0,.5); }
+.pnl * { font-family: inherit; }
+.pnl-h { display: flex; align-items: center; justify-content: space-between; padding: 5px 10px; background: #6699cc; border-bottom: 1px solid #486ebd; color: #000; font-weight: 700; font-size: 12px; }
+.pnl-h span { font-weight: 400; }
+.wl { width: 100%; border-collapse: collapse; font-size: 12px; }
+.wl th { text-align: left; padding: 4px 8px; font-weight: 700; background: #6699cc; border: 1px solid #fff; white-space: nowrap; }
+.wl td { padding: 5px 8px; border: 1px solid #fff; white-space: nowrap; font-size: 12px; }
+.wl tr.o td { background: #F7F7F7; } .wl tr.e td { background: #FDFEC7; }
+.wl td.nt { color: #3366CC; }
+.wl tr.hl td { background: #b8f0b8 !important; }
+.wl tr.gone { display: none; } .wl tr.fade td { opacity: 0; transition: opacity .4s; }
+.wl .mk { color: #0000FF; text-decoration: underline; }
+.wl .mk.sl { }
+.audit { padding: 0; font-size: 12px; color: #15120B; }
+.audit .ah, .audit .ar { display: grid; grid-template-columns: 82px 62px minmax(0, 1fr); gap: 0; }
+.audit .ah { background: #6699cc; font-weight: 700; }
+.audit .ah span, .audit .ar span { padding: 5px 8px; border: 1px solid #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.audit .ar:nth-child(even) span { background: #F7F7F7; } .audit .ar:nth-child(odd) span { background: #FDFEC7; }
+.audit .rd { color: #1f5b87; font-weight: 700; } .audit .wr { color: #9a4a00; font-weight: 700; }
+
+/* 3 automation (Aevon's own panel, on the dark stage) */
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 36px; align-items: center; }
+.narrow .split { grid-template-columns: 1fr; gap: 14px; }
+.slotcard { border: 1px dashed var(--accent); border-radius: 14px; padding: 28px 30px; background: rgba(157,191,161,.06); }
+.slotcard .big { font-size: 56px; font-weight: 600; letter-spacing: -.02em; margin-top: 6px; line-height: 1.1; }
+.slotcard p { margin-top: 10px; color: var(--ink-2); font-size: 22px; }
+.narrow .slotcard { padding: 14px 16px; } .narrow .slotcard .big { font-size: 38px; } .narrow .slotcard p { font-size: 16px; }
+.win { border: 1px solid var(--line-2); border-radius: 12px; background: var(--surface); overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,.4); }
+.panel-h { display: flex; align-items: center; gap: 12px; padding: 14px 22px; border-bottom: 1px solid var(--line); background: var(--raised); font-weight: 600; font-size: 20px; }
+.live { width: 11px; height: 11px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px rgba(157,191,161,.2); }
+.lines { padding: 8px 22px 14px; display: grid; }
+.line { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-top: 1px solid var(--line); font-size: 22px; }
 .line:first-child { border-top: 0; }
-.compact .line { padding: .45em 0; font-size: .9em; }
-.ic { width: 1.25em; height: 1.25em; border-radius: 50%; border: 1.5px solid var(--ink-3); flex: none; position: relative; transition: background .3s, border-color .3s; }
+.narrow .panel-h { font-size: 16px; padding: 10px 14px; } .narrow .lines { padding: 4px 14px 8px; } .narrow .line { font-size: 16px; padding: 11px 0; gap: 12px; }
+.ic { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--ink-3); flex: none; position: relative; transition: background .3s, border-color .3s; }
+.narrow .ic { width: 22px; height: 22px; }
 .line.done .ic { background: var(--accent); border-color: var(--accent); }
 .line.done .ic::after { content: ""; position: absolute; left: 32%; top: 14%; width: 26%; height: 50%; border: solid var(--on-accent); border-width: 0 2px 2px 0; transform: rotate(40deg); }
 .line b { color: var(--accent); font-weight: 700; }
 
 /* 4, 5 phone and texts */
-.row { display: grid; grid-template-columns: auto minmax(0, 26em); gap: 3.5em; align-items: center; justify-content: center; }
-.compact .row { gap: 1.1em; }
-.ph { height: 26em; width: 15.5em; border: 1px solid var(--line-2); border-radius: 1.8em; padding: .5em; background: var(--raised); box-shadow: 0 1.5em 4em rgba(0,0,0,.5); }
-.compact .ph { height: 14em; width: 9em; border-radius: 1.2em; }
-.ph-in { height: 100%; border-radius: 1.4em; background: var(--bg); border: 1px solid var(--line); padding: 0 .8em .8em; overflow: hidden; font-size: .9em; }
-.compact .ph-in { font-size: .74em; }
-.ph-top { margin: 0 -.8em .8em; padding: 1em .8em .7em; border-bottom: 1px solid var(--line); text-align: center; font-family: var(--f-mono); font-size: .68em; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); }
-.msg { width: fit-content; max-width: 92%; margin-top: .5em; padding: .6em .8em; border-radius: 1em; line-height: 1.38; }
-.msg.in { background: var(--raised); border-bottom-left-radius: .25em; }
-.msg.out { margin-left: auto; background: var(--accent); color: var(--on-accent); font-weight: 700; border-bottom-right-radius: .25em; }
-.typing { display: none; gap: .3em; padding: .8em .9em; } .typing.on { display: flex; }
-.typing i { width: .45em; height: .45em; border-radius: 50%; background: var(--ink-3); animation: dot 1s infinite; }
-.typing i:nth-child(2) { animation-delay: .15s; } .typing i:nth-child(3) { animation-delay: .3s; }
-@keyframes dot { 0%, 60%, 100% { opacity: .3; } 30% { opacity: 1; } }
-.sendp { display: grid; gap: .9em; align-content: center; }
-.counter { font-size: 1.1em; color: var(--ink-2); } .counter b { display: inline-block; vertical-align: -.12em; font-size: 3.2em; font-weight: 600; color: var(--ink); letter-spacing: -.03em; line-height: 1; margin: 0 .2em; }
-.compact .counter b { font-size: 2.2em; }
-.compact .counter { font-size: .95em; }
-.chips { display: grid; gap: .5em; }
-.pt { display: flex; align-items: center; gap: .7em; padding: .6em .9em; border: 1px solid var(--line-2); border-radius: 999px; background: var(--surface); font-family: var(--f-mono); font-size: .68em; }
-.compact .pt { padding: .4em .8em; font-size: .72em; }
-.pt em { margin-left: auto; font-style: normal; color: var(--accent); }
-.nohd { display: inline-flex; width: fit-content; align-items: center; gap: .6em; font-size: .82em; color: var(--accent); border: 1px solid var(--accent); border-radius: 999px; padding: .35em .9em; }
-.compact .nohd { font-size: .78em; }
-.trio { font-size: 1.2em; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1em; align-items: center; }
-.compact .trio { font-size: 1em; gap: .5em; }
-.card { border: 1px solid var(--line-2); border-radius: 1em; background: var(--surface); padding: 0 .9em .9em; min-height: 62%; transition: border-color .4s, background .4s, opacity .4s; }
-.card.hl { border-color: var(--accent); background: rgba(157,191,161,.08); }
-.card-h { display: flex; justify-content: space-between; align-items: center; gap: .5em; margin: 0 -.9em .6em; padding: .8em .9em .65em; border-bottom: 1px solid var(--line); font-family: var(--f-mono); font-size: .62em; letter-spacing: .03em; color: var(--ink-2); }
-.card .msg { font-size: .85em; }
-.compact .card { padding: 0 .55em .6em; } .compact .card-h { margin: 0 -.55em .45em; padding: .6em .55em .5em; font-size: .6em; }
-.compact .card .msg { font-size: .72em; padding: .5em .6em; }
-.compact .card .msg.q { display: block; width: auto; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.badge { color: var(--accent); border: 1px solid var(--accent); border-radius: 999px; padding: .1em .6em; opacity: 0; transition: opacity .4s; white-space: nowrap; }
-.card.hl .badge { opacity: 1; }
-.compact .badge { display: none; }
-
-/* 6 task */
-.tasks { flex: none; font-size: 1.15em; }
-.compact .tasks { font-size: 1em; }
-.tbar { display: flex; align-items: center; gap: 1em; padding: .8em 1.1em; border-bottom: 1px solid var(--line); font-weight: 600; font-size: .95em; }
-.tbar .plus { margin-left: auto; font-size: .8em; font-weight: 600; border: 1px solid var(--line-2); border-radius: 999px; padding: .25em .9em; color: var(--ink-2); }
-.tbar .crumb { color: var(--ink-3); font-weight: 500; }
-.tbody { padding: 1.1em;  display: flex; flex-direction: column; gap: .8em; min-height: 0; }
-.empty { color: var(--ink-3); font-size: .85em; padding: .4em 0; }
-.task { border: 1px solid var(--accent); border-radius: .6em; background: rgba(157,191,161,.07); padding: 1em 1.2em; transition: border-color .4s, background .4s; }
-.task h3 { font-size: 1.3em; font-weight: 600; letter-spacing: -.015em; line-height: 1.2; }
-.compact .task { padding: .7em .8em; } .compact .task h3 { font-size: 1.1em; }
-.fields { display: grid; grid-template-columns: repeat(3, minmax(0, auto)); justify-content: start; gap: .4em 2.2em; margin-top: .9em; }
-.compact .fields { gap: .3em 1.1em; margin-top: .6em; grid-template-columns: repeat(2, minmax(0, auto)); }
-.fields div { display: grid; gap: .1em; } .fields .v { font-size: .85em; font-weight: 500; }
-.v2 { display: none; } .task.done .v2 { display: inline; } .task.done .v1 { display: none; }
-.act { display: flex; align-items: center; gap: 1em; margin-top: 1.1em; }
-.compact .act { margin-top: .7em; }
-.approve { position: relative; font: 700 .85em/1 var(--f-body); padding: .8em 1.5em; border-radius: 999px; background: var(--accent); color: var(--on-accent); border: 0; transition: background .3s, transform .15s; }
-.compact .approve { padding: .65em 1.2em; }
-.approve .b2 { display: none; } .task.done .approve { background: transparent; border: 1px solid var(--accent); color: var(--accent); } .task.done .approve .b1 { display: none; } .task.done .approve .b2 { display: inline; }
-.pill { font-family: var(--f-mono); font-size: .56em; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-2); border: 1px solid var(--line-2); border-radius: 999px; padding: .4em .9em; }
-.pill.p2 { display: none; color: var(--accent); border-color: var(--accent); } .task.done .pill.p1 { display: none; } .task.done .pill.p2 { display: inline-block; }
+.row { display: grid; grid-template-columns: auto minmax(0, 560px); gap: 80px; align-items: center; justify-content: center; }
+.narrow .row { grid-template-columns: 1fr; gap: 10px; justify-items: center; align-content: center; }
+.phone { position: relative; width: 340px; height: 636px; padding: 10px; border-radius: 48px; background: #20252b; border: 2px solid #3a424b; box-shadow: 0 30px 80px rgba(0,0,0,.6), inset 0 0 0 2px #0d0f11; }
+.pscreen { position: relative; height: 100%; border-radius: 38px; background: #fff; color: #1a1d21; overflow: hidden; display: flex; flex-direction: column; font-family: var(--f-body); }
+.sbar { flex: none; display: flex; align-items: center; justify-content: space-between; padding: 12px 24px 0; height: 36px; font-size: 14px; font-weight: 700; color: #1a1d21; }
+.sbar .ico { display: inline-flex; align-items: center; gap: 6px; }
+.sbar svg { display: block; }
+.phead { flex: none; display: flex; align-items: center; gap: 10px; padding: 6px 14px 10px 10px; border-bottom: 1px solid #dfe2e6; background: #f6f7f8; }
+.phead .back { width: 14px; height: 14px; border-left: 3px solid #1c6dc0; border-bottom: 3px solid #1c6dc0; transform: rotate(45deg); margin: 0 6px 0 8px; flex: none; }
+.phead .av { width: 38px; height: 38px; border-radius: 50%; background: #1c6dc0; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 17px; flex: none; }
+.phead b { display: block; font-size: 16px; font-weight: 700; line-height: 1.15; }
+.phead small { display: block; font-size: 13px; color: #5a626c; }
+.thread { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 7px; padding: 10px 16px 12px; overflow: hidden; background: #fff; }
+.stamp { align-self: center; font-size: 13px; color: #6a727c; margin: 2px 0; }
+.b { position: relative; width: fit-content; max-width: 84%; padding: 9px 14px; border-radius: 20px; font-size: 16px; line-height: 1.36; }
+.b.in { align-self: flex-start; background: #e6e8eb; color: #1a1d21; border-bottom-left-radius: 5px; margin-left: 6px; }
+.b.in::before { content: ""; position: absolute; left: -6px; bottom: 0; width: 14px; height: 14px; background: #e6e8eb; border-bottom-right-radius: 14px; }
+.b.in::after { content: ""; position: absolute; left: -9px; bottom: 0; width: 9px; height: 16px; background: #fff; border-bottom-right-radius: 9px; }
+.b.out { align-self: flex-end; background: #1c6dc0; color: #fff; font-weight: 700; border-bottom-right-radius: 5px; margin-right: 6px; }
+.b.out::before { content: ""; position: absolute; right: -6px; bottom: 0; width: 14px; height: 14px; background: #1c6dc0; border-bottom-left-radius: 14px; }
+.b.out::after { content: ""; position: absolute; right: -9px; bottom: 0; width: 9px; height: 16px; background: #fff; border-bottom-left-radius: 9px; }
+.b.typ { display: none; align-self: flex-end; gap: 5px; padding: 14px 16px; margin-right: 6px; background: #1c6dc0; }
+.b.typ.on { display: flex; opacity: 1; transform: none; }
+.b.typ i { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.9); animation: dot 1s infinite; }
+.b.typ i:nth-child(2) { animation-delay: .15s; } .b.typ i:nth-child(3) { animation-delay: .3s; }
+@keyframes dot { 0%, 60%, 100% { opacity: .35; } 30% { opacity: 1; } }
+.dlv { align-self: flex-end; margin-right: 8px; font-size: 13px; color: #6a727c; }
+.compose { flex: none; display: flex; align-items: center; gap: 8px; padding: 8px 14px 18px; background: #fff; border-top: 1px solid #eceef0; }
+.compose span { flex: 1; height: 34px; border: 1px solid #cfd4da; border-radius: 17px; padding: 0 14px; display: flex; align-items: center; font-size: 15px; color: #7b838d; }
+.compose i { width: 30px; height: 30px; border-radius: 50%; background: #d5dae0; flex: none; }
+.narrow .phone { width: 282px; height: 356px; padding: 8px; border-radius: 36px; }
+.narrow .pscreen { border-radius: 29px; }
+.narrow .sbar { height: 30px; padding: 9px 18px 0; font-size: 13px; }
+.narrow .phead { padding: 4px 12px 8px 6px; } .narrow .phead .av { width: 32px; height: 32px; font-size: 15px; }
+.narrow .phead b { font-size: 15px; } .narrow .phead small { font-size: 12px; }
+.narrow .thread { padding: 8px 12px 10px; gap: 6px; }
+.narrow .b { font-size: 15px; padding: 7px 12px; }
+.narrow .compose { display: none; }
+.narrow #s4 .phone { height: 286px; }
+.narrow .hide-n { display: none; }
+.sendp { display: grid; gap: 16px; align-content: center; }
+.counter { font-size: 26px; color: var(--ink-2); } .counter b { display: inline-block; vertical-align: -.1em; font-size: 78px; font-weight: 600; color: var(--ink); letter-spacing: -.03em; line-height: 1; margin: 0 .22em 0 .2em; }
+.narrow .counter { font-size: 15px; } .narrow .counter b { font-size: 26px; margin: 0 .2em; vertical-align: -.05em; }
+.rcps { display: grid; gap: 12px; }
+.rcp { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 22px; border: 1px solid var(--line-2); border-radius: 14px; background: var(--surface); font-size: 26px; font-weight: 600; transition: border-color .4s, background .4s; }
+.rcp .stx { font-size: 20px; font-weight: 600; color: var(--ink-2); border: 1px solid var(--line-2); border-radius: 999px; padding: 6px 16px; white-space: nowrap; transition: color .4s, border-color .4s, background .4s; }
+.rcp.yes { border-color: var(--accent); background: rgba(157,191,161,.1); }
+.rcp.yes .stx { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
+.rcp.told .stx { color: var(--ink-3); }
+.narrow .rcp { padding: 7px 12px; font-size: 15px; border-radius: 10px; gap: 8px; } .narrow .rcps { gap: 6px; width: 100%; }
+.narrow .rcp .stx { font-size: 12px; padding: 3px 10px; }
+.narrow .sendp { gap: 8px; width: 100%; }
+.nohd { display: inline-flex; width: fit-content; align-items: center; font-size: 20px; color: var(--accent); border: 1px solid var(--accent); border-radius: 999px; padding: 8px 20px; }
+.narrow .nohd { font-size: 13px; padding: 4px 12px; }
 
 /* 7 booked */
-#s7 .sched { flex: 1; }
-.s7grid { position: relative; height: 100%; min-height: 0; display: flex; flex-direction: column; justify-content: center; }
-.s7sched { position: absolute; left: 0; top: 0; bottom: 0; width: 55%; display: flex; flex-direction: column; transition: opacity .5s; }
-.compact .s7sched { width: 100%; } .compact .s7sched.away { opacity: 0; }
-.actchip { position: absolute; z-index: 3; left: 50%; bottom: 1.2em; transform: translate(-50%, 8px); display: flex; align-items: center; gap: .6em; background: var(--bg); border: 1px solid var(--accent); color: var(--accent); border-radius: 999px; padding: .4em 1em; font-family: var(--f-mono); font-size: .62em; white-space: nowrap; opacity: 0; transition: opacity .4s, transform .4s; }
-.actchip.on { opacity: 1; transform: translate(-50%, 0); }
-.s7panel { position: absolute; right: 0; top: 0; bottom: 0; width: 42%; display: flex; flex-direction: column; justify-content: center; gap: 1em; }
-.compact .s7panel { width: 100%; gap: .5em; pointer-events: none; }
-.wlh { display: flex; justify-content: space-between; align-items: center; }
-.wlrow { display: flex; align-items: center; gap: .7em; padding: .55em 1em; border-top: 1px solid var(--line); font-family: var(--f-mono); font-size: .78em; max-height: 3.4em; overflow: hidden; transition: max-height .5s ease, padding .5s ease, opacity .5s ease, background .4s; }
-.compact .wlrow { padding: .25em .9em; font-size: .82em; max-height: 2.6em; }
-.wlrow em { margin-left: auto; font-style: normal; color: var(--accent); opacity: 0; transition: opacity .3s; }
-.wlrow.hl { background: rgba(157,191,161,.1); } .wlrow.hl em { opacity: 1; }
-.wlrow.gone { max-height: 0; padding-top: 0; padding-bottom: 0; opacity: 0; border-top-width: 0; }
-.audit { padding: .6em 1em .8em; font-family: var(--f-mono); font-size: .62em; line-height: 1.95; color: var(--ink-2); background: var(--bg-2); }
-.compact .audit { font-size: .66em; line-height: 1.75; padding: .4em .8em .5em; }
-.audit div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.audit .tt { color: var(--ink-3); } .audit .rd { color: var(--ink-2); font-weight: 500; } .audit .wr { color: var(--accent); font-weight: 500; }
-.audit .k { display: inline-block; width: 5.5ch; margin: 0 1ch; }
-.compact .s7panel .panel-h, .compact .s7panel .wlh { padding: .45em .9em; }
+.s7grid { position: relative; height: 100%; min-height: 0; display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(0, 1fr); gap: 24px; align-items: stretch; }
+.s7pane.sw7 { display: flex; flex-direction: column; min-height: 0; }
+.s7panel { display: flex; flex-direction: column; justify-content: center; gap: 18px; min-height: 0; }
+.narrow .s7grid { display: block; }
+.narrow .s7pane { position: absolute; inset: 0; }
+.narrow .s7panel { position: absolute; inset: 0; display: block; }
+.narrow .s7panel > .pnl { position: absolute; left: 0; right: 0; top: 50%; bottom: auto; transform: translateY(-50%); }
+.narrow #s7sched { opacity: 0; transition: opacity .4s; } .narrow #s7sched.on { opacity: 1; }
+.narrow .s7panel > .pnl.rv { transform: translateY(-46%); } .narrow .s7panel > .pnl.rv.on { transform: translateY(-50%); }
+.narrow .s7panel > .pnl.rv:not(.on) { pointer-events: none; }
+.narrow .audit { font-size: 12px; } .narrow .audit .ar span { white-space: normal; } .narrow .audit .ah, .narrow .audit .ar { grid-template-columns: 70px 54px minmax(0, 1fr); }
 
 /* cursor */
-.cur { position: absolute; left: 0; top: 0; z-index: 20; width: 1.5em; pointer-events: none; opacity: 0; transition: opacity .3s ease, transform 1s cubic-bezier(.45,.05,.25,1); filter: drop-shadow(0 2px 4px rgba(0,0,0,.6)); }
+.cur { position: absolute; left: 0; top: 0; z-index: 20; width: 26px; pointer-events: none; opacity: 0; transition: opacity .3s ease, transform 1s cubic-bezier(.45,.05,.25,1); filter: drop-shadow(0 2px 3px rgba(0,0,0,.45)); }
 .cur.on { opacity: 1; } .cur.jump { transition: opacity .3s ease; }
 .cur svg { display: block; width: 100%; height: auto; transition: transform .15s; transform-origin: 0 0; }
 .cur.press svg { transform: scale(.82); }
-.cur::after { content: ""; position: absolute; left: -.6em; top: -.6em; width: 1.2em; height: 1.2em; border-radius: 50%; border: 2px solid var(--accent); opacity: 0; transform: scale(.4); }
+.cur::after { content: ""; position: absolute; left: -10px; top: -10px; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #1f5b87; opacity: 0; transform: scale(.4); }
 .cur.press::after { animation: rip .5s ease-out; }
 @keyframes rip { 0% { opacity: .9; transform: scale(.4); } 100% { opacity: 0; transform: scale(1.6); } }
 
 /* reduced motion: static storyboard */
-.board { display: none; width: 100%; max-width: 1100px; margin: 0 auto; }
+.board { display: none; width: 100%; max-width: 1180px; margin: 0 auto; padding: 14px 14px 24px; }
 .board h1 { font-size: clamp(22px, 3vw, 30px); font-weight: 600; letter-spacing: -.02em; margin: 6px 0 4px; }
 .board > p { color: var(--ink-2); font-size: 15px; }
-.board ol { list-style: none; counter-reset: b; display: grid; gap: 22px; margin-top: 20px; }
-.board li { counter-increment: b; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding-top: 18px; border-top: 1px solid var(--line); }
+.board ol { list-style: none; counter-reset: b; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 28px; margin-top: 20px; }
+.board li { counter-increment: b; display: grid; align-content: start; grid-template-columns: minmax(0, 1fr); gap: 10px; padding-top: 16px; border-top: 1px solid var(--line); }
 .board h3 { font-size: 18px; font-weight: 600; line-height: 1.3; }
 .board h3::before { content: counter(b) ". "; font-family: var(--f-mono); font-size: 13px; color: var(--accent); }
 .board li > p { color: var(--ink-2); font-size: 15px; }
-.frame { position: relative; overflow: hidden; border: 1px solid var(--line-2); border-radius: 10px; aspect-ratio: 16 / 9; background: var(--bg); max-width: 640px; }
+.frame { position: relative; overflow: hidden; border: 1px solid var(--line-2); border-radius: 10px; background: var(--bg); width: 100%; }
 .frame .inner { transform-origin: 0 0; }
 .board .cta { margin-top: 6px; width: fit-content; }
+@media (max-width: 760px) { .board ol { grid-template-columns: 1fr; } }
 body.reduced .reel { display: none; }
 body.reduced .board { display: block; }
 body.reduced { display: block; }
@@ -243,14 +311,12 @@ body.reduced { display: block; }
 </head>
 <body>
 
-<main class="reel" id="reel" role="region" aria-label="Cancellation backfill demo: a self-playing illustration with sample data">
-  <div class="top">
-    <span class="chip" id="chip">Wording: OSCAR</span>
-    <span class="note">Illustration with sample data, not a screenshot</span>
-  </div>
+<main class="reel" id="reel" role="region" aria-label="Cancellation backfill demo: a self-playing illustration with fictional names">
+  <div class="top"><span class="note">Illustration of how it would look in OSCAR. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University.</span></div>
   <div class="stagewrap" id="stagewrap">
     <div class="stage" id="stage">
       <div class="inner" id="inner">
+
         <section class="sc" id="s1"><div class="t1">
           <p class="lbl acc a" style="--d:.15s">Aevon Health &middot; in development</p>
           <h2 class="a" style="--d:.35s">Cancellation backfill</h2>
@@ -258,73 +324,109 @@ body.reduced { display: block; }
           <p class="sub a" style="--d:.8s">A cancelled consult, filled from your own waiting list.</p>
         </div></section>
 
-        <section class="sc" id="s2"><div class="win sched a" id="sa"></div></section>
+        <section class="sc" id="s2"><div class="emr sched a" id="sa"></div></section>
 
         <section class="sc" id="s3"><div class="split">
-          <div class="slotcard a" style="--d:.2s"><span class="lbl acc">Open slot</span><div class="big">Thu 10:40</div><p>Provider A &middot; your clinic</p></div>
+          <div class="slotcard a" style="--d:.2s"><span class="lbl acc">Open slot</span><div class="big">Thu 10:40</div><p>Dr. Hale &middot; Your Clinic</p></div>
           <div class="win a" style="--d:.4s">
             <div class="panel-h"><span class="live"></span>Aevon activity</div>
             <div class="lines">
               <div class="line rv" id="l1"><span class="ic"></span><span>Slot opened: Thu 10:40</span></div>
-              <div class="line rv" id="l2"><span class="ic"></span><span data-t="wlchecked"></span></div>
+              <div class="line rv" id="l2"><span class="ic"></span><span>Waiting list checked</span></div>
               <div class="line rv" id="l3"><span class="ic"></span><span><b>3 patients</b> match this provider and time</span></div>
             </div>
           </div>
         </div></section>
 
         <section class="sc" id="s4"><div class="row">
-          <div class="ph a"><div class="ph-in">
-            <div class="ph-top">Text from your clinic</div>
-            <div class="msg in typing" id="typing"><i></i><i></i><i></i></div>
-            <div class="msg in rv" id="m1">An appointment has opened at your clinic on Thursday at 10:40 am. Reply YES to take it.</div>
+          <div class="phone a"><div class="pscreen">
+            <div class="sbar"><span>9:41</span><span class="ico"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div>
+            <div class="phead"><span class="back"></span><span class="av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div>
+            <div class="thread">
+              <div class="stamp">Today 9:41 am</div>
+              <div class="b in rv" id="m4">Hi Olivia, an appointment has opened at Your Clinic on Thursday at 10:40 am. Reply YES to take it.</div>
+            </div>
+            <div class="compose"><span>Text message</span><i></i></div>
           </div></div>
           <div class="sendp a" style="--d:.5s">
-            <div class="counter">Sent to <b id="cnt" data-init="0">0</b>patients</div>
-            <div class="chips">
-              <div class="pt rv" id="p1">Chart 20917<em>sent</em></div>
-              <div class="pt rv" id="p2">Chart 14073<em>sent</em></div>
-              <div class="pt rv" id="p3">Chart 31558<em>sent</em></div>
+            <div class="counter">Sent to<b id="cnt" data-init="0">0</b>patients</div>
+            <div class="rcps">
+              <div class="rcp rv" id="p1"><span>Tran, Olivia</span><span class="stx">Delivered</span></div>
+              <div class="rcp rv" id="p2"><span>Castellanos, Ana</span><span class="stx">Delivered</span></div>
+              <div class="rcp rv" id="p3"><span>Whitfield, Grace</span><span class="stx">Delivered</span></div>
             </div>
             <div class="nohd rv" id="nohd">No health details in the text</div>
           </div>
         </div></section>
 
-        <section class="sc" id="s5"><div class="trio">
-          <div class="card a" id="c1" style="--d:.2s"><div class="card-h"><span>Chart 20917</span><span class="badge">First reply</span></div>
-            <div class="msg in q">An appointment has opened at your clinic on Thursday at 10:40 am. Reply YES to take it.</div>
-            <div class="msg out rv" id="y1">YES</div></div>
-          <div class="card a" id="c2" style="--d:.35s"><div class="card-h"><span>Chart 14073</span></div>
-            <div class="msg in q">An appointment has opened at your clinic on Thursday at 10:40 am. Reply YES to take it.</div>
-            <div class="msg in rv" id="f2">That appointment has now been filled.</div></div>
-          <div class="card a" id="c3" style="--d:.5s"><div class="card-h"><span>Chart 31558</span></div>
-            <div class="msg in q">An appointment has opened at your clinic on Thursday at 10:40 am. Reply YES to take it.</div>
-            <div class="msg in rv" id="f3">That appointment has now been filled.</div></div>
-        </div></section>
-
-        <section class="sc" id="s6"><div class="win tasks a">
-          <div class="tbar" id="tbar"></div>
-          <div class="tbody">
-            <div class="empty" id="empty"></div>
-            <div class="task rv" id="task">
-              <h3>Approve booking: Chart 20917, Thu 10:40</h3>
-              <div class="fields" id="fields"></div>
-              <div class="act"><button class="approve" id="approve" type="button" tabindex="-1"><span class="b1">Approve</span><span class="b2">Approved</span></button><span class="pill p1">Waiting for approval</span><span class="pill p2">Approved</span></div>
+        <section class="sc" id="s5"><div class="row">
+          <div class="phone a"><div class="pscreen">
+            <div class="sbar"><span>9:42</span><span class="ico"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div>
+            <div class="phead"><span class="back"></span><span class="av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div>
+            <div class="thread">
+              <div class="stamp hide-n">Today 9:41 am</div>
+              <div class="b in hide-n">Hi Olivia, an appointment has opened at Your Clinic on Thursday at 10:40 am. Reply YES to take it.</div>
+              <div class="b out typ" id="typ"><i></i><i></i><i></i></div>
+              <div class="b out rv" id="y5">YES</div>
+              <div class="dlv rv" id="dlv">Delivered</div>
+              <div class="stamp rv" id="st5">9:43 am</div>
+              <div class="b in rv" id="c5">You're booked for Thursday at 10:40 am. Reply CANCEL if you can no longer come.</div>
+            </div>
+            <div class="compose"><span>Text message</span><i></i></div>
+          </div></div>
+          <div class="sendp a" style="--d:.4s">
+            <div class="counter">Replies</div>
+            <div class="rcps">
+              <div class="rcp" id="q1"><span>Tran, Olivia</span><span class="stx" data-init="Delivered">Delivered</span></div>
+              <div class="rcp" id="q2"><span>Castellanos, Ana</span><span class="stx" data-init="Delivered">Delivered</span></div>
+              <div class="rcp" id="q3"><span>Whitfield, Grace</span><span class="stx" data-init="Delivered">Delivered</span></div>
             </div>
           </div>
         </div></section>
 
-        <section class="sc" id="s7"><div class="s7grid">
-          <div class="s7sched" id="s7sched"><div class="win sched" id="sb"></div></div>
-          <div class="actchip" id="actchip"></div>
-          <div class="s7panel" id="s7panel">
-            <div class="win rv" id="wlcard">
-              <div class="panel-h wlh"><span data-t="wl"></span><span class="lbl" id="wlcount" data-init="3 waiting">3 waiting</span></div>
-              <div class="wlrow" id="wl1"><span>Chart 20917</span><em>booked</em></div>
-              <div class="wlrow"><span>Chart 14073</span></div>
-              <div class="wlrow"><span>Chart 31558</span></div>
+        <section class="sc" id="s6"><div class="emr tk tasks a">
+          <div class="e-title">OSCAR EMR (illustration)<span class="r">Front desk</span></div>
+          <div class="tk-body">
+            <h2>Tickler Manager</h2>
+            <div class="tk-f">
+              <label>Service Date <span class="tk-sel">2026-11-19</span></label>
+              <label class="hn">Creator <span class="tk-sel">All Providers</span></label>
+              <label>Assigned To <span class="tk-sel">Desk, Front</span></label>
+              <label>Status <span class="tk-sel">Active</span></label>
+              <span class="btn3 pri">Search</span>
             </div>
-            <div class="win rv" id="auditcard">
-              <div class="panel-h wlh"><span>Audit log</span><span class="lbl">sample times</span></div>
+            <table class="tktbl" id="tasktbl">
+              <thead><tr><th></th><th class="hn"></th><th>Demographic Name</th><th class="hn">Creator</th><th class="hn">Service Date</th><th class="hn">Date of Message</th><th class="hn">Priority</th><th class="hn">Assigned to</th><th>Status</th><th>Message</th></tr></thead>
+              <tbody>
+                <tr class="rvr" id="newtask"><td><span class="cb"></span></td><td class="hn"><span class="pen"></span></td><td>Tran, Olivia</td><td class="hn">Aevon, Service</td><td class="hn">2026-11-19</td><td class="hn">2026-11-18 09:41</td><td class="hn">Normal</td><td class="hn">Desk, Front</td><td><span class="s1">Active</span><span class="s2">Completed</span></td><td>Approve booking: Thu 10:40</td></tr>
+                <tr><td><span class="cb"></span></td><td class="hn"><span class="pen"></span></td><td>Lindqvist, Mara</td><td class="hn">Hale, Dr.</td><td class="hn">2026-11-18</td><td class="hn">2026-11-16 14:02</td><td class="hn">High</td><td class="hn">Desk, Front</td><td>Active</td><td>Return phone call</td></tr>
+                <tr><td><span class="cb"></span></td><td class="hn"><span class="pen"></span></td><td>Bains, Harpreet</td><td class="hn">Desk, Front</td><td class="hn">2026-11-20</td><td class="hn">2026-11-16 10:15</td><td class="hn">Low</td><td class="hn">Desk, Front</td><td>Active</td><td>Update contact details</td></tr>
+                <tr><td><span class="cb"></span></td><td class="hn"><span class="pen"></span></td><td>Nakamura, Ken</td><td class="hn">Quinn, Dr.</td><td class="hn">2026-11-20</td><td class="hn">2026-11-17 08:50</td><td class="hn">Normal</td><td class="hn">Desk, Front</td><td>Active</td><td>Rebook missed visit</td></tr>
+                <tr><td><span class="cb"></span></td><td class="hn"><span class="pen"></span></td><td>Moreau, Luc</td><td class="hn">Desk, Front</td><td class="hn">2026-11-19</td><td class="hn">2026-11-17 11:30</td><td class="hn">Normal</td><td class="hn">Desk, Front</td><td>Active</td><td>Confirm appointment</td></tr>
+                <tr><td><span class="cb"></span></td><td class="hn"><span class="pen"></span></td><td>Whitfield, Grace</td><td class="hn">Desk, Front</td><td class="hn">2026-11-23</td><td class="hn">2026-11-17 15:44</td><td class="hn">Low</td><td class="hn">Desk, Front</td><td>Active</td><td>Update mailing address</td></tr>
+                <tr><td><span class="cb"></span></td><td class="hn"><span class="pen"></span></td><td>Okafor, Daniel</td><td class="hn">Hale, Dr.</td><td class="hn">2026-11-19</td><td class="hn">2026-11-18 08:05</td><td class="hn">Normal</td><td class="hn">Desk, Front</td><td>Active</td><td>Rebook cancelled visit</td></tr>
+              </tbody>
+            </table>
+            <div class="tk-act"><span class="btn3 lnk">Check All</span><span class="btn3 lnk">Clear All</span><span class="btn3 pri dis" id="apbtn">Complete Selected</span><span class="btn3 dng dis">Delete Selected</span><span class="btn3">New Tickler</span></div>
+          </div>
+        </div></section>
+
+        <section class="sc" id="s7"><div class="s7grid">
+          <div class="s7pane sw7" id="s7sched"><div class="emr sched" id="sb"></div></div>
+          <div class="s7panel" id="s7panel">
+            <div class="pnl s7pane rv" id="wlcard">
+              <div class="pnl-h">Waiting List<span id="wlcount" data-init="3 waiting">3 waiting</span></div>
+              <table class="wl" id="wltbl">
+                <thead><tr><th></th><th>Patient Name</th><th class="hn">Note</th><th class="hn">Date</th><th>Provider</th></tr></thead>
+                <tbody>
+                  <tr class="o" id="wl1"><td>1</td><td>Tran, Olivia</td><td class="hn nt">Thursday mornings</td><td class="hn">2026-11-02</td><td>Dr. Hale <span class="mk" id="bk1">make appt</span></td></tr>
+                  <tr class="e"><td>2</td><td>Castellanos, Ana</td><td class="hn nt">Any morning</td><td class="hn">2026-11-05</td><td>Dr. Hale <span class="mk">make appt</span></td></tr>
+                  <tr class="o"><td>3</td><td>Whitfield, Grace</td><td class="hn nt">Thursday or Friday</td><td class="hn">2026-11-09</td><td>Dr. Hale <span class="mk">make appt</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="pnl s7pane rv" id="auditcard">
+              <div class="pnl-h">Audit log<span>sample times</span></div>
               <div class="audit" id="audit"></div>
             </div>
           </div>
@@ -333,129 +435,85 @@ body.reduced { display: block; }
         <section class="sc" id="s8"><div class="end">
           <p class="lbl acc a" style="--d:.1s">Aevon Health</p>
           <h2 class="a" style="--d:.3s">One open slot, filled without a phone call.</h2>
-          <p class="sub a" style="--d:.9s">In development. Illustration with sample data.</p>
+          <p class="sub a" style="--d:.9s">In development. Illustration with fictional names.</p>
         </div></section>
 
-        <div class="cur" id="cur"><svg viewBox="0 0 16 22" aria-hidden="true"><path d="M1 1 L1 17 L5 13 L8 20 L11 18.7 L8 12 L14 12 Z" fill="#ECEEEA" stroke="#0C0E0D" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+        <div class="cur" id="cur"><svg viewBox="0 0 16 22" aria-hidden="true"><path d="M1 1 L1 17 L5 13 L8 20 L11 18.7 L8 12 L14 12 Z" fill="#ffffff" stroke="#10151b" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
       </div>
       <div class="cta-layer" id="cta"><a class="cta" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 20-minute call</a></div>
     </div>
   </div>
-  <p class="caption" id="caption" aria-live="off">In development. Everything shown uses sample data.</p>
+  <p class="caption" id="caption" aria-live="off">In development. Everything shown uses fictional names.</p>
   <div class="controls">
     <button class="cbtn" id="pp" type="button" aria-label="Pause the demo"><svg class="pp-pause" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3.4v12H2zM8.6 1H12v12H8.6z"/></svg><svg class="pp-play" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1l9 6-9 6z"/></svg><span id="pptext">Pause</span></button>
     <button class="cbtn" id="rp" type="button" aria-label="Replay the demo from the start"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.5a5.5 5.5 0 1 0 5.2 3.7l-1.5.5A4 4 0 1 1 7 3v2.2l3.3-2.7L7 .5z"/></svg><span>Replay</span></button>
     <div class="bar" id="bar" role="progressbar" aria-label="Demo progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="barfill"></i></div>
-    <span class="time" id="time">0:00 / 0:43</span>
+    <span class="time" id="time">0:00 / 0:44</span>
   </div>
 </main>
 
 <section class="board" id="board" aria-label="Cancellation backfill, storyboard">
   <h1>Cancellation backfill, in eight steps</h1>
-  <p>Animation is turned off on this device, so here are the key frames. Illustration with sample data, not a screenshot. In development.</p>
+  <p>Animation is turned off on this device, so here are the key frames. Illustration of how it would look in OSCAR. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University. In development.</p>
   <ol id="boardlist"></ol>
 </section>
 
 <script>
 (function () {
   'use strict';
-  var params = new URLSearchParams(location.search);
-  var emr = params.get('emr'); if (['oscar', 'accuro', 'chr'].indexOf(emr) < 0) emr = 'oscar';
   var embed = window.top !== window;
   if (embed) document.body.classList.add('embed');
   var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ---------- wording: swaps words only, never layout ---------- */
-  var SH = {
-    dot: '<circle cx="5" cy="5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/>',
-    sq: '<rect x="1.4" y="1.4" width="7.2" height="7.2" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/>',
-    dia: '<path d="M5 .9 L9.1 5 L5 9.1 L.9 5 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>',
-    x: '<path d="M1.8 1.8 L8.2 8.2 M8.2 1.8 L1.8 8.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>'
-  };
-  function mk(shape, text) { return '<span class="mk"><svg class="sh" viewBox="0 0 10 10" aria-hidden="true">' + SH[shape] + '</svg>' + text + '</span>'; }
-  var VAR = {
-    oscar: {
-      chip: 'OSCAR', wl: 'Waiting List', book: 'make appt', confirm: null,
-      todo: ['dot', 'To Do'], cx: ['x', 'Cancelled'],
-      legend: [['dot', 'To Do'], ['sq', 'Here'], ['x', 'Cancelled'], ['dia', 'No Show']],
-      tbar: '<span>Ticklers</span>',
-      empty: 'No open ticklers',
-      fields: [['Service Date', 'Wed'], ['Priority', 'Normal'], ['Assigned to', 'Front desk'], ['Message', 'Approve booking']]
-    },
-    accuro: {
-      chip: 'Accuro', wl: 'Wait List', book: 'Book Patient', confirm: null,
-      todo: ['dot', 'B'], cx: ['x', 'CX'],
-      legend: [['dot', 'B Booked'], ['sq', 'A Arrived'], ['x', 'CX Cancelled'], ['dia', 'NS No Show']],
-      tbar: '<span class="crumb">Home</span><span class="crumb">&rsaquo;</span><span>Tasks</span>',
-      empty: 'No open tasks',
-      fields: [['Task Priority', 'Normal'], ['Assigned to', 'Front desk'], ['Message', 'Approve booking']]
-    },
-    chr: {
-      chip: 'TELUS CHR', wl: 'Waitlist (kept by Aevon)', book: 'Book appointment', confirm: 'Confirm Notifications',
-      todo: ['dot', 'Confirmed'], cx: ['x', 'Cancelled'],
-      legend: [['dot', 'Confirmed'], ['sq', 'Arrived'], ['x', 'Cancelled']],
-      tbar: '<span>Tasks</span><span class="plus">+ New task</span>',
-      empty: 'No open tasks',
-      fields: [['Status', 'New', 'Done'], ['Priority', 'Routine'], ['Assigned to', 'Front desk'], ['Message', 'Approve booking']]
-    }
-  };
-  var V = VAR[emr];
-  document.getElementById('chip').textContent = 'Wording: ' + V.chip;
 
   function q(s, r) { return (r || document).querySelector(s); }
   function qa(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
   var inner = q('#inner'), stage = q('#stage'), wrap = q('#stagewrap');
 
-  /* ---------- build schedule ---------- */
-  function fmt(m) { var mm = m % 60; return Math.floor(m / 60) + ':' + (mm < 10 ? '0' : '') + mm; }
-  function sched(withNew) {
-    var P = 180, T0 = 540;
-    function blk(s, who, cls, d, extra) {
-      var top = (s - T0) / P * 100, h = 40 / P * 100;
-      return '<div class="blk ' + (cls || '') + '" style="top:' + top + '%;height:' + h + '%;--d:' + d + 's">' +
-        '<span class="who"><span class="tm">' + fmt(s) + '</span>Chart ' + who + '</span>' +
-        '<span class="st-a">' + mk(V.todo[0], V.todo[1]) + '</span><span class="st-b">' + mk(V.cx[0], V.cx[1]) + '</span></div>';
+  /* ---------- the schedule day view (drawn per layout: two providers wide, Dr. Hale alone on narrow) ---------- */
+  var narrow = false, W = 1280, H = 720, scale = 1;
+  var SYM = { td: 't', hr: 'H', pk: 'P', ns: 'N', cx: 'C', bd: 'B' };
+  var HALE = [[540, 20, 'Bains, Harpreet', 'hr'], [570, 20, 'Moreau, Luc', 'td'], [600, 20, 'Nakamura, Ken', 'ns'], [640, 20, 'Okafor, Daniel', 'td', 't']];
+  var QUINN = [[560, 20, 'Lindqvist, Mara', 'bd']];
+  function fmt(m) { var mm = m % 60; return (m < 600 ? '0' : '') + Math.floor(m / 60) + ':' + (mm < 10 ? '0' : '') + mm; }
+  function sched(isB) {
+    var T0 = 540, P = narrow ? 120 : 150, rows = P / 10, d = 0;
+    function blk(a) {
+      var s = a[0], dur = a[1], who = a[2], st = a[3], cls = a[4] || '';
+      d += .1;
+      return '<div class="ap ' + st + (isB && cls === 't' ? ' cxs' : '') + ' ' + cls + '" style="top:' + ((s - T0) / P * 100) + '%;height:' + (dur / P * 100) + '%;--d:' + d.toFixed(2) + 's">' +
+        '<span class="ic2">' + (isB && cls === 't' ? 'C' : SYM[st]) + '</span><span class="nm">' + who.toUpperCase() + '</span><span class="lks"><i>E</i><i>B</i><i>M</i><i>Rx</i></span></div>';
     }
-    var a = blk(540, '10482', '', .05) + blk(640, '40816', 't', .25) + blk(680, '30264', '', .45) +
-      (withNew ? blk(640, '20917', 'n', 0).replace('</div>', '</div>') : '');
-    var b = blk(560, '11305', '', .15) + blk(600, '22750', '', .35) + blk(660, '17294', '', .55);
-    var axis = ['9:00', '10:00', '11:00'].map(function (t, i) { return '<span style="top:' + (i * 33.3334) + '%">' + t + '</span>'; }).join('');
-    var legend = V.legend.map(function (l) { return mk(l[0], l[1]); }).join('');
-    return '<div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><b>Thursday</b><span class="r">your clinic</span></div>' +
-      '<div class="grid"><div class="colh first"></div><div class="colh">Provider A</div><div class="colh">Provider B</div>' +
-      '<div class="axis">' + axis + '</div><div class="lane">' + a + '</div><div class="lane">' + b + '</div></div>' +
-      '<div class="legend">' + legend + '</div>';
+    var hale = HALE.map(blk).join('');
+    if (isB) hale += blk([640, 20, 'Tran, Olivia', 'td', 'n']);
+    var quinn = QUINN.map(blk).join('');
+    var axis = '';
+    for (var i = 0; i < rows; i++) { var m = T0 + i * 10; axis += '<span class="' + (m % 60 === 0 ? 'h' : '') + '">' + fmt(m) + '</span>'; }
+    var lane = function (x, c) { return '<div class="lane ' + (c || '') + '" style="--rows:' + rows + '">' + x + '</div>'; };
+    return '<div class="e-title">OSCAR EMR (illustration)<span class="r">Front desk</span></div>' +
+      '<div class="e-link"><a class="l hv">Schedule</a><a>Caseload</a><a>Search</a><a>Report</a><a>Billing</a><a class="hn">Lab</a><a>Msg</a><a class="hn">Con</a><a class="hn">EDoc</a><a>Tickler</a><a>Administration</a></div>' +
+      '<div class="e-ivory"><i class="arw lf"></i><b>2026-11-19</b><i class="arw rt"></i><span class="lk"><u>T</u>oday</span><span class="lk">Mo<u>n</u>th</span><span class="sp">View all providers</span></div>' +
+      '<div class="sgrid"><div class="colh"><span class="wb">W</span><span class="wb">S</span>Hale, Dr.</div>' + (narrow ? '' : '<div class="colh alt q-col"><span class="wb">W</span><span class="wb">S</span>Quinn, Dr.</div>') +
+      '<div class="axis">' + axis + '</div>' + lane(hale) +
+      (narrow ? '' : '<div class="axis q-col">' + axis + '</div>' + lane(quinn, 'q-col')) + '</div>' +
+      '<div class="e-foot legend"><span><i class="sw" style="background:#FDFEC7"></i>To Do</span><span><i class="sw" style="background:#00ee00"></i>Here</span><span><i class="sw" style="background:#FFBBFF"></i>Picked</span><span><i class="sw" style="background:#cccccc"></i>No Show</span><span><i class="sw" style="background:#999999"></i>Cancelled</span><span><i class="sw" style="background:#3ea4e1"></i>Billed</span></div>';
   }
-  q('#sa').innerHTML = sched(false);
-  q('#sb').innerHTML = sched(true);
+  function build() { q('#sa').innerHTML = sched(false); q('#sb').innerHTML = sched(true); }
 
-  /* ---------- wording into the other scenes ---------- */
-  qa('[data-t="wl"]').forEach(function (e) { e.textContent = V.wl; });
-  qa('[data-t="wlchecked"]').forEach(function (e) { e.textContent = V.wl + ' checked'; });
-  q('#tbar').innerHTML = V.tbar;
-  q('#empty').textContent = V.empty;
-  q('#fields').innerHTML = V.fields.map(function (f) {
-    var val = f[2] ? '<span class="v1">' + f[1] + '</span><span class="v2">' + f[2] + '</span>' : f[1];
-    return '<div><span class="lbl">' + f[0] + '</span><span class="v">' + val + '</span></div>';
-  }).join('');
-  qa('#fields div').forEach(function (d) { if (d.firstChild.textContent === 'Message') d.parentNode.removeChild(d); });
-  q('#actchip').innerHTML = V.confirm ? V.book + ' &rarr; ' + V.confirm : V.book;
   var audit = [
-    ['09:14:02', 'READ', 'schedule, Provider A, Thu'],
-    ['09:14:03', 'READ', V.wl + ', 3 matches'],
-    ['09:41:19', 'WRITE', V.book + ', Chart 20917, Thu 10:40']
+    ['09:14:02', 'READ', 'schedule, Dr. Hale, Thu'],
+    ['09:14:03', 'READ', 'waiting list, 3 matches'],
+    ['09:41:19', 'WRITE', 'book, Tran, Olivia, Thu 10:40'],
+    ['09:41:20', 'WRITE', 'waiting list, Tran, Olivia removed']
   ];
-  if (V.confirm) audit.push(['09:41:20', 'WRITE', V.confirm]);
-  audit.push([V.confirm ? '09:41:21' : '09:41:20', 'WRITE', V.wl + ', Chart 20917 removed']);
-  q('#audit').innerHTML = audit.map(function (l, i) {
-    return '<div class="rv" id="al' + i + '"><span class="tt">' + l[0] + '</span><span class="k ' + (l[1] === 'READ' ? 'rd' : 'wr') + '">' + l[1] + '</span>' + l[2] + '</div>';
+  q('#audit').innerHTML = '<div class="ah"><span>Time</span><span>Type</span><span>Detail</span></div>' + audit.map(function (l, i) {
+    return '<div class="ar rvr" id="al' + i + '"><span>' + l[0] + '</span><span class="' + (l[1] === 'READ' ? 'rd' : 'wr') + '">' + l[1] + '</span><span>' + l[2] + '</span></div>';
   }).join('');
 
   /* ---------- engine ---------- */
-  var STATE = ['on', 'cx', 'done', 'away', 'gone', 'hl', 'press'];
-  var ST = [0, 3.8, 9.4, 14.6, 19.8, 24.6, 30.8, 37.4], TOTAL = 43.4;
+  var STATE = ['on', 'cx', 'done', 'away', 'gone', 'hl', 'press', 'sel', 'dn', 'yes', 'told', 'fade'];
+  var ST = [0, 3.8, 9.4, 14.6, 20.0, 26.0, 32.0, 38.6], TOTAL = 44.6;
   var CAP = [
-    'In development. Everything shown uses sample data.',
+    'In development. Everything shown uses fictional names.',
     'A consult cancels the day before.',
     'The automation sees the open slot and checks your waiting list.',
     'Three patients get a text. No health details in it.',
@@ -464,7 +522,7 @@ body.reduced { display: block; }
     'Booked into the schedule. Every read and write is logged.',
     'One open slot, filled without a phone call.'
   ];
-  var cues = [], W = 1280, scale = 1, silent = false, capTimer = null;
+  var cues = [], silent = false, capTimer = null;
   function at(t, fn) { cues.push({ t: t * 1000, fn: fn, i: cues.length }); }
   function sc(n, off, fn) { at(ST[n - 1] + off, fn); }
   function on(sel, c) { qa(sel, inner).forEach(function (e) { e.classList.add(c || 'on'); }); }
@@ -501,18 +559,19 @@ body.reduced { display: block; }
     if (silent) return;
     cur.classList.add('press'); setTimeout(function () { cur.classList.remove('press'); }, 520);
   }
-  function startPos() { return [W * .86, W * .56 * .9]; }
+  function startPos() { return [W * .86, H * .9]; }
+  function apprStart() { var s = startPos(); curSet(s[0], s[1]); }
 
   /* scene 1 */
   sc(1, 0, function () { go(1); });
   /* scene 2: one block is cancelled */
   sc(2, 0, function () { go(2); });
   sc(2, .6, function () { on('#sa .lane'); });
-  sc(2, 1.5, function () { var s = startPos(); curSet(s[0], s[1]); });
-  sc(2, 1.7, function () { curTo('#sa .blk.t .st-a', 1000, .5, .5); });
+  sc(2, 1.5, apprStart);
+  sc(2, 1.7, function () { curTo('#sa .ap.t', 1000, .45, .5); });
   sc(2, 2.95, click);
-  sc(2, 3.1, function () { on('#sa .blk.t', 'cx'); });
-  sc(2, 4.1, function () { off('#cur'); });
+  sc(2, 3.1, function () { on('#sa .ap.t', 'cx'); });
+  sc(2, 4.2, function () { off('#cur'); });
   /* scene 3: the automation notices */
   sc(3, 0, function () { go(3); });
   [[.8, 'l1'], [1.8, 'l2'], [2.8, 'l3']].forEach(function (x) {
@@ -521,50 +580,58 @@ body.reduced { display: block; }
   });
   /* scene 4: three texts go out */
   sc(4, 0, function () { go(4); });
-  sc(4, .7, function () { on('#typing'); });
-  sc(4, 1.5, function () { off('#typing'); on('#m1'); });
-  [[2.0, 'p1', '1'], [2.4, 'p2', '2'], [2.8, 'p3', '3']].forEach(function (x) {
+  sc(4, .9, function () { on('#m4'); });
+  [[1.7, 'p1', '1'], [2.1, 'p2', '2'], [2.5, 'p3', '3']].forEach(function (x) {
     sc(4, x[0], function () { on('#' + x[1]); txt('#cnt', x[2]); });
   });
-  sc(4, 3.5, function () { on('#nohd'); });
+  sc(4, 3.6, function () { on('#nohd'); });
   /* scene 5: the first yes */
   sc(5, 0, function () { go(5); });
-  sc(5, .9, function () { on('#y1'); });
-  sc(5, 1.6, function () { on('#c1', 'hl'); });
-  sc(5, 2.4, function () { on('#f2'); });
-  sc(5, 2.7, function () { on('#f3'); });
+  sc(5, .8, function () { on('#typ'); });
+  sc(5, 2.0, function () { off('#typ'); on('#y5'); });
+  sc(5, 2.5, function () { on('#dlv'); });
+  sc(5, 2.8, function () { on('#q1', 'yes'); txt('#q1 .stx', 'Replied YES'); });
+  sc(5, 3.5, function () { on('#q2', 'told'); txt('#q2 .stx', 'Told the slot is filled'); });
+  sc(5, 3.8, function () { on('#q3', 'told'); txt('#q3 .stx', 'Told the slot is filled'); });
+  sc(5, 4.4, function () { on('#st5'); on('#c5'); });
   /* scene 6: front desk approves */
   sc(6, 0, function () { go(6); });
-  sc(6, .9, function () { on('#task'); off('#empty'); q('#empty').style.display = 'none'; });
-  sc(6, 1.9, function () { var s = startPos(); curSet(s[0], s[1]); });
-  sc(6, 2.1, function () { curTo('#approve', 1300, .5, .5); });
-  sc(6, 3.6, click);
-  sc(6, 3.75, function () { on('#task', 'done'); });
-  sc(6, 5.0, function () { off('#cur'); });
+  sc(6, .9, function () { on('#newtask'); });
+  sc(6, 1.8, apprStart);
+  sc(6, 2.0, function () { curTo('#newtask .cb', 900, .5, .5); });
+  sc(6, 3.05, click);
+  sc(6, 3.2, function () { on('#newtask', 'sel'); q('#apbtn').classList.remove('dis'); });
+  sc(6, 3.4, function () { curTo('#apbtn', 800, .5, .5); });
+  sc(6, 4.4, click);
+  sc(6, 4.55, function () { on('#newtask', 'dn'); off('#newtask', 'sel'); });
+  sc(6, 5.5, function () { off('#cur'); });
   /* scene 7: booked and logged */
   sc(7, 0, function () { go(7); });
-  sc(7, .5, function () { on('#sb .lane'); });
-  sc(7, 1.0, function () { on('#actchip'); });
-  sc(7, 1.7, function () { on('#sb .blk.t', 'gone'); on('#sb .blk.n'); });
-  sc(7, 3.0, function () { on('#s7sched', 'away'); off('#actchip'); });
-  sc(7, 3.2, function () { on('#wlcard'); });
-  sc(7, 3.8, function () { on('#wl1', 'hl'); });
-  sc(7, 4.3, function () { on('#wl1', 'gone'); txt('#wlcount', '2 waiting'); });
-  sc(7, 3.6, function () { on('#auditcard'); });
-  audit.forEach(function (l, i) { sc(7, 4.0 + i * .45, function () { on('#al' + i); }); });
+  sc(7, .4, function () { on('#sb .lane'); on('#wlcard'); });
+  sc(7, 1.0, apprStart);
+  sc(7, 1.2, function () { curTo('#bk1', 1100, .5, .5); });
+  sc(7, 2.45, click);
+  sc(7, 2.6, function () { on('#wl1', 'hl'); });
+  sc(7, 2.9, function () { off('#cur'); if (narrow) { off('#wlcard'); on('#s7sched'); } });
+  sc(7, 3.1, function () { on('#sb .ap.t', 'gone'); on('#sb .ap.n'); });
+  sc(7, 3.9, function () { if (!narrow) { on('#wl1', 'fade'); } });
+  sc(7, 4.3, function () { if (!narrow) { on('#wl1', 'gone'); txt('#wlcount', '2 waiting'); } });
+  sc(7, 4.0, function () { if (!narrow) on('#auditcard'); });
+  sc(7, 4.6, function () { if (narrow) { off('#s7sched'); on('#auditcard'); } });
+  audit.forEach(function (l, i) { sc(7, (narrow_t(i)), function () { on('#al' + i); }); });
+  function narrow_t(i) { return 4.7 + i * .45; }
   /* scene 8: end card */
   sc(8, 0, function () { go(8); });
   sc(8, 1.5, function () { ctaEl.classList.add('on'); });
   cues.sort(function (a, b) { return a.t - b.t || a.i - b.i; });
-  var COMPACT_AWAY = true;
 
   function reset() {
     clearTimeout(capTimer);
     qa('[class]', stage).forEach(function (e) { STATE.forEach(function (c) { e.classList.remove(c); }); });
     qa('[data-init]', inner).forEach(function (e) { e.textContent = e.getAttribute('data-init'); });
-    var em = q('#empty'); em.style.display = '';
+    var ab = q('#apbtn'); ab.classList.remove('go'); ab.classList.add('dis');
     ctaEl.classList.remove('on');
-    cur.style.transform = 'translate(' + W * .86 + 'px,' + W * .5 + 'px)';
+    cur.style.transform = 'translate(' + W * .86 + 'px,' + H * .9 + 'px)';
   }
   var idx = 0, t = 0;
   function applyTo(ms) { while (idx < cues.length && cues[idx].t <= ms) cues[idx++].fn(); }
@@ -581,29 +648,30 @@ body.reduced { display: block; }
   }
 
   /* ---------- sizing ---------- */
-  var compact = false;
+  function setMode(n, sw) {
+    var changed = n !== narrow || !q('#sa .sgrid');
+    narrow = n;
+    inner.classList.toggle('narrow', n);
+    if (n) { W = sw; H = Math.round(sw * 1.5); } else { W = 1280; H = 720; }
+    inner.style.width = W + 'px'; inner.style.height = H + 'px';
+    if (changed) build();
+    return changed;
+  }
   function layout() {
     if (document.body.classList.contains('reduced')) return;
-    var cs = getComputedStyle(wrap);
     var avW = wrap.clientWidth, avH = embed ? 1e6 : wrap.clientHeight;
-    var sw = Math.max(200, Math.floor(Math.min(avW, avH * 16 / 9)));
-    compact = sw < 820;
-    W = compact ? 480 : 1280;
-    var H = W * 9 / 16;
-    inner.classList.toggle('compact', compact);
-    inner.style.width = W + 'px'; inner.style.height = H + 'px';
-    scale = sw / W;
-    inner.style.transform = 'scale(' + scale + ')';
-    stage.style.width = sw + 'px'; stage.style.height = Math.round(sw * 9 / 16) + 'px';
-    reportHeight();
-  }
-  function reportHeight() {
-    if (!embed) return;
-    try { parent.postMessage({ aevonReel: 'height', h: Math.ceil(document.documentElement.scrollHeight) }, location.origin); } catch (e) {}
+    var isNarrow = avW < 640;
+    var sw = isNarrow ? Math.max(300, avW) : Math.max(300, Math.floor(Math.min(avW, avH * 16 / 9)));
+    var changed = setMode(isNarrow, sw);
+    scale = isNarrow ? 1 : sw / 1280;
+    inner.style.transform = scale === 1 ? 'none' : 'scale(' + scale + ')';
+    stage.style.width = sw + 'px'; stage.style.height = Math.round(H * scale) + 'px';
+    if (changed && started) jumpTo(t);
   }
 
   /* ---------- player ---------- */
-  var playing = true, last = 0, pp = q('#pp'), ppText = q('#pptext'), fill = q('#barfill'), timeEl = q('#time'), barEl = q('#bar'), lastSec = -1;
+  var playing = false, last = 0, started = false, userPaused = false;
+  var pp = q('#pp'), ppText = q('#pptext'), fill = q('#barfill'), timeEl = q('#time'), barEl = q('#bar'), lastSec = -1;
   function mmss(ms) { var s = Math.floor(ms / 1000); return Math.floor(s / 60) + ':' + (s % 60 < 10 ? '0' : '') + (s % 60); }
   function paint() {
     fill.style.width = Math.min(100, t / (TOTAL * 1000) * 100) + '%';
@@ -611,10 +679,11 @@ body.reduced { display: block; }
     if (s !== lastSec) { lastSec = s; timeEl.textContent = mmss(t) + ' / ' + mmss(TOTAL * 1000); barEl.setAttribute('aria-valuenow', Math.round(t / (TOTAL * 1000) * 100)); }
   }
   function setPlaying(p) {
+    var was = playing;
     playing = p; pp.classList.toggle('paused', !p);
     ppText.textContent = p ? 'Pause' : 'Play';
     pp.setAttribute('aria-label', p ? 'Pause the demo' : 'Play the demo');
-    if (p) { last = 0; requestAnimationFrame(tick); }
+    if (p && !was) { last = 0; requestAnimationFrame(tick); }
   }
   function tick(now) {
     if (!playing) return;
@@ -624,34 +693,42 @@ body.reduced { display: block; }
     if (t >= TOTAL * 1000) { restart(); } else { applyTo(t); paint(); }
     requestAnimationFrame(tick);
   }
-  pp.addEventListener('click', function () { setPlaying(!playing); });
-  q('#rp').addEventListener('click', function () { restart(); if (!playing) setPlaying(true); });
-
+  pp.addEventListener('click', function () { userPaused = playing; setPlaying(!playing); });
+  q('#rp').addEventListener('click', function () { userPaused = false; restart(); setPlaying(true); });
   window.addEventListener('resize', layout);
-  if (window.ResizeObserver) new ResizeObserver(function () { reportHeight(); }).observe(document.body);
+
+  /* the page tells the reel when it is on screen; played on its own, the reel plays at once */
+  window.addEventListener('message', function (e) {
+    if (e.origin !== location.origin || e.source !== window.parent || !e.data || e.data.aevonReel !== 'visible') return;
+    if (reduced || !started) return;
+    if (e.data.v) { if (!userPaused) setPlaying(true); } else setPlaying(false);
+  });
+  function post(o) { try { parent.postMessage(o, location.origin); } catch (err) {} }
+  function reportHeight() { if (embed) post({ aevonReel: 'height', h: Math.ceil(document.documentElement.scrollHeight) }); }
 
   /* test and storyboard hook: jump to a time in seconds and hold */
   window.aevonReel = { seek: function (s) { setPlaying(false); jumpTo(s * 1000); }, total: TOTAL, scenes: ST };
 
   /* ---------- reduced motion: static storyboard ---------- */
   function buildBoard() {
-    var KEY = [1.6, 4.3, 4.0, 4.4, 3.8, 5.2, 5.9, 3.0];
+    var KEY = [1.6, 4.3, 4.0, 4.4, 5.2, 5.2, 5.9, 3.0];
     var DET = [
       'Title card: Cancellation backfill. A cancelled consult, filled from your own waiting list.',
-      'A day view for one clinic with two provider columns, Provider A and Provider B. The Thursday 10:40 block is marked ' + V.cx[1] + ', greyed and struck through.',
-      'An activity panel logs: slot opened Thu 10:40; ' + V.wl + ' checked; 3 patients match this provider and time.',
-      'A phone shows the text: "An appointment has opened at your clinic on Thursday at 10:40 am. Reply YES to take it." Sent to 3 patients. No health details in it.',
-      'Chart 20917 replies YES first. The other two patients are told "That appointment has now been filled."',
-      'A task for the front desk reads "Approve booking: Chart 20917, Thu 10:40". The Approve button is clicked.',
-      'A new block appears at Thu 10:40 (' + V.todo[1] + '). The ' + V.wl + ' entry is removed. An audit log shows timestamped READ and WRITE lines, with sample times.',
-      'One open slot, filled without a phone call. In development. Illustration with sample data.'
+      'An OSCAR-style provider schedule day view with two provider columns, Hale, Dr. and Quinn, Dr. The Thursday 10:40 block for Okafor, Daniel changes from To Do yellow to the Cancelled grey.',
+      'An activity panel logs: slot opened Thu 10:40; waiting list checked; 3 patients match this provider and time.',
+      'A phone shows the text from Your Clinic: "Hi Olivia, an appointment has opened at Your Clinic on Thursday at 10:40 am. Reply YES to take it." Sent to 3 patients, all marked Delivered. No health details in it.',
+      'Olivia Tran replies YES first and is told "You\'re booked for Thursday at 10:40 am. Reply CANCEL if you can no longer come." The other two patients are marked "Told the slot is filled".',
+      'A tickler assigned to the front desk reads "Approve booking: Thu 10:40" for Tran, Olivia in the Tickler Manager. It is selected and Complete Selected is clicked, so its status becomes Completed.',
+      'A new block for Tran, Olivia appears at Thu 10:40 as To Do. The waiting list entry is removed. An audit log shows timestamped READ and WRITE lines, with sample times.',
+      'One open slot, filled without a phone call. In development. Illustration with fictional names.'
     ];
     var ol = q('#boardlist'), frames = [];
     for (var i = 0; i < 8; i++) {
       jumpTo((ST[i] + KEY[i]) * 1000);
       var li = document.createElement('li');
-      var h = document.createElement('h3'); h.textContent = CAP[i === 0 ? 0 : i] ; li.appendChild(h);
-      if (i === 0) h.textContent = 'Cancellation backfill. A cancelled consult, filled from your own waiting list.';
+      var h = document.createElement('h3');
+      h.textContent = i === 0 ? 'Cancellation backfill. A cancelled consult, filled from your own waiting list.' : CAP[i];
+      li.appendChild(h);
       var fr = document.createElement('div'); fr.className = 'frame'; fr.setAttribute('role', 'img'); fr.setAttribute('aria-label', 'Key frame ' + (i + 1) + ': ' + DET[i]);
       var cl = inner.cloneNode(true); cl.removeAttribute('id'); qa('[id]', cl).forEach(function (e) { e.removeAttribute('id'); });
       cl.classList.add('nt'); fr.appendChild(cl); li.appendChild(fr); frames.push([fr, cl]);
@@ -659,22 +736,37 @@ body.reduced { display: block; }
       if (i === 7) { var a = document.createElement('a'); a.className = 'cta'; a.href = 'https://calendar.app.google/7R7srDKzWrvmLQg37'; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Book a 20-minute call'; li.appendChild(a); }
       ol.appendChild(li);
     }
-    function fit() { frames.forEach(function (f) { var s = f[0].clientWidth / (compact ? 480 : 1280); f[1].style.transform = 'scale(' + s + ')'; }); }
+    function fit() {
+      frames.forEach(function (f) {
+        var s = f[0].clientWidth / W;
+        f[0].style.height = Math.round(H * s) + 'px';
+        f[1].style.transform = 'scale(' + s + ')';
+      });
+      reportHeight();
+    }
     fit(); window.addEventListener('resize', fit);
     document.fonts && document.fonts.ready && document.fonts.ready.then(fit);
   }
 
-  layout();
   if (reduced) {
     document.body.classList.add('reduced');
-    // the board is laid out at the wide size so its key frames stay readable
-    compact = false; W = 1280; inner.classList.remove('compact'); inner.style.width = '1280px'; inner.style.height = '720px'; scale = 1; inner.style.transform = 'none';
-    stage.style.width = '1280px'; stage.style.height = '720px'; stage.style.position = 'absolute'; stage.style.left = '-9999px';
+    var nar = window.innerWidth < 640;
+    var bw = nar ? Math.max(300, window.innerWidth - 28) : 560;
+    setMode(nar, nar ? bw : 1280);
+    scale = 1; inner.style.transform = 'none';
+    stage.style.width = W + 'px'; stage.style.height = H + 'px'; stage.style.position = 'absolute'; stage.style.left = '-9999px';
+    started = true;
     buildBoard();
     reportHeight();
+    post({ aevonReel: 'ready' });
   } else {
+    layout();
     // wait a beat so web fonts settle before the first frame
-    var begin = function () { restart(); setPlaying(true); };
+    var begin = function () {
+      started = true; layout(); restart();
+      setPlaying(!embed);
+      post({ aevonReel: 'ready' });
+    };
     if (document.fonts && document.fonts.ready) { Promise.race([document.fonts.ready, new Promise(function (r) { setTimeout(r, 900); })]).then(begin); } else begin();
   }
 })();

@@ -35,7 +35,7 @@
 
        Every product visual on this page is an HTML and CSS illustration with sample data, because
        the product is in development and no real screenshot exists. Each one is labelled as an
-       illustration in its caption. Chart numbers only, never names. */
+       illustration in its caption. Fictional names only, never real ones. */
 
     .skip { position: absolute; left: 12px; top: -60px; z-index: 10; background: var(--accent); color: var(--on-accent); font-weight: 600; font-size: 15px; padding: 10px 16px; border-radius: 999px; text-decoration: none; }
     .skip:focus { top: 12px; color: var(--on-accent); }
@@ -52,33 +52,48 @@
        darkened sooner: the type stays legible and the illustration lands on the page ground. */
     .hero-bg::after { background: linear-gradient(180deg, rgba(12,14,13,.66) 0%, rgba(12,14,13,.62) 26%, rgba(12,14,13,.86) 50%, var(--bg) 74%); }
     figure.hero-art { width: 100%; max-width: 1000px; margin: 64px auto 0; padding: 0 28px; text-align: left; }
-    .hero-stage { display: grid; grid-template-columns: minmax(0, 1fr) 252px; gap: 28px; align-items: end; }
+    .hero-stage { display: grid; grid-template-columns: minmax(0, 1fr) 252px; gap: 28px; align-items: center; }
     .hero-art figcaption { text-align: center; }
 
     /* ---- illustration parts ---- */
     .ill { margin: 0; }
     .ill figcaption { margin-top: 14px; font-size: 13.5px; color: var(--ink-3); }
 
-    /* task list, as it would sit in an EMR task queue */
-    .tl-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 16px 18px 13px; }
-    .tl-head b { font-size: 16px; font-weight: 600; color: var(--ink); }
-    .tl-head span { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; }
-    .tl-row { display: grid; grid-template-columns: 15px minmax(0, 1fr) auto; gap: 1px 12px; align-items: center; padding: 12px 18px; border-top: 1px solid var(--line); }
-    .tl-row i { grid-row: 1 / span 2; width: 15px; height: 15px; border: 1.5px solid var(--line-2); border-radius: 3px; }
-    .tl-row b { grid-column: 2; font-size: 15px; font-weight: 600; color: var(--ink); }
-    .tl-row small { grid-column: 2; font-size: 13px; color: var(--ink-3); }
-    .tl-row em { grid-column: 3; grid-row: 1 / span 2; font-style: normal; font-family: var(--f-mono); font-size: 11px; padding: 5px 9px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--ink-2); white-space: nowrap; }
-    .tl-row em.late { border-color: var(--danger); color: var(--danger); }
-    .tl-sum { display: flex; flex-wrap: wrap; gap: 4px 18px; align-items: baseline; padding: 12px 18px 14px; border-top: 1px solid var(--line); background: var(--bg-2); font-size: 13.5px; color: var(--ink-2); }
-    .tl-sum .lbl { width: 100%; font-size: 10.5px; }
+    /* the EMR task list, drawn after OSCAR's Tickler Manager (original CSS, nothing copied) */
+    .ow { border: 1px solid #5d6f99; background: #fff; color: #333; overflow: hidden; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; box-shadow: 0 30px 80px rgba(0,0,0,.45), 0 2px 6px rgba(0,0,0,.4); }
+    .ow-bar { display: flex; justify-content: space-between; padding: 5px 10px; background: #003399; color: #fff; font: 700 12px/1.2 Verdana, Tahoma, Arial, sans-serif; }
+    .ow-bar span { font-weight: 400; }
+    .ow h4 { margin: 0; padding: 10px 14px 6px; font-size: 20px; font-weight: 500; letter-spacing: 0; color: #333; line-height: 1.1; }
+    .ow table { width: calc(100% - 28px); margin: 0 14px; border-collapse: collapse; font-size: 12.5px; }
+    .ow th { text-align: left; padding: 5px 8px; border-bottom: 2px solid #ddd; white-space: nowrap; }
+    .ow td { padding: 6px 8px; border-top: 1px solid lightgrey; }
+    .ow tbody tr:nth-child(odd) td { background: #f9f9f9; }
+    .ow td.hi { color: #a3261a; font-weight: 700; }
+    .ow-act { display: flex; gap: 6px; padding: 10px 14px 12px; }
+    .ow-act span { padding: 3px 9px; font-size: 12px; border: 1px solid #ccc; border-radius: 4px; color: #428bca; }
+    .ow-act span.b { color: #fff; background: #428bca; border-color: #357ebd; opacity: .65; }
+    .tl-sum { display: flex; flex-wrap: wrap; gap: 4px 18px; align-items: baseline; padding: 10px 14px 12px; border-top: 1px solid #ccc; background: whitesmoke; font-size: 13px; color: #333; }
+    .tl-sum .lbl { width: 100%; font-size: 10.5px; color: #555; }
 
-    /* phone with a text thread */
-    .phone { width: 252px; max-width: 100%; padding: 9px; border: 1px solid var(--line-2); border-radius: 32px; background: var(--raised); box-shadow: 0 30px 80px rgba(0,0,0,.5), 0 2px 6px rgba(0,0,0,.4); }
-    .phone-in { border-radius: 24px; background: var(--bg); border: 1px solid var(--line); padding: 0 12px 18px; overflow: hidden; }
-    .phone-top { margin: 0 -12px 14px; padding: 15px 12px 11px; border-bottom: 1px solid var(--line); text-align: center; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); }
-    .msg { width: fit-content; max-width: 90%; margin-top: 8px; padding: 9px 12px; border-radius: 15px; font-size: 13.5px; line-height: 1.42; }
-    .msg.in { background: var(--raised); color: var(--ink); border-bottom-left-radius: 4px; }
-    .msg.out { margin-left: auto; background: var(--accent); color: var(--on-accent); font-weight: 700; border-bottom-right-radius: 4px; }
+    /* phone with a text thread: an original drawing, not any particular app */
+    .phone { width: 252px; max-width: 100%; padding: 8px; border-radius: 38px; background: #20252b; border: 2px solid #3a424b; box-shadow: 0 30px 80px rgba(0,0,0,.5), 0 2px 6px rgba(0,0,0,.4); }
+    .sp { border-radius: 31px; background: #fff; color: #1a1d21; overflow: hidden; font-family: var(--f-body); }
+    .sp-sb { display: flex; justify-content: space-between; align-items: center; padding: 11px 20px 0; height: 30px; font-size: 12.5px; font-weight: 700; }
+    .sp-sb span:last-child { display: inline-flex; gap: 5px; align-items: center; }
+    .sp-h { display: flex; align-items: center; gap: 9px; padding: 5px 12px 9px 8px; background: #f6f7f8; border-bottom: 1px solid #dfe2e6; }
+    .sp-bk { width: 11px; height: 11px; border-left: 3px solid #1c6dc0; border-bottom: 3px solid #1c6dc0; transform: rotate(45deg); margin: 0 5px 0 7px; flex: none; }
+    .sp-av { width: 32px; height: 32px; border-radius: 50%; background: #1c6dc0; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; flex: none; }
+    .sp-h b { display: block; font-size: 14px; line-height: 1.15; } .sp-h small { display: block; font-size: 12px; color: #5a626c; }
+    .sp-t { display: flex; flex-direction: column; gap: 6px; padding: 10px 12px 14px; }
+    .sp-st { align-self: center; font-size: 11.5px; color: #6a727c; }
+    .sp-b { position: relative; width: fit-content; max-width: 86%; padding: 8px 12px; border-radius: 17px; font-size: 14px; line-height: 1.35; }
+    .sp-b.in { align-self: flex-start; margin-left: 5px; background: #e6e8eb; border-bottom-left-radius: 5px; }
+    .sp-b.in::before { content: ""; position: absolute; left: -5px; bottom: 0; width: 12px; height: 12px; background: #e6e8eb; border-bottom-right-radius: 12px; }
+    .sp-b.in::after { content: ""; position: absolute; left: -8px; bottom: 0; width: 8px; height: 14px; background: #fff; border-bottom-right-radius: 8px; }
+    .sp-b.out { align-self: flex-end; margin-right: 5px; background: #1c6dc0; color: #fff; font-weight: 700; border-bottom-right-radius: 5px; }
+    .sp-b.out::before { content: ""; position: absolute; right: -5px; bottom: 0; width: 12px; height: 12px; background: #1c6dc0; border-bottom-left-radius: 12px; }
+    .sp-b.out::after { content: ""; position: absolute; right: -8px; bottom: 0; width: 8px; height: 14px; background: #fff; border-bottom-left-radius: 8px; }
+    .sp-dl { align-self: flex-end; margin-right: 6px; font-size: 11.5px; color: #6a727c; }
 
     /* one open slot, start to filled */
     .slot-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 18px 14px; border-bottom: 1px solid var(--line); }
@@ -118,29 +133,22 @@
     .feature .price-list { margin-top: 20px; }
 
 
-    /* the self-playing reel: a poster drawn as the first frame, iframe loaded on click */
+    /* the self-playing reel: loaded as the block nears the viewport, plays while at least half of it is on screen */
     .reelblock { margin-top: 8px; padding-top: 48px; border-top: 1px solid var(--line); }
     .reelblock h3 { font-size: 22px; margin-top: 10px; }
     .reelblock > p { margin-top: 8px; color: var(--ink-2); font-size: 16px; max-width: 64ch; }
     .reelplayer { margin-top: 24px; border: 1px solid var(--line-2); border-radius: var(--radius-lg); overflow: hidden; background: var(--bg); box-shadow: 0 30px 80px rgba(0,0,0,.45), 0 2px 6px rgba(0,0,0,.4); }
-    .rp-stage { position: relative; width: 100%; aspect-ratio: 16 / 10; }
+    /* The player reserves its final height up front (stage plus the reel's fixed caption and controls),
+       so nothing moves when the iframe loads. Container units follow the player's own width. */
+    .reelplayer { container-type: inline-size; }
+    .rp-stage { position: relative; width: 100%; height: calc(56.25cqw + 180px); background: var(--bg); }
     .rp-stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; background: var(--bg); }
-    .rp-poster { position: absolute; inset: 0; width: 100%; border: 0; cursor: pointer; color: var(--ink); font: inherit; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; padding: 24px 20px 20px;
-      background: radial-gradient(70% 60% at 50% 38%, rgba(157,191,161,.09), transparent 70%), var(--bg); }
-    .rp-poster .rp-eyebrow { font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
-    .rp-poster .rp-title { margin-top: 14px; font-family: var(--f-display); font-weight: 600; font-size: clamp(30px, 6vw, 62px); letter-spacing: -.03em; line-height: 1.06; }
-    .rp-poster .rp-rule { width: 56px; height: 2px; background: var(--accent); margin: 18px auto 0; }
-    .rp-poster .rp-line { margin-top: 16px; max-width: 30ch; font-size: clamp(16px, 2.2vw, 22px); color: var(--ink-2); }
-    .rp-poster .rp-go { margin-top: 30px; display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 22px 0 14px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-weight: 700; font-size: 15px; transition: background 160ms ease; }
-    .rp-poster:hover .rp-go { background: var(--ink); }
-    .rp-poster .rp-go svg { width: 30px; height: 30px; flex: none; }
-    .rp-poster .rp-small { margin-top: 14px; font-size: 13px; color: var(--ink-3); }
-    .rp-variants { margin-top: 14px; font-size: 14.5px; color: var(--ink-3); display: flex; flex-wrap: wrap; gap: 0 18px; align-items: center; }
-    .rp-variants a { display: inline-flex; align-items: center; min-height: 44px; }
-    .rp-variants a[aria-current="true"] { color: var(--ink); text-decoration: none; font-weight: 600; }
+    .rp-wait[hidden] { display: none; }
+    .rp-wait { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--ink-3); }
+    @container (max-width: 639px) { .rp-stage { height: calc(150cqw + 224px); } }
+    .rp-stage.rd { height: 900px; }
     .reelblock details { margin-top: 18px; border-bottom: 1px solid var(--line); }
     .reelblock details ol { padding: 0 0 20px 22px; color: var(--ink-2); font-size: 15.5px; display: grid; gap: 8px; max-width: 70ch; }
-    @media (max-width: 640px) { .rp-stage { aspect-ratio: auto; height: 380px; } }
 
     /* roadmap: dashed, so it does not read as shipped */
     .road { margin-top: 8px; padding-top: 48px; border-top: 1px solid var(--line); }
@@ -386,24 +394,36 @@
   </div>
 
   <figure class="hero-art ill">
-    <div class="hero-stage" role="img" aria-label="Illustration with sample data. On the left, a task list inside an EMR titled Referrals to chase, with three referrals identified by chart number that have had no response for 24, 19 and 14 days. On the right, a phone showing a text that offers an open appointment on Thursday at 10:40 am, the reply YES, and a booking confirmation.">
-      <div class="shot">
-        <div class="shot-bar"><i></i><i></i><i></i><span>EMR tasks · front desk · sample data</span></div>
-        <div class="tl-head"><b>Referrals to chase</b><span>Mon · 3 tasks</span></div>
-        <div class="tl-row"><i></i><b>Cardiology referral</b><small>Chart 10482 · no response</small><em class="late">24 days</em></div>
-        <div class="tl-row"><i></i><b>Dermatology referral</b><small>Chart 20917 · no response</small><em class="late">19 days</em></div>
-        <div class="tl-row"><i></i><b>Orthopaedics referral</b><small>Chart 30264 · no response</small><em>14 days</em></div>
+    <div class="hero-stage" role="img" aria-label="Illustration of how it would look in OSCAR, with fictional names. On the left, the Tickler Manager with three ticklers for Tran, Olivia, Okafor, Daniel and Bains, Harpreet, each a referral with no response for 24, 19 and 14 days. On the right, a phone showing a text from Your Clinic that offers an open appointment on Thursday at 10:40 am, the reply YES marked Delivered, and a booking confirmation.">
+      <div class="ow">
+        <div class="ow-bar">OSCAR EMR (illustration)<span>Front desk</span></div>
+        <h4>Tickler Manager</h4>
+        <table>
+          <thead><tr><th>Demographic Name</th><th>Message</th><th>Priority</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Tran, Olivia</td><td>Referral sent 24 days ago, no response</td><td class="hi">High</td><td>Active</td></tr>
+            <tr><td>Okafor, Daniel</td><td>Referral sent 19 days ago, no response</td><td class="hi">High</td><td>Active</td></tr>
+            <tr><td>Bains, Harpreet</td><td>Referral sent 14 days ago, no response</td><td>Normal</td><td>Active</td></tr>
+          </tbody>
+        </table>
+        <div class="ow-act"><span>Check All</span><span class="b">Complete Selected</span></div>
       </div>
       <div class="phone">
-        <div class="phone-in">
-          <div class="phone-top">Text from your clinic</div>
-          <div class="msg in">An appointment has opened on Thursday at 10:40 am. Reply YES to take it.</div>
-          <div class="msg out">YES</div>
-          <div class="msg in">You are booked for Thursday at 10:40 am.</div>
+        <div class="sp">
+          <div class="sp-sb"><span>9:41</span><span><svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="23" height="11" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div>
+          <div class="sp-h"><span class="sp-bk"></span><span class="sp-av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div>
+          <div class="sp-t">
+            <div class="sp-st">Today 9:41 am</div>
+            <div class="sp-b in">Hi Olivia, an appointment has opened at Your Clinic on Thursday at 10:40 am. Reply YES to take it.</div>
+            <div class="sp-b out">YES</div>
+            <div class="sp-dl">Delivered</div>
+            <div class="sp-st">9:43 am</div>
+            <div class="sp-b in">You're booked for Thursday at 10:40 am. Reply CANCEL if you can no longer come.</div>
+          </div>
         </div>
       </div>
     </div>
-    <figcaption>Illustration with sample data. The product is in development, so this is not a screenshot.</figcaption>
+    <figcaption>Illustration of how it would look in OSCAR. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University. The product is in development, so this is not a screenshot.</figcaption>
   </figure>
 </header>
 
@@ -456,7 +476,7 @@
         </ol>
       </div>
       <figure class="ill">
-        <div class="shot glow" role="img" aria-label="Illustration with sample data of one daily run. Connection: OSCAR through its official API, using one account controlled by the clinic. Rule: referral sent, no response after 14 days. Result: 4 tasks added for the front desk. Below is an audit log listing one read of referrals and four task writes, each with a chart number.">
+        <div class="shot glow" role="img" aria-label="Illustration with fictional names of one daily run. Connection: OSCAR through its official API, using one account controlled by the clinic. Rule: referral sent, no response after 14 days. Result: 4 tasks added for the front desk. Below is an audit log listing one read of referrals and four tickler writes, each with a patient name.">
           <div class="shot-bar"><i></i><i></i><i></i><span>Daily run · sample data</span></div>
           <div class="run-row"><span class="lbl accent">01 Connect</span><div><b>OSCAR, official API</b><small>One account, created and controlled by your clinic</small></div></div>
           <div class="run-row"><span class="lbl accent">02 Check</span><div><b>Referral sent, no response after 14 days</b><small>The number of days is yours to set</small></div></div>
@@ -464,13 +484,13 @@
           <div class="log">
             <span class="lbl">Audit log</span>
             <div>07:30 <span>READ</span> referrals, sent, no response</div>
-            <div>07:30 <span>WRITE</span> task, chart 10482</div>
-            <div>07:30 <span>WRITE</span> task, chart 20917</div>
-            <div>07:30 <span>WRITE</span> task, chart 11305</div>
-            <div>07:30 <span>WRITE</span> task, chart 30264</div>
+            <div>07:30 <span>WRITE</span> tickler, Tran, Olivia</div>
+            <div>07:30 <span>WRITE</span> tickler, Okafor, Daniel</div>
+            <div>07:30 <span>WRITE</span> tickler, Lindqvist, Mara</div>
+            <div>07:30 <span>WRITE</span> tickler, Bains, Harpreet</div>
           </div>
         </div>
-        <figcaption>Illustration with sample data, not a screenshot.</figcaption>
+        <figcaption>Illustration of how it would look in OSCAR. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University.</figcaption>
       </figure>
     </div>
   </div>
@@ -496,16 +516,22 @@
         </ul>
       </div>
       <figure class="ill">
-        <div class="shot glow" role="img" aria-label="Illustration with sample data of the referral chase list as tasks in an EMR. Four referrals identified by chart number, for cardiology, dermatology, gastroenterology and orthopaedics, with no response for 24, 19, 15 and 14 days. Below is a daily summary: 3 cancellations and 2 schedule changes yesterday.">
-          <div class="shot-bar"><i></i><i></i><i></i><span>EMR tasks · front desk · sample data</span></div>
-          <div class="tl-head"><b>Referrals to chase</b><span>Mon · 4 tasks</span></div>
-          <div class="tl-row"><i></i><b>Cardiology referral</b><small>Chart 10482 · no response</small><em class="late">24 days</em></div>
-          <div class="tl-row"><i></i><b>Dermatology referral</b><small>Chart 20917 · no response</small><em class="late">19 days</em></div>
-          <div class="tl-row"><i></i><b>Gastroenterology referral</b><small>Chart 11305 · no response</small><em>15 days</em></div>
-          <div class="tl-row"><i></i><b>Orthopaedics referral</b><small>Chart 30264 · no response</small><em>14 days</em></div>
+        <div class="ow" role="img" aria-label="Illustration of how it would look in OSCAR, with fictional names. The referral chase list as ticklers in the Tickler Manager. Four referrals for Tran, Olivia, Okafor, Daniel, Lindqvist, Mara and Bains, Harpreet, with no response for 24, 19, 15 and 14 days. Below is a daily summary: 3 cancellations and 2 schedule changes yesterday.">
+          <div class="ow-bar">OSCAR EMR (illustration)<span>Front desk</span></div>
+          <h4>Tickler Manager</h4>
+          <table>
+            <thead><tr><th>Demographic Name</th><th>Message</th><th>Priority</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Tran, Olivia</td><td>Referral sent 24 days ago, no response</td><td class="hi">High</td><td>Active</td></tr>
+              <tr><td>Okafor, Daniel</td><td>Referral sent 19 days ago, no response</td><td class="hi">High</td><td>Active</td></tr>
+              <tr><td>Lindqvist, Mara</td><td>Referral sent 15 days ago, no response</td><td>Normal</td><td>Active</td></tr>
+              <tr><td>Bains, Harpreet</td><td>Referral sent 14 days ago, no response</td><td>Normal</td><td>Active</td></tr>
+            </tbody>
+          </table>
+          <div class="ow-act"><span>Check All</span><span class="b">Complete Selected</span></div>
           <div class="tl-sum"><span class="lbl">Daily summary · yesterday</span><span>3 cancellations</span><span>2 schedule changes</span></div>
         </div>
-        <figcaption>Illustration with sample data, not a screenshot.</figcaption>
+        <figcaption>Illustration of how it would look in OSCAR. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University.</figcaption>
       </figure>
     </div>
 
@@ -521,27 +547,33 @@
         </ul>
       </div>
       <figure class="ill">
-        <div class="backfill" role="img" aria-label="Illustration with sample data of one cancelled slot being filled. The slot on Thursday at 10:40 am opens after a cancellation. A text goes to three patients on the clinic's waitlist. Chart 20917 replies YES first. The front desk approves, and the slot is booked into the schedule. Beside it, a phone shows the text the patient receives: an appointment has opened on Thursday at 10:40 am, reply YES to take it. The patient replies YES and is told they are booked.">
+        <div class="backfill" role="img" aria-label="Illustration with fictional names of one cancelled slot being filled. The slot on Thursday at 10:40 am opens after a cancellation. A text goes to three patients on the clinic's waitlist. Tran, Olivia replies YES first. The front desk approves, and the slot is booked into the schedule. Beside it, a phone shows the text Olivia receives from Your Clinic: an appointment has opened on Thursday at 10:40 am, reply YES to take it. She replies YES, the reply is marked Delivered, and she is told she is booked.">
           <div class="shot glow">
             <div class="shot-bar"><i></i><i></i><i></i><span>Open slot · sample data</span></div>
             <div class="slot-head"><div><b>Thursday, 10:40 am</b><small>Opened by a cancellation</small></div><span class="tag">Filled</span></div>
             <ol class="trail">
               <li class="ok">Text sent to 3 on your waitlist<small>No health details in the message</small></li>
-              <li class="ok">Chart 20917 replied YES first</li>
+              <li class="ok">Tran, Olivia replied YES first</li>
               <li class="ok">Approved by the front desk<small>Optional step</small></li>
               <li class="ok">Booked into the schedule</li>
             </ol>
           </div>
           <div class="phone">
-            <div class="phone-in">
-              <div class="phone-top">Text from your clinic</div>
-              <div class="msg in">An appointment has opened on Thursday at 10:40 am. Reply YES to take it.</div>
-              <div class="msg out">YES</div>
-              <div class="msg in">You are booked for Thursday at 10:40 am.</div>
-            </div>
+        <div class="sp">
+          <div class="sp-sb"><span>9:41</span><span><svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="23" height="11" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div>
+          <div class="sp-h"><span class="sp-bk"></span><span class="sp-av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div>
+          <div class="sp-t">
+            <div class="sp-st">Today 9:41 am</div>
+            <div class="sp-b in">Hi Olivia, an appointment has opened at Your Clinic on Thursday at 10:40 am. Reply YES to take it.</div>
+            <div class="sp-b out">YES</div>
+            <div class="sp-dl">Delivered</div>
+            <div class="sp-st">9:43 am</div>
+            <div class="sp-b in">You're booked for Thursday at 10:40 am. Reply CANCEL if you can no longer come.</div>
           </div>
         </div>
-        <figcaption>Illustration with sample data, not a screenshot.</figcaption>
+      </div>
+        </div>
+        <figcaption>Illustration of how it would look in OSCAR. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University.</figcaption>
       </figure>
     </div>
 
@@ -551,30 +583,19 @@
       <p>A short self-playing illustration, about 40 seconds. In development. It uses sample data and is not a screenshot.</p>
       <div class="reelplayer">
         <div class="rp-stage" id="rp-stage">
-          <button type="button" class="rp-poster" id="rp-poster" aria-label="Play the cancellation backfill demo, about 40 seconds">
-            <span class="rp-eyebrow">Aevon Health &middot; in development</span>
-            <span class="rp-title">Cancellation backfill</span>
-            <span class="rp-rule"></span>
-            <span class="rp-line">A cancelled consult, filled from your own waiting list.</span>
-            <span class="rp-go"><svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="15" fill="#0C0E0D"/><path d="M12 9.5l9 5.5-9 5.5z" fill="#9DBFA1"/></svg>Play demo</span>
-            <span class="rp-small">Illustration with sample data, not a screenshot</span>
-          </button>
+          <p class="rp-wait" id="rp-wait">Loading the demo</p>
+          <noscript><p class="rp-wait">The demo needs JavaScript. The text version is below.</p></noscript>
         </div>
       </div>
-      <p class="rp-variants" id="rp-variants">Wording in the demo:
-        <a href="health-reel.html?emr=oscar" data-emr="oscar" aria-current="true">OSCAR</a>
-        <a href="health-reel.html?emr=accuro" data-emr="accuro">Accuro</a>
-        <a href="health-reel.html?emr=chr" data-emr="chr">TELUS CHR</a>
-      </p>
       <details>
         <summary>Text version of the demo</summary>
         <ol>
           <li>Title card: Cancellation backfill. A cancelled consult, filled from your own waiting list.</li>
-          <li>A schedule day view for one clinic, with two provider columns. The Thursday 10:40 appointment is marked Cancelled.</li>
+          <li>An OSCAR-style schedule day view for one clinic, with two provider columns, Hale, Dr. and Quinn, Dr. The Thursday 10:40 appointment for Okafor, Daniel is marked Cancelled.</li>
           <li>The automation notices the open slot, logs it, and checks the waiting list. Three patients match this provider and time.</li>
           <li>Those three patients get a text offering the slot. It contains no health details.</li>
-          <li>The first patient to reply YES, Chart 20917, gets the slot. The other two are told it has been filled.</li>
-          <li>A task appears for the front desk: Approve booking, Chart 20917, Thursday 10:40. Staff approve it, or you let it run.</li>
+          <li>The first patient to reply YES, Tran, Olivia, gets the slot. The other two are told it has been filled.</li>
+          <li>A tickler appears for the front desk: Approve booking, Tran, Olivia, Thursday 10:40. Staff approve it, or you let it run.</li>
           <li>The booking appears in the schedule at 10:40, the patient is removed from the waiting list, and an audit log shows each read and write with a time.</li>
           <li>End card: one open slot, filled without a phone call. In development. Illustration with sample data.</li>
         </ol>
@@ -823,39 +844,41 @@
 </footer>
 
 <script>
-/* Load the reel only on click, so the page stays light. The poster above is the reel's first frame. */
+/* The reel loads when its block is near the viewport and plays while at least half of it is on screen.
+   With reduced motion it never autoplays: the reel shows its static storyboard instead. */
 (function () {
   var stage = document.getElementById('rp-stage');
   if (!stage) return;
-  var emr = 'oscar';
-  var links = document.querySelectorAll('#rp-variants a');
-  function setHeight(h) {
-    stage.style.aspectRatio = 'auto';
-    stage.style.height = Math.max(300, Math.min(h, 1200)) + 'px';
+  var player = stage.parentNode;
+  var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var frame = null, ready = false, visible = false;
+  if (reduced) stage.classList.add('rd');
+  function send() {
+    if (frame && ready && frame.contentWindow) frame.contentWindow.postMessage({ aevonReel: 'visible', v: visible }, location.origin);
   }
-  function load(variant) {
-    emr = variant;
-    var f = stage.querySelector('iframe');
-    var src = 'health-reel.html?emr=' + variant;
-    if (!f) {
-      setHeight(stage.clientWidth * 0.5625 + (stage.clientWidth < 700 ? 200 : 160));
-      stage.innerHTML = '<iframe src="' + src + '" title="Cancellation backfill demo: a self-playing illustration with sample data" loading="eager"></iframe>';
-    } else {
-      f.src = src;
+  function load() {
+    if (frame) return;
+    frame = document.createElement('iframe');
+    frame.title = 'Cancellation backfill demo: a self-playing illustration with fictional names';
+    frame.src = 'health-reel.html';
+    stage.appendChild(frame);
+  }
+  if ('IntersectionObserver' in window) {
+    var near = new IntersectionObserver(function (es) {
+      if (es.some(function (e) { return e.isIntersecting; })) { load(); near.disconnect(); }
+    }, { rootMargin: '700px 0px' });
+    near.observe(player);
+    if (!reduced) {
+      new IntersectionObserver(function (es) {
+        visible = es[es.length - 1].intersectionRatio >= 0.5;
+        send();
+      }, { threshold: [0, 0.25, 0.5, 0.75, 1] }).observe(player);
     }
-    for (var i = 0; i < links.length; i++) {
-      if (links[i].getAttribute('data-emr') === variant) links[i].setAttribute('aria-current', 'true');
-      else links[i].removeAttribute('aria-current');
-    }
-  }
-  document.getElementById('rp-poster').addEventListener('click', function () { load(emr); });
-  for (var i = 0; i < links.length; i++) {
-    links[i].addEventListener('click', function (e) { e.preventDefault(); load(this.getAttribute('data-emr')); });
-  }
+  } else { load(); visible = !reduced; }
   window.addEventListener('message', function (e) {
-    if (e.origin !== location.origin || !e.data || e.data.aevonReel !== 'height') return;
-    var f = stage.querySelector('iframe');
-    if (f && e.source === f.contentWindow) setHeight(e.data.h);
+    if (e.origin !== location.origin || !e.data || !frame || e.source !== frame.contentWindow) return;
+    if (e.data.aevonReel === 'ready') { ready = true; var w = document.getElementById('rp-wait'); if (w) w.hidden = true; send(); }
+    if (e.data.aevonReel === 'height' && reduced) stage.style.height = Math.max(400, Math.min(e.data.h, 6000)) + 'px';
   });
 })();
 </script>
