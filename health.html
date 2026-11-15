@@ -15,6 +15,10 @@
   <meta property="og:title" content="Medical Clinic Automation for OSCAR EMR | Aevon Health" />
   <meta property="og:description" content="In development: clinic automation on your EMR that fills cancelled appointments from your waitlist and follows up unanswered referrals. For clinics in BC and Ontario." />
   <meta property="og:locale" content="en_CA" />
+  <meta property="og:image" content="https://aevon.ca/img/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Aevon. Software for the companies the big platforms skip." />
   <meta name="twitter:card" content="summary" />
 
   <link rel="icon" type="image/svg+xml" href="logo.svg" />
@@ -70,8 +74,11 @@
     .ow tbody tr:nth-child(odd) td { background: #f9f9f9; }
     .ow td.hi { color: #a3261a; font-weight: 700; }
     .ow-act { display: flex; gap: 6px; padding: 10px 14px 12px; }
-    .ow-act span { padding: 3px 9px; font-size: 12px; border: 1px solid #ccc; border-radius: 4px; color: #428bca; }
-    .ow-act span.b { color: #fff; background: #428bca; border-color: #357ebd; opacity: .65; }
+    .ow-act span { padding: 3px 9px; font-size: 12px; border: 1px solid #ccc; border-radius: 4px; color: #2a6496; }
+    .ow-act span.b { color: #fff; background: #2a6496; border-color: #245682; }
+    /* Keeps the four-column table inside a 360px screen. */
+    .feature > * { min-width: 0; }
+    @media (max-width: 400px) { .ow table { font-size: 11.5px; } .ow th, .ow td { padding-left: 5px; padding-right: 5px; } }
     .tl-sum { display: flex; flex-wrap: wrap; gap: 4px 18px; align-items: baseline; padding: 10px 14px 12px; border-top: 1px solid #ccc; background: whitesmoke; font-size: 13px; color: #333; }
     .tl-sum .lbl { width: 100%; font-size: 10.5px; color: #555; }
 
@@ -257,7 +264,7 @@
       "name": "Is it available now?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Not yet. Both automations are in development. We are taking on founding clinics to build them with, starting on OSCAR."
+        "text": "Not yet. Both automations are in development. We are looking for founding clinics to build them with, starting with clinics that use OSCAR."
       }
     },
     {
@@ -265,7 +272,7 @@
       "name": "Does this replace our EMR or booking tool?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. It works alongside them. If you use an online booking tool, it keeps doing its job."
+        "text": "No. It works alongside your EMR and does not replace it. If you use an online booking tool, that keeps working the way it does now."
       }
     },
     {
@@ -273,7 +280,7 @@
       "name": "Do staff need to learn new software?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. The chase list shows up as tasks inside your EMR."
+        "text": "No. The chase list appears as tasks inside the EMR your staff already use."
       }
     },
     {
@@ -281,7 +288,7 @@
       "name": "Do patients get messages from it?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Only with cancellation backfill, and only patients on your own waitlist. The texts contain no health details, and your staff can approve each booking. The referral chase list is staff-facing only."
+        "text": "Only if you use cancellation backfill, and then only patients on your own waitlist. The texts contain no health details, and your staff can approve each booking. The referral chase list is only seen by staff."
       }
     },
     {
@@ -345,7 +352,7 @@
       "name": "Do we still need our fax service or booking tool?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Nothing changes there. Referrals still go out the way they do today, and your online booking tool keeps doing its job."
+        "text": "Yes. Nothing changes there. Referrals still go out the way they do today, and your online booking tool keeps working the way it does now."
       }
     },
     {
@@ -353,7 +360,7 @@
       "name": "Is this AI making decisions about patients?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. The automations follow rules you set and handle administrative follow-up only. There is no triage, diagnosis or treatment. Clinical decisions stay with your physicians."
+        "text": "No. The automations follow rules that your clinic sets, and they only handle administrative follow-up. They do no triage, diagnosis or treatment. Clinical decisions stay with your physicians."
       }
     }
   ]
@@ -368,7 +375,7 @@
   <div class="wrap">
     <a class="brand" href="/"><img src="logo.svg" alt="" />Aevon</a>
     <div class="navr">
-      <a href="#what">What we're building</a>
+      <a href="#what">What we are building</a>
       <a href="#privacy">Privacy</a>
       <a href="#founding">Founding clinics</a>
       <a href="#questions">Questions</a>
@@ -380,17 +387,18 @@
 <header class="hero">
   <div class="hero-bg" style="--hero-image:url(img/hero.jpg)" role="presentation"></div>
   <div class="wrap">
-    <span class="lbl">Aevon Health · for medical clinics in BC and Ontario</span>
-    <h1>Unanswered referrals and empty slots, handled inside your EMR.</h1>
+    <span class="lbl">Aevon Health</span>
+    <h1>Admin automation for medical clinics in BC and Ontario.</h1>
     <p class="sub">
-      We are building admin automation that connects to your EMR through its official API and
-      does the chasing your front desk has no time for.
+      Aevon Health connects to your EMR through its official API. We are building two things
+      first: a morning list of referrals that nobody has answered, and a way to offer cancelled
+      appointments to patients on your waitlist by text.
     </p>
     <div class="cta">
-      <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 20-minute call</a>
+      <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 15-minute call</a>
       <a class="btn btn-ghost" href="#contact">Or send us a note</a>
     </div>
-    <p class="verify"><b>In development.</b> Now taking on founding clinics, with a 60-day pilot at no charge.</p>
+    <p class="verify"><b>In development.</b> We are looking for founding clinics for a 60-day pilot at no charge.</p>
   </div>
 
   <figure class="hero-art ill">
@@ -442,22 +450,21 @@
 <section id="problem" class="tight">
   <div class="wrap">
     <div class="sec-head">
-      <span class="pill">The problem</span>
-      <h2>Your staff already know what falls through.</h2>
-      <p class="lede">None of it is hard. There just isn't time.</p>
+      <h2>Where front desk follow-up gets missed</h2>
+      <p class="lede">The two things we are building first both deal with follow-up that is done by hand today.</p>
     </div>
     <div class="grid3">
       <div>
-        <h3>The referral that went quiet</h3>
-        <p>A referral goes out and nothing comes back. Chasing it depends on someone remembering to look. Some slip through.</p>
+        <h3>Referrals with no reply</h3>
+        <p>A referral is sent and the other office does not respond. Finding those means someone remembering to look, which is hard to keep up on a busy day.</p>
       </div>
       <div>
-        <h3>The slot that stayed empty</h3>
-        <p>A consult cancels the day before. Nobody has an hour to phone down the waitlist, so the slot goes unused.</p>
+        <h3>Cancelled appointments</h3>
+        <p>A patient cancels a day or two ahead. Filling the slot means phoning down the waitlist, and there is rarely time for that, so the appointment goes unused.</p>
       </div>
       <div>
-        <h3>The week nobody saw</h3>
-        <p>Cancellations and schedule changes pile up. By the time anyone adds them up, the week is over.</p>
+        <h3>Schedule changes</h3>
+        <p>Cancellations and changes are spread across the day and across staff. Nobody has a single view of them unless someone puts one together by hand.</p>
       </div>
     </div>
   </div>
@@ -467,19 +474,18 @@
   <div class="wrap">
     <div class="how">
       <div>
-        <span class="pill">How it works</span>
-        <h2 class="h2">Three steps. Nothing new to log into.</h2>
+        <h2 class="h2" style="margin-top:0">How it works</h2>
         <ol class="steps">
-          <li><div><h3>We connect to your EMR</h3><p>Through its official API, using one dedicated account that your clinic creates and controls. No screen scraping and no shared staff logins.</p></div></li>
-          <li><div><h3>The automation does the checking</h3><p>Each day it looks for what you asked it to watch, such as referrals with no response after a number of days you set.</p></div></li>
-          <li><div><h3>Your staff get a short list</h3><p>As tasks inside the EMR. Anything uncertain goes to a person. The automation does not guess.</p></div></li>
+          <li><div><h3>We connect to your EMR</h3><p>We use the EMR's official API and one dedicated account that your clinic creates and controls. We do not use screen scraping or shared staff logins.</p></div></li>
+          <li><div><h3>It checks every day</h3><p>The automation looks for the things you have asked it to watch. For example, referrals that have had no response after a number of days that you choose.</p></div></li>
+          <li><div><h3>Staff see a list of tasks</h3><p>The results appear as tasks inside the EMR, so there is nothing new to log into. If the automation is not sure about something, it leaves it for a person to decide.</p></div></li>
         </ol>
       </div>
       <figure class="ill">
         <div class="shot glow" role="img" aria-label="Illustration with fictional names of one daily run. Connection: OSCAR through its official API, using one account controlled by the clinic. Rule: referral sent, no response after 14 days. Result: 4 tasks added for the front desk. Below is an audit log listing one read of referrals and four tickler writes, each with a patient name.">
           <div class="shot-bar"><i></i><i></i><i></i><span>Daily run · sample data</span></div>
           <div class="run-row"><span class="lbl accent">01 Connect</span><div><b>OSCAR, official API</b><small>One account, created and controlled by your clinic</small></div></div>
-          <div class="run-row"><span class="lbl accent">02 Check</span><div><b>Referral sent, no response after 14 days</b><small>The number of days is yours to set</small></div></div>
+          <div class="run-row"><span class="lbl accent">02 Check</span><div><b>Referral sent, no response after 14 days</b><small>Your clinic chooses the number of days</small></div></div>
           <div class="run-row"><span class="lbl accent">03 List</span><div><b>4 tasks added for the front desk</b><small>Inside the EMR task list</small></div></div>
           <div class="log">
             <span class="lbl">Audit log</span>
@@ -499,21 +505,20 @@
 <section id="what" class="bt">
   <div class="wrap">
     <div class="sec-head">
-      <span class="pill">What we're building first</span>
-      <h2>Two jobs, done properly.</h2>
-      <p class="lede">Both are in development. We would rather do two things well than promise ten.</p>
+      <h2>What we are building first</h2>
+      <p class="lede">Both of these are in development and neither is available yet.</p>
     </div>
 
     <div class="feature">
       <div>
         <span class="pill accent">For family practices</span>
         <h3>Referral follow-up: a daily chase list</h3>
-        <p>Each morning, outgoing referrals with no response are waiting for your front desk as tasks inside the EMR.</p>
+        <p>Each morning, outgoing referrals that have had no response show up as tasks for your front desk inside the EMR.</p>
         <p style="font-size:15px"><a href="oscar-emr-referral-follow-up.html">How to track referrals with no response in OSCAR today</a></p>
         <ul class="price-list">
-          <li>You set how many days counts as "no response"</li>
-          <li>A short daily summary of cancellations and schedule changes</li>
-          <li>Staff-facing only. Nothing is sent to patients</li>
+          <li>You choose how many days count as no response</li>
+          <li>It includes a short daily summary of cancellations and schedule changes</li>
+          <li>Only your staff see it. Nothing is sent to patients</li>
         </ul>
       </div>
       <figure class="ill">
@@ -540,12 +545,12 @@
       <div>
         <span class="pill accent">For specialist clinics</span>
         <h3>Cancellation backfill: fill cancelled appointments from your waitlist</h3>
-        <p>When a slot opens, patients on your own waitlist get a text. The first to say yes is booked into the schedule.</p>
+        <p>When an appointment slot opens up, patients on your clinic's own waitlist get a text message. The first patient to reply yes is booked into the schedule.</p>
         <p style="font-size:15px"><a href="oscar-emr-fill-cancelled-appointments.html">How to fill a cancelled appointment in OSCAR today</a></p>
         <ul class="price-list">
-          <li>Your staff can approve each booking, or let it run</li>
-          <li>Messages contain no health details</li>
-          <li>A monthly count of slots filled</li>
+          <li>Staff can approve each booking before it is made, or let it run automatically</li>
+          <li>The messages contain no health details</li>
+          <li>You get a monthly count of the slots that were filled</li>
         </ul>
       </div>
       <figure class="ill">
@@ -605,20 +610,20 @@
     </div>
 
     <div class="road">
-      <h3>On the roadmap</h3>
-      <p>Not built and not available yet. Listed so you know where this is going.</p>
+      <h3>Planned for later</h3>
+      <p>These are not built yet and are not available.</p>
       <ul>
         <li><span class="lbl">Not yet available</span>Recall and reactivation</li>
         <li><span class="lbl">Not yet available</span>No-show follow-up</li>
         <li><span class="lbl">Not yet available</span>Intake preparation</li>
         <li><span class="lbl">Not yet available</span>WorkSafeBC and ICBC form preparation</li>
       </ul>
-      <p class="after">Need something else automated? This is sold as a custom service first. <a href="mailto:hello@aevon.ca">Tell us what eats your front desk's time.</a></p>
+      <p class="after">If there is other admin work you would like automated, we also take on custom work. Email <a href="mailto:hello@aevon.ca">hello@aevon.ca</a> and describe it.</p>
     </div>
 
     <div class="band">
-      <p>Is one of these the thing your front desk keeps losing time to?</p>
-      <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 20-minute call</a>
+      <p>Book a 15-minute call to talk about either of these for your clinic.</p>
+      <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 15-minute call</a>
     </div>
   </div>
 </section>
@@ -626,35 +631,33 @@
 <section id="emrs" class="tight bt">
   <div class="wrap">
     <div class="sec-head">
-      <span class="pill">EMRs</span>
       <h2>Works on your EMR: OSCAR first, Accuro and TELUS CHR planned.</h2>
-      <p class="lede">We connect through the EMR's official API, so each one is its own piece of work.</p>
+      <p class="lede">We connect through each EMR's official API, so support is added one EMR at a time.</p>
     </div>
     <ul class="emr">
       <li class="now"><b>OSCAR</b><span>Building for it now</span></li>
       <li><b>Accuro</b><span>Planned</span></li>
       <li><b>TELUS CHR</b><span>Planned</span></li>
     </ul>
-    <p class="after">On a different EMR? <a href="mailto:hello@aevon.ca">Tell us which one.</a></p>
+    <p class="after">If your clinic uses a different EMR, email <a href="mailto:hello@aevon.ca">hello@aevon.ca</a> and tell us which one.</p>
   </div>
 </section>
 
 <section id="privacy" class="bt">
   <div class="wrap two">
     <div>
-      <span class="pill">Privacy and security</span>
-      <h2 style="margin-top:12px">Privacy and security: eight commitments.</h2>
-      <p style="margin-top:16px">Written for the person at your clinic who has to sign off on this.</p>
+      <h2>Privacy and security: eight commitments.</h2>
+      <p style="margin-top:16px">These are the commitments we make to every clinic we work with.</p>
     </div>
     <ul class="commit">
-      <li><h3>Official EMR APIs only</h3><p>We connect through your EMR's official API and nothing else.</p></li>
+      <li><h3>Official EMR APIs only</h3><p>We connect only through your EMR's official API.</p></li>
       <li><h3>Hosted in Canada</h3><p>Patient information is hosted in Canada.</p></li>
-      <li><h3>Minimal data stored</h3><p>We store the minimum the task needs.</p></li>
+      <li><h3>Minimal data stored</h3><p>We store as little data as the task requires.</p></li>
       <li><h3>Full audit log</h3><p>Every read from your EMR and every write to it is logged.</p></li>
-      <li><h3>Privacy impact assessment</h3><p>We prepare one for your clinic.</p></li>
-      <li><h3>Administrative tasks only</h3><p>No triage, diagnosis or treatment. Clinical decisions stay with your physicians.</p></li>
+      <li><h3>Privacy impact assessment</h3><p>We prepare a privacy impact assessment for your clinic.</p></li>
+      <li><h3>Administrative tasks only</h3><p>The automation does no triage, diagnosis or treatment.</p></li>
       <li><h3>No AI training on clinic data</h3><p>Your clinic's data is not used to train AI models.</p></li>
-      <li><h3>One account ends it</h3><p>Disable one EMR account and our access ends.</p></li>
+      <li><h3>Your clinic controls access</h3><p>Our access ends when your clinic disables one EMR account.</p></li>
     </ul>
   </div>
 </section>
@@ -663,12 +666,11 @@
   <div class="wrap">
     <div class="price-grid" style="margin-top:0">
       <div>
-        <span class="pill">Founding clinic program</span>
-        <h2 class="h2">Help shape it, and start free.</h2>
+        <h2 class="h2" style="margin-top:0">Founding clinic program</h2>
         <p style="margin-top:16px;color:var(--ink-2)">
-          We are taking on a small number of founding clinics to build these with. In return we
-          ask for honest feedback, one named staff contact and, if it works, permission to share
-          the results.
+          We are looking for a small number of clinics to build these with. Founding clinics get
+          a 60-day pilot at no charge. In return, we ask for honest feedback, one staff member as
+          our contact, and permission to share the results if it works.
         </p>
         <p class="founder">
           Aevon Health is a Canadian service from Aevon that builds administrative automation for medical clinics on top of the EMR they already use. It is led by Aidan Cox, whose background is medical clinic IT and privacy.
@@ -679,14 +681,14 @@
         <div class="price-num" style="margin-top:8px">60 days</div>
         <p style="color:var(--ink-2);margin-top:2px">pilot at no charge</p>
         <ul class="price-list">
-          <li>EMR connection handled for you</li>
-          <li>Privacy impact assessment handled for you</li>
-          <li>One agreed success number to judge it by</li>
-          <li>A 15-minute check-in each week</li>
-          <li>Founding pricing afterwards</li>
+          <li>We handle the EMR connection</li>
+          <li>We prepare the privacy impact assessment</li>
+          <li>We agree on one number that defines success</li>
+          <li>A 15-minute check-in every week</li>
+          <li>Founding pricing after the pilot</li>
         </ul>
         <div style="margin-top:24px">
-          <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Ask about a founding spot</a>
+          <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Ask about the founding program</a>
         </div>
       </div>
     </div>
@@ -699,19 +701,19 @@
     <div style="margin-top:26px">
       <details open>
         <summary>Is it available now?</summary>
-        <p>Not yet. Both automations are in development. We are taking on founding clinics to build them with, starting on OSCAR.</p>
+        <p>Not yet. Both automations are in development. We are looking for founding clinics to build them with, starting with clinics that use OSCAR.</p>
       </details>
       <details>
         <summary>Does this replace our EMR or booking tool?</summary>
-        <p>No. It works alongside them. If you use an online booking tool, it keeps doing its job.</p>
+        <p>No. It works alongside your EMR and does not replace it. If you use an online booking tool, that keeps working the way it does now.</p>
       </details>
       <details>
         <summary>Do staff need to learn new software?</summary>
-        <p>No. The chase list shows up as tasks inside your EMR.</p>
+        <p>No. The chase list appears as tasks inside the EMR your staff already use.</p>
       </details>
       <details>
         <summary>Do patients get messages from it?</summary>
-        <p>Only with cancellation backfill, and only patients on your own waitlist. The texts contain no health details, and your staff can approve each booking. The referral chase list is staff-facing only.</p>
+        <p>Only if you use cancellation backfill, and then only patients on your own waitlist. The texts contain no health details, and your staff can approve each booking. The referral chase list is only seen by staff.</p>
       </details>
       <details>
         <summary>Where is patient information stored?</summary>
@@ -743,11 +745,11 @@
       </details>
       <details>
         <summary>Do we still need our fax service or booking tool?</summary>
-        <p>Yes. Nothing changes there. Referrals still go out the way they do today, and your online booking tool keeps doing its job.</p>
+        <p>Yes. Nothing changes there. Referrals still go out the way they do today, and your online booking tool keeps working the way it does now.</p>
       </details>
       <details>
         <summary>Is this AI making decisions about patients?</summary>
-        <p>No. The automations follow rules you set and handle administrative follow-up only. There is no triage, diagnosis or treatment. Clinical decisions stay with your physicians.</p>
+        <p>No. The automations follow rules that your clinic sets, and they only handle administrative follow-up. They do no triage, diagnosis or treatment. Clinical decisions stay with your physicians.</p>
       </details>
     </div>
   </div>
@@ -756,9 +758,8 @@
 <section id="contact" class="bt">
   <div class="wrap" style="max-width:940px">
     <div class="sec-head">
-      <span class="pill">Contact</span>
       <h2>Tell us about your clinic.</h2>
-      <p class="lede">A reply from the person building it, usually the same day. Or <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">book a 20-minute call</a>.</p>
+      <p class="lede">A reply from the person building it, usually the same day. Or <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">book a 15-minute call</a>.</p>
     </div>
     <form id="clinic-form" style="margin-top:30px; max-width:640px" novalidate>
       <div class="fgrid">
@@ -823,10 +824,10 @@
 
 <section class="close bt">
   <div class="wrap">
-    <h2>Twenty minutes, to see if it fits your clinic.</h2>
-    <p>Tell us which EMR you are on and what your front desk keeps chasing. We will tell you plainly whether we can help yet.</p>
+    <h2>Book a 15-minute call</h2>
+    <p>On the call we will ask which EMR you use and where your front desk spends time on follow-up. If we cannot help your clinic yet, we will say so.</p>
     <div class="cta">
-      <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 20-minute call</a>
+      <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 15-minute call</a>
       <a class="btn btn-ghost" href="mailto:hello@aevon.ca">hello@aevon.ca</a>
     </div>
   </div>

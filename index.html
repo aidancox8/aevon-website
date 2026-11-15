@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aevon | Software for Companies the Big Platforms Skip</title>
-  <meta name="description" content="Aevon is a Canadian software company. Our product is Cadre: employee certification tracking for trades and transport." />
+  <meta name="description" content="Aevon is a Canadian software company. Its product is Cadre, certification tracking for trades and transport. In development: Aevon Health, for medical clinics." />
   <link rel="canonical" href="https://aevon.ca/" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0C0E0D" />
@@ -19,6 +19,10 @@
   <meta property="og:title" content="Aevon | Software for Companies the Big Platforms Skip" />
   <meta property="og:description" content="A Canadian software company. Our product is Cadre: certification tracking for trades and transport." />
   <meta property="og:locale" content="en_CA" />
+  <meta property="og:image" content="https://aevon.ca/img/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Aevon. Software for the companies the big platforms skip." />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Aevon | Software for Companies the Big Platforms Skip" />
   <meta name="twitter:description" content="A Canadian software company. Our product is Cadre: certification tracking for trades and transport." />
@@ -37,12 +41,18 @@
     "name": "Aevon",
     "url": "https://aevon.ca",
     "email": "hello@aevon.ca",
-    "description": "Aevon builds operational software for businesses that have outgrown a spreadsheet but are too specific for the large platforms. Its product is Cadre, certification tracking and HR software for trades, transport and manufacturing.",
+    "description": "Aevon builds operational software for businesses that have outgrown a spreadsheet but are too specific for the large platforms. Its product is Cadre, certification tracking and HR software for trades, transport and manufacturing. In development: Aevon Health, administrative automation for medical clinics in British Columbia and Ontario that connects to the clinic's EMR.",
     "address": { "@type": "PostalAddress", "addressRegion": "BC", "addressCountry": "CA" },
-    "makesOffer": {
-      "@type": "Offer",
-      "itemOffered": { "@type": "SoftwareApplication", "name": "Cadre", "applicationCategory": "BusinessApplication", "url": "https://aevon.ca/cadre.html" }
-    }
+    "makesOffer": [
+      {
+        "@type": "Offer",
+        "itemOffered": { "@type": "SoftwareApplication", "name": "Cadre", "applicationCategory": "BusinessApplication", "url": "https://aevon.ca/cadre.html" }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": { "@type": "Service", "name": "Aevon Health", "serviceType": "Administrative automation for medical clinics", "description": "In development.", "url": "https://aevon.ca/health.html" }
+      }
+    ]
   }
   </script>
 
@@ -56,12 +66,15 @@
 </head>
 <body>
 
-<nav>
+<a class="skip" href="#main">Skip to content</a>
+
+<nav aria-label="Main">
   <div class="wrap">
     <a class="brand" href="/"><img src="logo.svg" alt="" />Aevon</a>
     <div class="navr">
       <a href="#how">What we do</a>
       <a href="#cadre">Cadre</a>
+      <a href="health.html">Aevon Health</a>
       <a href="#built">Built to order</a>
       <a href="#contact">Contact</a>
       <a class="btn btn-primary btn-sm" href="#contact">Contact</a>
@@ -84,6 +97,8 @@
     </div>
   </div>
 </header>
+
+<main id="main">
 
 <!-- Where a template puts a wall of customer logos. We have one deployment and say so lower down;
      this strip is the credentials Cadre actually tracks, which is true and useful. -->
@@ -144,6 +159,28 @@
         <img src="img/shots/cadre-renewals.jpg" width="1568" height="744" loading="lazy"
              alt="The Cadre renewals screen: staff listed with credential, issue date, expiry date and a status of Expired or Expiring, with counts for expired and for 30, 60 and 90 days." />
       </figure>
+    </div>
+  </div>
+</section>
+
+<section id="health" class="tight" style="border-top:1px solid var(--line)">
+  <div class="wrap two">
+    <div>
+      <span class="pill">In development</span>
+      <h2 style="margin-top:12px">Aevon Health</h2>
+    </div>
+    <div>
+      <p>
+        Admin automation for medical clinics in BC and Ontario. It connects to the clinic's EMR
+        through its official API. Two things are being built first: a daily list of outgoing
+        referrals that have had no response, and a way to offer cancelled appointments to patients
+        on the clinic's own waitlist by text.
+      </p>
+      <p>
+        It is not available yet. We are looking for founding clinics to build it with, starting
+        with clinics that use OSCAR.
+      </p>
+      <p><a href="health.html">Read about Aevon Health</a></p>
     </div>
   </div>
 </section>
@@ -225,11 +262,14 @@
   </div>
 </section>
 
+</main>
+
 <footer>
   <div class="wrap">
     <div>&copy; 2026 Aevon · Canada</div>
     <div style="display:flex;gap:22px;flex-wrap:wrap">
       <a href="cadre.html">Cadre</a>
+      <a href="health.html">Aevon Health</a>
       <a href="https://cadre-demo.web.app/dashboard" target="_blank" rel="noopener">Live demo</a>
       <a href="mailto:hello@aevon.ca">hello@aevon.ca</a>
       <a href="privacy.html">Privacy</a>
