@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Track Referrals With No Response in OSCAR EMR | Aevon</title>
+  <meta name="description" content="How to find outgoing referrals with no response in OSCAR EMR using the Consultations screen, what the red rows mean, and how to create a follow-up tickler." />
+  <link rel="canonical" href="https://aevon.ca/oscar-emr-referral-follow-up.html" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://aevon.ca/oscar-emr-referral-follow-up.html" />
+  <meta property="og:site_name" content="Aevon" />
+  <meta property="og:title" content="Track Referrals With No Response in OSCAR EMR | Aevon" />
+  <meta property="og:description" content="How to find outgoing referrals with no response in OSCAR EMR using the Consultations screen, what the red rows mean, and how to create a follow-up tickler." />
+  <meta property="og:locale" content="en_CA" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="theme-color" content="#0C0E0D" />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css?v=3" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9R5SHY2LD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-M9R5SHY2LD');
+  </script>
+  <style>
+    /* prose page: no hero, the nav needs a ground of its own */
+    nav { position: static; border-bottom: 1px solid var(--line); }
+    main { padding: 64px 0 96px; }
+    .prose ol { padding-left: 22px; }
+    .prose h3 { font-size: 17px; margin-top: 26px; }
+    .answer { border: 1px solid var(--line-2); border-radius: var(--radius-lg); background: var(--surface); padding: 20px 22px; margin-top: 26px; }
+    .answer p { margin-top: 0; color: var(--ink); }
+    .note { font-size: 15px; color: var(--ink-3) !important; }
+    table.t { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 15.5px; }
+    table.t th, table.t td { text-align: left; padding: 9px 12px 9px 0; border-bottom: 1px solid var(--line); color: var(--ink-2); vertical-align: top; }
+    table.t th { color: var(--ink-3); font-weight: 600; }
+    .cta-box { border: 1px solid var(--line-2); border-radius: var(--radius-lg); background: var(--surface); padding: 24px; margin-top: 40px; }
+    .cta-box h2 { margin-top: 0; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to track referrals with no response in OSCAR EMR",
+  "description": "How to find outgoing referrals with no response in OSCAR EMR using the Consultations screen, what the red rows mean, and how to create a follow-up tickler.",
+  "datePublished": "2026-11-15",
+  "dateModified": "2026-11-15",
+  "mainEntityOfPage": "https://aevon.ca/oscar-emr-referral-follow-up.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Aevon",
+    "url": "https://aevon.ca/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Aevon",
+    "url": "https://aevon.ca/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to track referrals with no response in OSCAR EMR",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Open the Consultations screen.",
+      "text": "It is reached from the Con link on the top bar, and from the Consultations section of a patient's chart. The screen is titled View Consultation Requests."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Set the filters.",
+      "text": "Choose a team, set a date range, and choose whether to search on Referral Date or Appointment Date. Leave Include Completed unticked so finished requests stay out of the way."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Read the Status and Referral Date columns.",
+      "text": "Each row shows the Status, Urgency, Team, Patient, Provider, Service, Consultant, Referral Date, Appointment Date and Last Followup."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 4,
+      "name": "Look for the red rows.",
+      "text": "OSCAR shows a request in red when it is overdue. The table below gives the number of days for each status."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 5,
+      "name": "Create ticklers for the ones at \"Nothing\".",
+      "text": "Use the link \"Add Tickler for Consults with ND for more than one week\". It creates a tickler for each of those requests, which then appears in the Tickler Manager."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 6,
+      "name": "Update the status when a reply arrives.",
+      "text": "When the specialist's office confirms or the report comes back, change the request's status. This step is what keeps the list trustworthy."
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does OSCAR EMR track outgoing referrals?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Outgoing referrals are consultation requests. The Consultations screen lists them with their Status, Urgency, Team, Patient, Provider, Service, Consultant, Referral Date, Appointment Date and Last Followup."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why are some consultation rows red in OSCAR?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A row turns red when the request is overdue: more than 7 days at Nothing or Pending Patient Callback, or more than 30 days at Pending Specialist Callback."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can OSCAR remind staff to follow up a referral?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Partly. The Consultations screen has a link that creates a tickler for requests that have had a status of Nothing for more than a week. Someone has to open the screen and click it. It does not run on a schedule."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a tickler in OSCAR?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A tickler is a task or reminder attached to a patient. It has a Service Date, a Priority of High, Normal or Low, the person it is assigned to, and a message. Ticklers are managed in the Tickler Manager."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this the same in OSCAR Pro and Juno?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The idea is the same, but the wording differs. Juno, for example, uses the statuses Not Complete, Preliminary Pending Specialist, Pending Callback, Appointment Booked, Completed, Cancelled and Deleted. Check your own version."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/"><img src="logo.svg" alt="" />Aevon</a>
+    <div class="navr">
+      <a href="health.html">Aevon Health</a>
+      <a href="health.html#contact">Contact</a>
+      <a class="btn btn-primary btn-sm" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a call</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap prose">
+    <span class="lbl">OSCAR EMR how-to</span>
+    <h1 style="margin-top:12px">How to track referrals with no response in OSCAR EMR</h1>
+    <div class="answer"><p><b>Short answer.</b> Open the Consultations screen. It lists every consultation request with its status and referral date, and it shows overdue requests in red. A link on that screen creates a tickler for requests that have sat at "Nothing" for more than a week.</p></div>
+
+    <h2>Step by step</h2>
+    <ol>
+      <li><b>Open the Consultations screen.</b> It is reached from the Con link on the top bar, and from the Consultations section of a patient's chart. The screen is titled View Consultation Requests.</li>
+      <li><b>Set the filters.</b> Choose a team, set a date range, and choose whether to search on Referral Date or Appointment Date. Leave Include Completed unticked so finished requests stay out of the way.</li>
+      <li><b>Read the Status and Referral Date columns.</b> Each row shows the Status, Urgency, Team, Patient, Provider, Service, Consultant, Referral Date, Appointment Date and Last Followup.</li>
+      <li><b>Look for the red rows.</b> OSCAR shows a request in red when it is overdue. The table below gives the number of days for each status.</li>
+      <li><b>Create ticklers for the ones at "Nothing".</b> Use the link "Add Tickler for Consults with ND for more than one week". It creates a tickler for each of those requests, which then appears in the Tickler Manager.</li>
+      <li><b>Update the status when a reply arrives.</b> When the specialist's office confirms or the report comes back, change the request's status. This step is what keeps the list trustworthy.</li>
+    </ol>
+
+    <h2>What the statuses mean</h2>
+    <table class="t">
+      <tr><th>Status</th><th>Meaning</th><th>Turns red after</th></tr>
+      <tr><td>Nothing</td><td>The request was created and nothing has happened since</td><td>7 days</td></tr>
+      <tr><td>Pending Specialist Callback</td><td>Sent, waiting to hear from the specialist's office</td><td>30 days</td></tr>
+      <tr><td>Pending Patient Callback</td><td>Waiting on the patient</td><td>7 days</td></tr>
+      <tr><td>Booking Confirmed</td><td>The specialist appointment is booked</td><td>Does not turn red</td></tr>
+      <tr><td>Completed</td><td>Finished. Hidden unless you tick Include Completed</td><td>Does not turn red</td></tr>
+    </table>
+
+    <h2>Where the manual way falls short</h2>
+    <ul>
+      <li><b>Someone has to open the screen.</b> The red rows only help on the days a staff member looks at them.</li>
+      <li><b>It depends on the statuses being kept up to date.</b> If nobody changes a request's status when the specialist replies, it will show as overdue when it is not.</li>
+      <li><b>The one-click tickler covers one case.</b> It is for requests at "Nothing" for over a week. Requests waiting on a specialist are flagged in red but need a tickler made by hand.</li>
+    </ul>
+
+    <h2>What can be automated</h2>
+    <p>Aevon Health is building a referral chase list for OSCAR. Each morning it reads your consultation requests and adds a tickler for your front desk for each one with no response after the number of days you set, along with a short summary of the previous day's cancellations and schedule changes. Nothing is sent to patients. It connects through OSCAR's official API, using one account your clinic controls. It is in development and not yet generally available.</p>
+    <p>It is only useful if your clinic keeps consultation statuses current. If yours does not, tell us how replies reach you today and we will say plainly whether we can help.</p>
+
+    <h2>Questions</h2>
+    <h3>Does OSCAR EMR track outgoing referrals?</h3>
+    <p>Yes. Outgoing referrals are consultation requests. The Consultations screen lists them with their Status, Urgency, Team, Patient, Provider, Service, Consultant, Referral Date, Appointment Date and Last Followup.</p>
+    <h3>Why are some consultation rows red in OSCAR?</h3>
+    <p>A row turns red when the request is overdue: more than 7 days at Nothing or Pending Patient Callback, or more than 30 days at Pending Specialist Callback.</p>
+    <h3>Can OSCAR remind staff to follow up a referral?</h3>
+    <p>Partly. The Consultations screen has a link that creates a tickler for requests that have had a status of Nothing for more than a week. Someone has to open the screen and click it. It does not run on a schedule.</p>
+    <h3>What is a tickler in OSCAR?</h3>
+    <p>A tickler is a task or reminder attached to a patient. It has a Service Date, a Priority of High, Normal or Low, the person it is assigned to, and a message. Ticklers are managed in the Tickler Manager.</p>
+    <h3>Is this the same in OSCAR Pro and Juno?</h3>
+    <p>The idea is the same, but the wording differs. Juno, for example, uses the statuses Not Complete, Preliminary Pending Specialist, Pending Callback, Appointment Booked, Completed, Cancelled and Deleted. Check your own version.</p>
+
+    <div class="cta-box">
+      <h2>Want the list waiting for you each morning?</h2>
+      <p>Aevon Health is building this for OSCAR with a small number of founding clinics, starting with a 60-day pilot at no charge.</p>
+      <p style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="health.html#what">See how it works</a>
+        <a class="btn btn-ghost" href="health.html#contact">Tell us about your clinic</a>
+      </p>
+    </div>
+
+    <p class="note" style="margin-top:34px">Written from the OSCAR community edition (Open-O) source code as of November 2026. OSCAR Pro, Juno and older OSCAR versions can differ, so check your own screens. Aevon is not affiliated with OSCAR EMR, McMaster University or any OSCAR service provider. Related: <a href="oscar-emr-fill-cancelled-appointments.html">How to fill a cancelled appointment in OSCAR EMR</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Aevon · Canada</div>
+    <div style="display:flex;gap:6px 22px;flex-wrap:wrap">
+      <a href="/">Aevon</a>
+      <a href="health.html">Aevon Health</a>
+      <a href="mailto:hello@aevon.ca">hello@aevon.ca</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

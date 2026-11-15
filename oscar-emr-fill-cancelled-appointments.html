@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fill Cancelled Appointments in OSCAR EMR | Aevon Health</title>
+  <meta name="description" content="How to fill a cancelled appointment in OSCAR EMR using the Waiting List and make appt, where the manual way falls short, and what can be automated." />
+  <link rel="canonical" href="https://aevon.ca/oscar-emr-fill-cancelled-appointments.html" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://aevon.ca/oscar-emr-fill-cancelled-appointments.html" />
+  <meta property="og:site_name" content="Aevon" />
+  <meta property="og:title" content="Fill Cancelled Appointments in OSCAR EMR | Aevon Health" />
+  <meta property="og:description" content="How to fill a cancelled appointment in OSCAR EMR using the Waiting List and make appt, where the manual way falls short, and what can be automated." />
+  <meta property="og:locale" content="en_CA" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="theme-color" content="#0C0E0D" />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css?v=3" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9R5SHY2LD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-M9R5SHY2LD');
+  </script>
+  <style>
+    /* prose page: no hero, the nav needs a ground of its own */
+    nav { position: static; border-bottom: 1px solid var(--line); }
+    main { padding: 64px 0 96px; }
+    .prose ol { padding-left: 22px; }
+    .prose h3 { font-size: 17px; margin-top: 26px; }
+    .answer { border: 1px solid var(--line-2); border-radius: var(--radius-lg); background: var(--surface); padding: 20px 22px; margin-top: 26px; }
+    .answer p { margin-top: 0; color: var(--ink); }
+    .note { font-size: 15px; color: var(--ink-3) !important; }
+    table.t { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 15.5px; }
+    table.t th, table.t td { text-align: left; padding: 9px 12px 9px 0; border-bottom: 1px solid var(--line); color: var(--ink-2); vertical-align: top; }
+    table.t th { color: var(--ink-3); font-weight: 600; }
+    .cta-box { border: 1px solid var(--line-2); border-radius: var(--radius-lg); background: var(--surface); padding: 24px; margin-top: 40px; }
+    .cta-box h2 { margin-top: 0; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to fill a cancelled appointment in OSCAR EMR",
+  "description": "How to fill a cancelled appointment in OSCAR EMR using the Waiting List and make appt, where the manual way falls short, and what can be automated.",
+  "datePublished": "2026-11-15",
+  "dateModified": "2026-11-15",
+  "mainEntityOfPage": "https://aevon.ca/oscar-emr-fill-cancelled-appointments.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Aevon",
+    "url": "https://aevon.ca/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Aevon",
+    "url": "https://aevon.ca/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to fill a cancelled appointment in OSCAR EMR",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Mark the appointment as cancelled.",
+      "text": "On the schedule, set the appointment's status to Cancelled. Clicking the status icon on an appointment moves it to the next status. The appointment stays visible with the Cancelled colour."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Open the Waiting List.",
+      "text": "Choose the list you want from the Current List dropdown. Each row shows the Patient Name, a Note, the Date they were added and the Provider."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Find a patient who fits the slot.",
+      "text": "Look for someone waiting for that provider whose note says the time would suit. This is why a useful note matters when a patient is added to the list."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 4,
+      "name": "Phone the patient.",
+      "text": "OSCAR does not contact them for you. Call and offer the time."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 5,
+      "name": "Book them with make appt.",
+      "text": "On that patient's row, pick the provider and use make appt to book the appointment."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 6,
+      "name": "Take them off the list.",
+      "text": "Use Remove on their row once they are booked, so the list stays accurate."
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does OSCAR EMR have a waiting list?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. OSCAR has a Waiting List screen with the columns Patient Name, Note, Date and Provider. Each row can be updated, booked with make appt, or removed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can OSCAR text patients on the waiting list when a slot opens?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not on its own. The Waiting List is a list that staff work through by hand. Texting waiting patients and booking the first to accept needs an add-on that connects to OSCAR."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between cancelling and deleting an appointment in OSCAR?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cancelling sets the appointment's status to Cancelled, so it stays on record with that status. Deleting removes the appointment from the schedule and keeps only an archived copy. Cancelling keeps a visible record of what happened."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this the same in OSCAR Pro and Juno?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The idea is the same, but the screens can differ. In Juno, the Waiting List is found under Reports. Check your own version."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do we need to change our booking tool or fax service to do this?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Filling a cancelled slot from the Waiting List happens inside OSCAR. An online booking tool or a fax service keeps working as before."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/"><img src="logo.svg" alt="" />Aevon</a>
+    <div class="navr">
+      <a href="health.html">Aevon Health</a>
+      <a href="health.html#contact">Contact</a>
+      <a class="btn btn-primary btn-sm" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a call</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap prose">
+    <span class="lbl">OSCAR EMR how-to</span>
+    <h1 style="margin-top:12px">How to fill a cancelled appointment in OSCAR EMR</h1>
+    <div class="answer"><p><b>Short answer.</b> OSCAR has a Waiting List. When an appointment is cancelled, open the Waiting List, choose a patient who fits the slot, phone them, and use <b>make appt</b> to book them into the open time. OSCAR does not contact waiting patients for you.</p></div>
+
+    <h2>Step by step</h2>
+    <ol>
+      <li><b>Mark the appointment as cancelled.</b> On the schedule, set the appointment's status to Cancelled. Clicking the status icon on an appointment moves it to the next status. The appointment stays visible with the Cancelled colour.</li>
+      <li><b>Open the Waiting List.</b> Choose the list you want from the Current List dropdown. Each row shows the Patient Name, a Note, the Date they were added and the Provider.</li>
+      <li><b>Find a patient who fits the slot.</b> Look for someone waiting for that provider whose note says the time would suit. This is why a useful note matters when a patient is added to the list.</li>
+      <li><b>Phone the patient.</b> OSCAR does not contact them for you. Call and offer the time.</li>
+      <li><b>Book them with make appt.</b> On that patient's row, pick the provider and use make appt to book the appointment.</li>
+      <li><b>Take them off the list.</b> Use Remove on their row once they are booked, so the list stays accurate.</li>
+    </ol>
+
+    <h2>Where the manual way falls short</h2>
+    <ul>
+      <li><b>Someone has to notice.</b> A cancellation changes one appointment's status. Nothing tells the front desk that a slot is now free.</li>
+      <li><b>It is one phone call at a time.</b> Staff work down the list until someone answers and says yes. A short-notice slot often goes unfilled before that happens.</li>
+      <li><b>The list goes stale.</b> The Waiting List only helps if patients are added to it and removed once they are booked.</li>
+    </ul>
+
+    <h2>What can be automated</h2>
+    <p>Aevon Health is building cancellation backfill for OSCAR. When an appointment is cancelled, patients on your own waiting list who fit that provider and time get a text offering the slot. The first to reply YES is booked, and your front desk can approve each booking first. The texts contain no health details. It connects through OSCAR's official API, using one account your clinic controls. It is in development and not yet generally available.</p>
+
+    <h2>Questions</h2>
+    <h3>Does OSCAR EMR have a waiting list?</h3>
+    <p>Yes. OSCAR has a Waiting List screen with the columns Patient Name, Note, Date and Provider. Each row can be updated, booked with make appt, or removed.</p>
+    <h3>Can OSCAR text patients on the waiting list when a slot opens?</h3>
+    <p>Not on its own. The Waiting List is a list that staff work through by hand. Texting waiting patients and booking the first to accept needs an add-on that connects to OSCAR.</p>
+    <h3>What is the difference between cancelling and deleting an appointment in OSCAR?</h3>
+    <p>Cancelling sets the appointment's status to Cancelled, so it stays on record with that status. Deleting removes the appointment from the schedule and keeps only an archived copy. Cancelling keeps a visible record of what happened.</p>
+    <h3>Is this the same in OSCAR Pro and Juno?</h3>
+    <p>The idea is the same, but the screens can differ. In Juno, the Waiting List is found under Reports. Check your own version.</p>
+    <h3>Do we need to change our booking tool or fax service to do this?</h3>
+    <p>No. Filling a cancelled slot from the Waiting List happens inside OSCAR. An online booking tool or a fax service keeps working as before.</p>
+
+    <div class="cta-box">
+      <h2>Want the calls made for you?</h2>
+      <p>Aevon Health is building this for OSCAR with a small number of founding clinics, starting with a 60-day pilot at no charge.</p>
+      <p style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="health.html#what">See how it works</a>
+        <a class="btn btn-ghost" href="health.html#contact">Tell us about your clinic</a>
+      </p>
+    </div>
+
+    <p class="note" style="margin-top:34px">Written from the OSCAR community edition (Open-O) source code as of November 2026. OSCAR Pro, Juno and older OSCAR versions can differ, so check your own screens. Aevon is not affiliated with OSCAR EMR, McMaster University or any OSCAR service provider. Related: <a href="oscar-emr-referral-follow-up.html">How to track referrals with no response in OSCAR EMR</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Aevon · Canada</div>
+    <div style="display:flex;gap:6px 22px;flex-wrap:wrap">
+      <a href="/">Aevon</a>
+      <a href="health.html">Aevon Health</a>
+      <a href="mailto:hello@aevon.ca">hello@aevon.ca</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
