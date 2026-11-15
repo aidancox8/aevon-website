@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Medical Clinic Automation for OSCAR EMR | Aevon Health</title>
-  <meta name="description" content="Aevon Health builds medical clinic automation on your EMR: fill cancelled appointments from your waitlist and follow up unanswered referrals. BC and Ontario." />
+  <title>Fax to Booked: Referral Intake for Clinics | Aevon Health</title>
+  <meta name="description" content="Aevon Health builds automation for the work after a fax is sorted: confirm the referral, get what is missing, book the patient, send the welcome. BC, Ontario." />
   <link rel="canonical" href="https://aevon.ca/health.html" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0C0E0D" />
@@ -12,8 +12,8 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://aevon.ca/health.html" />
   <meta property="og:site_name" content="Aevon" />
-  <meta property="og:title" content="Medical Clinic Automation for OSCAR EMR | Aevon Health" />
-  <meta property="og:description" content="In development: clinic automation on your EMR that fills cancelled appointments from your waitlist and follows up unanswered referrals. For clinics in BC and Ontario." />
+  <meta property="og:title" content="Fax to Booked: Referral Intake for Clinics | Aevon Health" />
+  <meta property="og:description" content="Aevon Health builds automation for the work after a fax is sorted: confirm the referral, get what is missing, book the patient, send the welcome. BC, Ontario." />
   <meta property="og:locale" content="en_CA" />
   <meta property="og:image" content="https://aevon.ca/img/og.png" />
   <meta property="og:image:width" content="1200" />
@@ -101,6 +101,25 @@
     .sp-b.out::before { content: ""; position: absolute; right: -5px; bottom: 0; width: 12px; height: 12px; background: #1c6dc0; border-bottom-left-radius: 12px; }
     .sp-b.out::after { content: ""; position: absolute; right: -8px; bottom: 0; width: 8px; height: 14px; background: #fff; border-bottom-left-radius: 8px; }
     .sp-dl { align-self: flex-end; margin-right: 6px; font-size: 11.5px; color: #6a727c; }
+
+
+    /* hero and how-it-works: Incoming Docs list beside the Aevon checklist */
+    .hs-left { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); gap: 16px; align-items: center; }
+    .ow td.ty { font-weight: 700; color: #00283c; }
+    .ow tbody tr.new td { background: #ffffaa; }
+    .ow table.docs { font-size: 12px; }
+    .ow table.docs th, .ow table.docs td { padding-left: 6px; padding-right: 6px; }
+    .ab .shot-bar span { color: var(--accent); }
+    .ck { list-style: none; padding: 14px 16px 16px; display: grid; gap: 10px; font-size: 14.5px; line-height: 1.35; }
+    .ck li { position: relative; padding-left: 28px; color: var(--ink); }
+    .ck li::before { content: ""; position: absolute; left: 0; top: 1px; width: 17px; height: 17px; border-radius: 50%; border: 1.5px solid var(--ink-3); }
+    .ck li.ok::before { background: var(--accent); border-color: var(--accent); }
+    .ck li.ok::after { content: ""; position: absolute; left: 6px; top: 4px; width: 4px; height: 8px; border: solid var(--on-accent); border-width: 0 2px 2px 0; transform: rotate(40deg); }
+    .ck li.no { color: var(--danger); }
+    .ck li.no::before { border-color: var(--danger); }
+    .ck li.no::after { content: "!"; position: absolute; left: 0; top: 1px; width: 17px; text-align: center; font-size: 12px; font-weight: 700; line-height: 17px; }
+    .ck-rule { padding: 0 16px 14px; font-size: 13px; color: var(--ink-3); }
+    .reelblock + .feature { margin-top: 24px; }
 
     /* one open slot, start to filled */
     .slot-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 18px 14px; border-bottom: 1px solid var(--line); }
@@ -203,6 +222,7 @@
     @media (max-width: 760px) {
       figure.hero-art { margin-top: 44px; padding: 0 20px; }
       .hero-stage { grid-template-columns: 1fr; gap: 16px; }
+      .hs-left { grid-template-columns: 1fr; }
       .hero-stage .phone { margin: 0 auto; }
       .emr { grid-template-columns: 1fr; }
       .commit { grid-template-columns: 1fr; }
@@ -230,7 +250,7 @@
   "@type": "Service",
   "name": "Aevon Health",
   "serviceType": "Administrative automation for medical clinics",
-  "description": "In development. Automation that connects to a medical clinic's EMR through its official API: filling cancelled appointments from the clinic's own waitlist by text, and a daily list of outgoing referrals with no response. Administrative tasks only.",
+  "description": "In development. Automation that connects to a medical clinic's EMR through its official API and completes the routine work after an incoming fax is sorted: confirming a referral, requesting what is missing, booking the patient by text and sending the confirmation, with exceptions handed to staff. Can also sort and label incoming faxes where the clinic has no tool for it. Administrative tasks only.",
   "url": "https://aevon.ca/health.html",
   "areaServed": [
     {
@@ -277,10 +297,50 @@
     },
     {
       "@type": "Question",
+      "name": "Does it replace the tool that sorts our faxes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. If your EMR or an add-on already sorts and labels your faxes, it starts after that. If nothing does, it can sort them as well, with your staff confirming the labels until you are comfortable letting it run."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it decide which referrals are urgent?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It reads what the referring office wrote and follows the rules your clinic sets for provider and appointment type. Urgency is a clinical decision and stays with your physicians."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does a new referral get booked?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The patient is offered times your clinic allows, by text. When they pick one, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. If anything is missing or unusual, it goes to your staff instead. Your clinic can also choose to confirm every booking."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens when it is not sure?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It stops and hands the referral to a person, with the reason: a missing phone number, two patients with the same name, a referral marked urgent by the sender, or anything outside your clinic's rules. It does not guess."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do physicians have to review each referral first?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Only if your clinic wants that. Many clinics have a physician accept or prioritise new referrals. That step stays with the physician, and the automation waits for it. Where your clinic's rules allow a referral to be booked directly, it is."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "Do staff need to learn new software?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. The chase list appears as tasks inside the EMR your staff already use."
+        "text": "No. Exceptions show up as tasks inside your EMR."
       }
     },
     {
@@ -288,7 +348,7 @@
       "name": "Do patients get messages from it?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Only if you use cancellation backfill, and then only patients on your own waitlist. The texts contain no health details, and your staff can approve each booking. The referral chase list is only seen by staff."
+        "text": "Yes, for booking: a short form request, the offered times and the confirmation. The messages contain no health details."
       }
     },
     {
@@ -325,14 +385,6 @@
     },
     {
       "@type": "Question",
-      "name": "How does it follow up referrals that have had no response?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Each morning it reads your outgoing referrals and adds a task for your front desk for each one with no response after the number of days you set. Some EMRs already flag overdue referrals on their own screen. This puts them in front of staff daily without anyone opening that screen."
-      }
-    },
-    {
-      "@type": "Question",
       "name": "Which EMRs does it work with?",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -360,7 +412,7 @@
       "name": "Is this AI making decisions about patients?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. The automations follow rules that your clinic sets, and they only handle administrative follow-up. They do no triage, diagnosis or treatment. Clinical decisions stay with your physicians."
+        "text": "No. The automations follow rules that your clinic sets, and they only handle administrative follow-up. They do no triage, diagnosis or treatment. Clinical decisions stay with your physicians. Where it reads a fax to sort it, it uses a language model run in Canada under a no-retention agreement, and your clinic's data is never used to train it."
       }
     }
   ]
@@ -388,11 +440,9 @@
   <div class="hero-bg" style="--hero-image:url(img/hero.jpg)" role="presentation"></div>
   <div class="wrap">
     <span class="lbl">Aevon Health</span>
-    <h1>Admin automation for medical clinics in BC and Ontario.</h1>
+    <h1>From fax to booked, inside your EMR.</h1>
     <p class="sub">
-      Aevon Health connects to your EMR through its official API. We are building two things
-      first: a morning list of referrals that nobody has answered, and a way to offer cancelled
-      appointments to patients on your waitlist by text.
+      Sorting a fax is the easy part. Someone still has to confirm it, chase what is missing, book the patient and send the welcome. We are building the part that does all of that, so routine referrals reach the schedule without your staff touching them.
     </p>
     <div class="cta">
       <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 15-minute call</a>
@@ -402,31 +452,43 @@
   </div>
 
   <figure class="hero-art ill">
-    <div class="hero-stage" role="img" aria-label="Illustration of how it would look in OSCAR, with fictional names. On the left, the Tickler Manager with three ticklers for Tran, Olivia, Okafor, Daniel and Bains, Harpreet, each a referral with no response for 24, 19 and 14 days. On the right, a phone showing a text from Your Clinic that offers an open appointment on Thursday at 10:40 am, the reply YES marked Delivered, and a booking confirmation.">
-      <div class="ow">
-        <div class="ow-bar">OSCAR EMR (illustration)<span>Front desk</span></div>
-        <h4>Tickler Manager</h4>
-        <table>
-          <thead><tr><th>Demographic Name</th><th>Message</th><th>Priority</th><th>Status</th></tr></thead>
-          <tbody>
-            <tr><td>Tran, Olivia</td><td>Referral sent 24 days ago, no response</td><td class="hi">High</td><td>Active</td></tr>
-            <tr><td>Okafor, Daniel</td><td>Referral sent 19 days ago, no response</td><td class="hi">High</td><td>Active</td></tr>
-            <tr><td>Bains, Harpreet</td><td>Referral sent 14 days ago, no response</td><td>Normal</td><td>Active</td></tr>
-          </tbody>
-        </table>
-        <div class="ow-act"><span>Check All</span><span class="b">Complete Selected</span></div>
+    <div class="hero-stage" role="img" aria-label="Illustration of how it would look in OSCAR, with fictional names. On the left, an OSCAR Incoming Docs list of documents already labelled by type, with a new Referral for Tran, Olivia at the top, beside a separate Aevon panel that checks the referral against the clinic's required list: patient name, date of birth, health number, phone number and reason for referral present are ticked, and a recent report is missing. On the right, a phone showing a text from Your Clinic: Dr. Hale has these times, Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am, reply 1, 2 or 3. The patient replies 1 and it is marked Delivered.">
+      <div class="hs-left">
+        <div class="ow">
+          <div class="ow-bar">OSCAR EMR (illustration)<span>Front desk</span></div>
+          <h4>Incoming Docs</h4>
+          <table class="docs">
+            <thead><tr><th>Type</th><th>Patient</th><th>Received</th></tr></thead>
+            <tbody>
+              <tr class="new"><td class="ty">Referral</td><td>Tran, Olivia</td><td>2026-11-18</td></tr>
+              <tr><td class="ty">Consult report</td><td>Lindqvist, Mara</td><td>2026-10-26</td></tr>
+              <tr><td class="ty">Lab result</td><td>Moreau, Luc</td><td>2026-11-02</td></tr>
+              <tr><td class="ty">Referral</td><td>Bains, Harpreet</td><td>2026-11-04</td></tr>
+              <tr><td class="ty">Form request</td><td>Whitfield, Grace</td><td>2026-11-12</td></tr>
+            </tbody>
+          </table>
+          <div class="ow-act"><span>Reader View</span><span>Load All</span></div>
+        </div>
+        <div class="shot ab">
+          <div class="shot-bar"><i></i><i></i><i></i><span>Aevon · checks the list</span></div>
+          <ul class="ck">
+            <li class="ok">Patient name</li>
+            <li class="ok">Date of birth</li>
+            <li class="ok">Health number</li>
+            <li class="ok">Phone number</li>
+            <li class="ok">Reason for referral present</li>
+            <li class="no">Recent report attached: missing</li>
+          </ul>
+        </div>
       </div>
       <div class="phone">
         <div class="sp">
-          <div class="sp-sb"><span>9:41</span><span><svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="23" height="11" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div>
-          <div class="sp-h"><span class="sp-bk"></span><span class="sp-av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div>
+          <div class="sp-sb"><span>9:41</span><span><svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="23" height="11" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div>          <div class="sp-h"><span class="sp-bk"></span><span class="sp-av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div>
           <div class="sp-t">
-            <div class="sp-st">Today 9:41 am</div>
-            <div class="sp-b in">Hi Olivia, an appointment has opened at Your Clinic on Thursday at 10:40 am. Reply YES to take it.</div>
-            <div class="sp-b out">YES</div>
+            <div class="sp-st">Today 9:52 am</div>
+            <div class="sp-b in">Dr. Hale has these times: Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am. Reply 1, 2 or 3.</div>
+            <div class="sp-b out">1</div>
             <div class="sp-dl">Delivered</div>
-            <div class="sp-st">9:43 am</div>
-            <div class="sp-b in">You're booked for Thursday at 10:40 am. Reply CANCEL if you can no longer come.</div>
           </div>
         </div>
       </div>
@@ -450,21 +512,21 @@
 <section id="problem" class="tight">
   <div class="wrap">
     <div class="sec-head">
-      <h2>Where front desk follow-up gets missed</h2>
-      <p class="lede">The two things we are building first both deal with follow-up that is done by hand today.</p>
+      <h2>Your staff already know what falls through.</h2>
+      <p class="lede">The work after a fax is sorted is done by hand today, and it piles up.</p>
     </div>
     <div class="grid3">
       <div>
-        <h3>Referrals with no reply</h3>
-        <p>A referral is sent and the other office does not respond. Finding those means someone remembering to look, which is hard to keep up on a busy day.</p>
+        <h3>The pile that never shrinks</h3>
+        <p>Sorting a fax takes seconds. Finishing it takes a person: confirm, chase, book, confirm again. So the pile grows.</p>
       </div>
       <div>
-        <h3>Cancelled appointments</h3>
+        <h3>The referral that arrives twice</h3>
+        <p>When a referral sits, the referring office sends it again and the patient phones to ask. Both land on the same pile.</p>
+      </div>
+      <div>
+        <h3>The slot that stayed empty</h3>
         <p>A patient cancels a day or two ahead. Filling the slot means phoning down the waitlist, and there is rarely time for that, so the appointment goes unused.</p>
-      </div>
-      <div>
-        <h3>Schedule changes</h3>
-        <p>Cancellations and changes are spread across the day and across staff. Nobody has a single view of them unless someone puts one together by hand.</p>
       </div>
     </div>
   </div>
@@ -476,24 +538,29 @@
       <div>
         <h2 class="h2" style="margin-top:0">How it works</h2>
         <ol class="steps">
-          <li><div><h3>We connect to your EMR</h3><p>We use the EMR's official API and one dedicated account that your clinic creates and controls. We do not use screen scraping or shared staff logins.</p></div></li>
-          <li><div><h3>It checks every day</h3><p>The automation looks for the things you have asked it to watch. For example, referrals that have had no response after a number of days that you choose.</p></div></li>
-          <li><div><h3>Staff see a list of tasks</h3><p>The results appear as tasks inside the EMR, so there is nothing new to log into. If the automation is not sure about something, it leaves it for a person to decide.</p></div></li>
+          <li><div><h3>The fax gets sorted</h3><p>By your EMR's own tools if it has them. If it does not, we can sort and label incoming faxes too. Either way we connect through the EMR's official API, using one account your clinic controls.</p></div></li>
+          <li><div><h3>The automation finishes the routine parts</h3><p>It checks the referral against your list, asks for what is missing, and offers the patient times you allow.</p></div></li>
+          <li><div><h3>Routine referrals book themselves</h3><p>When a referral meets every rule your clinic sets, it is booked and confirmed with nobody at your clinic touching it. Anything that does not is handed to a person with the reason. The automation does not guess, and it never decides urgency.</p></div></li>
         </ol>
       </div>
       <figure class="ill">
-        <div class="shot glow" role="img" aria-label="Illustration with fictional names of one daily run. Connection: OSCAR through its official API, using one account controlled by the clinic. Rule: referral sent, no response after 14 days. Result: 4 tasks added for the front desk. Below is an audit log listing one read of referrals and four tickler writes, each with a patient name.">
-          <div class="shot-bar"><i></i><i></i><i></i><span>Daily run · sample data</span></div>
-          <div class="run-row"><span class="lbl accent">01 Connect</span><div><b>OSCAR, official API</b><small>One account, created and controlled by your clinic</small></div></div>
-          <div class="run-row"><span class="lbl accent">02 Check</span><div><b>Referral sent, no response after 14 days</b><small>Your clinic chooses the number of days</small></div></div>
-          <div class="run-row"><span class="lbl accent">03 List</span><div><b>4 tasks added for the front desk</b><small>Inside the EMR task list</small></div></div>
+        <div class="shot glow" role="img" aria-label="Illustration with fictional names of one referral handled by Aevon. A checklist shows patient name, date of birth, health number, phone number, reason for referral present and recent report attached, all ticked. Below is an audit log: a read of the referral for Tran, Olivia, a read of the clinic's required list, a write of the appointment for Tran, Olivia on Thursday at 10:40, and a write of a tickler for Okafor, Daniel, an exception handed to staff.">
+          <div class="shot-bar"><i></i><i></i><i></i><span>Referral checked · sample data</span></div>
+          <ul class="ck">
+            <li class="ok">Patient name</li>
+            <li class="ok">Date of birth</li>
+            <li class="ok">Health number</li>
+            <li class="ok">Phone number</li>
+            <li class="ok">Reason for referral present</li>
+            <li class="ok">Recent report attached</li>
+          </ul>
+          <p class="ck-rule">Clinic rule: new referrals to Dr. Hale, New consult, 20 min</p>
           <div class="log">
             <span class="lbl">Audit log</span>
-            <div>07:30 <span>READ</span> referrals, sent, no response</div>
-            <div>07:30 <span>WRITE</span> tickler, Tran, Olivia</div>
-            <div>07:30 <span>WRITE</span> tickler, Okafor, Daniel</div>
-            <div>07:30 <span>WRITE</span> tickler, Lindqvist, Mara</div>
-            <div>07:30 <span>WRITE</span> tickler, Bains, Harpreet</div>
+            <div>09:41 <span>READ</span> referral, Tran, Olivia</div>
+            <div>09:41 <span>READ</span> required list, new referral</div>
+            <div>09:53 <span>WRITE</span> appt, Tran, Olivia, Thu 10:40</div>
+            <div>09:53 <span>WRITE</span> tickler, Okafor, Daniel</div>
           </div>
         </div>
         <figcaption>Illustration of how it would look in OSCAR. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University.</figcaption>
@@ -505,41 +572,67 @@
 <section id="what" class="bt">
   <div class="wrap">
     <div class="sec-head">
-      <h2>What we are building first</h2>
+      <h2>Two jobs, done properly.</h2>
       <p class="lede">Both of these are in development and neither is available yet.</p>
     </div>
 
     <div class="feature">
       <div>
-        <span class="pill accent">For family practices</span>
-        <h3>Referral follow-up: a daily chase list</h3>
-        <p>Each morning, outgoing referrals that have had no response show up as tasks for your front desk inside the EMR.</p>
-        <p style="font-size:15px"><a href="oscar-emr-referral-follow-up.html">How to track referrals with no response in OSCAR today</a></p>
+        <span class="pill accent">For specialist clinics</span>
+        <h3>Referral intake: from fax to booked</h3>
+        <p>A new referral goes from a sorted fax to a booked appointment. Routine ones need no work from your staff or physicians.</p>
         <ul class="price-list">
-          <li>You choose how many days count as no response</li>
-          <li>It includes a short daily summary of cancellations and schedule changes</li>
-          <li>Only your staff see it. Nothing is sent to patients</li>
+          <li>Acknowledges the referring office when the referral arrives</li>
+          <li>Asks the patient or the referring office for what is missing</li>
+          <li>Offers the patient times by text and books the one they pick</li>
+          <li>Sends the confirmation and welcome email</li>
+          <li>Hands exceptions to your staff with the reason, as tasks in your EMR</li>
+          <li>Staff confirmation before booking is available if your clinic wants it</li>
+          <li>Sorts and labels incoming faxes too, if nothing does that for you today</li>
         </ul>
       </div>
       <figure class="ill">
-        <div class="ow" role="img" aria-label="Illustration of how it would look in OSCAR, with fictional names. The referral chase list as ticklers in the Tickler Manager. Four referrals for Tran, Olivia, Okafor, Daniel, Lindqvist, Mara and Bains, Harpreet, with no response for 24, 19, 15 and 14 days. Below is a daily summary: 3 cancellations and 2 schedule changes yesterday.">
-          <div class="ow-bar">OSCAR EMR (illustration)<span>Front desk</span></div>
-          <h4>Tickler Manager</h4>
-          <table>
-            <thead><tr><th>Demographic Name</th><th>Message</th><th>Priority</th><th>Status</th></tr></thead>
-            <tbody>
-              <tr><td>Tran, Olivia</td><td>Referral sent 24 days ago, no response</td><td class="hi">High</td><td>Active</td></tr>
-              <tr><td>Okafor, Daniel</td><td>Referral sent 19 days ago, no response</td><td class="hi">High</td><td>Active</td></tr>
-              <tr><td>Lindqvist, Mara</td><td>Referral sent 15 days ago, no response</td><td>Normal</td><td>Active</td></tr>
-              <tr><td>Bains, Harpreet</td><td>Referral sent 14 days ago, no response</td><td>Normal</td><td>Active</td></tr>
-            </tbody>
-          </table>
-          <div class="ow-act"><span>Check All</span><span class="b">Complete Selected</span></div>
-          <div class="tl-sum"><span class="lbl">Daily summary · yesterday</span><span>3 cancellations</span><span>2 schedule changes</span></div>
+        <div class="shot glow" role="img" aria-label="Illustration with fictional names of one referral, start to booked. The referral for Tran, Olivia is checked against the clinic's list. An acknowledgement goes to the referring office and a short form to the patient. The missing details come back. The patient picks Thursday at 10:40 by text. The clinic rule is met, the appointment is booked into the schedule, and the confirmation and welcome email are sent.">
+          <div class="shot-bar"><i></i><i></i><i></i><span>Referral · sample data</span></div>
+          <div class="slot-head"><div><b>Referral for Tran, Olivia</b><small>From Dr. Quinn's office</small></div><span class="tag">Booked</span></div>
+          <ol class="trail">
+            <li class="ok">Checked against your required list<small>One item missing</small></li>
+            <li class="ok">Acknowledgement to the referring office, short form to the patient</li>
+            <li class="ok">Missing details came back</li>
+            <li class="ok">Patient picked Thursday 10:40 by text</li>
+            <li class="ok">Clinic rule met, booked into the schedule</li>
+            <li class="ok">Confirmation and welcome email sent</li>
+          </ol>
         </div>
         <figcaption>Illustration of how it would look in OSCAR. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University.</figcaption>
       </figure>
     </div>
+
+    <div class="reelblock" id="reel">
+      <span class="lbl accent">Watch it work</span>
+      <h3>One referral, start to finish</h3>
+      <p>A short self-playing illustration, about 45 seconds. In development. It uses sample data and is not a screenshot.</p>
+      <div class="reelplayer">
+        <div class="rp-stage" id="rp-stage">
+          <p class="rp-wait" id="rp-wait">Loading the demo</p>
+          <noscript><p class="rp-wait">The demo needs JavaScript. The text version is below.</p></noscript>
+        </div>
+      </div>
+      <details>
+        <summary>Text version of the demo</summary>
+        <ol>
+          <li>Title card: From fax to booked. The work after the fax is sorted.</li>
+          <li>An OSCAR-style Inbox, Incoming Docs, lists documents already labelled by type: Consult report, Lab result, Referral, Referral and Form request, each with a received date. A new Referral for Tran, Olivia from Dr. Quinn's office arrives.</li>
+          <li>A separate Aevon panel checks the referral against the clinic's own required list. Patient name, date of birth, health number, phone number and reason for referral present are ticked. Recent report attached is missing.</li>
+          <li>Two things go out at once: an acknowledgement to Dr. Quinn's office, and a text to the patient with a link to a short form. The text contains no health details.</li>
+          <li>The form shows Completed. A new document arrives in the OSCAR Inbox and is attached to the same referral, and the checklist is fully ticked.</li>
+          <li>The patient is texted the times Dr. Hale has: Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am. They reply 1 and it is marked Delivered.</li>
+          <li>Clinic rule met: complete referral, patient matched, time picked. The appointment appears on the OSCAR schedule day view on its own, with no tickler to tick. The patient's phone shows the confirmation and Welcome email sent. A list headed For your staff: 1 exception shows one tickler from a different referral, Okafor, Daniel: no phone number on the referral.</li>
+          <li>End card: One referral, from fax to booked. No calls, no data entry, no chasing. In development. Illustration with fictional names.</li>
+        </ol>
+      </details>
+    </div>
+
 
     <div class="feature flip">
       <div>
@@ -551,6 +644,7 @@
           <li>Staff can approve each booking before it is made, or let it run automatically</li>
           <li>The messages contain no health details</li>
           <li>You get a monthly count of the slots that were filled</li>
+          <li>Uses the same text-and-book step as referral intake</li>
         </ul>
       </div>
       <figure class="ill">
@@ -584,39 +678,14 @@
       </figure>
     </div>
 
-    <div class="reelblock" id="reel">
-      <span class="lbl accent">Watch it work</span>
-      <h3>One cancelled slot, start to finish</h3>
-      <p>A short self-playing illustration, about 40 seconds. In development. It uses sample data and is not a screenshot.</p>
-      <div class="reelplayer">
-        <div class="rp-stage" id="rp-stage">
-          <p class="rp-wait" id="rp-wait">Loading the demo</p>
-          <noscript><p class="rp-wait">The demo needs JavaScript. The text version is below.</p></noscript>
-        </div>
-      </div>
-      <details>
-        <summary>Text version of the demo</summary>
-        <ol>
-          <li>Title card: Cancellation backfill. A cancelled consult, filled from your own waiting list.</li>
-          <li>An OSCAR-style schedule day view for one clinic, with two provider columns, Hale, Dr. and Quinn, Dr. The Thursday 10:40 appointment for Okafor, Daniel is marked Cancelled.</li>
-          <li>The automation notices the open slot, logs it, and checks the waiting list. Three patients match this provider and time.</li>
-          <li>Those three patients get a text offering the slot. It contains no health details.</li>
-          <li>The first patient to reply YES, Tran, Olivia, gets the slot. The other two are told it has been filled.</li>
-          <li>A tickler appears for the front desk: Approve booking, Tran, Olivia, Thursday 10:40. Staff approve it, or you let it run.</li>
-          <li>The booking appears in the schedule at 10:40, the patient is removed from the waiting list, and an audit log shows each read and write with a time.</li>
-          <li>End card: one open slot, filled without a phone call. In development. Illustration with sample data.</li>
-        </ol>
-      </details>
-    </div>
-
     <div class="road">
       <h3>Planned for later</h3>
       <p>These are not built yet and are not available.</p>
       <ul>
-        <li><span class="lbl">Not yet available</span>Recall and reactivation</li>
-        <li><span class="lbl">Not yet available</span>No-show follow-up</li>
-        <li><span class="lbl">Not yet available</span>Intake preparation</li>
-        <li><span class="lbl">Not yet available</span>WorkSafeBC and ICBC form preparation</li>
+        <li><span class="lbl">Not yet available</span>Closing the loop when a consult report or result comes back</li>
+        <li><span class="lbl">Not yet available</span>Records and form requests, with deadlines</li>
+        <li><span class="lbl">Not yet available</span>Alerts when an outgoing fax fails</li>
+        <li><span class="lbl">Not yet available</span><a href="oscar-emr-referral-follow-up.html">Referral follow-up</a> for family practices</li>
       </ul>
       <p class="after">If there is other admin work you would like automated, we also take on custom work. Email <a href="mailto:hello@aevon.ca">hello@aevon.ca</a> and describe it.</p>
     </div>
@@ -683,7 +752,7 @@
         <ul class="price-list">
           <li>We handle the EMR connection</li>
           <li>We prepare the privacy impact assessment</li>
-          <li>We agree on one number that defines success</li>
+          <li>One agreed number to judge it by, such as how many days behind your fax inbox is</li>
           <li>A 15-minute check-in every week</li>
           <li>Founding pricing after the pilot</li>
         </ul>
@@ -708,12 +777,32 @@
         <p>No. It works alongside your EMR and does not replace it. If you use an online booking tool, that keeps working the way it does now.</p>
       </details>
       <details>
+        <summary>Does it replace the tool that sorts our faxes?</summary>
+        <p>No. If your EMR or an add-on already sorts and labels your faxes, it starts after that. If nothing does, it can sort them as well, with your staff confirming the labels until you are comfortable letting it run.</p>
+      </details>
+      <details>
+        <summary>Does it decide which referrals are urgent?</summary>
+        <p>No. It reads what the referring office wrote and follows the rules your clinic sets for provider and appointment type. Urgency is a clinical decision and stays with your physicians.</p>
+      </details>
+      <details>
+        <summary>How does a new referral get booked?</summary>
+        <p>The patient is offered times your clinic allows, by text. When they pick one, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. If anything is missing or unusual, it goes to your staff instead. Your clinic can also choose to confirm every booking.</p>
+      </details>
+      <details>
+        <summary>What happens when it is not sure?</summary>
+        <p>It stops and hands the referral to a person, with the reason: a missing phone number, two patients with the same name, a referral marked urgent by the sender, or anything outside your clinic's rules. It does not guess.</p>
+      </details>
+      <details>
+        <summary>Do physicians have to review each referral first?</summary>
+        <p>Only if your clinic wants that. Many clinics have a physician accept or prioritise new referrals. That step stays with the physician, and the automation waits for it. Where your clinic's rules allow a referral to be booked directly, it is.</p>
+      </details>
+      <details>
         <summary>Do staff need to learn new software?</summary>
-        <p>No. The chase list appears as tasks inside the EMR your staff already use.</p>
+        <p>No. Exceptions show up as tasks inside your EMR.</p>
       </details>
       <details>
         <summary>Do patients get messages from it?</summary>
-        <p>Only if you use cancellation backfill, and then only patients on your own waitlist. The texts contain no health details, and your staff can approve each booking. The referral chase list is only seen by staff.</p>
+        <p>Yes, for booking: a short form request, the offered times and the confirmation. The messages contain no health details.</p>
       </details>
       <details>
         <summary>Where is patient information stored?</summary>
@@ -732,10 +821,6 @@
         <p>When an appointment is cancelled in your EMR, patients on your own waitlist who fit that provider and time get a text offering the slot. The first to reply YES is booked. Your front desk can approve each booking first.</p>
       </details>
       <details>
-        <summary>How does it follow up referrals that have had no response?</summary>
-        <p>Each morning it reads your outgoing referrals and adds a task for your front desk for each one with no response after the number of days you set. Some EMRs already flag overdue referrals on their own screen. This puts them in front of staff daily without anyone opening that screen.</p>
-      </details>
-      <details>
         <summary>Which EMRs does it work with?</summary>
         <p>We are building for OSCAR first. Accuro and TELUS CHR are planned. It connects through the EMR's official API, so each EMR is its own piece of work.</p>
       </details>
@@ -749,7 +834,7 @@
       </details>
       <details>
         <summary>Is this AI making decisions about patients?</summary>
-        <p>No. The automations follow rules that your clinic sets, and they only handle administrative follow-up. They do no triage, diagnosis or treatment. Clinical decisions stay with your physicians.</p>
+        <p>No. The automations follow rules that your clinic sets, and they only handle administrative follow-up. They do no triage, diagnosis or treatment. Clinical decisions stay with your physicians. Where it reads a fax to sort it, it uses a language model run in Canada under a no-retention agreement, and your clinic's data is never used to train it.</p>
       </details>
     </div>
   </div>
@@ -796,7 +881,7 @@
       <fieldset style="border:0;padding:0;margin:16px 0 0">
         <legend class="lbl" style="margin-bottom:9px">What are you interested in? <span class="opt">(optional, pick any)</span></legend>
         <div style="display:flex;flex-wrap:wrap;gap:8px">
-          <label class="chk"><input type="checkbox" name="c-interest" value="Referral chase list"><span>Referral chase list</span></label>
+          <label class="chk"><input type="checkbox" name="c-interest" value="Referral intake"><span>Referral intake</span></label>
           <label class="chk"><input type="checkbox" name="c-interest" value="Cancellation backfill"><span>Cancellation backfill</span></label>
           <label class="chk"><input type="checkbox" name="c-interest" value="Something else"><span>Something else</span></label>
         </div>
@@ -862,7 +947,7 @@
   function load() {
     if (frame) return;
     frame = document.createElement('iframe');
-    frame.title = 'Cancellation backfill demo: a self-playing illustration with fictional names';
+    frame.title = 'From fax to booked demo: a self-playing illustration with fictional names';
     frame.src = 'health-reel.html';
     stage.appendChild(frame);
   }

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Cancellation backfill: self-playing demo | Aevon Health</title>
+<title>From fax to booked: self-playing demo | Aevon Health</title>
 <meta name="robots" content="noindex, follow" />
 <meta name="theme-color" content="#0C0E0D" />
 <link rel="icon" type="image/svg+xml" href="logo.svg" />
@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
-/* Aevon Health reel: cancellation backfill. An illustration with fictional names, drawn in HTML and CSS.
+/* Aevon Health reel: from fax to booked. An illustration with fictional names, drawn in HTML and CSS.
    The page, captions and controls follow site.css (dark ground, fern accent, Manrope).
    The EMR window and the phone are original, generic drawings and sit on the dark stage as light surfaces. */
 :root {
@@ -282,6 +282,98 @@ body.embed .controls { margin-top: 10px; padding: 0 14px; height: 44px; }
 .narrow .s7panel > .pnl.rv:not(.on) { pointer-events: none; }
 .narrow .audit { font-size: 12px; } .narrow .audit .ar span { white-space: normal; } .narrow .audit .ah, .narrow .audit .ar { grid-template-columns: 70px 54px minmax(0, 1fr); }
 
+/* OSCAR Inbox (document list). Original CSS in the same look as the rest of the window. Appearance of the real list is not confirmed. */
+.emr.inbox { height: 520px; }
+.inner:not(.narrow) .emr.inbox, .inner:not(.narrow) .emr.inbox * { font-size: 15px; }
+.inner:not(.narrow) .emr.inbox .e-title { height: 28px; } .inner:not(.narrow) .emr.inbox .e-link { height: 32px; } .inner:not(.narrow) .emr.inbox .i-h b { font-size: 18px; } .inner:not(.narrow) .emr.inbox .itbl td { padding: 9px 10px; }
+.emr.inbox.mini { height: auto; }
+.i-bar { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 30px; padding: 3px 8px; background: #486ebd; white-space: nowrap; overflow: hidden; }
+.i-bar .sb { display: inline-block; padding: 2px 8px; margin-right: 5px; font-size: 12px; color: #000; background: #e8e8e8; border: 1px solid #8a8a8a; border-radius: 2px; }
+.i-lnks span { margin-left: 12px; font-size: 12px; color: #fff; }
+.i-lnks span.hv { text-decoration: underline; font-weight: 700; }
+.i-main { flex: 1; min-height: 0; display: grid; grid-template-columns: 150px minmax(0, 1fr); background: #E0E1FF; }
+.i-cat { padding: 10px 10px; font-size: 12px; color: #00283c; line-height: 1.9; }
+.i-cat b { font-weight: 700; } .i-cat div { padding-left: 14px; }
+.i-list { padding: 8px 10px; background: #E0E1FF; min-width: 0; }
+.i-h { display: flex; align-items: baseline; justify-content: space-between; padding: 0 2px 6px; font-size: 12px; color: #00283c; }
+.i-h b { font-size: 14px; }
+.itbl { width: 100%; border-collapse: collapse; font-size: 12px; background: #fff; color: #15120B; }
+.itbl th { text-align: left; padding: 5px 8px; font-weight: 700; background: #b6c0e8; border: 1px solid #fff; white-space: nowrap; }
+.itbl td { padding: 6px 8px; border: 1px solid #e3e3e3; white-space: nowrap; }
+.itbl td.ty { font-weight: 700; color: #00283c; }
+.itbl tbody tr:nth-child(even) td { background: #f7f7f7; }
+.itbl tr.nr { display: none; }
+.itbl tr.nr.on { display: table-row; }
+.itbl tr.nr.on td { background: #ffffaa; }
+.itbl .cb { display: inline-block; width: 12px; height: 12px; border: 1px solid #777; background: #fff; vertical-align: -2px; }
+.narrow .emr.inbox { height: auto; }
+.narrow .i-main { grid-template-columns: 1fr; }
+.narrow .i-cat { display: none; }
+.narrow .itbl td, .narrow .itbl th { padding: 6px 4px; white-space: normal; }
+.narrow .i-bar { padding: 3px 6px; }
+.narrow .i-bar .sb { padding: 2px 5px; margin-right: 3px; }
+
+/* Aevon panels: checklist states, dense variant, cards */
+.line.miss .ic { border-color: var(--danger); }
+.line.miss .ic::after { content: "!"; position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: var(--danger); }
+.line.miss > span:last-child { color: var(--danger); }
+.slotcard .rule3 { font-size: 18px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line-2); }
+.narrow .slotcard .rule3 { font-size: 14px; margin-top: 8px; padding-top: 8px; }
+.split.s5 { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 28px; }
+.narrow .split.s5 { grid-template-columns: 1fr; gap: 10px; }
+.win.dense .line { font-size: 19px; padding: 9px 0; }
+.win.dense .line b { color: var(--accent); }
+.narrow .win.dense .line { font-size: 14px; padding: 5px 0; gap: 10px; }
+.narrow .win.dense .ic { width: 18px; height: 18px; }
+.narrow .win.dense .panel-h { padding: 8px 14px; font-size: 14px; }
+.narrow .win.dense .line.miss .ic::after { font-size: 12px; }
+.narrow #s3 .line { padding: 8px 0; font-size: 15px; }
+.fbtn { display: block; width: fit-content; margin-top: 8px; padding: 7px 14px; border-radius: 9px; background: #1c6dc0; color: #fff; font-weight: 700; font-size: 15px; }
+.ackc { border: 1px solid var(--line-2); border-radius: 14px; background: var(--surface); padding: 16px 22px; }
+.ackc .ackh { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-family: var(--f-mono); font-size: 13px; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); }
+.ackc .stx { font-size: 13px; color: var(--on-accent); background: var(--accent); border-radius: 999px; padding: 3px 12px; font-family: var(--f-body); letter-spacing: 0; text-transform: none; font-weight: 600; }
+.ackc b { display: block; margin-top: 8px; font-size: 24px; font-weight: 600; }
+.ackc p { margin-top: 6px; font-size: 20px; color: var(--ink-2); line-height: 1.35; }
+.narrow .ackc { padding: 10px 14px; border-radius: 10px; width: 100%; } .narrow .ackc b { font-size: 16px; margin-top: 4px; } .narrow .ackc p { font-size: 14px; } .narrow .ackc .ackh { font-size: 12px; }
+.narrow #s4 .phone, .narrow #s6 .phone { height: 330px; }
+.sendp .lbl { line-height: 1.4; text-transform: none; font-size: 15px; letter-spacing: .02em; }
+.narrow .sendp .lbl { font-size: 12px; }
+.rcp.pick { border-color: var(--accent); background: rgba(157,191,161,.1); }
+.rcp.pick .stx { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
+.s5 .win { align-self: center; }
+
+/* scene 7: schedule, Aevon rule panel, patient phone, staff exception */
+.s7x { opacity: 0; transform: translateY(8px); transition: opacity .5s ease, transform .5s ease; }
+.s7x.on { opacity: 1; transform: none; }
+.s7grid { position: relative; height: 100%; min-height: 0; display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 24px; }
+.s7L, .s7R { display: flex; flex-direction: column; gap: 14px; min-height: 0; }
+.s7R { justify-content: center; }
+.s7sc { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.s7sc .emr { flex: 1; }
+.s7exc { flex: none; }
+.s7lbl { font-size: 17px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+.emr.tk.exc .tk-body { padding: 8px 12px; }
+.s7rule .panel-h { padding: 10px 20px; font-size: 19px; }
+.s7rule .lines { padding: 2px 20px 8px; }
+.s7rule .line { font-size: 19px; padding: 8px 0; gap: 14px; }
+.s7R .s7phw { align-self: center; }
+.s7R .phone.s7ph { width: 300px; height: 372px; padding: 9px; border-radius: 40px; }
+.s7ph .pscreen { border-radius: 31px; }
+.s7ph .compose { display: none; }
+.wel { font-weight: 600; color: #3b6d46; background: #e3f1e5; border-radius: 10px; padding: 4px 10px; font-size: 14px; }
+.narrow .s7grid { display: block; }
+.narrow .s7L, .narrow .s7R { display: block; position: absolute; inset: 0; }
+.narrow .s7sc { position: absolute; inset: 0; display: flex; }
+.narrow .s7exc, .narrow .s7rule, .narrow .s7phw { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-46%); }
+.narrow .s7phw { display: flex; justify-content: center; }
+.narrow .s7exc.on, .narrow .s7rule.on, .narrow .s7phw.on { transform: translateY(-50%); }
+.narrow .s7x:not(.on) { pointer-events: none; }
+.narrow .s7R .phone.s7ph { width: 282px; height: 356px; }
+.narrow .s7rule .panel-h { font-size: 16px; padding: 10px 14px; } .narrow .s7rule .lines { padding: 4px 14px 8px; } .narrow .s7rule .line { font-size: 16px; padding: 11px 0; }
+.narrow .s7lbl { font-size: 16px; }
+.end .sub2 { margin-top: 12px; font-size: 20px; color: var(--ink-3); }
+.narrow .end .sub2 { font-size: 14px; }
+
 /* cursor */
 .cur { position: absolute; left: 0; top: 0; z-index: 20; width: 26px; pointer-events: none; opacity: 0; transition: opacity .3s ease, transform 1s cubic-bezier(.45,.05,.25,1); filter: drop-shadow(0 2px 3px rgba(0,0,0,.45)); }
 .cur.on { opacity: 1; } .cur.jump { transition: opacity .3s ease; }
@@ -311,7 +403,7 @@ body.reduced { display: block; }
 </head>
 <body>
 
-<main class="reel" id="reel" role="region" aria-label="Cancellation backfill demo: a self-playing illustration with fictional names">
+<main class="reel" id="reel" role="region" aria-label="From fax to booked demo: a self-playing illustration with fictional names">
   <div class="top"><span class="note">Illustration of how it would look in OSCAR. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University.</span></div>
   <div class="stagewrap" id="stagewrap">
     <div class="stage" id="stage">
@@ -319,123 +411,88 @@ body.reduced { display: block; }
 
         <section class="sc" id="s1"><div class="t1">
           <p class="lbl acc a" style="--d:.15s">Aevon Health &middot; in development</p>
-          <h2 class="a" style="--d:.35s">Cancellation backfill</h2>
+          <h2 class="a" style="--d:.35s">From fax to booked</h2>
           <div class="rule a" style="--d:.6s"></div>
-          <p class="sub a" style="--d:.8s">A cancelled consult, filled from your own waiting list.</p>
+          <p class="sub a" style="--d:.8s">The work after the fax is sorted.</p>
         </div></section>
 
-        <section class="sc" id="s2"><div class="emr sched a" id="sa"></div></section>
+        <section class="sc" id="s2"><div class="emr inbox a" id="ia"></div></section>
 
         <section class="sc" id="s3"><div class="split">
-          <div class="slotcard a" style="--d:.2s"><span class="lbl acc">Open slot</span><div class="big">Thu 10:40</div><p>Dr. Hale &middot; Your Clinic</p></div>
+          <div class="slotcard a" style="--d:.2s"><span class="lbl acc">Referral received</span><div class="big">Tran, Olivia</div><p>From Dr. Quinn&rsquo;s office</p><p class="rule3">Clinic rule: new referrals to Dr. Hale, New consult, 20 min</p></div>
           <div class="win a" style="--d:.4s">
-            <div class="panel-h"><span class="live"></span>Aevon activity</div>
-            <div class="lines">
-              <div class="line rv" id="l1"><span class="ic"></span><span>Slot opened: Thu 10:40</span></div>
-              <div class="line rv" id="l2"><span class="ic"></span><span>Waiting list checked</span></div>
-              <div class="line rv" id="l3"><span class="ic"></span><span><b>3 patients</b> match this provider and time</span></div>
-            </div>
+            <div class="panel-h"><span class="live"></span>Aevon checks the clinic&rsquo;s required list</div>
+            <div class="lines"><div class="line rv" id="c1"><span class="ic"></span><span id="c1t" data-init="Patient name">Patient name</span></div><div class="line rv" id="c2"><span class="ic"></span><span id="c2t" data-init="Date of birth">Date of birth</span></div><div class="line rv" id="c3"><span class="ic"></span><span id="c3t" data-init="Health number">Health number</span></div><div class="line rv" id="c4"><span class="ic"></span><span id="c4t" data-init="Phone number">Phone number</span></div><div class="line rv" id="c5"><span class="ic"></span><span id="c5t" data-init="Reason for referral present">Reason for referral present</span></div><div class="line rv" id="c6"><span class="ic"></span><span id="c6t" data-init="Recent report attached: missing">Recent report attached: missing</span></div></div>
           </div>
         </div></section>
 
         <section class="sc" id="s4"><div class="row">
-          <div class="phone a"><div class="pscreen">
-            <div class="sbar"><span>9:41</span><span class="ico"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div>
-            <div class="phead"><span class="back"></span><span class="av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div>
-            <div class="thread">
-              <div class="stamp">Today 9:41 am</div>
-              <div class="b in rv" id="m4">Hi Olivia, an appointment has opened at Your Clinic on Thursday at 10:40 am. Reply YES to take it.</div>
-            </div>
-            <div class="compose"><span>Text message</span><i></i></div>
-          </div></div>
-          <div class="sendp a" style="--d:.5s">
-            <div class="counter">Sent to<b id="cnt" data-init="0">0</b>patients</div>
-            <div class="rcps">
-              <div class="rcp rv" id="p1"><span>Tran, Olivia</span><span class="stx">Delivered</span></div>
-              <div class="rcp rv" id="p2"><span>Castellanos, Ana</span><span class="stx">Delivered</span></div>
-              <div class="rcp rv" id="p3"><span>Whitfield, Grace</span><span class="stx">Delivered</span></div>
-            </div>
-            <div class="nohd rv" id="nohd">No health details in the text</div>
-          </div>
-        </div></section>
-
-        <section class="sc" id="s5"><div class="row">
-          <div class="phone a"><div class="pscreen">
-            <div class="sbar"><span>9:42</span><span class="ico"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div>
-            <div class="phead"><span class="back"></span><span class="av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div>
-            <div class="thread">
-              <div class="stamp hide-n">Today 9:41 am</div>
-              <div class="b in hide-n">Hi Olivia, an appointment has opened at Your Clinic on Thursday at 10:40 am. Reply YES to take it.</div>
-              <div class="b out typ" id="typ"><i></i><i></i><i></i></div>
-              <div class="b out rv" id="y5">YES</div>
-              <div class="dlv rv" id="dlv">Delivered</div>
-              <div class="stamp rv" id="st5">9:43 am</div>
-              <div class="b in rv" id="c5">You're booked for Thursday at 10:40 am. Reply CANCEL if you can no longer come.</div>
-            </div>
-            <div class="compose"><span>Text message</span><i></i></div>
-          </div></div>
+          <div class="phone s4p"><div class="pscreen"><div class="sbar"><span>9:41</span><span class="ico"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div><div class="phead"><span class="back"></span><span class="av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div><div class="thread"><div class="stamp">Today 9:41 am</div><div class="b in rv" id="m4">Hi Olivia, Your Clinic has received your referral. Please complete this short form before we book you.<span class="fbtn">Complete the form</span></div></div></div></div>
           <div class="sendp a" style="--d:.4s">
-            <div class="counter">Replies</div>
-            <div class="rcps">
-              <div class="rcp" id="q1"><span>Tran, Olivia</span><span class="stx" data-init="Delivered">Delivered</span></div>
-              <div class="rcp" id="q2"><span>Castellanos, Ana</span><span class="stx" data-init="Delivered">Delivered</span></div>
-              <div class="rcp" id="q3"><span>Whitfield, Grace</span><span class="stx" data-init="Delivered">Delivered</span></div>
+            <p class="lbl acc">Two things go out at once</p>
+            <div class="ackc rv" id="ack"><div class="ackh"><span>To the referring office</span><span class="stx">Sent</span></div><b>Dr. Quinn&rsquo;s office</b><p>Referral received. We will contact the patient to book. Still needed: the recent report.</p></div>
+            <div class="ackc hide-n rv" id="ptc"><div class="ackh"><span>To the patient, by text</span><span class="stx">Sent</span></div><b>Tran, Olivia</b><p>A short form to complete before booking.</p></div>
+          </div>
+        </div></section>
+
+        <section class="sc" id="s5"><div class="split s5">
+          <div class="emr inbox mini a" id="ib"></div>
+          <div class="win dense a" style="--d:.3s">
+            <div class="panel-h"><span class="live"></span>Aevon activity</div>
+            <div class="lines">
+              <div class="line rv" id="f1"><span class="ic"></span><span>Short form: <b>Completed</b></span></div>
+              <div class="line rv" id="f2"><span class="ic"></span><span>New document attached to the same referral</span></div>
+              <div class="line rv" id="d1"><span class="ic"></span><span id="d1t" data-init="Patient name">Patient name</span></div><div class="line rv" id="d2"><span class="ic"></span><span id="d2t" data-init="Date of birth">Date of birth</span></div><div class="line rv" id="d3"><span class="ic"></span><span id="d3t" data-init="Health number">Health number</span></div><div class="line rv" id="d4"><span class="ic"></span><span id="d4t" data-init="Phone number">Phone number</span></div><div class="line rv" id="d5"><span class="ic"></span><span id="d5t" data-init="Reason for referral present">Reason for referral present</span></div><div class="line rv" id="d6"><span class="ic"></span><span id="d6t" data-init="Recent report attached: missing">Recent report attached: missing</span></div>
             </div>
           </div>
         </div></section>
 
-        <section class="sc" id="s6"><div class="emr tk tasks a">
-          <div class="e-title">OSCAR EMR (illustration)<span class="r">Front desk</span></div>
-          <div class="tk-body">
-            <h2>Tickler Manager</h2>
-            <div class="tk-f">
-              <label>Service Date <span class="tk-sel">2026-11-19</span></label>
-              <label class="hn">Creator <span class="tk-sel">All Providers</span></label>
-              <label>Assigned To <span class="tk-sel">Desk, Front</span></label>
-              <label>Status <span class="tk-sel">Active</span></label>
-              <span class="btn3 pri">Search</span>
+        <section class="sc" id="s6"><div class="row">
+          <div class="phone s6p"><div class="pscreen"><div class="sbar"><span>9:52</span><span class="ico"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div><div class="phead"><span class="back"></span><span class="av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div><div class="thread"><div class="stamp">Today 9:52 am</div><div class="b in rv" id="m6">Dr. Hale has these times: Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am. Reply 1, 2 or 3.</div><div class="b out typ" id="typ"><i></i><i></i><i></i></div><div class="b out rv" id="y6">1</div><div class="dlv rv" id="dlv">Delivered</div></div></div></div>
+          <div class="sendp a" style="--d:.4s">
+            <p class="lbl acc hide-n">Clinic rule: new referrals to Dr. Hale, New consult, 20 min</p>
+            <div class="counter">Times offered</div>
+            <div class="rcps">
+              <div class="rcp rv" id="o1"><span>1 &nbsp;Thu 10:40 am</span><span class="stx" data-init="Offered">Offered</span></div>
+              <div class="rcp rv" id="o2"><span>2 &nbsp;Fri 2:20 pm</span><span class="stx" data-init="Offered">Offered</span></div>
+              <div class="rcp rv" id="o3"><span>3 &nbsp;Mon 9:00 am</span><span class="stx" data-init="Offered">Offered</span></div>
             </div>
-            <table class="tktbl" id="tasktbl">
-              <thead><tr><th></th><th class="hn"></th><th>Demographic Name</th><th class="hn">Creator</th><th class="hn">Service Date</th><th class="hn">Date of Message</th><th class="hn">Priority</th><th class="hn">Assigned to</th><th>Status</th><th>Message</th></tr></thead>
-              <tbody>
-                <tr class="rvr" id="newtask"><td><span class="cb"></span></td><td class="hn"><span class="pen"></span></td><td>Tran, Olivia</td><td class="hn">Aevon, Service</td><td class="hn">2026-11-19</td><td class="hn">2026-11-18 09:41</td><td class="hn">Normal</td><td class="hn">Desk, Front</td><td><span class="s1">Active</span><span class="s2">Completed</span></td><td>Approve booking: Thu 10:40</td></tr>
-                <tr><td><span class="cb"></span></td><td class="hn"><span class="pen"></span></td><td>Lindqvist, Mara</td><td class="hn">Hale, Dr.</td><td class="hn">2026-11-18</td><td class="hn">2026-11-16 14:02</td><td class="hn">High</td><td class="hn">Desk, Front</td><td>Active</td><td>Return phone call</td></tr>
-                <tr><td><span class="cb"></span></td><td class="hn"><span class="pen"></span></td><td>Bains, Harpreet</td><td class="hn">Desk, Front</td><td class="hn">2026-11-20</td><td class="hn">2026-11-16 10:15</td><td class="hn">Low</td><td class="hn">Desk, Front</td><td>Active</td><td>Update contact details</td></tr>
-                <tr><td><span class="cb"></span></td><td class="hn"><span class="pen"></span></td><td>Nakamura, Ken</td><td class="hn">Quinn, Dr.</td><td class="hn">2026-11-20</td><td class="hn">2026-11-17 08:50</td><td class="hn">Normal</td><td class="hn">Desk, Front</td><td>Active</td><td>Rebook missed visit</td></tr>
-                <tr><td><span class="cb"></span></td><td class="hn"><span class="pen"></span></td><td>Moreau, Luc</td><td class="hn">Desk, Front</td><td class="hn">2026-11-19</td><td class="hn">2026-11-17 11:30</td><td class="hn">Normal</td><td class="hn">Desk, Front</td><td>Active</td><td>Confirm appointment</td></tr>
-                <tr><td><span class="cb"></span></td><td class="hn"><span class="pen"></span></td><td>Whitfield, Grace</td><td class="hn">Desk, Front</td><td class="hn">2026-11-23</td><td class="hn">2026-11-17 15:44</td><td class="hn">Low</td><td class="hn">Desk, Front</td><td>Active</td><td>Update mailing address</td></tr>
-                <tr><td><span class="cb"></span></td><td class="hn"><span class="pen"></span></td><td>Okafor, Daniel</td><td class="hn">Hale, Dr.</td><td class="hn">2026-11-19</td><td class="hn">2026-11-18 08:05</td><td class="hn">Normal</td><td class="hn">Desk, Front</td><td>Active</td><td>Rebook cancelled visit</td></tr>
-              </tbody>
-            </table>
-            <div class="tk-act"><span class="btn3 lnk">Check All</span><span class="btn3 lnk">Clear All</span><span class="btn3 pri dis" id="apbtn">Complete Selected</span><span class="btn3 dng dis">Delete Selected</span><span class="btn3">New Tickler</span></div>
           </div>
         </div></section>
 
         <section class="sc" id="s7"><div class="s7grid">
-          <div class="s7pane sw7" id="s7sched"><div class="emr sched" id="sb"></div></div>
-          <div class="s7panel" id="s7panel">
-            <div class="pnl s7pane rv" id="wlcard">
-              <div class="pnl-h">Waiting List<span id="wlcount" data-init="3 waiting">3 waiting</span></div>
-              <table class="wl" id="wltbl">
-                <thead><tr><th></th><th>Patient Name</th><th class="hn">Note</th><th class="hn">Date</th><th>Provider</th></tr></thead>
-                <tbody>
-                  <tr class="o" id="wl1"><td>1</td><td>Tran, Olivia</td><td class="hn nt">Thursday mornings</td><td class="hn">2026-11-02</td><td>Dr. Hale <span class="mk" id="bk1">make appt</span></td></tr>
-                  <tr class="e"><td>2</td><td>Castellanos, Ana</td><td class="hn nt">Any morning</td><td class="hn">2026-11-05</td><td>Dr. Hale <span class="mk">make appt</span></td></tr>
-                  <tr class="o"><td>3</td><td>Whitfield, Grace</td><td class="hn nt">Thursday or Friday</td><td class="hn">2026-11-09</td><td>Dr. Hale <span class="mk">make appt</span></td></tr>
-                </tbody>
-              </table>
+          <div class="s7L">
+            <div class="s7x s7sc" id="s7sched"><div class="emr sched" id="sb"></div></div>
+            <div class="s7x s7exc" id="s7exc">
+              <p class="s7lbl">For your staff: 1 exception</p>
+              <div class="emr tk exc">
+                <div class="e-title">OSCAR EMR (illustration)<span class="r">Front desk</span></div>
+                <div class="tk-body">
+                  <table class="tktbl"><thead><tr><th>Demographic Name</th><th class="hn">Creator</th><th>Status</th><th>Message</th></tr></thead>
+                  <tbody><tr><td>Okafor, Daniel</td><td class="hn">Aevon, Service</td><td>Active</td><td>No phone number on the referral</td></tr></tbody></table>
+                </div>
+              </div>
             </div>
-            <div class="pnl s7pane rv" id="auditcard">
-              <div class="pnl-h">Audit log<span>sample times</span></div>
-              <div class="audit" id="audit"></div>
+          </div>
+          <div class="s7R">
+            <div class="win s7x s7rule" id="s7rule">
+              <div class="panel-h"><span class="live"></span>Clinic rule met</div>
+              <div class="lines">
+                <div class="line rv" id="r1"><span class="ic"></span><span>Complete referral</span></div>
+                <div class="line rv" id="r2"><span class="ic"></span><span>Patient matched</span></div>
+                <div class="line rv" id="r3"><span class="ic"></span><span>Time picked</span></div>
+                <div class="line rv" id="r4"><span class="ic"></span><span><b>Booked:</b> Thu 10:40, Dr. Hale</span></div>
+              </div>
             </div>
+            <div class="s7x s7phw" id="s7ph"><div class="phone s7ph"><div class="pscreen"><div class="sbar"><span>9:53</span><span class="ico"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div><div class="phead"><span class="back"></span><span class="av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div><div class="thread"><div class="stamp">Today 9:53 am</div><div class="b in">You&rsquo;re booked with Dr. Hale on Thursday at 10:40 am.</div><div class="dlv wel rv" id="wel" style="align-self:flex-start;margin-left:8px">Welcome email sent</div></div></div></div></div>
           </div>
         </div></section>
 
         <section class="sc" id="s8"><div class="end">
           <p class="lbl acc a" style="--d:.1s">Aevon Health</p>
-          <h2 class="a" style="--d:.3s">One open slot, filled without a phone call.</h2>
-          <p class="sub a" style="--d:.9s">In development. Illustration with fictional names.</p>
+          <h2 class="a" style="--d:.3s">One referral, from fax to booked.</h2>
+          <p class="sub a" style="--d:.7s">No calls, no data entry, no chasing.</p>
+          <p class="sub a sub2" style="--d:1.0s">In development. Illustration with fictional names.</p>
         </div></section>
 
         <div class="cur" id="cur"><svg viewBox="0 0 16 22" aria-hidden="true"><path d="M1 1 L1 17 L5 13 L8 20 L11 18.7 L8 12 L14 12 Z" fill="#ffffff" stroke="#10151b" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
@@ -448,12 +505,12 @@ body.reduced { display: block; }
     <button class="cbtn" id="pp" type="button" aria-label="Pause the demo"><svg class="pp-pause" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3.4v12H2zM8.6 1H12v12H8.6z"/></svg><svg class="pp-play" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1l9 6-9 6z"/></svg><span id="pptext">Pause</span></button>
     <button class="cbtn" id="rp" type="button" aria-label="Replay the demo from the start"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.5a5.5 5.5 0 1 0 5.2 3.7l-1.5.5A4 4 0 1 1 7 3v2.2l3.3-2.7L7 .5z"/></svg><span>Replay</span></button>
     <div class="bar" id="bar" role="progressbar" aria-label="Demo progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="barfill"></i></div>
-    <span class="time" id="time">0:00 / 0:44</span>
+    <span class="time" id="time">0:00 / 0:46</span>
   </div>
 </main>
 
-<section class="board" id="board" aria-label="Cancellation backfill, storyboard">
-  <h1>Cancellation backfill, in eight steps</h1>
+<section class="board" id="board" aria-label="From fax to booked, storyboard">
+  <h1>From fax to booked, in eight steps</h1>
   <p>Animation is turned off on this device, so here are the key frames. Illustration of how it would look in OSCAR. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University. In development.</p>
   <ol id="boardlist"></ol>
 </section>
@@ -472,19 +529,20 @@ body.reduced { display: block; }
   /* ---------- the schedule day view (drawn per layout: two providers wide, Dr. Hale alone on narrow) ---------- */
   var narrow = false, W = 1280, H = 720, scale = 1;
   var SYM = { td: 't', hr: 'H', pk: 'P', ns: 'N', cx: 'C', bd: 'B' };
-  var HALE = [[540, 20, 'Bains, Harpreet', 'hr'], [570, 20, 'Moreau, Luc', 'td'], [600, 20, 'Nakamura, Ken', 'ns'], [640, 20, 'Okafor, Daniel', 'td', 't']];
-  var QUINN = [[560, 20, 'Lindqvist, Mara', 'bd']];
+  var HALE = [[540, 20, 'Bains, Harpreet', 'hr'], [570, 20, 'Moreau, Luc', 'td'], [600, 20, 'Nakamura, Ken', 'ns'], [660, 20, 'Whitfield, Grace', 'td']];
+  var QUINN = [[560, 20, 'Lindqvist, Mara', 'bd'], [600, 20, 'Castellanos, Ana', 'td']];
   function fmt(m) { var mm = m % 60; return (m < 600 ? '0' : '') + Math.floor(m / 60) + ':' + (mm < 10 ? '0' : '') + mm; }
-  function sched(isB) {
+  function sched() {
+    var isB = true;
     var T0 = 540, P = narrow ? 120 : 150, rows = P / 10, d = 0;
     function blk(a) {
       var s = a[0], dur = a[1], who = a[2], st = a[3], cls = a[4] || '';
       d += .1;
-      return '<div class="ap ' + st + (isB && cls === 't' ? ' cxs' : '') + ' ' + cls + '" style="top:' + ((s - T0) / P * 100) + '%;height:' + (dur / P * 100) + '%;--d:' + d.toFixed(2) + 's">' +
-        '<span class="ic2">' + (isB && cls === 't' ? 'C' : SYM[st]) + '</span><span class="nm">' + who.toUpperCase() + '</span><span class="lks"><i>E</i><i>B</i><i>M</i><i>Rx</i></span></div>';
+      return '<div class="ap ' + st + ' ' + cls + '" style="top:' + ((s - T0) / P * 100) + '%;height:' + (dur / P * 100) + '%;--d:' + d.toFixed(2) + 's">' +
+        '<span class="ic2">' + SYM[st] + '</span><span class="nm">' + who.toUpperCase() + '</span><span class="lks"><i>E</i><i>B</i><i>M</i><i>Rx</i></span></div>';
     }
     var hale = HALE.map(blk).join('');
-    if (isB) hale += blk([640, 20, 'Tran, Olivia', 'td', 'n']);
+    hale += blk([640, 20, 'Tran, Olivia', 'td', 'n']);
     var quinn = QUINN.map(blk).join('');
     var axis = '';
     for (var i = 0; i < rows; i++) { var m = T0 + i * 10; axis += '<span class="' + (m % 60 === 0 ? 'h' : '') + '">' + fmt(m) + '</span>'; }
@@ -497,30 +555,43 @@ body.reduced { display: block; }
       (narrow ? '' : '<div class="axis q-col">' + axis + '</div>' + lane(quinn, 'q-col')) + '</div>' +
       '<div class="e-foot legend"><span><i class="sw" style="background:#FDFEC7"></i>To Do</span><span><i class="sw" style="background:#00ee00"></i>Here</span><span><i class="sw" style="background:#FFBBFF"></i>Picked</span><span><i class="sw" style="background:#cccccc"></i>No Show</span><span><i class="sw" style="background:#999999"></i>Cancelled</span><span><i class="sw" style="background:#3ea4e1"></i>Billed</span></div>';
   }
-  function build() { q('#sa').innerHTML = sched(false); q('#sb').innerHTML = sched(true); }
 
-  var audit = [
-    ['09:14:02', 'READ', 'schedule, Dr. Hale, Thu'],
-    ['09:14:03', 'READ', 'waiting list, 3 matches'],
-    ['09:41:19', 'WRITE', 'book, Tran, Olivia, Thu 10:40'],
-    ['09:41:20', 'WRITE', 'waiting list, Tran, Olivia removed']
-  ];
-  q('#audit').innerHTML = '<div class="ah"><span>Time</span><span>Type</span><span>Detail</span></div>' + audit.map(function (l, i) {
-    return '<div class="ar rvr" id="al' + i + '"><span>' + l[0] + '</span><span class="' + (l[1] === 'READ' ? 'rd' : 'wr') + '">' + l[1] + '</span><span>' + l[2] + '</span></div>';
-  }).join('');
+  /* the Inbox list: full on scene 2, two rows on scene 5 */
+  function inbox(mini) {
+    var rows = [
+      ['Consult report', 'Lindqvist, Mara', 'Fax', '2026-10-26'],
+      ['Lab result', 'Moreau, Luc', 'Lab feed', '2026-11-02'],
+      ['Referral', 'Bains, Harpreet', 'Fax', '2026-11-04'],
+      ['Referral', 'Nakamura, Ken', 'Fax', '2026-11-09'],
+      ['Form request', 'Whitfield, Grace', 'Fax', '2026-11-12']
+    ];
+    function tr(r, cls, id) { return '<tr' + (cls ? ' class="' + cls + '"' : '') + (id ? ' id="' + id + '"' : '') + '><td><span class="cb"></span></td><td class="ty">' + r[0] + '</td><td>' + r[1] + '</td><td class="hn">' + r[2] + '</td><td>' + r[3] + '</td></tr>'; }
+    var head = '<div class="e-title">OSCAR EMR (illustration)<span class="r">Front desk</span></div>' +
+      '<div class="e-link"><a>Schedule</a><a class="hn">Caseload</a><a class="hn">Search</a><a class="hn">Report</a><a class="hn">Billing</a><a class="hn">Lab</a><a>Msg</a><a class="hn">Con</a><a class="hn">EDoc</a><a class="l hv">Inbox</a><a>Tickler</a><a class="hn">Administration</a></div>';
+    var th = '<thead><tr><th></th><th>Type</th><th>Patient</th><th class="hn">From</th><th>Received</th></tr></thead>';
+    if (mini) {
+      return head + '<div class="i-main"><div class="i-list"><div class="i-h"><b>Inbox</b><span>Incoming Docs</span></div><table class="itbl">' + th + '<tbody>' +
+        tr(['Report', 'Tran, Olivia', 'Patient, by form', '2026-11-18'], 'nr', 'ndoc') + tr(['Referral', 'Tran, Olivia', 'Dr. Quinn’s office', '2026-11-18']) + '</tbody></table></div></div>';
+    }
+    return head + '<div class="i-bar"><span><span class="sb">Reader View</span><span class="sb">Search</span><span class="sb">Load All</span></span><span class="i-lnks hn"><span>Forwarding Rules</span><span>Upload Document</span><span>Pending Docs</span><span class="hv">Incoming Docs</span></span></div>' +
+      '<div class="i-main"><div class="i-cat"><b>All (<span id="icnt" data-init="5">5</span>)</b><div>Documents (<span id="idoc" data-init="4">4</span>)</div><div>HL7 (1)</div></div>' +
+      '<div class="i-list"><div class="i-h"><b>Incoming Docs</b><span>sorted by type</span></div><table class="itbl">' + th + '<tbody>' +
+      tr(['Referral', 'Tran, Olivia', 'Dr. Quinn’s office', '2026-11-18'], 'nr', 'newrow') + rows.map(function (r) { return tr(r); }).join('') + '</tbody></table></div></div>';
+  }
+  function build() { q('#sb').innerHTML = sched(); q('#ia').innerHTML = inbox(false); q('#ib').innerHTML = inbox(true); }
 
   /* ---------- engine ---------- */
-  var STATE = ['on', 'cx', 'done', 'away', 'gone', 'hl', 'press', 'sel', 'dn', 'yes', 'told', 'fade'];
-  var ST = [0, 3.8, 9.4, 14.6, 20.0, 26.0, 32.0, 38.6], TOTAL = 44.6;
+  var STATE = ['on', 'done', 'miss', 'press', 'pick'];
+  var ST = [0, 3.2, 9.2, 14.8, 20.6, 26.0, 31.4, 42.4], TOTAL = 46.4;
   var CAP = [
     'In development. Everything shown uses fictional names.',
-    'A patient cancels a consult.',
-    'The automation sees the open slot and checks your waiting list.',
-    'Three patients get a text. No health details in it.',
-    'The first to say yes gets it.',
-    'Your front desk approves it, or you let it run.',
-    'Booked into the schedule. Every read and write is logged.',
-    'One open slot, filled without a phone call.'
+    'The fax is sorted, by your EMR or by us. The work starts after that.',
+    'It checks the referral against your own list.',
+    'The referring office gets an acknowledgement. The patient gets a short form.',
+    'Missing details come back without a phone call.',
+    'The patient picks a time by text.',
+    'It books itself. Only the exceptions reach your staff.',
+    'One referral, from fax to booked.'
   ];
   var cues = [], silent = false, capTimer = null;
   function at(t, fn) { cues.push({ t: t * 1000, fn: fn, i: cues.length }); }
@@ -564,62 +635,52 @@ body.reduced { display: block; }
 
   /* scene 1 */
   sc(1, 0, function () { go(1); });
-  /* scene 2: one block is cancelled */
+  /* scene 2: the Inbox, already sorted by type; one new referral arrives */
   sc(2, 0, function () { go(2); });
-  sc(2, .6, function () { on('#sa .lane'); });
-  sc(2, 1.5, apprStart);
-  sc(2, 1.7, function () { curTo('#sa .ap.t', 1000, .45, .5); });
-  sc(2, 2.95, click);
-  sc(2, 3.1, function () { on('#sa .ap.t', 'cx'); var ic = q('#sa .ap.t .ic2'); if (ic) ic.textContent = 'C'; });
-  sc(2, 4.2, function () { off('#cur'); });
-  /* scene 3: the automation notices */
+  sc(2, 2.8, function () { on('#newrow'); txt('#icnt', '6'); txt('#idoc', '5'); });
+  /* scene 3: checked against the clinic's own list */
   sc(3, 0, function () { go(3); });
-  [[.8, 'l1'], [1.8, 'l2'], [2.8, 'l3']].forEach(function (x) {
+  [[.8, 'c1'], [1.5, 'c2'], [2.2, 'c3'], [2.9, 'c4'], [3.6, 'c5']].forEach(function (x) {
     sc(3, x[0], function () { on('#' + x[1]); });
-    sc(3, x[0] + .6, function () { on('#' + x[1], 'done'); });
+    sc(3, x[0] + .5, function () { on('#' + x[1], 'done'); });
   });
-  /* scene 4: three texts go out */
+  sc(3, 4.3, function () { on('#c6'); });
+  sc(3, 4.8, function () { on('#c6', 'miss'); });
+  /* scene 4: two things go out at once */
   sc(4, 0, function () { go(4); });
-  sc(4, .9, function () { on('#m4'); });
-  [[1.7, 'p1', '1'], [2.1, 'p2', '2'], [2.5, 'p3', '3']].forEach(function (x) {
-    sc(4, x[0], function () { on('#' + x[1]); txt('#cnt', x[2]); });
-  });
-  sc(4, 3.6, function () { on('#nohd'); });
-  /* scene 5: the first yes */
+  sc(4, .8, function () { on('#ack'); });
+  sc(4, 1.2, function () { on('#ptc'); on('#m4'); });
+  /* scene 5: the missing items come back */
   sc(5, 0, function () { go(5); });
-  sc(5, .8, function () { on('#typ'); });
-  sc(5, 2.0, function () { off('#typ'); on('#y5'); });
-  sc(5, 2.5, function () { on('#dlv'); });
-  sc(5, 2.8, function () { on('#q1', 'yes'); txt('#q1 .stx', 'Replied YES'); });
-  sc(5, 3.5, function () { on('#q2', 'told'); txt('#q2 .stx', 'Told the slot is filled'); });
-  sc(5, 3.8, function () { on('#q3', 'told'); txt('#q3 .stx', 'Told the slot is filled'); });
-  sc(5, 4.4, function () { on('#st5'); on('#c5'); });
-  /* scene 6: front desk approves */
+  for (var k = 1; k <= 5; k++) { (function (id) { sc(5, 0, function () { on('#' + id); on('#' + id, 'done'); }); })('d' + k); }
+  sc(5, 0, function () { on('#d6'); on('#d6', 'miss'); });
+  sc(5, .7, function () { on('#f1'); });
+  sc(5, 1.2, function () { on('#f1', 'done'); });
+  sc(5, 1.9, function () { on('#ndoc'); });
+  sc(5, 2.3, function () { on('#f2'); });
+  sc(5, 2.8, function () { on('#f2', 'done'); });
+  sc(5, 3.6, function () { off('#d6', 'miss'); txt('#d6t', 'Recent report attached'); on('#d6', 'done'); });
+  /* scene 6: the patient picks a time by text */
   sc(6, 0, function () { go(6); });
-  sc(6, .9, function () { on('#newtask'); });
-  sc(6, 1.8, apprStart);
-  sc(6, 2.0, function () { curTo('#newtask .cb', 900, .5, .5); });
-  sc(6, 3.05, click);
-  sc(6, 3.2, function () { on('#newtask', 'sel'); q('#apbtn').classList.remove('dis'); });
-  sc(6, 3.4, function () { curTo('#apbtn', 800, .5, .5); });
-  sc(6, 4.4, click);
-  sc(6, 4.55, function () { on('#newtask', 'dn'); off('#newtask', 'sel'); });
-  sc(6, 5.5, function () { off('#cur'); });
-  /* scene 7: booked and logged */
+  sc(6, .6, function () { on('#m6'); on('#o1'); on('#o2'); on('#o3'); });
+  sc(6, 1.8, function () { on('#typ'); });
+  sc(6, 2.9, function () { off('#typ'); on('#y6'); });
+  sc(6, 3.4, function () { on('#dlv'); });
+  sc(6, 3.7, function () { on('#o1', 'pick'); txt('#o1 .stx', 'Picked'); });
+  /* scene 7: it books itself; only the exception reaches staff */
   sc(7, 0, function () { go(7); });
-  sc(7, .4, function () { on('#sb .lane'); on('#wlcard'); });
-  sc(7, 1.0, apprStart);
-  sc(7, 1.2, function () { curTo('#bk1', 1100, .5, .5); });
-  sc(7, 2.45, click);
-  sc(7, 2.6, function () { on('#wl1', 'hl'); });
-  sc(7, 2.9, function () { off('#cur'); if (narrow) { off('#wlcard'); on('#s7sched'); } });
-  sc(7, 3.1, function () { on('#sb .ap.t', 'gone'); on('#sb .ap.n'); });
-  sc(7, 3.9, function () { if (!narrow) { on('#wl1', 'fade'); } });
-  sc(7, 4.3, function () { if (!narrow) { on('#wl1', 'gone'); txt('#wlcount', '2 waiting'); } });
-  sc(7, 4.0, function () { if (!narrow) on('#auditcard'); });
-  sc(7, 4.6, function () { if (narrow) { off('#s7sched'); on('#auditcard'); } });
-  audit.forEach(function (l, i) { sc(7, (narrow_t(i)), function () { on('#al' + i); }); });
-  function narrow_t(i) { return 4.7 + i * .45; }
+  sc(7, .2, function () { if (!narrow) { on('#s7sched'); on('#sb .lane'); } });
+  sc(7, .4, function () { on('#s7rule'); });
+  [[1.0, 'r1'], [1.8, 'r2'], [2.6, 'r3']].forEach(function (x) {
+    sc(7, x[0], function () { on('#' + x[1]); });
+    sc(7, x[0] + .4, function () { on('#' + x[1], 'done'); });
+  });
+  sc(7, 3.4, function () { on('#r4'); on('#r4', 'done'); });
+  sc(7, 4.0, function () { if (narrow) { off('#s7rule'); on('#s7sched'); on('#sb .lane'); } });
+  sc(7, 4.7, function () { on('#sb .ap.n'); });
+  sc(7, 6.2, function () { if (narrow) off('#s7sched'); on('#s7ph'); });
+  sc(7, 7.4, function () { on('#wel'); });
+  sc(7, 8.2, function () { if (narrow) off('#s7ph'); on('#s7exc'); });
   /* scene 8: end card */
   sc(8, 0, function () { go(8); });
   sc(8, 1.5, function () { ctaEl.classList.add('on'); });
@@ -629,7 +690,6 @@ body.reduced { display: block; }
     clearTimeout(capTimer);
     qa('[class]', stage).forEach(function (e) { STATE.forEach(function (c) { e.classList.remove(c); }); });
     qa('[data-init]', inner).forEach(function (e) { e.textContent = e.getAttribute('data-init'); });
-    var ab = q('#apbtn'); ab.classList.remove('go'); ab.classList.add('dis');
     ctaEl.classList.remove('on');
     cur.style.transform = 'translate(' + W * .86 + 'px,' + H * .9 + 'px)';
   }
@@ -649,7 +709,7 @@ body.reduced { display: block; }
 
   /* ---------- sizing ---------- */
   function setMode(n, sw) {
-    var changed = n !== narrow || !q('#sa .sgrid');
+    var changed = n !== narrow || !q('#sb .sgrid');
     narrow = n;
     inner.classList.toggle('narrow', n);
     if (n) { W = sw; H = Math.round(sw * 1.5); } else { W = 1280; H = 720; }
@@ -711,23 +771,23 @@ body.reduced { display: block; }
 
   /* ---------- reduced motion: static storyboard ---------- */
   function buildBoard() {
-    var KEY = [1.6, 4.3, 4.0, 4.4, 5.2, 5.2, 5.9, 3.0];
+    var KEY = [1.6, 4.0, 5.2, 3.6, 4.6, 4.4, 10.4, 3.0];
     var DET = [
-      'Title card: Cancellation backfill. A cancelled consult, filled from your own waiting list.',
-      'An OSCAR-style provider schedule day view with two provider columns, Hale, Dr. and Quinn, Dr. The Thursday 10:40 block for Okafor, Daniel changes from To Do yellow to the Cancelled grey.',
-      'An activity panel logs: slot opened Thu 10:40; waiting list checked; 3 patients match this provider and time.',
-      'A phone shows the text from Your Clinic: "Hi Olivia, an appointment has opened at Your Clinic on Thursday at 10:40 am. Reply YES to take it." Sent to 3 patients, all marked Delivered. No health details in it.',
-      'Olivia Tran replies YES first and is told "You\'re booked for Thursday at 10:40 am. Reply CANCEL if you can no longer come." The other two patients are marked "Told the slot is filled".',
-      'A tickler assigned to the front desk reads "Approve booking: Thu 10:40" for Tran, Olivia in the Tickler Manager. It is selected and Complete Selected is clicked, so its status becomes Completed.',
-      'A new block for Tran, Olivia appears at Thu 10:40 as To Do. The waiting list entry is removed. An audit log shows timestamped READ and WRITE lines, with sample times.',
-      'One open slot, filled without a phone call. In development. Illustration with fictional names.'
+      'Title card: From fax to booked. The work after the fax is sorted.',
+      'An OSCAR-style Inbox, Incoming Docs, listing documents already labelled by type: Consult report, Lab result, Referral, Referral and Form request, each with a received date, some days or weeks old. A new Referral for Tran, Olivia from Dr. Quinn\u2019s office arrives at the top.',
+      'A separate dark Aevon panel checks the referral against the clinic\u2019s own required list. Patient name, date of birth, health number, phone number and reason for referral present are ticked. One item is missing: Recent report attached. The clinic rule shown is: new referrals to Dr. Hale, New consult, 20 min.',
+      'Two things go out at once. An acknowledgement to Dr. Quinn\u2019s office: Referral received. We will contact the patient to book. Still needed: the recent report. And a text to the patient: Hi Olivia, Your Clinic has received your referral. Please complete this short form before we book you, with a plain form button.',
+      'The short form shows Completed. A new document arrives in the OSCAR Inbox and is attached to the same referral, and the Aevon checklist is fully ticked.',
+      'A phone shows the text: Dr. Hale has these times: Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am. Reply 1, 2 or 3. The patient replies 1, and it is marked Delivered.',
+      'An Aevon panel shows: Clinic rule met: complete referral, patient matched, time picked. The appointment appears on the OSCAR schedule day view on its own, with no tickler to tick. The patient\u2019s phone shows the confirmation and the line Welcome email sent. A list headed For your staff: 1 exception shows one OSCAR tickler from a different referral, Okafor, Daniel: no phone number on the referral.',
+      'One referral, from fax to booked. No calls, no data entry, no chasing. In development. Illustration with fictional names.'
     ];
     var ol = q('#boardlist'), frames = [];
     for (var i = 0; i < 8; i++) {
       jumpTo((ST[i] + KEY[i]) * 1000);
       var li = document.createElement('li');
       var h = document.createElement('h3');
-      h.textContent = i === 0 ? 'Cancellation backfill. A cancelled consult, filled from your own waiting list.' : CAP[i];
+      h.textContent = i === 0 ? 'From fax to booked. The work after the fax is sorted.' : CAP[i];
       li.appendChild(h);
       var fr = document.createElement('div'); fr.className = 'frame'; fr.setAttribute('role', 'img'); fr.setAttribute('aria-label', 'Key frame ' + (i + 1) + ': ' + DET[i]);
       var cl = inner.cloneNode(true); cl.removeAttribute('id'); qa('[id]', cl).forEach(function (e) { e.removeAttribute('id'); });
