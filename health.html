@@ -3,19 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Automation for Medical Clinics | Aevon Health</title>
-  <meta name="description" content="Aevon Health is building admin automation that connects to your clinic's EMR: a morning list of unanswered referrals, and texts that fill cancelled slots from your own waitlist. For clinics in BC and Ontario. In development." />
+  <title>Medical Clinic Automation for OSCAR EMR | Aevon Health</title>
+  <meta name="description" content="Aevon Health builds medical clinic automation on your EMR: fill cancelled appointments from your waitlist and follow up unanswered referrals. BC and Ontario." />
   <link rel="canonical" href="https://aevon.ca/health.html" />
-  <!-- Pre-launch: kept out of search until the page is approved. Change to "index, follow" and add
-       it to sitemap.xml and llms.txt when outreach starts. -->
-  <meta name="robots" content="noindex, follow" />
+  <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0C0E0D" />
 
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://aevon.ca/health.html" />
   <meta property="og:site_name" content="Aevon" />
-  <meta property="og:title" content="Admin Automation for Medical Clinics | Aevon Health" />
-  <meta property="og:description" content="In development: automation that connects to your EMR and handles unanswered referrals and cancelled slots. For clinics in BC and Ontario." />
+  <meta property="og:title" content="Medical Clinic Automation for OSCAR EMR | Aevon Health" />
+  <meta property="og:description" content="In development: clinic automation on your EMR that fills cancelled appointments from your waitlist and follows up unanswered referrals. For clinics in BC and Ontario." />
   <meta property="og:locale" content="en_CA" />
   <meta name="twitter:card" content="summary" />
 
@@ -211,6 +209,148 @@
       /* Footer links: at least 44px tall so they are easy to tap on a phone. */
     footer a { display: inline-flex; align-items: center; min-height: 44px; }
   </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Aevon Health",
+  "serviceType": "Administrative automation for medical clinics",
+  "description": "In development. Automation that connects to a medical clinic's EMR through its official API: filling cancelled appointments from the clinic's own waitlist by text, and a daily list of outgoing referrals with no response. Administrative tasks only.",
+  "url": "https://aevon.ca/health.html",
+  "areaServed": [
+    {
+      "@type": "AdministrativeArea",
+      "name": "British Columbia"
+    },
+    {
+      "@type": "AdministrativeArea",
+      "name": "Ontario"
+    }
+  ],
+  "audience": {
+    "@type": "Audience",
+    "audienceType": "Medical clinic managers and physician owners"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Aevon",
+    "url": "https://aevon.ca/",
+    "email": "hello@aevon.ca"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is it available now?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not yet. Both automations are in development. We are taking on founding clinics to build them with, starting on OSCAR."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does this replace our EMR or booking tool?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It works alongside them. If you use an online booking tool, it keeps doing its job."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do staff need to learn new software?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The chase list shows up as tasks inside your EMR."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do patients get messages from it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Only with cancellation backfill, and only patients on your own waitlist. The texts contain no health details, and your staff can approve each booking. The referral chase list is staff-facing only."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where is patient information stored?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In Canada, and we store as little as possible."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does it cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pricing is per physician per month, plus a one-time setup fee. Founding clinics start with a 60-day pilot at no charge."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if we want to stop?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your clinic disables the one EMR account we use, and our access ends."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does it fill a cancelled appointment?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When an appointment is cancelled in your EMR, patients on your own waitlist who fit that provider and time get a text offering the slot. The first to reply YES is booked. Your front desk can approve each booking first."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does it follow up referrals that have had no response?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Each morning it reads your outgoing referrals and adds a task for your front desk for each one with no response after the number of days you set. Some EMRs already flag overdue referrals on their own screen. This puts them in front of staff daily without anyone opening that screen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which EMRs does it work with?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We are building for OSCAR first. Accuro and TELUS CHR are planned. It connects through the EMR's official API, so each EMR is its own piece of work."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does it fit with privacy law in BC and Ontario?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your clinic stays in control of the patient record. We act as your service provider under BC's PIPA, or as your agent under Ontario's PHIPA, and we prepare a privacy impact assessment for your privacy officer before anything goes live."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do we still need our fax service or booking tool?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Nothing changes there. Referrals still go out the way they do today, and your online booking tool keeps doing its job."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this AI making decisions about patients?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The automations follow rules you set and handle administrative follow-up only. There is no triage, diagnosis or treatment. Clinical decisions stay with your physicians."
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
 
@@ -240,7 +380,7 @@
     </p>
     <div class="cta">
       <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 20-minute call</a>
-      <a class="btn btn-ghost" href="mailto:hello@aevon.ca?subject=Our%20clinic%27s%20EMR%20and%20what%20we%20keep%20chasing">Or email us your EMR</a>
+      <a class="btn btn-ghost" href="#contact">Or send us a note</a>
     </div>
     <p class="verify"><b>In development.</b> Now taking on founding clinics, with a 60-day pilot at no charge.</p>
   </div>
@@ -289,7 +429,7 @@
     <div class="grid3">
       <div>
         <h3>The referral that went quiet</h3>
-        <p>A referral goes out and nothing comes back. Chasing it depends on someone remembering, or on a spreadsheet. Some slip through.</p>
+        <p>A referral goes out and nothing comes back. Chasing it depends on someone remembering to look. Some slip through.</p>
       </div>
       <div>
         <h3>The slot that stayed empty</h3>
@@ -347,7 +487,7 @@
     <div class="feature">
       <div>
         <span class="pill accent">For family practices</span>
-        <h3>Referral chase list</h3>
+        <h3>Referral follow-up: a daily chase list</h3>
         <p>Each morning, outgoing referrals with no response are waiting for your front desk as tasks inside the EMR.</p>
         <ul class="price-list">
           <li>You set how many days counts as "no response"</li>
@@ -372,7 +512,7 @@
     <div class="feature flip">
       <div>
         <span class="pill accent">For specialist clinics</span>
-        <h3>Cancellation backfill</h3>
+        <h3>Cancellation backfill: fill cancelled appointments from your waitlist</h3>
         <p>When a slot opens, patients on your own waitlist get a text. The first to say yes is booked into the schedule.</p>
         <ul class="price-list">
           <li>Your staff can approve each booking, or let it run</li>
@@ -464,7 +604,7 @@
   <div class="wrap">
     <div class="sec-head">
       <span class="pill">EMRs</span>
-      <h2>One EMR at a time.</h2>
+      <h2>Works on your EMR: OSCAR first, Accuro and TELUS CHR planned.</h2>
       <p class="lede">We connect through the EMR's official API, so each one is its own piece of work.</p>
     </div>
     <ul class="emr">
@@ -480,7 +620,7 @@
   <div class="wrap two">
     <div>
       <span class="pill">Privacy and security</span>
-      <h2 style="margin-top:12px">Eight commitments.</h2>
+      <h2 style="margin-top:12px">Privacy and security: eight commitments.</h2>
       <p style="margin-top:16px">Written for the person at your clinic who has to sign off on this.</p>
     </div>
     <ul class="commit">
@@ -532,7 +672,7 @@
 
 <section id="questions" class="tight bt">
   <div class="wrap" style="max-width:860px">
-    <h2 style="font-size:clamp(26px,3vw,34px)">Questions</h2>
+    <h2 style="font-size:clamp(26px,3vw,34px)">Questions clinics ask</h2>
     <div style="margin-top:26px">
       <details open>
         <summary>Is it available now?</summary>
@@ -563,9 +703,97 @@
         <p>Your clinic disables the one EMR account we use, and our access ends.</p>
       </details>
       <details>
+        <summary>How does it fill a cancelled appointment?</summary>
+        <p>When an appointment is cancelled in your EMR, patients on your own waitlist who fit that provider and time get a text offering the slot. The first to reply YES is booked. Your front desk can approve each booking first.</p>
+      </details>
+      <details>
+        <summary>How does it follow up referrals that have had no response?</summary>
+        <p>Each morning it reads your outgoing referrals and adds a task for your front desk for each one with no response after the number of days you set. Some EMRs already flag overdue referrals on their own screen. This puts them in front of staff daily without anyone opening that screen.</p>
+      </details>
+      <details>
+        <summary>Which EMRs does it work with?</summary>
+        <p>We are building for OSCAR first. Accuro and TELUS CHR are planned. It connects through the EMR's official API, so each EMR is its own piece of work.</p>
+      </details>
+      <details>
+        <summary>How does it fit with privacy law in BC and Ontario?</summary>
+        <p>Your clinic stays in control of the patient record. We act as your service provider under BC's PIPA, or as your agent under Ontario's PHIPA, and we prepare a privacy impact assessment for your privacy officer before anything goes live.</p>
+      </details>
+      <details>
+        <summary>Do we still need our fax service or booking tool?</summary>
+        <p>Yes. Nothing changes there. Referrals still go out the way they do today, and your online booking tool keeps doing its job.</p>
+      </details>
+      <details>
         <summary>Is this AI making decisions about patients?</summary>
         <p>No. The automations follow rules you set and handle administrative follow-up only. There is no triage, diagnosis or treatment. Clinical decisions stay with your physicians.</p>
       </details>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="bt">
+  <div class="wrap" style="max-width:940px">
+    <div class="sec-head">
+      <span class="pill">Contact</span>
+      <h2>Tell us about your clinic.</h2>
+      <p class="lede">A reply from the person building it, usually the same day. Or <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">book a 20-minute call</a>.</p>
+    </div>
+    <form id="clinic-form" style="margin-top:30px; max-width:640px" novalidate>
+      <div class="fgrid">
+        <label>
+          <span class="lbl">Name</span>
+          <input id="c-name" type="text" required autocomplete="name" class="fld" />
+        </label>
+        <label>
+          <span class="lbl">Email</span>
+          <input id="c-email" type="email" required autocomplete="email" class="fld" />
+        </label>
+      </div>
+      <div class="fgrid" style="margin-top:16px">
+        <label>
+          <span class="lbl">Clinic <span class="opt">(optional)</span></span>
+          <input id="c-clinic" type="text" autocomplete="organization" class="fld" />
+        </label>
+        <label>
+          <span class="lbl">EMR</span>
+          <select id="c-emr" class="fld">
+            <option value="">Choose one</option>
+            <option>OSCAR</option>
+            <option>OSCAR Pro</option>
+            <option>Juno</option>
+            <option>Accuro</option>
+            <option>TELUS CHR</option>
+            <option>TELUS PS Suite</option>
+            <option>TELUS Med Access</option>
+            <option>Other</option>
+            <option>Not sure</option>
+          </select>
+        </label>
+      </div>
+      <fieldset style="border:0;padding:0;margin:16px 0 0">
+        <legend class="lbl" style="margin-bottom:9px">What are you interested in? <span class="opt">(optional, pick any)</span></legend>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <label class="chk"><input type="checkbox" name="c-interest" value="Referral chase list"><span>Referral chase list</span></label>
+          <label class="chk"><input type="checkbox" name="c-interest" value="Cancellation backfill"><span>Cancellation backfill</span></label>
+          <label class="chk"><input type="checkbox" name="c-interest" value="Something else"><span>Something else</span></label>
+        </div>
+      </fieldset>
+      <label style="display:block; margin-top:16px">
+        <span class="lbl">What does your front desk keep chasing? <span class="opt">(optional)</span></span>
+        <textarea id="c-msg" rows="4" class="fld" aria-describedby="c-note"></textarea>
+      </label>
+      <p id="c-note" style="margin-top:8px; font-size:14.5px; color:var(--ink-3)">Please do not include any patient information.</p>
+      <!-- Left empty by people. Filled in by bots, whose submissions are dropped. -->
+      <div style="position:absolute; left:-9999px" aria-hidden="true">
+        <label>Website <input id="c-website" type="text" tabindex="-1" autocomplete="off" /></label>
+      </div>
+      <div style="display:flex; align-items:center; gap:16px; margin-top:18px; flex-wrap:wrap">
+        <button class="btn btn-primary" id="c-send" type="submit">Send</button>
+        <span id="c-err" role="alert" style="color:var(--danger); font-size:14.5px"></span>
+      </div>
+    </form>
+    <div id="clinic-done" hidden class="done" style="margin-top:30px" tabindex="-1">
+      <h3>Got it, thanks.</h3>
+      <p style="margin-top:8px; color:var(--ink-2)">I will get back to you personally, usually the same day.</p>
     </div>
   </div>
 </section>
@@ -632,5 +860,49 @@
 })();
 </script>
 
+<script>
+  // Same endpoint as the home page form. page: location.pathname says which form it came from.
+  (function () {
+    var form = document.getElementById('clinic-form');
+    if (!form) return;
+    var err = document.getElementById('c-err');
+    var btn = document.getElementById('c-send');
+    var ref = new URLSearchParams(location.search).get('ref') || '';
+    var EMAIL_RE = /^[^@\s]+@[^@\s.]+\.[^@\s]+$/;
+    function finish() {
+      form.hidden = true;
+      var done = document.getElementById('clinic-done'); done.hidden = false;
+      done.focus({ preventScroll: true });
+      done.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    form.addEventListener('input', function () { err.textContent = ''; });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      err.textContent = '';
+      var name = document.getElementById('c-name').value.trim();
+      var email = document.getElementById('c-email').value.trim();
+      if (!name || !email || !EMAIL_RE.test(email)) { err.textContent = 'A name and a valid email, and I can reply.'; return; }
+      if (document.getElementById('c-website').value) { finish(); return; }
+      var clinic = document.getElementById('c-clinic').value.trim();
+      var emr = document.getElementById('c-emr').value;
+      var interest = Array.from(document.querySelectorAll('input[name=c-interest]:checked')).map(function (c) { return c.value; }).join(', ');
+      var msg = document.getElementById('c-msg').value.trim();
+      btn.disabled = true; btn.textContent = 'Sending...';
+      fetch('https://qzxtfgzpyptvriorfhxw.supabase.co/functions/v1/interest', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, email: email, phone: '',
+          message: ['Aevon Health enquiry', clinic ? 'Clinic: ' + clinic : '', emr ? 'EMR: ' + emr : '',
+            interest ? 'Interested in: ' + interest : '', msg].filter(Boolean).join('\n\n'),
+          page: location.pathname, ref: ref })
+      }).then(function (res) {
+        if (!res.ok) throw new Error('status ' + res.status);
+        finish();
+      }).catch(function () {
+        btn.disabled = false; btn.textContent = 'Send';
+        err.innerHTML = 'That did not send. Email <a href="mailto:hello@aevon.ca">hello@aevon.ca</a> and I will pick it up.';
+      });
+    });
+  })();
+</script>
 </body>
 </html>

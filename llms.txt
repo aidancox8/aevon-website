@@ -15,6 +15,7 @@ Cadre keeps every employee certification (forklift, first aid, fall protection, 
 - [ADP certification tracking](https://aevon.ca/adp-certification-tracking.html): Cadre keeps its staff list in sync with ADP and adds certification tracking on top
 - [Construction training matrix builder](https://aevon.ca/construction-training-matrix.html): free in-browser builder; add workers and tickets, colour-coded expiry dates, CSV export and print, no signup
 - [Live demo](https://cadre-demo.web.app/dashboard): the real product with a sample company loaded, no signup
+- [Aevon Health](https://aevon.ca/health.html): in development; admin automation for medical clinics in BC and Ontario that connects to the clinic's EMR through its official API (OSCAR first, Accuro and TELUS CHR planned). Two automations: filling cancelled appointments from the clinic's own waitlist by text, and a daily list of outgoing referrals with no response. No clinic customers yet; founding clinics start with a 60-day pilot at no charge
 - [Privacy](https://aevon.ca/privacy.html)
 
 ## Contact
