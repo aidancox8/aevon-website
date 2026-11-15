@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cancellation backfill: self-playing demo | Aevon Health</title>
+<meta name="robots" content="noindex, follow" />
+<meta name="theme-color" content="#0C0E0D" />
+<link rel="icon" type="image/svg+xml" href="logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* Aevon Health reel: cancellation backfill. An illustration with sample data, drawn in HTML and CSS.
+   Palette and type follow site.css (dark ground, fern accent, Manrope and Martian Mono).
+   One shared layout; the ?emr= query parameter swaps wording only. */
+:root {
+  --bg: #0C0E0D; --bg-2: #111413; --surface: #161A18; --raised: #1D2220;
+  --ink: #ECEEEA; --ink-2: #B7BDB5; --ink-3: #858C84;
+  --line: rgba(236,238,234,.09); --line-2: rgba(236,238,234,.16);
+  --accent: #9DBFA1; --accent-2: #7FA884; --on-accent: #0C0E0D; --danger: #E3968A;
+  --f-body: Manrope, system-ui, sans-serif; --f-mono: 'Martian Mono', ui-monospace, monospace;
+  color-scheme: dark;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { background: var(--bg); color: var(--ink); font-family: var(--f-body); -webkit-font-smoothing: antialiased; }
+body { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; padding: 12px 16px 14px; overflow-x: hidden; }
+body.embed { min-height: 0; }
+body.embed .reel { max-width: 1040px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.reel { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 1400px; margin: 0 auto; }
+.top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; min-height: 30px; }
+.chip { font-family: var(--f-mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); border-radius: 999px; padding: 5px 11px; white-space: nowrap; }
+.note { font-size: 13.5px; color: var(--ink-2); }
+.stagewrap { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+.stage { position: relative; overflow: hidden; border: 1px solid var(--line-2); border-radius: 12px; background: var(--bg); box-shadow: 0 24px 60px rgba(0,0,0,.45); flex: none; }
+.caption { min-height: 2.7em; display: flex; align-items: center; justify-content: center; text-align: center; font-size: clamp(17px, 2vw, 26px); font-weight: 600; letter-spacing: -.012em; line-height: 1.3; color: var(--ink); text-wrap: balance; transition: opacity .2s ease; padding: 0 4px; }
+.controls { display: flex; align-items: center; gap: 10px; }
+.cbtn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; min-width: 44px; padding: 0 14px; font: 600 14px/1 var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--line-2); border-radius: 999px; cursor: pointer; }
+.cbtn:hover { border-color: var(--ink-2); }
+.cbtn svg { width: 14px; height: 14px; fill: currentColor; flex: none; }
+.cbtn .pp-play { display: none; }
+.cbtn.paused .pp-play { display: block; }
+.cbtn.paused .pp-pause { display: none; }
+.bar { flex: 1; height: 4px; border-radius: 2px; background: var(--line-2); overflow: hidden; min-width: 40px; }
+.bar i { display: block; height: 100%; width: 0; background: var(--accent); }
+.time { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); white-space: nowrap; }
+@media (max-width: 520px) { .cbtn span { display: none; } .cbtn { padding: 0; width: 44px; } .time { display: none; } }
+
+/* ---------- stage content (logical size 1280x720, or 480x270 when compact) ---------- */
+.inner { position: absolute; left: 0; top: 0; transform-origin: 0 0; font-size: 22px; line-height: 1.3; overflow: hidden;
+  --pad: 48px; background: radial-gradient(70% 60% at 50% 38%, rgba(157,191,161,.07), transparent 70%), var(--bg); }
+.inner.compact { font-size: 16px; --pad: 18px; }
+.inner.nt, .inner.nt * { transition: none !important; animation: none !important; }
+.sc { position: absolute; inset: 0; padding: var(--pad); display: flex; flex-direction: column; justify-content: center; opacity: 0; transition: opacity .5s ease; pointer-events: none; }
+.sc.on { opacity: 1; }
+.a { opacity: 0; transform: translateY(10px); transition: opacity .6s ease, transform .6s ease; }
+.sc.on .a { opacity: 1; transform: none; transition-delay: var(--d, .25s); }
+.rv { opacity: 0; transform: translateY(8px); transition: opacity .45s ease, transform .45s ease; }
+.rv.on { opacity: 1; transform: none; }
+.lbl { font-family: var(--f-mono); font-size: .56em; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.lbl.acc { color: var(--accent); }
+.win { border: 1px solid var(--line-2); border-radius: .6em; background: var(--surface); overflow: hidden; display: flex; flex-direction: column; min-height: 0; box-shadow: 0 1em 3em rgba(0,0,0,.4); }
+.win-bar { display: flex; align-items: center; gap: .6em; padding: .5em .9em; background: var(--raised); border-bottom: 1px solid var(--line); font-size: .78em; }
+.win-bar .dots { display: flex; gap: .35em; } .win-bar .dots i { width: .6em; height: .6em; border-radius: 50%; background: var(--line-2); display: block; }
+.win-bar b { font-weight: 600; } .win-bar span.r { margin-left: auto; color: var(--ink-3); }
+.compact .win-bar .dots { display: none; }
+
+/* 1 title / 8 end */
+.t1, .end { text-align: center; margin: auto; }
+.t1 .lbl, .end .lbl { font-size: .62em; }
+.t1 h2, .end h2 { font-weight: 600; letter-spacing: -.03em; line-height: 1.06; text-wrap: balance; }
+.t1 h2 { font-size: 3.5em; margin-top: .4em; } .compact .t1 h2 { font-size: 2.1em; }
+.t1 .sub { margin: .9em auto 0; font-size: 1.2em; color: var(--ink-2); max-width: 30em; }
+.compact .t1 .sub { max-width: 20em; }
+.t1 .rule { width: 3.5em; height: 2px; background: var(--accent); margin: 1.2em auto 0; }
+.end { padding-bottom: 6em; } .compact .end { padding-bottom: 4.5em; }
+.end h2 { font-size: 2.7em; max-width: 14em; margin: .4em auto 0; } .compact .end h2 { font-size: 1.6em; }
+.end .sub { margin-top: .9em; font-size: 1.05em; color: var(--ink-2); }
+.cta-layer { position: absolute; left: 0; right: 0; bottom: 11%; display: flex; justify-content: center; opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity .5s ease, transform .5s ease, visibility 0s linear .5s; }
+.cta-layer.on { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.cta { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 26px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font: 700 16px/1 var(--f-body); text-decoration: none; }
+.cta:hover { background: var(--ink); }
+
+/* 2 schedule */
+.sched { flex: 1; }
+.grid { flex: 1; min-height: 0; display: grid; grid-template-columns: 3.4em 1fr 1fr; grid-template-rows: auto 1fr; }
+.colh { padding: .5em .6em; font-weight: 600; font-size: .85em; text-align: center; border-bottom: 1px solid var(--line); border-left: 1px solid var(--line); }
+.colh.first { border-left: 0; }
+.axis { position: relative; }
+.axis span { position: absolute; left: 0; right: .5em; text-align: right; font-family: var(--f-mono); font-size: .56em; color: var(--ink-3); padding-top: .3em; }
+.lane { position: relative; border-left: 1px solid var(--line); background-image: linear-gradient(var(--line) 1px, transparent 1px); background-size: 100% 33.3334%; }
+.blk { position: absolute; left: .4em; right: .4em; display: flex; flex-direction: column; justify-content: center; gap: .15em; padding: .25em .65em; border-radius: .4em; background: var(--raised); border: 1px solid var(--line-2); overflow: hidden; opacity: 0; transform: translateY(6px); transition: opacity .45s ease, transform .45s ease, background .4s ease, border-color .4s ease, color .4s ease; }
+.lane.on .blk { opacity: 1; transform: none; transition-delay: var(--d, 0s); }
+.blk .who { font-weight: 600; font-size: .85em; white-space: nowrap; }
+.blk .tm { font-family: var(--f-mono); font-weight: 400; font-size: .72em; color: var(--ink-3); margin-right: .5em; }
+.mk { display: inline-flex; align-items: center; gap: .45em; font-family: var(--f-mono); font-size: .56em; letter-spacing: .02em; color: var(--ink-2); white-space: nowrap; }
+.mk .sh { width: 1.05em; height: 1.05em; flex: none; }
+.st-b { display: none; } .blk.cx .st-a { display: none; } .blk.cx .st-b { display: inline-flex; color: var(--danger); }
+.lane.on .blk.cx { background: transparent; border: 1px dashed var(--line-2); transition-delay: 0s; }
+.blk.cx .who { text-decoration: line-through; color: var(--ink-3); font-weight: 500; } .blk.cx .tm { text-decoration: line-through; }
+.blk.cx .who, .blk.cx .tm { text-decoration-thickness: 2px; }
+.lane.on .blk.cx { opacity: .85; background: var(--bg); }
+.blk.n { border-color: var(--accent); background: rgba(157,191,161,.13); }
+.blk.n .mk { color: var(--accent); }
+.lane.on .blk.n { opacity: 0; transform: scale(.96); transition-delay: 0s; }
+.lane.on .blk.n.on { opacity: 1; transform: none; }
+.lane.on .blk.t.gone { opacity: 0; }
+.legend { display: flex; flex-wrap: wrap; gap: .3em 1.3em; padding: .55em .9em; border-top: 1px solid var(--line); background: var(--bg-2); }
+.compact .legend { display: none; }
+.compact .blk { padding: .1em .5em; gap: 0; }
+.compact .blk .who { font-size: .82em; line-height: 1.15; } .compact .blk .mk { line-height: 1; } .compact .blk { min-height: 0; } .compact .blk .mk { font-size: .62em; }
+.compact .grid { grid-template-columns: 2.6em 1fr 1fr; } .compact .colh { padding: .3em .4em; }
+
+/* 3 automation */
+.split { font-size: 1.15em; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 1.4em; align-items: center; }
+.compact .split { font-size: 1em; grid-template-columns: 1fr; gap: .7em; }
+.slotcard { border: 1px dashed var(--accent); border-radius: .7em; padding: 1.2em 1.3em; background: rgba(157,191,161,.06); }
+.slotcard .big { font-size: 2.2em; font-weight: 600; letter-spacing: -.02em; margin-top: .25em; line-height: 1.1; }
+.slotcard p { margin-top: .4em; color: var(--ink-2); font-size: .85em; }
+.compact .slotcard { padding: .55em .8em; display: flex; flex-wrap: wrap; align-items: baseline; gap: .1em .9em; }
+.compact .slotcard .big { font-size: 1.4em; margin: 0; } .compact .slotcard p { margin: 0; }
+.panel-h { display: flex; align-items: center; gap: .6em; padding: .7em 1em; border-bottom: 1px solid var(--line); background: var(--raised); font-weight: 600; font-size: .85em; }
+.live { width: .55em; height: .55em; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 .25em rgba(157,191,161,.2); }
+.lines { padding: .5em 1em .8em; display: grid; }
+.line { display: flex; align-items: center; gap: .8em; padding: .7em 0; border-top: 1px solid var(--line); font-size: .95em; }
+.line:first-child { border-top: 0; }
+.compact .line { padding: .45em 0; font-size: .9em; }
+.ic { width: 1.25em; height: 1.25em; border-radius: 50%; border: 1.5px solid var(--ink-3); flex: none; position: relative; transition: background .3s, border-color .3s; }
+.line.done .ic { background: var(--accent); border-color: var(--accent); }
+.line.done .ic::after { content: ""; position: absolute; left: 32%; top: 14%; width: 26%; height: 50%; border: solid var(--on-accent); border-width: 0 2px 2px 0; transform: rotate(40deg); }
+.line b { color: var(--accent); font-weight: 700; }
+
+/* 4, 5 phone and texts */
+.row { display: grid; grid-template-columns: auto minmax(0, 26em); gap: 3.5em; align-items: center; justify-content: center; }
+.compact .row { gap: 1.1em; }
+.ph { height: 26em; width: 15.5em; border: 1px solid var(--line-2); border-radius: 1.8em; padding: .5em; background: var(--raised); box-shadow: 0 1.5em 4em rgba(0,0,0,.5); }
+.compact .ph { height: 14em; width: 9em; border-radius: 1.2em; }
+.ph-in { height: 100%; border-radius: 1.4em; background: var(--bg); border: 1px solid var(--line); padding: 0 .8em .8em; overflow: hidden; font-size: .9em; }
+.compact .ph-in { font-size: .74em; }
+.ph-top { margin: 0 -.8em .8em; padding: 1em .8em .7em; border-bottom: 1px solid var(--line); text-align: center; font-family: var(--f-mono); font-size: .68em; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); }
+.msg { width: fit-content; max-width: 92%; margin-top: .5em; padding: .6em .8em; border-radius: 1em; line-height: 1.38; }
+.msg.in { background: var(--raised); border-bottom-left-radius: .25em; }
+.msg.out { margin-left: auto; background: var(--accent); color: var(--on-accent); font-weight: 700; border-bottom-right-radius: .25em; }
+.typing { display: none; gap: .3em; padding: .8em .9em; } .typing.on { display: flex; }
+.typing i { width: .45em; height: .45em; border-radius: 50%; background: var(--ink-3); animation: dot 1s infinite; }
+.typing i:nth-child(2) { animation-delay: .15s; } .typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes dot { 0%, 60%, 100% { opacity: .3; } 30% { opacity: 1; } }
+.sendp { display: grid; gap: .9em; align-content: center; }
+.counter { font-size: 1.1em; color: var(--ink-2); } .counter b { display: inline-block; vertical-align: -.12em; font-size: 3.2em; font-weight: 600; color: var(--ink); letter-spacing: -.03em; line-height: 1; margin: 0 .2em; }
+.compact .counter b { font-size: 2.2em; }
+.compact .counter { font-size: .95em; }
+.chips { display: grid; gap: .5em; }
+.pt { display: flex; align-items: center; gap: .7em; padding: .6em .9em; border: 1px solid var(--line-2); border-radius: 999px; background: var(--surface); font-family: var(--f-mono); font-size: .68em; }
+.compact .pt { padding: .4em .8em; font-size: .72em; }
+.pt em { margin-left: auto; font-style: normal; color: var(--accent); }
+.nohd { display: inline-flex; width: fit-content; align-items: center; gap: .6em; font-size: .82em; color: var(--accent); border: 1px solid var(--accent); border-radius: 999px; padding: .35em .9em; }
+.compact .nohd { font-size: .78em; }
+.trio { font-size: 1.2em; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1em; align-items: center; }
+.compact .trio { font-size: 1em; gap: .5em; }
+.card { border: 1px solid var(--line-2); border-radius: 1em; background: var(--surface); padding: 0 .9em .9em; min-height: 62%; transition: border-color .4s, background .4s, opacity .4s; }
+.card.hl { border-color: var(--accent); background: rgba(157,191,161,.08); }
+.card-h { display: flex; justify-content: space-between; align-items: center; gap: .5em; margin: 0 -.9em .6em; padding: .8em .9em .65em; border-bottom: 1px solid var(--line); font-family: var(--f-mono); font-size: .62em; letter-spacing: .03em; color: var(--ink-2); }
+.card .msg { font-size: .85em; }
+.compact .card { padding: 0 .55em .6em; } .compact .card-h { margin: 0 -.55em .45em; padding: .6em .55em .5em; font-size: .6em; }
+.compact .card .msg { font-size: .72em; padding: .5em .6em; }
+.compact .card .msg.q { display: block; width: auto; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.badge { color: var(--accent); border: 1px solid var(--accent); border-radius: 999px; padding: .1em .6em; opacity: 0; transition: opacity .4s; white-space: nowrap; }
+.card.hl .badge { opacity: 1; }
+.compact .badge { display: none; }
+
+/* 6 task */
+.tasks { flex: none; font-size: 1.15em; }
+.compact .tasks { font-size: 1em; }
+.tbar { display: flex; align-items: center; gap: 1em; padding: .8em 1.1em; border-bottom: 1px solid var(--line); font-weight: 600; font-size: .95em; }
+.tbar .plus { margin-left: auto; font-size: .8em; font-weight: 600; border: 1px solid var(--line-2); border-radius: 999px; padding: .25em .9em; color: var(--ink-2); }
+.tbar .crumb { color: var(--ink-3); font-weight: 500; }
+.tbody { padding: 1.1em;  display: flex; flex-direction: column; gap: .8em; min-height: 0; }
+.empty { color: var(--ink-3); font-size: .85em; padding: .4em 0; }
+.task { border: 1px solid var(--accent); border-radius: .6em; background: rgba(157,191,161,.07); padding: 1em 1.2em; transition: border-color .4s, background .4s; }
+.task h3 { font-size: 1.3em; font-weight: 600; letter-spacing: -.015em; line-height: 1.2; }
+.compact .task { padding: .7em .8em; } .compact .task h3 { font-size: 1.1em; }
+.fields { display: grid; grid-template-columns: repeat(3, minmax(0, auto)); justify-content: start; gap: .4em 2.2em; margin-top: .9em; }
+.compact .fields { gap: .3em 1.1em; margin-top: .6em; grid-template-columns: repeat(2, minmax(0, auto)); }
+.fields div { display: grid; gap: .1em; } .fields .v { font-size: .85em; font-weight: 500; }
+.v2 { display: none; } .task.done .v2 { display: inline; } .task.done .v1 { display: none; }
+.act { display: flex; align-items: center; gap: 1em; margin-top: 1.1em; }
+.compact .act { margin-top: .7em; }
+.approve { position: relative; font: 700 .85em/1 var(--f-body); padding: .8em 1.5em; border-radius: 999px; background: var(--accent); color: var(--on-accent); border: 0; transition: background .3s, transform .15s; }
+.compact .approve { padding: .65em 1.2em; }
+.approve .b2 { display: none; } .task.done .approve { background: transparent; border: 1px solid var(--accent); color: var(--accent); } .task.done .approve .b1 { display: none; } .task.done .approve .b2 { display: inline; }
+.pill { font-family: var(--f-mono); font-size: .56em; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-2); border: 1px solid var(--line-2); border-radius: 999px; padding: .4em .9em; }
+.pill.p2 { display: none; color: var(--accent); border-color: var(--accent); } .task.done .pill.p1 { display: none; } .task.done .pill.p2 { display: inline-block; }
+
+/* 7 booked */
+#s7 .sched { flex: 1; }
+.s7grid { position: relative; height: 100%; min-height: 0; display: flex; flex-direction: column; justify-content: center; }
+.s7sched { position: absolute; left: 0; top: 0; bottom: 0; width: 55%; display: flex; flex-direction: column; transition: opacity .5s; }
+.compact .s7sched { width: 100%; } .compact .s7sched.away { opacity: 0; }
+.actchip { position: absolute; z-index: 3; left: 50%; bottom: 1.2em; transform: translate(-50%, 8px); display: flex; align-items: center; gap: .6em; background: var(--bg); border: 1px solid var(--accent); color: var(--accent); border-radius: 999px; padding: .4em 1em; font-family: var(--f-mono); font-size: .62em; white-space: nowrap; opacity: 0; transition: opacity .4s, transform .4s; }
+.actchip.on { opacity: 1; transform: translate(-50%, 0); }
+.s7panel { position: absolute; right: 0; top: 0; bottom: 0; width: 42%; display: flex; flex-direction: column; justify-content: center; gap: 1em; }
+.compact .s7panel { width: 100%; gap: .5em; pointer-events: none; }
+.wlh { display: flex; justify-content: space-between; align-items: center; }
+.wlrow { display: flex; align-items: center; gap: .7em; padding: .55em 1em; border-top: 1px solid var(--line); font-family: var(--f-mono); font-size: .78em; max-height: 3.4em; overflow: hidden; transition: max-height .5s ease, padding .5s ease, opacity .5s ease, background .4s; }
+.compact .wlrow { padding: .25em .9em; font-size: .82em; max-height: 2.6em; }
+.wlrow em { margin-left: auto; font-style: normal; color: var(--accent); opacity: 0; transition: opacity .3s; }
+.wlrow.hl { background: rgba(157,191,161,.1); } .wlrow.hl em { opacity: 1; }
+.wlrow.gone { max-height: 0; padding-top: 0; padding-bottom: 0; opacity: 0; border-top-width: 0; }
+.audit { padding: .6em 1em .8em; font-family: var(--f-mono); font-size: .62em; line-height: 1.95; color: var(--ink-2); background: var(--bg-2); }
+.compact .audit { font-size: .66em; line-height: 1.75; padding: .4em .8em .5em; }
+.audit div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.audit .tt { color: var(--ink-3); } .audit .rd { color: var(--ink-2); font-weight: 500; } .audit .wr { color: var(--accent); font-weight: 500; }
+.audit .k { display: inline-block; width: 5.5ch; margin: 0 1ch; }
+.compact .s7panel .panel-h, .compact .s7panel .wlh { padding: .45em .9em; }
+
+/* cursor */
+.cur { position: absolute; left: 0; top: 0; z-index: 20; width: 1.5em; pointer-events: none; opacity: 0; transition: opacity .3s ease, transform 1s cubic-bezier(.45,.05,.25,1); filter: drop-shadow(0 2px 4px rgba(0,0,0,.6)); }
+.cur.on { opacity: 1; } .cur.jump { transition: opacity .3s ease; }
+.cur svg { display: block; width: 100%; height: auto; transition: transform .15s; transform-origin: 0 0; }
+.cur.press svg { transform: scale(.82); }
+.cur::after { content: ""; position: absolute; left: -.6em; top: -.6em; width: 1.2em; height: 1.2em; border-radius: 50%; border: 2px solid var(--accent); opacity: 0; transform: scale(.4); }
+.cur.press::after { animation: rip .5s ease-out; }
+@keyframes rip { 0% { opacity: .9; transform: scale(.4); } 100% { opacity: 0; transform: scale(1.6); } }
+
+/* reduced motion: static storyboard */
+.board { display: none; width: 100%; max-width: 1100px; margin: 0 auto; }
+.board h1 { font-size: clamp(22px, 3vw, 30px); font-weight: 600; letter-spacing: -.02em; margin: 6px 0 4px; }
+.board > p { color: var(--ink-2); font-size: 15px; }
+.board ol { list-style: none; counter-reset: b; display: grid; gap: 22px; margin-top: 20px; }
+.board li { counter-increment: b; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding-top: 18px; border-top: 1px solid var(--line); }
+.board h3 { font-size: 18px; font-weight: 600; line-height: 1.3; }
+.board h3::before { content: counter(b) ". "; font-family: var(--f-mono); font-size: 13px; color: var(--accent); }
+.board li > p { color: var(--ink-2); font-size: 15px; }
+.frame { position: relative; overflow: hidden; border: 1px solid var(--line-2); border-radius: 10px; aspect-ratio: 16 / 9; background: var(--bg); max-width: 640px; }
+.frame .inner { transform-origin: 0 0; }
+.board .cta { margin-top: 6px; width: fit-content; }
+body.reduced .reel { display: none; }
+body.reduced .board { display: block; }
+body.reduced { display: block; }
+</style>
+</head>
+<body>
+
+<main class="reel" id="reel" role="region" aria-label="Cancellation backfill demo: a self-playing illustration with sample data">
+  <div class="top">
+    <span class="chip" id="chip">Wording: OSCAR</span>
+    <span class="note">Illustration with sample data, not a screenshot</span>
+  </div>
+  <div class="stagewrap" id="stagewrap">
+    <div class="stage" id="stage">
+      <div class="inner" id="inner">
+        <section class="sc" id="s1"><div class="t1">
+          <p class="lbl acc a" style="--d:.15s">Aevon Health &middot; in development</p>
+          <h2 class="a" style="--d:.35s">Cancellation backfill</h2>
+          <div class="rule a" style="--d:.6s"></div>
+          <p class="sub a" style="--d:.8s">A cancelled consult, filled from your own waiting list.</p>
+        </div></section>
+
+        <section class="sc" id="s2"><div class="win sched a" id="sa"></div></section>
+
+        <section class="sc" id="s3"><div class="split">
+          <div class="slotcard a" style="--d:.2s"><span class="lbl acc">Open slot</span><div class="big">Thu 10:40</div><p>Provider A &middot; your clinic</p></div>
+          <div class="win a" style="--d:.4s">
+            <div class="panel-h"><span class="live"></span>Aevon activity</div>
+            <div class="lines">
+              <div class="line rv" id="l1"><span class="ic"></span><span>Slot opened: Thu 10:40</span></div>
+              <div class="line rv" id="l2"><span class="ic"></span><span data-t="wlchecked"></span></div>
+              <div class="line rv" id="l3"><span class="ic"></span><span><b>3 patients</b> match this provider and time</span></div>
+            </div>
+          </div>
+        </div></section>
+
+        <section class="sc" id="s4"><div class="row">
+          <div class="ph a"><div class="ph-in">
+            <div class="ph-top">Text from your clinic</div>
+            <div class="msg in typing" id="typing"><i></i><i></i><i></i></div>
+            <div class="msg in rv" id="m1">An appointment has opened at your clinic on Thursday at 10:40 am. Reply YES to take it.</div>
+          </div></div>
+          <div class="sendp a" style="--d:.5s">
+            <div class="counter">Sent to <b id="cnt" data-init="0">0</b>patients</div>
+            <div class="chips">
+              <div class="pt rv" id="p1">Chart 20917<em>sent</em></div>
+              <div class="pt rv" id="p2">Chart 14073<em>sent</em></div>
+              <div class="pt rv" id="p3">Chart 31558<em>sent</em></div>
+            </div>
+            <div class="nohd rv" id="nohd">No health details in the text</div>
+          </div>
+        </div></section>
+
+        <section class="sc" id="s5"><div class="trio">
+          <div class="card a" id="c1" style="--d:.2s"><div class="card-h"><span>Chart 20917</span><span class="badge">First reply</span></div>
+            <div class="msg in q">An appointment has opened at your clinic on Thursday at 10:40 am. Reply YES to take it.</div>
+            <div class="msg out rv" id="y1">YES</div></div>
+          <div class="card a" id="c2" style="--d:.35s"><div class="card-h"><span>Chart 14073</span></div>
+            <div class="msg in q">An appointment has opened at your clinic on Thursday at 10:40 am. Reply YES to take it.</div>
+            <div class="msg in rv" id="f2">That appointment has now been filled.</div></div>
+          <div class="card a" id="c3" style="--d:.5s"><div class="card-h"><span>Chart 31558</span></div>
+            <div class="msg in q">An appointment has opened at your clinic on Thursday at 10:40 am. Reply YES to take it.</div>
+            <div class="msg in rv" id="f3">That appointment has now been filled.</div></div>
+        </div></section>
+
+        <section class="sc" id="s6"><div class="win tasks a">
+          <div class="tbar" id="tbar"></div>
+          <div class="tbody">
+            <div class="empty" id="empty"></div>
+            <div class="task rv" id="task">
+              <h3>Approve booking: Chart 20917, Thu 10:40</h3>
+              <div class="fields" id="fields"></div>
+              <div class="act"><button class="approve" id="approve" type="button" tabindex="-1"><span class="b1">Approve</span><span class="b2">Approved</span></button><span class="pill p1">Waiting for approval</span><span class="pill p2">Approved</span></div>
+            </div>
+          </div>
+        </div></section>
+
+        <section class="sc" id="s7"><div class="s7grid">
+          <div class="s7sched" id="s7sched"><div class="win sched" id="sb"></div></div>
+          <div class="actchip" id="actchip"></div>
+          <div class="s7panel" id="s7panel">
+            <div class="win rv" id="wlcard">
+              <div class="panel-h wlh"><span data-t="wl"></span><span class="lbl" id="wlcount" data-init="3 waiting">3 waiting</span></div>
+              <div class="wlrow" id="wl1"><span>Chart 20917</span><em>booked</em></div>
+              <div class="wlrow"><span>Chart 14073</span></div>
+              <div class="wlrow"><span>Chart 31558</span></div>
+            </div>
+            <div class="win rv" id="auditcard">
+              <div class="panel-h wlh"><span>Audit log</span><span class="lbl">sample times</span></div>
+              <div class="audit" id="audit"></div>
+            </div>
+          </div>
+        </div></section>
+
+        <section class="sc" id="s8"><div class="end">
+          <p class="lbl acc a" style="--d:.1s">Aevon Health</p>
+          <h2 class="a" style="--d:.3s">One open slot, filled without a phone call.</h2>
+          <p class="sub a" style="--d:.9s">In development. Illustration with sample data.</p>
+        </div></section>
+
+        <div class="cur" id="cur"><svg viewBox="0 0 16 22" aria-hidden="true"><path d="M1 1 L1 17 L5 13 L8 20 L11 18.7 L8 12 L14 12 Z" fill="#ECEEEA" stroke="#0C0E0D" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="cta-layer" id="cta"><a class="cta" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 20-minute call</a></div>
+    </div>
+  </div>
+  <p class="caption" id="caption" aria-live="off">In development. Everything shown uses sample data.</p>
+  <div class="controls">
+    <button class="cbtn" id="pp" type="button" aria-label="Pause the demo"><svg class="pp-pause" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3.4v12H2zM8.6 1H12v12H8.6z"/></svg><svg class="pp-play" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1l9 6-9 6z"/></svg><span id="pptext">Pause</span></button>
+    <button class="cbtn" id="rp" type="button" aria-label="Replay the demo from the start"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.5a5.5 5.5 0 1 0 5.2 3.7l-1.5.5A4 4 0 1 1 7 3v2.2l3.3-2.7L7 .5z"/></svg><span>Replay</span></button>
+    <div class="bar" id="bar" role="progressbar" aria-label="Demo progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="barfill"></i></div>
+    <span class="time" id="time">0:00 / 0:43</span>
+  </div>
+</main>
+
+<section class="board" id="board" aria-label="Cancellation backfill, storyboard">
+  <h1>Cancellation backfill, in eight steps</h1>
+  <p>Animation is turned off on this device, so here are the key frames. Illustration with sample data, not a screenshot. In development.</p>
+  <ol id="boardlist"></ol>
+</section>
+
+<script>
+(function () {
+  'use strict';
+  var params = new URLSearchParams(location.search);
+  var emr = params.get('emr'); if (['oscar', 'accuro', 'chr'].indexOf(emr) < 0) emr = 'oscar';
+  var embed = window.top !== window;
+  if (embed) document.body.classList.add('embed');
+  var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- wording: swaps words only, never layout ---------- */
+  var SH = {
+    dot: '<circle cx="5" cy="5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/>',
+    sq: '<rect x="1.4" y="1.4" width="7.2" height="7.2" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/>',
+    dia: '<path d="M5 .9 L9.1 5 L5 9.1 L.9 5 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>',
+    x: '<path d="M1.8 1.8 L8.2 8.2 M8.2 1.8 L1.8 8.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>'
+  };
+  function mk(shape, text) { return '<span class="mk"><svg class="sh" viewBox="0 0 10 10" aria-hidden="true">' + SH[shape] + '</svg>' + text + '</span>'; }
+  var VAR = {
+    oscar: {
+      chip: 'OSCAR', wl: 'Waiting List', book: 'make appt', confirm: null,
+      todo: ['dot', 'To Do'], cx: ['x', 'Cancelled'],
+      legend: [['dot', 'To Do'], ['sq', 'Here'], ['x', 'Cancelled'], ['dia', 'No Show']],
+      tbar: '<span>Ticklers</span>',
+      empty: 'No open ticklers',
+      fields: [['Service Date', 'Wed'], ['Priority', 'Normal'], ['Assigned to', 'Front desk'], ['Message', 'Approve booking']]
+    },
+    accuro: {
+      chip: 'Accuro', wl: 'Wait List', book: 'Book Patient', confirm: null,
+      todo: ['dot', 'B'], cx: ['x', 'CX'],
+      legend: [['dot', 'B Booked'], ['sq', 'A Arrived'], ['x', 'CX Cancelled'], ['dia', 'NS No Show']],
+      tbar: '<span class="crumb">Home</span><span class="crumb">&rsaquo;</span><span>Tasks</span>',
+      empty: 'No open tasks',
+      fields: [['Task Priority', 'Normal'], ['Assigned to', 'Front desk'], ['Message', 'Approve booking']]
+    },
+    chr: {
+      chip: 'TELUS CHR', wl: 'Waitlist (kept by Aevon)', book: 'Book appointment', confirm: 'Confirm Notifications',
+      todo: ['dot', 'Confirmed'], cx: ['x', 'Cancelled'],
+      legend: [['dot', 'Confirmed'], ['sq', 'Arrived'], ['x', 'Cancelled']],
+      tbar: '<span>Tasks</span><span class="plus">+ New task</span>',
+      empty: 'No open tasks',
+      fields: [['Status', 'New', 'Done'], ['Priority', 'Routine'], ['Assigned to', 'Front desk'], ['Message', 'Approve booking']]
+    }
+  };
+  var V = VAR[emr];
+  document.getElementById('chip').textContent = 'Wording: ' + V.chip;
+
+  function q(s, r) { return (r || document).querySelector(s); }
+  function qa(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+  var inner = q('#inner'), stage = q('#stage'), wrap = q('#stagewrap');
+
+  /* ---------- build schedule ---------- */
+  function fmt(m) { var mm = m % 60; return Math.floor(m / 60) + ':' + (mm < 10 ? '0' : '') + mm; }
+  function sched(withNew) {
+    var P = 180, T0 = 540;
+    function blk(s, who, cls, d, extra) {
+      var top = (s - T0) / P * 100, h = 40 / P * 100;
+      return '<div class="blk ' + (cls || '') + '" style="top:' + top + '%;height:' + h + '%;--d:' + d + 's">' +
+        '<span class="who"><span class="tm">' + fmt(s) + '</span>Chart ' + who + '</span>' +
+        '<span class="st-a">' + mk(V.todo[0], V.todo[1]) + '</span><span class="st-b">' + mk(V.cx[0], V.cx[1]) + '</span></div>';
+    }
+    var a = blk(540, '10482', '', .05) + blk(640, '40816', 't', .25) + blk(680, '30264', '', .45) +
+      (withNew ? blk(640, '20917', 'n', 0).replace('</div>', '</div>') : '');
+    var b = blk(560, '11305', '', .15) + blk(600, '22750', '', .35) + blk(660, '17294', '', .55);
+    var axis = ['9:00', '10:00', '11:00'].map(function (t, i) { return '<span style="top:' + (i * 33.3334) + '%">' + t + '</span>'; }).join('');
+    var legend = V.legend.map(function (l) { return mk(l[0], l[1]); }).join('');
+    return '<div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><b>Thursday</b><span class="r">your clinic</span></div>' +
+      '<div class="grid"><div class="colh first"></div><div class="colh">Provider A</div><div class="colh">Provider B</div>' +
+      '<div class="axis">' + axis + '</div><div class="lane">' + a + '</div><div class="lane">' + b + '</div></div>' +
+      '<div class="legend">' + legend + '</div>';
+  }
+  q('#sa').innerHTML = sched(false);
+  q('#sb').innerHTML = sched(true);
+
+  /* ---------- wording into the other scenes ---------- */
+  qa('[data-t="wl"]').forEach(function (e) { e.textContent = V.wl; });
+  qa('[data-t="wlchecked"]').forEach(function (e) { e.textContent = V.wl + ' checked'; });
+  q('#tbar').innerHTML = V.tbar;
+  q('#empty').textContent = V.empty;
+  q('#fields').innerHTML = V.fields.map(function (f) {
+    var val = f[2] ? '<span class="v1">' + f[1] + '</span><span class="v2">' + f[2] + '</span>' : f[1];
+    return '<div><span class="lbl">' + f[0] + '</span><span class="v">' + val + '</span></div>';
+  }).join('');
+  qa('#fields div').forEach(function (d) { if (d.firstChild.textContent === 'Message') d.parentNode.removeChild(d); });
+  q('#actchip').innerHTML = V.confirm ? V.book + ' &rarr; ' + V.confirm : V.book;
+  var audit = [
+    ['09:14:02', 'READ', 'schedule, Provider A, Thu'],
+    ['09:14:03', 'READ', V.wl + ', 3 matches'],
+    ['09:41:19', 'WRITE', V.book + ', Chart 20917, Thu 10:40']
+  ];
+  if (V.confirm) audit.push(['09:41:20', 'WRITE', V.confirm]);
+  audit.push([V.confirm ? '09:41:21' : '09:41:20', 'WRITE', V.wl + ', Chart 20917 removed']);
+  q('#audit').innerHTML = audit.map(function (l, i) {
+    return '<div class="rv" id="al' + i + '"><span class="tt">' + l[0] + '</span><span class="k ' + (l[1] === 'READ' ? 'rd' : 'wr') + '">' + l[1] + '</span>' + l[2] + '</div>';
+  }).join('');
+
+  /* ---------- engine ---------- */
+  var STATE = ['on', 'cx', 'done', 'away', 'gone', 'hl', 'press'];
+  var ST = [0, 3.8, 9.4, 14.6, 19.8, 24.6, 30.8, 37.4], TOTAL = 43.4;
+  var CAP = [
+    'In development. Everything shown uses sample data.',
+    'A consult cancels the day before.',
+    'The automation sees the open slot and checks your waiting list.',
+    'Three patients get a text. No health details in it.',
+    'The first to say yes gets it.',
+    'Your front desk approves it, or you let it run.',
+    'Booked into the schedule. Every read and write is logged.',
+    'One open slot, filled without a phone call.'
+  ];
+  var cues = [], W = 1280, scale = 1, silent = false, capTimer = null;
+  function at(t, fn) { cues.push({ t: t * 1000, fn: fn, i: cues.length }); }
+  function sc(n, off, fn) { at(ST[n - 1] + off, fn); }
+  function on(sel, c) { qa(sel, inner).forEach(function (e) { e.classList.add(c || 'on'); }); }
+  function off(sel, c) { qa(sel, inner).forEach(function (e) { e.classList.remove(c || 'on'); }); }
+  function txt(sel, s) { qa(sel, inner).forEach(function (e) { e.textContent = s; }); }
+  var cur = q('#cur'), cap = q('#caption'), ctaEl = q('#cta');
+
+  function setCap(s) {
+    clearTimeout(capTimer);
+    if (silent || reduced) { cap.textContent = s; cap.style.opacity = 1; return; }
+    cap.style.opacity = 0;
+    capTimer = setTimeout(function () { cap.textContent = s; cap.style.opacity = 1; }, 200);
+  }
+  function go(n) {
+    qa('.sc', inner).forEach(function (e, i) { e.classList.toggle('on', i === n - 1); });
+    inner.setAttribute('data-scene', n);
+    setCap(CAP[n - 1]);
+    off('#cur'); ctaEl.classList.remove('on');
+  }
+  function pt(sel, fx, fy) {
+    var e = q(sel, inner), r = e.getBoundingClientRect(), ir = inner.getBoundingClientRect();
+    return [(r.left - ir.left + r.width * fx) / scale, (r.top - ir.top + r.height * fy) / scale];
+  }
+  function curSet(x, y) {
+    cur.classList.add('jump'); cur.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+    void cur.offsetWidth; cur.classList.remove('jump'); cur.classList.add('on');
+  }
+  function curTo(sel, ms, fx, fy) {
+    var p = pt(sel, fx == null ? .5 : fx, fy == null ? .5 : fy);
+    cur.style.transitionDuration = silent ? '0s' : '.3s, ' + ms + 'ms';
+    cur.style.transform = 'translate(' + p[0] + 'px,' + p[1] + 'px)';
+  }
+  function click() {
+    if (silent) return;
+    cur.classList.add('press'); setTimeout(function () { cur.classList.remove('press'); }, 520);
+  }
+  function startPos() { return [W * .86, W * .56 * .9]; }
+
+  /* scene 1 */
+  sc(1, 0, function () { go(1); });
+  /* scene 2: one block is cancelled */
+  sc(2, 0, function () { go(2); });
+  sc(2, .6, function () { on('#sa .lane'); });
+  sc(2, 1.5, function () { var s = startPos(); curSet(s[0], s[1]); });
+  sc(2, 1.7, function () { curTo('#sa .blk.t .st-a', 1000, .5, .5); });
+  sc(2, 2.95, click);
+  sc(2, 3.1, function () { on('#sa .blk.t', 'cx'); });
+  sc(2, 4.1, function () { off('#cur'); });
+  /* scene 3: the automation notices */
+  sc(3, 0, function () { go(3); });
+  [[.8, 'l1'], [1.8, 'l2'], [2.8, 'l3']].forEach(function (x) {
+    sc(3, x[0], function () { on('#' + x[1]); });
+    sc(3, x[0] + .6, function () { on('#' + x[1], 'done'); });
+  });
+  /* scene 4: three texts go out */
+  sc(4, 0, function () { go(4); });
+  sc(4, .7, function () { on('#typing'); });
+  sc(4, 1.5, function () { off('#typing'); on('#m1'); });
+  [[2.0, 'p1', '1'], [2.4, 'p2', '2'], [2.8, 'p3', '3']].forEach(function (x) {
+    sc(4, x[0], function () { on('#' + x[1]); txt('#cnt', x[2]); });
+  });
+  sc(4, 3.5, function () { on('#nohd'); });
+  /* scene 5: the first yes */
+  sc(5, 0, function () { go(5); });
+  sc(5, .9, function () { on('#y1'); });
+  sc(5, 1.6, function () { on('#c1', 'hl'); });
+  sc(5, 2.4, function () { on('#f2'); });
+  sc(5, 2.7, function () { on('#f3'); });
+  /* scene 6: front desk approves */
+  sc(6, 0, function () { go(6); });
+  sc(6, .9, function () { on('#task'); off('#empty'); q('#empty').style.display = 'none'; });
+  sc(6, 1.9, function () { var s = startPos(); curSet(s[0], s[1]); });
+  sc(6, 2.1, function () { curTo('#approve', 1300, .5, .5); });
+  sc(6, 3.6, click);
+  sc(6, 3.75, function () { on('#task', 'done'); });
+  sc(6, 5.0, function () { off('#cur'); });
+  /* scene 7: booked and logged */
+  sc(7, 0, function () { go(7); });
+  sc(7, .5, function () { on('#sb .lane'); });
+  sc(7, 1.0, function () { on('#actchip'); });
+  sc(7, 1.7, function () { on('#sb .blk.t', 'gone'); on('#sb .blk.n'); });
+  sc(7, 3.0, function () { on('#s7sched', 'away'); off('#actchip'); });
+  sc(7, 3.2, function () { on('#wlcard'); });
+  sc(7, 3.8, function () { on('#wl1', 'hl'); });
+  sc(7, 4.3, function () { on('#wl1', 'gone'); txt('#wlcount', '2 waiting'); });
+  sc(7, 3.6, function () { on('#auditcard'); });
+  audit.forEach(function (l, i) { sc(7, 4.0 + i * .45, function () { on('#al' + i); }); });
+  /* scene 8: end card */
+  sc(8, 0, function () { go(8); });
+  sc(8, 1.5, function () { ctaEl.classList.add('on'); });
+  cues.sort(function (a, b) { return a.t - b.t || a.i - b.i; });
+  var COMPACT_AWAY = true;
+
+  function reset() {
+    clearTimeout(capTimer);
+    qa('[class]', stage).forEach(function (e) { STATE.forEach(function (c) { e.classList.remove(c); }); });
+    qa('[data-init]', inner).forEach(function (e) { e.textContent = e.getAttribute('data-init'); });
+    var em = q('#empty'); em.style.display = '';
+    ctaEl.classList.remove('on');
+    cur.style.transform = 'translate(' + W * .86 + 'px,' + W * .5 + 'px)';
+  }
+  var idx = 0, t = 0;
+  function applyTo(ms) { while (idx < cues.length && cues[idx].t <= ms) cues[idx++].fn(); }
+  function jumpTo(ms) {
+    inner.classList.add('nt'); silent = true;
+    reset(); idx = 0; t = ms; applyTo(ms);
+    void inner.offsetWidth; silent = false;
+    if (!reduced) inner.classList.remove('nt');
+    paint();
+  }
+  function restart() {
+    inner.classList.add('nt'); silent = true; reset(); idx = 0; t = 0; void inner.offsetWidth; silent = false; inner.classList.remove('nt');
+    applyTo(0); paint();
+  }
+
+  /* ---------- sizing ---------- */
+  var compact = false;
+  function layout() {
+    if (document.body.classList.contains('reduced')) return;
+    var cs = getComputedStyle(wrap);
+    var avW = wrap.clientWidth, avH = embed ? 1e6 : wrap.clientHeight;
+    var sw = Math.max(200, Math.floor(Math.min(avW, avH * 16 / 9)));
+    compact = sw < 820;
+    W = compact ? 480 : 1280;
+    var H = W * 9 / 16;
+    inner.classList.toggle('compact', compact);
+    inner.style.width = W + 'px'; inner.style.height = H + 'px';
+    scale = sw / W;
+    inner.style.transform = 'scale(' + scale + ')';
+    stage.style.width = sw + 'px'; stage.style.height = Math.round(sw * 9 / 16) + 'px';
+    reportHeight();
+  }
+  function reportHeight() {
+    if (!embed) return;
+    try { parent.postMessage({ aevonReel: 'height', h: Math.ceil(document.documentElement.scrollHeight) }, location.origin); } catch (e) {}
+  }
+
+  /* ---------- player ---------- */
+  var playing = true, last = 0, pp = q('#pp'), ppText = q('#pptext'), fill = q('#barfill'), timeEl = q('#time'), barEl = q('#bar'), lastSec = -1;
+  function mmss(ms) { var s = Math.floor(ms / 1000); return Math.floor(s / 60) + ':' + (s % 60 < 10 ? '0' : '') + (s % 60); }
+  function paint() {
+    fill.style.width = Math.min(100, t / (TOTAL * 1000) * 100) + '%';
+    var s = Math.floor(t / 1000);
+    if (s !== lastSec) { lastSec = s; timeEl.textContent = mmss(t) + ' / ' + mmss(TOTAL * 1000); barEl.setAttribute('aria-valuenow', Math.round(t / (TOTAL * 1000) * 100)); }
+  }
+  function setPlaying(p) {
+    playing = p; pp.classList.toggle('paused', !p);
+    ppText.textContent = p ? 'Pause' : 'Play';
+    pp.setAttribute('aria-label', p ? 'Pause the demo' : 'Play the demo');
+    if (p) { last = 0; requestAnimationFrame(tick); }
+  }
+  function tick(now) {
+    if (!playing) return;
+    if (!last) last = now;
+    var dt = Math.min(100, now - last); last = now;
+    t += dt;
+    if (t >= TOTAL * 1000) { restart(); } else { applyTo(t); paint(); }
+    requestAnimationFrame(tick);
+  }
+  pp.addEventListener('click', function () { setPlaying(!playing); });
+  q('#rp').addEventListener('click', function () { restart(); if (!playing) setPlaying(true); });
+
+  window.addEventListener('resize', layout);
+  if (window.ResizeObserver) new ResizeObserver(function () { reportHeight(); }).observe(document.body);
+
+  /* test and storyboard hook: jump to a time in seconds and hold */
+  window.aevonReel = { seek: function (s) { setPlaying(false); jumpTo(s * 1000); }, total: TOTAL, scenes: ST };
+
+  /* ---------- reduced motion: static storyboard ---------- */
+  function buildBoard() {
+    var KEY = [1.6, 4.3, 4.0, 4.4, 3.8, 5.2, 5.9, 3.0];
+    var DET = [
+      'Title card: Cancellation backfill. A cancelled consult, filled from your own waiting list.',
+      'A day view for one clinic with two provider columns, Provider A and Provider B. The Thursday 10:40 block is marked ' + V.cx[1] + ', greyed and struck through.',
+      'An activity panel logs: slot opened Thu 10:40; ' + V.wl + ' checked; 3 patients match this provider and time.',
+      'A phone shows the text: "An appointment has opened at your clinic on Thursday at 10:40 am. Reply YES to take it." Sent to 3 patients. No health details in it.',
+      'Chart 20917 replies YES first. The other two patients are told "That appointment has now been filled."',
+      'A task for the front desk reads "Approve booking: Chart 20917, Thu 10:40". The Approve button is clicked.',
+      'A new block appears at Thu 10:40 (' + V.todo[1] + '). The ' + V.wl + ' entry is removed. An audit log shows timestamped READ and WRITE lines, with sample times.',
+      'One open slot, filled without a phone call. In development. Illustration with sample data.'
+    ];
+    var ol = q('#boardlist'), frames = [];
+    for (var i = 0; i < 8; i++) {
+      jumpTo((ST[i] + KEY[i]) * 1000);
+      var li = document.createElement('li');
+      var h = document.createElement('h3'); h.textContent = CAP[i === 0 ? 0 : i] ; li.appendChild(h);
+      if (i === 0) h.textContent = 'Cancellation backfill. A cancelled consult, filled from your own waiting list.';
+      var fr = document.createElement('div'); fr.className = 'frame'; fr.setAttribute('role', 'img'); fr.setAttribute('aria-label', 'Key frame ' + (i + 1) + ': ' + DET[i]);
+      var cl = inner.cloneNode(true); cl.removeAttribute('id'); qa('[id]', cl).forEach(function (e) { e.removeAttribute('id'); });
+      cl.classList.add('nt'); fr.appendChild(cl); li.appendChild(fr); frames.push([fr, cl]);
+      var p = document.createElement('p'); p.textContent = DET[i]; li.appendChild(p);
+      if (i === 7) { var a = document.createElement('a'); a.className = 'cta'; a.href = 'https://calendar.app.google/7R7srDKzWrvmLQg37'; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Book a 20-minute call'; li.appendChild(a); }
+      ol.appendChild(li);
+    }
+    function fit() { frames.forEach(function (f) { var s = f[0].clientWidth / (compact ? 480 : 1280); f[1].style.transform = 'scale(' + s + ')'; }); }
+    fit(); window.addEventListener('resize', fit);
+    document.fonts && document.fonts.ready && document.fonts.ready.then(fit);
+  }
+
+  layout();
+  if (reduced) {
+    document.body.classList.add('reduced');
+    // the board is laid out at the wide size so its key frames stay readable
+    compact = false; W = 1280; inner.classList.remove('compact'); inner.style.width = '1280px'; inner.style.height = '720px'; scale = 1; inner.style.transform = 'none';
+    stage.style.width = '1280px'; stage.style.height = '720px'; stage.style.position = 'absolute'; stage.style.left = '-9999px';
+    buildBoard();
+    reportHeight();
+  } else {
+    // wait a beat so web fonts settle before the first frame
+    var begin = function () { restart(); setPlaying(true); };
+    if (document.fonts && document.fonts.ready) { Promise.race([document.fonts.ready, new Promise(function (r) { setTimeout(r, 900); })]).then(begin); } else begin();
+  }
+})();
+</script>
+</body>
+</html>

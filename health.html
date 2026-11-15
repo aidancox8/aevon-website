@@ -119,6 +119,31 @@
     .feature p { margin-top: 12px; color: var(--ink-2); max-width: 46ch; }
     .feature .price-list { margin-top: 20px; }
 
+
+    /* the self-playing reel: a poster drawn as the first frame, iframe loaded on click */
+    .reelblock { margin-top: 8px; padding-top: 48px; border-top: 1px solid var(--line); }
+    .reelblock h3 { font-size: 22px; margin-top: 10px; }
+    .reelblock > p { margin-top: 8px; color: var(--ink-2); font-size: 16px; max-width: 64ch; }
+    .reelplayer { margin-top: 24px; border: 1px solid var(--line-2); border-radius: var(--radius-lg); overflow: hidden; background: var(--bg); box-shadow: 0 30px 80px rgba(0,0,0,.45), 0 2px 6px rgba(0,0,0,.4); }
+    .rp-stage { position: relative; width: 100%; aspect-ratio: 16 / 10; }
+    .rp-stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; background: var(--bg); }
+    .rp-poster { position: absolute; inset: 0; width: 100%; border: 0; cursor: pointer; color: var(--ink); font: inherit; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; padding: 24px 20px 20px;
+      background: radial-gradient(70% 60% at 50% 38%, rgba(157,191,161,.09), transparent 70%), var(--bg); }
+    .rp-poster .rp-eyebrow { font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+    .rp-poster .rp-title { margin-top: 14px; font-family: var(--f-display); font-weight: 600; font-size: clamp(30px, 6vw, 62px); letter-spacing: -.03em; line-height: 1.06; }
+    .rp-poster .rp-rule { width: 56px; height: 2px; background: var(--accent); margin: 18px auto 0; }
+    .rp-poster .rp-line { margin-top: 16px; max-width: 30ch; font-size: clamp(16px, 2.2vw, 22px); color: var(--ink-2); }
+    .rp-poster .rp-go { margin-top: 30px; display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 22px 0 14px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-weight: 700; font-size: 15px; transition: background 160ms ease; }
+    .rp-poster:hover .rp-go { background: var(--ink); }
+    .rp-poster .rp-go svg { width: 30px; height: 30px; flex: none; }
+    .rp-poster .rp-small { margin-top: 14px; font-size: 13px; color: var(--ink-3); }
+    .rp-variants { margin-top: 14px; font-size: 14.5px; color: var(--ink-3); display: flex; flex-wrap: wrap; gap: 0 18px; align-items: center; }
+    .rp-variants a { display: inline-flex; align-items: center; min-height: 44px; }
+    .rp-variants a[aria-current="true"] { color: var(--ink); text-decoration: none; font-weight: 600; }
+    .reelblock details { margin-top: 18px; border-bottom: 1px solid var(--line); }
+    .reelblock details ol { padding: 0 0 20px 22px; color: var(--ink-2); font-size: 15.5px; display: grid; gap: 8px; max-width: 70ch; }
+    @media (max-width: 640px) { .rp-stage { aspect-ratio: auto; height: 380px; } }
+
     /* roadmap: dashed, so it does not read as shipped */
     .road { margin-top: 8px; padding-top: 48px; border-top: 1px solid var(--line); }
     .road h3 { font-size: 22px; }
@@ -380,6 +405,42 @@
       </figure>
     </div>
 
+    <div class="reelblock" id="reel">
+      <span class="lbl accent">Watch it work</span>
+      <h3>One cancelled slot, start to finish</h3>
+      <p>A short self-playing illustration, about 40 seconds. In development. It uses sample data and is not a screenshot.</p>
+      <div class="reelplayer">
+        <div class="rp-stage" id="rp-stage">
+          <button type="button" class="rp-poster" id="rp-poster" aria-label="Play the cancellation backfill demo, about 40 seconds">
+            <span class="rp-eyebrow">Aevon Health &middot; in development</span>
+            <span class="rp-title">Cancellation backfill</span>
+            <span class="rp-rule"></span>
+            <span class="rp-line">A cancelled consult, filled from your own waiting list.</span>
+            <span class="rp-go"><svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="15" fill="#0C0E0D"/><path d="M12 9.5l9 5.5-9 5.5z" fill="#9DBFA1"/></svg>Play demo</span>
+            <span class="rp-small">Illustration with sample data, not a screenshot</span>
+          </button>
+        </div>
+      </div>
+      <p class="rp-variants" id="rp-variants">Wording in the demo:
+        <a href="health-reel.html?emr=oscar" data-emr="oscar" aria-current="true">OSCAR</a>
+        <a href="health-reel.html?emr=accuro" data-emr="accuro">Accuro</a>
+        <a href="health-reel.html?emr=chr" data-emr="chr">TELUS CHR</a>
+      </p>
+      <details>
+        <summary>Text version of the demo</summary>
+        <ol>
+          <li>Title card: Cancellation backfill. A cancelled consult, filled from your own waiting list.</li>
+          <li>A schedule day view for one clinic, with two provider columns. The Thursday 10:40 appointment is marked Cancelled.</li>
+          <li>The automation notices the open slot, logs it, and checks the waiting list. Three patients match this provider and time.</li>
+          <li>Those three patients get a text offering the slot. It contains no health details.</li>
+          <li>The first patient to reply YES, Chart 20917, gets the slot. The other two are told it has been filled.</li>
+          <li>A task appears for the front desk: Approve booking, Chart 20917, Thursday 10:40. Staff approve it, or you let it run.</li>
+          <li>The booking appears in the schedule at 10:40, the patient is removed from the waiting list, and an audit log shows each read and write with a time.</li>
+          <li>End card: one open slot, filled without a phone call. In development. Illustration with sample data.</li>
+        </ol>
+      </details>
+    </div>
+
     <div class="road">
       <h3>On the roadmap</h3>
       <p>Not built and not available yet. Listed so you know where this is going.</p>
@@ -532,6 +593,44 @@
     </div>
   </div>
 </footer>
+
+<script>
+/* Load the reel only on click, so the page stays light. The poster above is the reel's first frame. */
+(function () {
+  var stage = document.getElementById('rp-stage');
+  if (!stage) return;
+  var emr = 'oscar';
+  var links = document.querySelectorAll('#rp-variants a');
+  function setHeight(h) {
+    stage.style.aspectRatio = 'auto';
+    stage.style.height = Math.max(300, Math.min(h, 1200)) + 'px';
+  }
+  function load(variant) {
+    emr = variant;
+    var f = stage.querySelector('iframe');
+    var src = 'health-reel.html?emr=' + variant;
+    if (!f) {
+      setHeight(stage.clientWidth * 0.5625 + (stage.clientWidth < 700 ? 200 : 160));
+      stage.innerHTML = '<iframe src="' + src + '" title="Cancellation backfill demo: a self-playing illustration with sample data" loading="eager"></iframe>';
+    } else {
+      f.src = src;
+    }
+    for (var i = 0; i < links.length; i++) {
+      if (links[i].getAttribute('data-emr') === variant) links[i].setAttribute('aria-current', 'true');
+      else links[i].removeAttribute('aria-current');
+    }
+  }
+  document.getElementById('rp-poster').addEventListener('click', function () { load(emr); });
+  for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener('click', function (e) { e.preventDefault(); load(this.getAttribute('data-emr')); });
+  }
+  window.addEventListener('message', function (e) {
+    if (e.origin !== location.origin || !e.data || e.data.aevonReel !== 'height') return;
+    var f = stage.querySelector('iframe');
+    if (f && e.source === f.contentWindow) setHeight(e.data.h);
+  });
+})();
+</script>
 
 </body>
 </html>
