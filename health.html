@@ -48,14 +48,18 @@
     .pill.accent { border-color: var(--accent); color: var(--accent); }
 
     /* ---- hero: the site's centred hero, with the product illustration directly under it ---- */
-    .hero { padding-bottom: 72px; }
+    .hero { padding-top: 88px; padding-bottom: 72px; min-height: 0; }
+    /* tighter than the other heroes so the top of the demo is on screen without scrolling */
+    .hero .sub { max-width: 68ch; margin-top: 16px; }
+    .hero .cta { margin-top: 22px; }
+    .hero .verify { margin-top: 16px; }
     .hero h1 { font-size: clamp(36px, 5.4vw, 62px); margin-top: 14px; }
     .hero .verify { color: var(--ink-2); text-shadow: 0 1px 10px rgba(0,0,0,.6); }
     .hero .verify b { color: var(--ink); }
     /* This hero is taller than the others because the illustration sits in it, so the photo is
        darkened sooner: the type stays legible and the illustration lands on the page ground. */
     .hero-bg::after { background: linear-gradient(180deg, rgba(12,14,13,.66) 0%, rgba(12,14,13,.62) 26%, rgba(12,14,13,.86) 50%, var(--bg) 74%); }
-    figure.hero-art { width: 100%; max-width: 1000px; margin: 64px auto 0; padding: 0 28px; text-align: left; }
+    figure.hero-art { width: 100%; max-width: 1000px; margin: 20px auto 0; scroll-margin-top: 16px; padding: 0 28px; text-align: left; }
     .hero-stage { display: grid; grid-template-columns: minmax(0, 1fr) 252px; gap: 28px; align-items: center; }
     .hero-art figcaption { text-align: center; }
 
@@ -119,7 +123,6 @@
     .ck li.no::before { border-color: var(--danger); }
     .ck li.no::after { content: "!"; position: absolute; left: 0; top: 1px; width: 17px; text-align: center; font-size: 12px; font-weight: 700; line-height: 17px; }
     .ck-rule { padding: 0 16px 14px; font-size: 13px; color: var(--ink-3); }
-    .reelblock + .feature { margin-top: 24px; }
 
     /* one open slot, start to filled */
     .slot-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 18px 14px; border-bottom: 1px solid var(--line); }
@@ -159,22 +162,24 @@
     .feature .price-list { margin-top: 20px; }
 
 
-    /* the self-playing reel: loaded as the block nears the viewport, plays while at least half of it is on screen */
-    .reelblock { margin-top: 8px; padding-top: 48px; border-top: 1px solid var(--line); }
-    .reelblock h3 { font-size: 22px; margin-top: 10px; }
-    .reelblock > p { margin-top: 8px; color: var(--ink-2); font-size: 16px; max-width: 64ch; }
-    .reelplayer { margin-top: 24px; border: 1px solid var(--line-2); border-radius: var(--radius-lg); overflow: hidden; background: var(--bg); box-shadow: 0 30px 80px rgba(0,0,0,.45), 0 2px 6px rgba(0,0,0,.4); }
+    /* The hero demo. The static illustration and the player share one grid cell, so the cell is as
+       tall as the taller of the two and nothing below moves when the player swaps in. The static
+       illustration is what shows until the reel reports ready, and if it never does. */
+    .hero-stack { display: grid; }
+    .hero-stack > * { grid-area: 1 / 1; min-width: 0; }
+    .reelplayer { align-self: start; visibility: hidden; border: 1px solid var(--line-2); border-radius: var(--radius-lg); overflow: hidden; background: var(--bg); box-shadow: 0 30px 80px rgba(0,0,0,.45), 0 2px 6px rgba(0,0,0,.4); container-type: inline-size; }
+    .hero-stack.live .reelplayer { visibility: visible; }
+    .hero-stack.failed .reelplayer { display: none; }
+    .hero-stack.live .hero-static { visibility: hidden; }
     /* The player reserves its final height up front (stage plus the reel's fixed caption and controls),
-       so nothing moves when the iframe loads. Container units follow the player's own width. */
-    .reelplayer { container-type: inline-size; }
+       from its own width, so the iframe loads into a box that is already the right size. */
     .rp-stage { position: relative; width: 100%; height: calc(56.25cqw + 180px); background: var(--bg); }
     .rp-stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; background: var(--bg); }
-    .rp-wait[hidden] { display: none; }
-    .rp-wait { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--ink-3); }
     @container (max-width: 639px) { .rp-stage { height: calc(150cqw + 224px); } }
-    .rp-stage.rd { height: 900px; }
-    .reelblock details { margin-top: 18px; border-bottom: 1px solid var(--line); }
-    .reelblock details ol { padding: 0 0 20px 22px; color: var(--ink-2); font-size: 15.5px; display: grid; gap: 8px; max-width: 70ch; }
+    @media (prefers-reduced-motion: reduce) { .reelplayer { display: none; } }
+    .hero-art details { margin-top: 18px; border-bottom: 1px solid var(--line); }
+    .hero-art details ol { padding: 0 0 20px 22px; color: var(--ink-2); font-size: 15.5px; display: grid; gap: 8px; max-width: 70ch; }
+    .reel-back { margin: 8px 0 0; font-size: 15.5px; }
 
     /* roadmap: dashed, so it does not read as shipped */
     .road { margin-top: 8px; padding-top: 48px; border-top: 1px solid var(--line); }
@@ -220,7 +225,7 @@
       .road ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 760px) {
-      figure.hero-art { margin-top: 44px; padding: 0 20px; }
+      figure.hero-art { margin-top: 24px; padding: 0 20px; }
       .hero-stage { grid-template-columns: 1fr; gap: 16px; }
       .hs-left { grid-template-columns: 1fr; }
       .hero-stage .phone { margin: 0 auto; }
@@ -418,6 +423,7 @@
   ]
 }
   </script>
+<noscript><style>.reelplayer { display: none; }</style></noscript>
 </head>
 <body>
 
@@ -451,48 +457,68 @@
     <p class="verify"><b>In development.</b> We are looking for founding clinics for a 60-day pilot at no charge.</p>
   </div>
 
-  <figure class="hero-art ill">
-    <div class="hero-stage" role="img" aria-label="Illustration of how it would look in OSCAR, with fictional names. On the left, an OSCAR Incoming Docs list of documents already labelled by type, with a new Referral for Tran, Olivia at the top, beside a separate Aevon panel that checks the referral against the clinic's required list: patient name, date of birth, health number, phone number and reason for referral present are ticked, and a recent report is missing. On the right, a phone showing a text from Your Clinic: Dr. Hale has these times, Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am, reply 1, 2 or 3. The patient replies 1 and it is marked Delivered.">
-      <div class="hs-left">
-        <div class="ow">
-          <div class="ow-bar">OSCAR EMR (illustration)<span>Front desk</span></div>
-          <h4>Incoming Docs</h4>
-          <table class="docs">
-            <thead><tr><th>Type</th><th>Patient</th><th>Received</th></tr></thead>
-            <tbody>
-              <tr class="new"><td class="ty">Referral</td><td>Tran, Olivia</td><td>2026-11-18</td></tr>
-              <tr><td class="ty">Consult report</td><td>Lindqvist, Mara</td><td>2026-10-26</td></tr>
-              <tr><td class="ty">Lab result</td><td>Moreau, Luc</td><td>2026-11-02</td></tr>
-              <tr><td class="ty">Referral</td><td>Bains, Harpreet</td><td>2026-11-04</td></tr>
-              <tr><td class="ty">Form request</td><td>Whitfield, Grace</td><td>2026-11-12</td></tr>
-            </tbody>
-          </table>
-          <div class="ow-act"><span>Reader View</span><span>Load All</span></div>
+  <figure class="hero-art ill" id="reel">
+    <div class="hero-stack" id="hero-stack">
+      <div class="hero-static" id="hero-static">
+      <div class="hero-stage" role="img" aria-label="Illustration of how it would look in OSCAR, with fictional names. On the left, an OSCAR Incoming Docs list of documents already labelled by type, with a new Referral for Tran, Olivia at the top, beside a separate Aevon panel that checks the referral against the clinic's required list: patient name, date of birth, health number, phone number and reason for referral present are ticked, and a recent report is missing. On the right, a phone showing a text from Your Clinic: Dr. Hale has these times, Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am, reply 1, 2 or 3. The patient replies 1 and it is marked Delivered.">
+        <div class="hs-left">
+          <div class="ow">
+            <div class="ow-bar">OSCAR EMR (illustration)<span>Front desk</span></div>
+            <h4>Incoming Docs</h4>
+            <table class="docs">
+              <thead><tr><th>Type</th><th>Patient</th><th>Received</th></tr></thead>
+              <tbody>
+                <tr class="new"><td class="ty">Referral</td><td>Tran, Olivia</td><td>2026-11-18</td></tr>
+                <tr><td class="ty">Consult report</td><td>Lindqvist, Mara</td><td>2026-10-26</td></tr>
+                <tr><td class="ty">Lab result</td><td>Moreau, Luc</td><td>2026-11-02</td></tr>
+                <tr><td class="ty">Referral</td><td>Bains, Harpreet</td><td>2026-11-04</td></tr>
+                <tr><td class="ty">Form request</td><td>Whitfield, Grace</td><td>2026-11-12</td></tr>
+              </tbody>
+            </table>
+            <div class="ow-act"><span>Reader View</span><span>Load All</span></div>
+          </div>
+          <div class="shot ab">
+            <div class="shot-bar"><i></i><i></i><i></i><span>Aevon · checks the list</span></div>
+            <ul class="ck">
+              <li class="ok">Patient name</li>
+              <li class="ok">Date of birth</li>
+              <li class="ok">Health number</li>
+              <li class="ok">Phone number</li>
+              <li class="ok">Reason for referral present</li>
+              <li class="no">Recent report attached: missing</li>
+            </ul>
+          </div>
         </div>
-        <div class="shot ab">
-          <div class="shot-bar"><i></i><i></i><i></i><span>Aevon · checks the list</span></div>
-          <ul class="ck">
-            <li class="ok">Patient name</li>
-            <li class="ok">Date of birth</li>
-            <li class="ok">Health number</li>
-            <li class="ok">Phone number</li>
-            <li class="ok">Reason for referral present</li>
-            <li class="no">Recent report attached: missing</li>
-          </ul>
-        </div>
-      </div>
-      <div class="phone">
-        <div class="sp">
-          <div class="sp-sb"><span>9:41</span><span><svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="23" height="11" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div>          <div class="sp-h"><span class="sp-bk"></span><span class="sp-av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div>
-          <div class="sp-t">
-            <div class="sp-st">Today 9:52 am</div>
-            <div class="sp-b in">Dr. Hale has these times: Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am. Reply 1, 2 or 3.</div>
-            <div class="sp-b out">1</div>
-            <div class="sp-dl">Delivered</div>
+        <div class="phone">
+          <div class="sp">
+            <div class="sp-sb"><span>9:41</span><span><svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="23" height="11" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div>          <div class="sp-h"><span class="sp-bk"></span><span class="sp-av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div>
+            <div class="sp-t">
+              <div class="sp-st">Today 9:52 am</div>
+              <div class="sp-b in">Dr. Hale has these times: Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am. Reply 1, 2 or 3.</div>
+              <div class="sp-b out">1</div>
+              <div class="sp-dl">Delivered</div>
+            </div>
           </div>
         </div>
       </div>
+      </div>
+      <div class="reelplayer" id="reel-player">
+        <div class="rp-stage" id="rp-stage"></div>
+      </div>
     </div>
+        <details>
+          <summary>Text version of the demo</summary>
+          <ol>
+            <li>Title card: From fax to booked. The work after the fax is sorted.</li>
+            <li>An OSCAR-style Inbox, Incoming Docs, lists documents already labelled by type: Consult report, Lab result, Referral, Referral and Form request, each with a received date. A new Referral for Tran, Olivia from Dr. Quinn's office arrives.</li>
+            <li>A separate Aevon panel checks the referral against the clinic's own required list. Patient name, date of birth, health number, phone number and reason for referral present are ticked. Recent report attached is missing.</li>
+            <li>Two things go out at once: an acknowledgement to Dr. Quinn's office, and a text to the patient with a link to a short form. The text contains no health details.</li>
+            <li>The form shows Completed. A new document arrives in the OSCAR Inbox and is attached to the same referral, and the checklist is fully ticked.</li>
+            <li>The patient is texted the times Dr. Hale has: Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am. They reply 1 and it is marked Delivered.</li>
+            <li>Clinic rule met: complete referral, patient matched, time picked. The appointment appears on the OSCAR schedule day view on its own, with no tickler to tick. The patient's phone shows the confirmation and Welcome email sent. A list headed For your staff: 1 exception shows one tickler from a different referral, Okafor, Daniel: no phone number on the referral.</li>
+            <li>End card: One referral, from fax to booked. No calls, no data entry, no chasing. In development. Illustration with fictional names.</li>
+          </ol>
+        </details>
     <figcaption>Illustration of how it would look in OSCAR. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University. The product is in development, so this is not a screenshot.</figcaption>
   </figure>
 </header>
@@ -608,30 +634,7 @@
       </figure>
     </div>
 
-    <div class="reelblock" id="reel">
-      <span class="lbl accent">Watch it work</span>
-      <h3>One referral, start to finish</h3>
-      <p>A short self-playing illustration, about 45 seconds. In development. It uses sample data and is not a screenshot.</p>
-      <div class="reelplayer">
-        <div class="rp-stage" id="rp-stage">
-          <p class="rp-wait" id="rp-wait">Loading the demo</p>
-          <noscript><p class="rp-wait">The demo needs JavaScript. The text version is below.</p></noscript>
-        </div>
-      </div>
-      <details>
-        <summary>Text version of the demo</summary>
-        <ol>
-          <li>Title card: From fax to booked. The work after the fax is sorted.</li>
-          <li>An OSCAR-style Inbox, Incoming Docs, lists documents already labelled by type: Consult report, Lab result, Referral, Referral and Form request, each with a received date. A new Referral for Tran, Olivia from Dr. Quinn's office arrives.</li>
-          <li>A separate Aevon panel checks the referral against the clinic's own required list. Patient name, date of birth, health number, phone number and reason for referral present are ticked. Recent report attached is missing.</li>
-          <li>Two things go out at once: an acknowledgement to Dr. Quinn's office, and a text to the patient with a link to a short form. The text contains no health details.</li>
-          <li>The form shows Completed. A new document arrives in the OSCAR Inbox and is attached to the same referral, and the checklist is fully ticked.</li>
-          <li>The patient is texted the times Dr. Hale has: Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am. They reply 1 and it is marked Delivered.</li>
-          <li>Clinic rule met: complete referral, patient matched, time picked. The appointment appears on the OSCAR schedule day view on its own, with no tickler to tick. The patient's phone shows the confirmation and Welcome email sent. A list headed For your staff: 1 exception shows one tickler from a different referral, Okafor, Daniel: no phone number on the referral.</li>
-          <li>End card: One referral, from fax to booked. No calls, no data entry, no chasing. In development. Illustration with fictional names.</li>
-        </ol>
-      </details>
-    </div>
+    <p class="reel-back"><a href="#reel">Watch the demo at the top of the page</a></p>
 
 
     <div class="feature flip">
@@ -932,41 +935,53 @@
 </footer>
 
 <script>
-/* The reel loads when its block is near the viewport and plays while at least half of it is on screen.
-   With reduced motion it never autoplays: the reel shows its static storyboard instead. */
+/* The hero demo. The static illustration is in the markup and shows by default. The reel loads at
+   once; when it reports ready the player replaces the illustration. It plays while a real part of
+   the player is on screen and pauses when it is not (the reel itself keeps a visitor's Pause).
+   With reduced motion nothing is loaded, and if the reel does not report ready in time the
+   illustration stays. */
 (function () {
   var stage = document.getElementById('rp-stage');
-  if (!stage) return;
+  var stack = document.getElementById('hero-stack');
+  if (!stage || !stack) return;
   var player = stage.parentNode;
-  var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var frame = null, ready = false, visible = false;
-  if (reduced) stage.classList.add('rd');
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var frame = null, ready = false, visible = false, gaveUp = false, timer = null;
   function send() {
     if (frame && ready && frame.contentWindow) frame.contentWindow.postMessage({ aevonReel: 'visible', v: visible }, location.origin);
   }
-  function load() {
-    if (frame) return;
-    frame = document.createElement('iframe');
-    frame.title = 'From fax to booked demo: a self-playing illustration with fictional names';
-    frame.src = 'health-reel.html';
-    stage.appendChild(frame);
+  function giveUp() {
+    if (ready) return;
+    gaveUp = true;
+    if (frame && frame.parentNode) frame.parentNode.removeChild(frame);
+    frame = null;
+    stack.classList.add('failed');
   }
+  frame = document.createElement('iframe');
+  frame.title = 'From fax to booked demo: a self-playing illustration with fictional names';
+  frame.src = 'health-reel.html';
+  stage.appendChild(frame);
+  timer = setTimeout(giveUp, 6000);
+  /* visible once at least 15% of the player, or at least 120px of it, is in the viewport */
   if ('IntersectionObserver' in window) {
-    var near = new IntersectionObserver(function (es) {
-      if (es.some(function (e) { return e.isIntersecting; })) { load(); near.disconnect(); }
-    }, { rootMargin: '700px 0px' });
-    near.observe(player);
-    if (!reduced) {
-      new IntersectionObserver(function (es) {
-        visible = es[es.length - 1].intersectionRatio >= 0.5;
-        send();
-      }, { threshold: [0, 0.25, 0.5, 0.75, 1] }).observe(player);
-    }
-  } else { load(); visible = !reduced; }
+    var steps = [], i;
+    for (i = 0; i <= 20; i++) steps.push(i / 20);
+    var h = player.offsetHeight;
+    if (h > 0) steps.push(Math.min(1, 120 / h));
+    steps.sort(function (a, b) { return a - b; });
+    new IntersectionObserver(function (es) {
+      var e = es[es.length - 1];
+      visible = e.isIntersecting && (e.intersectionRatio >= 0.15 || e.intersectionRect.height >= 120);
+      send();
+    }, { threshold: steps }).observe(player);
+  } else { visible = true; }
   window.addEventListener('message', function (e) {
     if (e.origin !== location.origin || !e.data || !frame || e.source !== frame.contentWindow) return;
-    if (e.data.aevonReel === 'ready') { ready = true; var w = document.getElementById('rp-wait'); if (w) w.hidden = true; send(); }
-    if (e.data.aevonReel === 'height' && reduced) stage.style.height = Math.max(400, Math.min(e.data.h, 6000)) + 'px';
+    if (e.data.aevonReel === 'ready' && !gaveUp && !ready) {
+      ready = true; clearTimeout(timer);
+      stack.classList.add('live');
+      send();
+    }
   });
 })();
 </script>
