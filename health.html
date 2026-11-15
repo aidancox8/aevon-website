@@ -962,18 +962,14 @@
   frame.src = 'health-reel.html';
   stage.appendChild(frame);
   timer = setTimeout(giveUp, 6000);
-  /* visible once at least 15% of the player, or at least 120px of it, is in the viewport */
+  /* Plays whenever the player is on screen or within about half a screen below it, so it is
+     already running on a phone, where the headline fills the first screen. Pauses once it is
+     scrolled well out of view. */
   if ('IntersectionObserver' in window) {
-    var steps = [], i;
-    for (i = 0; i <= 20; i++) steps.push(i / 20);
-    var h = player.offsetHeight;
-    if (h > 0) steps.push(Math.min(1, 120 / h));
-    steps.sort(function (a, b) { return a - b; });
     new IntersectionObserver(function (es) {
-      var e = es[es.length - 1];
-      visible = e.isIntersecting && (e.intersectionRatio >= 0.15 || e.intersectionRect.height >= 120);
+      visible = es[es.length - 1].isIntersecting;
       send();
-    }, { threshold: steps }).observe(player);
+    }, { rootMargin: '0px 0px 60% 0px', threshold: 0 }).observe(player);
   } else { visible = true; }
   window.addEventListener('message', function (e) {
     if (e.origin !== location.origin || !e.data || !frame || e.source !== frame.contentWindow) return;
