@@ -183,6 +183,8 @@
     @media (max-width: 420px) {
       .road ul { grid-template-columns: 1fr; }
     }
+      /* Footer links: at least 44px tall so they are easy to tap on a phone. */
+    footer a { display: inline-flex; align-items: center; min-height: 44px; }
   </style>
 </head>
 <body>
@@ -213,6 +215,7 @@
     </p>
     <div class="cta">
       <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 20-minute call</a>
+      <a class="btn btn-ghost" href="mailto:hello@aevon.ca?subject=Our%20clinic%27s%20EMR%20and%20what%20we%20keep%20chasing">Or email us your EMR</a>
     </div>
     <p class="verify"><b>In development.</b> Now taking on founding clinics, with a 60-day pilot at no charge.</p>
   </div>
@@ -522,7 +525,7 @@
 <footer>
   <div class="wrap">
     <div>&copy; 2026 Aevon · Canada</div>
-    <div style="display:flex;gap:22px;flex-wrap:wrap">
+    <div style="display:flex;gap:6px 22px;flex-wrap:wrap">
       <a href="/">Aevon</a>
       <a href="mailto:hello@aevon.ca">hello@aevon.ca</a>
       <a href="privacy.html">Privacy</a>
