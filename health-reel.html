@@ -514,7 +514,7 @@ body.reduced { display: block; }
   var ST = [0, 3.8, 9.4, 14.6, 20.0, 26.0, 32.0, 38.6], TOTAL = 44.6;
   var CAP = [
     'In development. Everything shown uses fictional names.',
-    'A consult cancels the day before.',
+    'A patient cancels a consult.',
     'The automation sees the open slot and checks your waiting list.',
     'Three patients get a text. No health details in it.',
     'The first to say yes gets it.',
@@ -570,7 +570,7 @@ body.reduced { display: block; }
   sc(2, 1.5, apprStart);
   sc(2, 1.7, function () { curTo('#sa .ap.t', 1000, .45, .5); });
   sc(2, 2.95, click);
-  sc(2, 3.1, function () { on('#sa .ap.t', 'cx'); });
+  sc(2, 3.1, function () { on('#sa .ap.t', 'cx'); var ic = q('#sa .ap.t .ic2'); if (ic) ic.textContent = 'C'; });
   sc(2, 4.2, function () { off('#cur'); });
   /* scene 3: the automation notices */
   sc(3, 0, function () { go(3); });
