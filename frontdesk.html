@@ -107,15 +107,15 @@
     .price li { padding: 7px 0; font-size: 14px; color: var(--text2); border-bottom: 1px solid var(--border); }
     .price li:last-child { border-bottom: none; }
     .price li b { color: var(--green); margin-right: 8px; }
-    .finenote { text-align: center; color: var(--text4); font-size: 12.5px; margin-top: 14px; }
+    .finenote { text-align: center; color: var(--text3); font-size: 12.5px; margin-top: 14px; }
 
     /* comparison */
     .vs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 820px; margin: 0 auto; }
     @media (max-width: 760px){ .vs { grid-template-columns: 1fr; } }
     .vs-col { border-radius: 16px; padding: 22px; border: 1px solid var(--border); background: var(--surface); }
     .vs-col.us { background: linear-gradient(180deg, rgba(34,197,94,0.06), var(--surface)); border-color: rgba(34,197,94,0.25); }
-    .vs-col h4 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; color: var(--text3); }
-    .vs-col.us h4 { color: var(--green); }
+    .vs-col h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; color: var(--text3); }
+    .vs-col.us h3 { color: var(--green); }
     .vs-col p { font-size: 13.5px; color: var(--text2); padding: 6px 0; }
 
     #interest-form, #interest-done { display: none; }
@@ -200,7 +200,7 @@
     <h2>Watch it clear a morning of inquiries</h2>
     <p class="sub">Put in your business and watch the agent run <i>your</i> front desk, not a generic one. It plays on its own: qualifies, books, attaches the documents, files everything, chases the quiet ones.</p>
     <div class="demoform">
-      <input id="df-biz" type="text" placeholder="Your business name" maxlength="42" autocomplete="off" />
+      <input id="df-biz" type="text" aria-label="Your business name" placeholder="Your business name" maxlength="42" autocomplete="off" />
       <select id="df-ind" aria-label="Your industry">
         <option value="">Industry: general</option>
         <option value="real estate">Real estate</option>
@@ -219,7 +219,7 @@
         <span class="rp-rec" id="rp-rec">&#9679; LIVE</span>
       </div>
       <div class="rp-stage" id="rp-stage">
-        <div class="rp-poster" onclick="playReelFor()">
+        <div class="rp-poster" role="button" tabindex="0" onclick="playReelFor()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();playReelFor()}">
           <span class="rp-play">&#9654;</span>
           <b>Press play, the agent does the rest</b>
           <span class="rp-sub">about 90 seconds &middot; qualifies &middot; books &middot; files &middot; follows up</span>
@@ -245,14 +245,14 @@
     <h2>Doesn't Gmail's AI already do this?</h2>
     <div class="vs">
       <div class="vs-col">
-        <h4>Gmail / Outlook AI</h4>
+        <h3>Gmail / Outlook AI</h3>
         <p>Helps you write a reply when you open an email.</p>
         <p>Knows nothing about your services, pricing, or calendar.</p>
         <p>No pipeline, no follow-ups, no booking, no documents.</p>
         <p>You still do the triage.</p>
       </div>
       <div class="vs-col us">
-        <h4>The Aevon Front Desk</h4>
+        <h3>The Aevon Front Desk</h3>
         <p>Works in the background on every inquiry, not just the one you opened.</p>
         <p>Wired into your business: your services, your booking rules, your documents.</p>
         <p>Books appointments, files leads, chases no-replies automatically.</p>

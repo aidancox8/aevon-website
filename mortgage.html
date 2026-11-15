@@ -66,12 +66,12 @@
     .ba-col { border-radius: 16px; padding: 22px; border: 1px solid var(--border); }
     .ba-col.before { background: var(--surface); }
     .ba-col.after { background: linear-gradient(180deg, rgba(34,197,94,0.06), var(--surface)); border-color: rgba(34,197,94,0.25); }
-    .ba-col h4 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 14px; }
-    .ba-col.before h4 { color: var(--red); }
-    .ba-col.after h4 { color: var(--green); }
+    .ba-col h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 14px; }
+    .ba-col.before h3 { color: var(--red); }
+    .ba-col.after h3 { color: var(--green); }
     .step { display: flex; gap: 11px; font-size: 13.5px; color: var(--text2); padding: 8px 0; border-bottom: 1px solid var(--border); }
     .step:last-child { border-bottom: none; }
-    .step .n { color: var(--text4); font-family: var(--mono); font-size: 12px; flex-shrink: 0; width: 16px; }
+    .step .n { color: var(--text3); font-family: var(--mono); font-size: 12px; flex-shrink: 0; width: 16px; }
     .ba-col.after .step .n { color: var(--green); }
 
     .demo-cta { background: var(--surface); border: 1px solid var(--border2); border-radius: 18px; padding: 30px; text-align: center; }
@@ -182,7 +182,7 @@
     <h2>Same file, half the handling</h2>
     <div class="ba">
       <div class="ba-col before">
-        <h4>Today, by hand</h4>
+        <h3>Today, by hand</h3>
         <div class="step"><span class="n">1</span><span>Client sends some of the documents you asked for</span></div>
         <div class="step"><span class="n">2</span><span>You compare against your checklist, list what is missing</span></div>
         <div class="step"><span class="n">3</span><span>Email the client, wait days, remind again</span></div>
@@ -190,7 +190,7 @@
         <div class="step"><span class="n">5</span><span>Update the client and the realtor by hand</span></div>
       </div>
       <div class="ba-col after">
-        <h4>With a tool built for you</h4>
+        <h3>With a tool built for you</h3>
         <div class="step"><span class="n">✓</span><span>Agent checks every file against your checklist</span></div>
         <div class="step"><span class="n">✓</span><span>Drafts the polite chase for exactly what is missing</span></div>
         <div class="step"><span class="n">✓</span><span>Client details flow into your forms once, not three times</span></div>
@@ -211,7 +211,7 @@
         <span class="rp-rec" id="rp-rec">&#9679; LIVE</span>
       </div>
       <div class="rp-stage" id="rp-stage">
-        <div class="rp-poster" onclick="playReel()">
+        <div class="rp-poster" role="button" tabindex="0" onclick="playReel()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();playReel()}">
           <span class="rp-play">&#9654;</span>
           <b>Press play, the agent does the rest</b>
           <span class="rp-sub">about 90 seconds &middot; reads &middot; qualifies &middot; drafts &middot; books &middot; files</span>
