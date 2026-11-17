@@ -255,7 +255,7 @@
   "@type": "Service",
   "name": "Aevon Health",
   "serviceType": "Administrative automation for medical clinics",
-  "description": "In development. Automation that connects to a medical clinic's EMR through its official API and completes the routine work after an incoming fax is sorted: confirming a referral, requesting what is missing, booking the patient by text and sending the confirmation, with exceptions handed to staff. Can also sort and label incoming faxes where the clinic has no tool for it. Administrative tasks only.",
+  "description": "In development. Automation that connects to a medical clinic's EMR through its official API and completes the routine work after an incoming fax is sorted: confirming a referral, requesting what is missing, booking patients who have agreed to texts and sending the confirmation, with exceptions, including patients with no text consent on file, handed to staff. Can also sort and label incoming faxes where the clinic has no tool for it. Administrative tasks only.",
   "url": "https://aevon.ca/health.html",
   "areaServed": [
     {
@@ -321,7 +321,7 @@
       "name": "How does a new referral get booked?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The patient is offered times your clinic allows, by text. When they pick one, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. If anything is missing or unusual, it goes to your staff instead. Your clinic can also choose to confirm every booking."
+        "text": "If the patient has agreed to texts with your clinic, they are offered times your clinic allows, by text. If there is no consent to text on file, your staff get a task to make the first call instead. When a patient picks a time, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. The service checks the schedule itself before booking, because OSCAR does not stop double bookings. If anything is missing or unusual, it goes to your staff. Your clinic can also choose to confirm every booking."
       }
     },
     {
@@ -353,7 +353,15 @@
       "name": "Do patients get messages from it?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes, for booking: a short form request, the offered times and the confirmation. The messages contain no health details."
+        "text": "Only patients who have agreed to texts with your clinic. For booking, they get a short form request, the offered times and the confirmation. The messages contain no health details."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you text patients who have not agreed to texts?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. A patient who gave their number to the referring office has not agreed to texts from your clinic. Your clinic collects and records that consent. Until it is on file, the first contact is a call or a letter from your clinic, and we create the task for your staff. Once consent is recorded, texting can follow."
       }
     },
     {
@@ -460,7 +468,7 @@
   <figure class="hero-art ill" id="reel">
     <div class="hero-stack" id="hero-stack">
       <div class="hero-static" id="hero-static">
-      <div class="hero-stage" role="img" aria-label="Illustration of how it would look in OSCAR, with fictional names. On the left, an OSCAR Incoming Docs list of documents already labelled by type, with a new Referral for Tran, Olivia at the top, beside a separate Aevon panel that checks the referral against the clinic's required list: patient name, date of birth, health number, phone number and reason for referral present are ticked, and a recent report is missing. On the right, a phone showing a text from Your Clinic: Dr. Hale has these times, Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am, reply 1, 2 or 3. The patient replies 1 and it is marked Delivered.">
+      <div class="hero-stage" role="img" aria-label="Illustration of how it would look in OSCAR, with fictional names. On the left, an OSCAR Incoming Docs list of documents already labelled by type, with a new Referral for Tran, Olivia at the top, beside a separate Aevon panel that checks the referral against the clinic's required list: patient name, date of birth, health number, phone number and reason for referral present are ticked, and a recent report is missing. On the right, a phone showing a text from Your Clinic to a patient who has agreed to texts: Dr. Hale has these times, Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am, reply 1, 2 or 3. The patient replies 1 and it is marked Delivered.">
         <div class="hs-left">
           <div class="ow">
             <div class="ow-bar">OSCAR EMR (illustration)<span>Front desk</span></div>
@@ -512,11 +520,11 @@
             <li>Title card: From fax to booked. The work after the fax is sorted.</li>
             <li>An OSCAR-style Inbox, Incoming Docs, lists documents already labelled by type: Consult report, Lab result, Referral, Referral and Form request, each with a received date. A new Referral for Tran, Olivia from Dr. Quinn's office arrives.</li>
             <li>A separate Aevon panel checks the referral against the clinic's own required list. Patient name, date of birth, health number, phone number and reason for referral present are ticked. Recent report attached is missing.</li>
-            <li>Two things go out at once: an acknowledgement to Dr. Quinn's office, and a text to the patient with a link to a short form. The text contains no health details.</li>
+            <li>Two things go out at once: an acknowledgement to Dr. Quinn's office, and, because the patient's consent to text is on file, a text to the patient with a link to a short form. The text contains no health details.</li>
             <li>The form shows Completed. A new document arrives in the OSCAR Inbox and is attached to the same referral, and the checklist is fully ticked.</li>
-            <li>The patient is texted the times Dr. Hale has: Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am. They reply 1 and it is marked Delivered.</li>
-            <li>Clinic rule met: complete referral, patient matched, time picked. The appointment appears on the OSCAR schedule day view on its own, with no tickler to tick. The patient's phone shows the confirmation and Welcome email sent. A list headed For your staff: 1 exception shows one tickler from a different referral, Okafor, Daniel: no phone number on the referral.</li>
-            <li>End card: One referral, from fax to booked. No calls, no data entry, no chasing. In development. Illustration with fictional names.</li>
+            <li>The patient, who has agreed to texts, is texted the times Dr. Hale has: Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am. They reply 1 and it is marked Delivered.</li>
+            <li>Clinic rule met: complete referral, patient matched, time picked. The appointment appears on the OSCAR schedule day view on its own, with no tickler to tick. The patient's phone shows the confirmation and Welcome email sent. A list headed For your staff: 1 exception shows one tickler from a different referral, Okafor, Daniel: Call to book, no text consent on file. Staff make the first call and record consent, and texting can follow.</li>
+            <li>End card: One referral, from fax to booked. Routine referrals handled, exceptions to your staff. In development. Illustration with fictional names.</li>
           </ol>
         </details>
     <figcaption>Illustration of how it would look in OSCAR. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University. The product is in development, so this is not a screenshot.</figcaption>
@@ -565,12 +573,12 @@
         <h2 class="h2" style="margin-top:0">How it works</h2>
         <ol class="steps">
           <li><div><h3>The fax gets sorted</h3><p>By your EMR's own tools if it has them. If it does not, we can sort and label incoming faxes too. Either way we connect through the EMR's official API, using one account your clinic controls.</p></div></li>
-          <li><div><h3>The automation finishes the routine parts</h3><p>It checks the referral against your list, asks for what is missing, and offers the patient times you allow.</p></div></li>
-          <li><div><h3>Routine referrals book themselves</h3><p>When a referral meets every rule your clinic sets, it is booked and confirmed with nobody at your clinic touching it. Anything that does not is handed to a person with the reason. The automation does not guess, and it never decides urgency.</p></div></li>
+          <li><div><h3>The automation finishes the routine parts</h3><p>It checks the referral against your list, asks for what is missing, and offers times you allow to patients who have agreed to texts with your clinic. If there is no consent to text on file, your staff get a task to make the first call.</p></div></li>
+          <li><div><h3>Routine referrals book themselves</h3><p>When a referral meets every rule your clinic sets, it is booked and confirmed without anyone at your clinic touching it. The service checks the schedule first, because OSCAR does not stop double bookings. On OSCAR, the original fax stays in the inbox after the copy is filed to the chart, for staff to clear with one click. Anything that does not meet the rules is handed to a person with the reason. The automation does not guess, and it never decides urgency.</p></div></li>
         </ol>
       </div>
       <figure class="ill">
-        <div class="shot glow" role="img" aria-label="Illustration with fictional names of one referral handled by Aevon. A checklist shows patient name, date of birth, health number, phone number, reason for referral present and recent report attached, all ticked. Below is an audit log: a read of the referral for Tran, Olivia, a read of the clinic's required list, a write of the appointment for Tran, Olivia on Thursday at 10:40, and a write of a tickler for Okafor, Daniel, an exception handed to staff.">
+        <div class="shot glow" role="img" aria-label="Illustration with fictional names of one referral handled by Aevon. A checklist shows patient name, date of birth, health number, phone number, reason for referral present and recent report attached, all ticked. Below is an audit log: a read of the referral for Tran, Olivia, a read of the clinic's required list, a write of the appointment for Tran, Olivia on Thursday at 10:40, and a write of a tickler for Okafor, Daniel, an exception handed to staff because no text consent is on file.">
           <div class="shot-bar"><i></i><i></i><i></i><span>Referral checked · sample data</span></div>
           <ul class="ck">
             <li class="ok">Patient name</li>
@@ -606,11 +614,12 @@
       <div>
         <span class="pill accent">For specialist clinics</span>
         <h3>Referral intake: from fax to booked</h3>
-        <p>A new referral goes from a sorted fax to a booked appointment. Routine ones need no work from your staff or physicians.</p>
+        <p>A new referral goes from a sorted fax to a booked appointment. Routine referrals need little work from your staff or physicians, and exceptions go to your staff.</p>
         <ul class="price-list">
           <li>Acknowledges the referring office when the referral arrives</li>
           <li>Asks the patient or the referring office for what is missing</li>
-          <li>Offers the patient times by text and books the one they pick</li>
+          <li>Offers times by text to patients who have agreed to texts with your clinic, and books the one they pick</li>
+          <li>Creates a task for your staff to make the first call when there is no text consent on file</li>
           <li>Sends the confirmation and welcome email</li>
           <li>Hands exceptions to your staff with the reason, as tasks in your EMR</li>
           <li>Staff confirmation before booking is available if your clinic wants it</li>
@@ -618,14 +627,14 @@
         </ul>
       </div>
       <figure class="ill">
-        <div class="shot glow" role="img" aria-label="Illustration with fictional names of one referral, start to booked. The referral for Tran, Olivia is checked against the clinic's list. An acknowledgement goes to the referring office and a short form to the patient. The missing details come back. The patient picks Thursday at 10:40 by text. The clinic rule is met, the appointment is booked into the schedule, and the confirmation and welcome email are sent.">
+        <div class="shot glow" role="img" aria-label="Illustration with fictional names of one referral, start to booked. The referral for Tran, Olivia is checked against the clinic's list. An acknowledgement goes to the referring office and a short form to the patient. The missing details come back. The patient, who has agreed to texts, picks Thursday at 10:40 by text. The clinic rule is met, the appointment is booked into the schedule, and the confirmation and welcome email are sent.">
           <div class="shot-bar"><i></i><i></i><i></i><span>Referral · sample data</span></div>
           <div class="slot-head"><div><b>Referral for Tran, Olivia</b><small>From Dr. Quinn's office</small></div><span class="tag">Booked</span></div>
           <ol class="trail">
             <li class="ok">Checked against your required list<small>One item missing</small></li>
             <li class="ok">Acknowledgement to the referring office, short form to the patient</li>
             <li class="ok">Missing details came back</li>
-            <li class="ok">Patient picked Thursday 10:40 by text</li>
+            <li class="ok">Patient, with consent to text on file, picked Thursday 10:40</li>
             <li class="ok">Clinic rule met, booked into the schedule</li>
             <li class="ok">Confirmation and welcome email sent</li>
           </ol>
@@ -789,7 +798,7 @@
       </details>
       <details>
         <summary>How does a new referral get booked?</summary>
-        <p>The patient is offered times your clinic allows, by text. When they pick one, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. If anything is missing or unusual, it goes to your staff instead. Your clinic can also choose to confirm every booking.</p>
+        <p>If the patient has agreed to texts with your clinic, they are offered times your clinic allows, by text. If there is no consent to text on file, your staff get a task to make the first call instead. When a patient picks a time, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. The service checks the schedule itself before booking, because OSCAR does not stop double bookings. If anything is missing or unusual, it goes to your staff. Your clinic can also choose to confirm every booking.</p>
       </details>
       <details>
         <summary>What happens when it is not sure?</summary>
@@ -805,7 +814,11 @@
       </details>
       <details>
         <summary>Do patients get messages from it?</summary>
-        <p>Yes, for booking: a short form request, the offered times and the confirmation. The messages contain no health details.</p>
+        <p>Only patients who have agreed to texts with your clinic. For booking, they get a short form request, the offered times and the confirmation. The messages contain no health details.</p>
+      </details>
+      <details>
+        <summary>Do you text patients who have not agreed to texts?</summary>
+        <p>No. A patient who gave their number to the referring office has not agreed to texts from your clinic. Your clinic collects and records that consent. Until it is on file, the first contact is a call or a letter from your clinic, and we create the task for your staff. Once consent is recorded, texting can follow.</p>
       </details>
       <details>
         <summary>Where is patient information stored?</summary>
