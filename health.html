@@ -46,6 +46,12 @@
     .bt { border-top: 1px solid var(--line); }
     .h2 { font-size: clamp(28px, 3.6vw, 42px); margin-top: 12px; }
     .pill.accent { border-color: var(--accent); color: var(--accent); }
+    /* This page uses plain sentence-case labels. The shared mono, all-caps label and the outlined
+       pill from site.css are restyled here, and only here. */
+    .lbl, .shot-bar span { font-family: var(--f-body); font-size: 13.5px; font-weight: 500; letter-spacing: 0; text-transform: none; }
+    .hero .lbl { font-size: 15px; font-weight: 600; }
+    .steps li::before { font-family: var(--f-body); font-size: 14px; font-weight: 600; }
+    .pill, .pill.accent { display: block; border: 0; border-radius: 0; padding: 0; font-family: var(--f-body); font-size: 14.5px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--accent); }
 
     /* ---- hero: the site's centred hero, with the product illustration directly under it ---- */
     .hero { padding-top: 88px; padding-bottom: 72px; min-height: 0; }
@@ -130,7 +136,7 @@
     .slot-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 18px 14px; border-bottom: 1px solid var(--line); }
     .slot-head b { display: block; font-size: 16px; font-weight: 600; color: var(--ink); }
     .slot-head small { font-size: 13px; color: var(--ink-3); }
-    .tag { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--accent); color: var(--accent); white-space: nowrap; }
+    .tag { font-family: var(--f-body); font-size: 14px; font-weight: 600; letter-spacing: 0; text-transform: none; padding: 0; border: 0; color: var(--accent); white-space: nowrap; }
     .trail { list-style: none; padding: 16px 18px 18px; }
     .trail li { position: relative; padding: 0 0 16px 28px; font-size: 14.5px; line-height: 1.4; color: var(--ink); }
     .trail li:last-child { padding-bottom: 0; }
@@ -148,10 +154,10 @@
     .run-row .lbl { padding-top: 4px; }
     .run-row b { display: block; font-size: 15px; font-weight: 600; color: var(--ink); }
     .run-row small { display: block; font-size: 13px; color: var(--ink-3); }
-    .log { padding: 14px 18px 16px; border-top: 1px solid var(--line); background: var(--bg-2); font-family: var(--f-mono); font-size: 11px; line-height: 1.9; color: var(--ink-2); }
-    .log .lbl { display: block; margin-bottom: 4px; font-size: 10.5px; }
+    .log { padding: 14px 18px 16px; border-top: 1px solid var(--line); background: var(--bg-2); font-family: var(--f-body); font-size: 13px; line-height: 1.75; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+    .log .lbl { display: block; margin-bottom: 4px; font-size: 13px; }
     .log div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .log div span { color: var(--accent); display: inline-block; width: 5.5ch; margin-left: 1ch; }
+    .log div span { color: var(--accent); display: inline-block; width: 3.4em; margin-left: .5em; }
 
     /* ---- the two offers: text beside its illustration, second row mirrored ---- */
     .feature { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 56px; align-items: center; padding: 56px 0; border-top: 1px solid var(--line); }
@@ -175,9 +181,9 @@
     .hero-stack.live .hero-static { visibility: hidden; }
     /* The player reserves its final height up front (stage plus the reel's fixed caption and controls),
        from its own width, so the iframe loads into a box that is already the right size. */
-    .rp-stage { position: relative; width: 100%; height: calc(56.25cqw + 126px); background: var(--bg); }
+    .rp-stage { position: relative; width: 100%; height: calc(56.25cqw + 92px); background: var(--bg); }
     .rp-stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; background: var(--bg); }
-    @container (max-width: 639px) { .rp-stage { height: calc(150cqw + 170px); } }
+    @container (max-width: 639px) { .rp-stage { height: calc(150cqw + 102px); } }
     @media (prefers-reduced-motion: reduce) { .reelplayer { display: none; } }
     .hero-art details { margin-top: 18px; border-bottom: 1px solid var(--line); }
     .hero-art details ol { padding: 0 0 20px 22px; color: var(--ink-2); font-size: 15.5px; display: grid; gap: 8px; max-width: 70ch; }
@@ -192,7 +198,7 @@
     .emr { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; margin-top: 32px; }
     .emr li { background: var(--bg-2); padding: 22px 24px 24px; }
     .emr b { display: block; font-family: var(--f-display); font-size: 22px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
-    .emr span { display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+    .emr span { display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; font-family: var(--f-body); font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--ink-3); }
     .emr span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--ink-3); }
     .emr li.now span { color: var(--accent); }
     .emr li.now span::before { border-color: var(--accent); background: var(--accent); }
@@ -203,7 +209,8 @@
     .commit li { background: var(--bg-2); padding: 20px 22px 22px; }
     .commit h3 { font-size: 16.5px; font-weight: 600; line-height: 1.3; padding-left: 22px; position: relative; }
     .commit h3::before { content: ""; position: absolute; left: 1px; top: 4px; width: 10px; height: 5px; border-left: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg); }
-    .commit p { margin-top: 6px; padding-left: 22px; font-size: 15px; color: var(--ink-2); }
+    .commit li { padding: 16px 22px 18px; }
+    .commit p { margin-top: 4px; padding-left: 22px; font-size: 15px; color: var(--ink-2); }
 
     /* getting started */
     .price-box .lbl { display: block; }
@@ -286,14 +293,6 @@
     },
     {
       "@type": "Question",
-      "name": "Does it replace the tool that sorts our faxes?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No. If your EMR or an add-on already sorts and labels your faxes, it starts after that. If nothing does, it can sort them as well, with your staff confirming the labels until you are comfortable letting it run."
-      }
-    },
-    {
-      "@type": "Question",
       "name": "Does it decide which referrals are urgent?",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -305,31 +304,7 @@
       "name": "How does a new referral get booked?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "If the patient has agreed to texts with your clinic, they are offered times your clinic allows, by text. If there is no consent to text on file, your staff get a task to make the first call instead. When a patient picks a time, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. The service checks the schedule itself before booking, because OSCAR does not stop double bookings. If anything is missing or unusual, it goes to your staff. Your clinic can also choose to confirm every booking."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What happens when it is not sure?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "It stops and hands the referral to a person, with the reason: a missing phone number, two patients with the same name, a referral marked urgent by the sender, or anything outside your clinic's rules. It does not guess."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do physicians have to review each referral first?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Only if your clinic wants that. Many clinics have a physician accept or prioritise new referrals. That step stays with the physician, and the automation waits for it. Where your clinic's rules allow a referral to be booked directly, it is."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do staff need to learn new software?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No. Exceptions show up as tasks inside your EMR."
+        "text": "If the patient has agreed to texts with your clinic, they are offered times your clinic allows, by text. If there is no consent to text on file, your staff get a task to make the first call instead. When a patient picks a time, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. The service checks the schedule itself before booking, because OSCAR does not stop double bookings. On OSCAR, the original fax stays in the inbox after the copy is filed to the chart, for staff to clear with one click. If anything is missing or unusual, it goes to your staff. Your clinic can also choose to confirm every booking."
       }
     },
     {
@@ -342,26 +317,10 @@
     },
     {
       "@type": "Question",
-      "name": "Do you text patients who have not agreed to texts?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No. A patient who gave their number to the referring office has not agreed to texts from your clinic. Your clinic collects and records that consent. Until it is on file, the first contact is a call or a letter from your clinic, and we create the task for your staff. Once consent is recorded, texting can follow."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Where is patient information stored?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "In Canada, and we store as little as possible."
-      }
-    },
-    {
-      "@type": "Question",
       "name": "What does it cost?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Pricing is per physician per month, plus a one-time setup fee. Clinics start with 60 days at no charge."
+        "text": "Pricing is per physician per month, plus a one-time setup fee. Clinics start with 30 days at no charge, with free onboarding."
       }
     },
     {
@@ -370,46 +329,6 @@
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Your clinic disables the one EMR account we use, and our access ends."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How does it fill a cancelled appointment?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "When an appointment is cancelled in your EMR, patients on your own waitlist who fit that provider and time, and who have agreed to texts, get a text offering the slot. The first to reply YES is booked. Your front desk can approve each booking first."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Which EMRs does it work with?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "It is made for OSCAR. Accuro and TELUS CHR are done on request. It connects through the EMR's official API, so each EMR is its own piece of work."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How does it fit with privacy law in BC and Ontario?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Your clinic stays in control of the patient record. We act as your service provider under BC's PIPA, or as your agent under Ontario's PHIPA, and we prepare a privacy impact assessment for your privacy officer before anything goes live."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do we still need our fax service or booking tool?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Nothing changes there. Referrals still go out the way they do today, and your online booking tool keeps working the way it does now."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Is this AI making decisions about patients?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No. The automations follow rules that your clinic sets, and they only handle administrative follow-up. They do no triage, diagnosis or treatment. Clinical decisions stay with your physicians. Where it reads a fax to sort it, it uses a language model run in Canada under a no-retention agreement, and your clinic's data is never used to train it."
       }
     }
   ]
@@ -440,13 +359,13 @@
     <span class="lbl">Aevon Health</span>
     <h1>From fax to booked, inside your EMR.</h1>
     <p class="sub">
-      Sorting a fax is the easy part. Someone still has to confirm it, chase what is missing, book the patient and send the welcome. Aevon Health does all of that, so routine referrals reach the schedule without your staff touching them.
+      Aevon Health completes the work that follows a sorted fax: confirming the referral, requesting what is missing and booking the patient.
     </p>
     <div class="cta">
       <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 15-minute call</a>
       <a class="btn btn-ghost" href="#contact">Or send us a note</a>
     </div>
-    <p class="verify"><b>60 days at no charge.</b> We handle the EMR connection and prepare the privacy impact assessment.</p>
+    <p class="verify"><b>30 days at no charge, with free onboarding.</b> We handle the EMR connection and prepare the privacy impact assessment.</p>
   </div>
 
   <figure class="hero-art ill" id="reel">
@@ -511,7 +430,7 @@
             <li>End card: One referral, from fax to booked. Routine referrals handled, exceptions to your staff. Illustration with fictional names.</li>
           </ol>
         </div>
-    <figcaption class="vh">Illustration. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University.</figcaption>
+    <figcaption class="vh">Illustration. All names are fictional.</figcaption>
   </figure>
 </header>
 
@@ -520,7 +439,6 @@
 <!-- This strip carries four of the privacy commitments. The full list is in #privacy. -->
 <div class="strip">
   <div class="wrap">
-    <span class="lbl">How it is built</span>
     <span>Official EMR APIs only</span><span>Patient information hosted in Canada</span>
     <span>Administrative tasks only</span><span>No AI training on clinic data</span>
   </div>
@@ -529,21 +447,20 @@
 <section id="problem" class="tight">
   <div class="wrap">
     <div class="sec-head">
-      <h2>Your staff already know what falls through.</h2>
-      <p class="lede">The work after a fax is sorted is done by hand today, and it piles up.</p>
+      <h2>Where referral work stalls</h2>
     </div>
     <div class="grid3">
       <div>
-        <h3>The pile that never shrinks</h3>
-        <p>Sorting a fax takes seconds. Finishing it takes a person: confirm, chase, book, confirm again. So the pile grows.</p>
+        <h3>After the fax is sorted</h3>
+        <p>Someone still has to confirm the referral, request what is missing and book the patient.</p>
       </div>
       <div>
-        <h3>The referral that arrives twice</h3>
-        <p>When a referral sits, the referring office sends it again and the patient phones to ask. Both land on the same pile.</p>
+        <h3>Referrals that arrive twice</h3>
+        <p>When one sits, the referring office sends it again and the patient calls to ask.</p>
       </div>
       <div>
-        <h3>The slot that stayed empty</h3>
-        <p>A patient cancels a day or two ahead. Filling the slot means phoning down the waitlist, and there is rarely time for that, so the appointment goes unused.</p>
+        <h3>Cancelled appointments</h3>
+        <p>Filling the slot means phoning down the waitlist, so it often goes unused.</p>
       </div>
     </div>
   </div>
@@ -555,9 +472,9 @@
       <div>
         <h2 class="h2" style="margin-top:0">How it works</h2>
         <ol class="steps">
-          <li><div><h3>The fax gets sorted</h3><p>By your EMR's own tools if it has them. If it does not, we can sort and label incoming faxes too. Either way we connect through the EMR's official API, using one account your clinic controls.</p></div></li>
-          <li><div><h3>The automation finishes the routine parts</h3><p>It checks the referral against your list, asks for what is missing, and offers times you allow to patients who have agreed to texts with your clinic. If there is no consent to text on file, your staff get a task to make the first call.</p></div></li>
-          <li><div><h3>Routine referrals book themselves</h3><p>When a referral meets every rule your clinic sets, it is booked and confirmed without anyone at your clinic touching it. The service checks the schedule first, because OSCAR does not stop double bookings. On OSCAR, the original fax stays in the inbox after the copy is filed to the chart, for staff to clear with one click. Anything that does not meet the rules is handed to a person with the reason. The automation does not guess, and it never decides urgency.</p></div></li>
+          <li><div><h3>The fax gets sorted</h3><p>By your EMR's own tools, or by us if it has none. We connect through the EMR's official API, using one account your clinic controls.</p></div></li>
+          <li><div><h3>It checks the referral and asks for what is missing</h3><p>Patients who have agreed to texts are offered times you allow. With no consent on file, your staff get a task to call.</p></div></li>
+          <li><div><h3>Routine referrals get booked</h3><p>A referral that meets every rule your clinic sets is booked and confirmed. Anything else goes to a person with the reason. It never decides urgency.</p></div></li>
         </ol>
       </div>
       <figure class="ill">
@@ -574,13 +491,13 @@
           <p class="ck-rule">Clinic rule: new referrals to Dr. Hale, New consult, 20 min</p>
           <div class="log">
             <span class="lbl">Audit log</span>
-            <div>09:41 <span>READ</span> referral, Tran, Olivia</div>
-            <div>09:41 <span>READ</span> required list, new referral</div>
-            <div>09:53 <span>WRITE</span> appt, Tran, Olivia, Thu 10:40</div>
-            <div>09:53 <span>WRITE</span> tickler, Okafor, Daniel</div>
+            <div>09:41 <span>Read</span> referral, Tran, Olivia</div>
+            <div>09:41 <span>Read</span> required list, new referral</div>
+            <div>09:53 <span>Wrote</span> appointment, Tran, Olivia, Thu 10:40</div>
+            <div>09:53 <span>Wrote</span> tickler, Okafor, Daniel</div>
           </div>
         </div>
-        <figcaption>Illustration. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University.</figcaption>
+        <figcaption class="vh">Illustration. All names are fictional.</figcaption>
       </figure>
     </div>
   </div>
@@ -589,24 +506,19 @@
 <section id="what" class="bt">
   <div class="wrap">
     <div class="sec-head">
-      <h2>Two jobs, done properly.</h2>
-      <p class="lede">Referral intake and cancellation backfill, both inside your EMR.</p>
+      <h2>Services</h2>
     </div>
 
     <div class="feature">
       <div>
-        <span class="pill accent">For specialist clinics</span>
         <h3>Referral intake: from fax to booked</h3>
-        <p>A new referral goes from a sorted fax to a booked appointment. Routine referrals need little work from your staff or physicians, and exceptions go to your staff.</p>
+        <p>A new referral goes from a sorted fax to a booked appointment. Exceptions go to your staff.</p>
         <ul class="price-list">
-          <li>Acknowledges the referring office when the referral arrives</li>
-          <li>Asks the patient or the referring office for what is missing</li>
-          <li>Offers times by text to patients who have agreed to texts with your clinic, and books the one they pick</li>
-          <li>Creates a task for your staff to make the first call when there is no text consent on file</li>
+          <li>Acknowledges the referring office and asks for what is missing</li>
+          <li>Offers times by text to patients who have agreed to texts, and books the one they pick</li>
+          <li>Gives your staff a task to call when there is no text consent on file</li>
           <li>Sends the confirmation and welcome email</li>
-          <li>Hands exceptions to your staff with the reason, as tasks in your EMR</li>
-          <li>Staff confirmation before booking is available if your clinic wants it</li>
-          <li>Sorts and labels incoming faxes too, if nothing does that for you today</li>
+          <li>Staff can confirm each booking first, if your clinic wants that</li>
         </ul>
       </div>
       <figure class="ill">
@@ -622,7 +534,7 @@
             <li class="ok">Confirmation and welcome email sent</li>
           </ol>
         </div>
-        <figcaption>Illustration with sample data. All names are fictional.</figcaption>
+        <figcaption class="vh">Illustration with sample data. All names are fictional.</figcaption>
       </figure>
     </div>
 
@@ -631,15 +543,13 @@
 
     <div class="feature flip">
       <div>
-        <span class="pill accent">For specialist clinics</span>
         <h3>Cancellation backfill: fill cancelled appointments from your waitlist</h3>
-        <p>When an appointment slot opens up, patients on your clinic's own waitlist who have agreed to texts get a text message. The first patient to reply yes is booked into the schedule.</p>
+        <p>When a slot opens, patients on your own waitlist who have agreed to texts get a text. The first to reply yes is booked.</p>
         <p style="font-size:15px"><a href="oscar-emr-fill-cancelled-appointments.html">How to fill a cancelled appointment in OSCAR today</a></p>
         <ul class="price-list">
-          <li>Staff can approve each booking before it is made, or let it run automatically</li>
+          <li>Staff can approve each booking, or let it run</li>
           <li>The messages contain no health details</li>
-          <li>You get a monthly count of the slots that were filled</li>
-          <li>Uses the same text-and-book step as referral intake</li>
+          <li>You get a monthly count of the slots filled</li>
         </ul>
       </div>
       <figure class="ill">
@@ -669,14 +579,14 @@
         </div>
       </div>
         </div>
-        <figcaption>Illustration. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University.</figcaption>
+        <figcaption class="vh">Illustration. All names are fictional.</figcaption>
       </figure>
     </div>
 
-    <p class="after-custom">If there is other admin work you would like automated, we also take on custom work. Email <a href="mailto:hello@aevon.ca">hello@aevon.ca</a> and describe it.</p>
+    <p class="after-custom">Custom administrative automation is available on request: <a href="mailto:hello@aevon.ca">hello@aevon.ca</a>.</p>
 
     <div class="band">
-      <p>Book a 15-minute call to talk about either of these for your clinic.</p>
+      <p>Discuss either service for your clinic.</p>
       <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 15-minute call</a>
     </div>
   </div>
@@ -689,9 +599,9 @@
       <p class="lede">We connect through each EMR's official API, so support is added one EMR at a time.</p>
     </div>
     <ul class="emr">
-      <li class="now"><b>OSCAR</b><span>Primary</span></li>
-      <li><b>Accuro</b><span>On request</span></li>
-      <li><b>TELUS CHR</b><span>On request</span></li>
+      <li class="now"><b>OSCAR</b></li>
+      <li><b>Accuro</b></li>
+      <li><b>TELUS CHR</b></li>
     </ul>
     <p class="after">If your clinic uses a different EMR, email <a href="mailto:hello@aevon.ca">hello@aevon.ca</a> and tell us which one.</p>
   </div>
@@ -701,17 +611,16 @@
   <div class="wrap two">
     <div>
       <h2>Privacy and security: eight commitments.</h2>
-      <p style="margin-top:16px">These are the commitments we make to every clinic we work with.</p>
     </div>
     <ul class="commit">
-      <li><h3>Official EMR APIs only</h3><p>We connect only through your EMR's official API.</p></li>
-      <li><h3>Hosted in Canada</h3><p>Patient information is hosted in Canada.</p></li>
-      <li><h3>Minimal data stored</h3><p>We store as little data as the task requires.</p></li>
-      <li><h3>Full audit log</h3><p>Every read from your EMR and every write to it is logged.</p></li>
-      <li><h3>Privacy impact assessment</h3><p>We prepare a privacy impact assessment for your clinic.</p></li>
-      <li><h3>Administrative tasks only</h3><p>The automation does no triage, diagnosis or treatment.</p></li>
-      <li><h3>No AI training on clinic data</h3><p>Your clinic's data is not used to train AI models.</p></li>
-      <li><h3>Your clinic controls access</h3><p>Our access ends when your clinic disables one EMR account.</p></li>
+      <li><h3>Official EMR APIs only</h3></li>
+      <li><h3>Patient information hosted in Canada</h3></li>
+      <li><h3>Minimal data stored</h3></li>
+      <li><h3>Full audit log</h3><p>Every EMR read and write is logged.</p></li>
+      <li><h3>Privacy impact assessment</h3><p>Prepared for your clinic.</p></li>
+      <li><h3>Administrative tasks only</h3><p>No triage, diagnosis or treatment.</p></li>
+      <li><h3>No AI training on clinic data</h3></li>
+      <li><h3>Your clinic controls access</h3><p>Disable one EMR account and our access ends.</p></li>
     </ul>
   </div>
 </section>
@@ -722,23 +631,23 @@
       <div>
         <h2 class="h2" style="margin-top:0">Getting started</h2>
         <p style="margin-top:16px;color:var(--ink-2)">
-          Your clinic pays nothing for 60 days. We handle the EMR connection, prepare the privacy
-          impact assessment, and agree one measure with you to judge it by.
+          Your clinic pays nothing for 30 days, and onboarding is free. We handle the EMR
+          connection, prepare the privacy impact assessment, and agree one measure of success with you.
         </p>
         <p class="about">
           Aevon Health is a Canadian service from Aevon that builds administrative automation for medical clinics on top of the EMR they already use. It is led by Aidan Cox, whose background is medical clinic IT and privacy.
         </p>
       </div>
       <div class="price-box">
-        <span class="lbl">Getting started</span>
-        <div class="price-num" style="margin-top:8px">60 days</div>
+        <div class="price-num" style="margin-top:0">30 days</div>
         <p style="color:var(--ink-2);margin-top:2px">at no charge</p>
         <ul class="price-list">
+          <li>Free onboarding</li>
           <li>We handle the EMR connection</li>
           <li>We prepare the privacy impact assessment</li>
-          <li>One agreed number to judge it by, such as how many days behind your fax inbox is</li>
+          <li>One agreed measure of success</li>
           <li>A 15-minute check-in every week</li>
-          <li>Pricing is per physician per month after the 60 days</li>
+          <li>Pricing is per physician per month after the 30 days</li>
         </ul>
         <div style="margin-top:24px">
           <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Ask about getting started</a>
@@ -750,15 +659,11 @@
 
 <section id="questions" class="tight bt">
   <div class="wrap" style="max-width:860px">
-    <h2 style="font-size:clamp(26px,3vw,34px)">Questions clinics ask</h2>
+    <h2 style="font-size:clamp(26px,3vw,34px)">Questions</h2>
     <div style="margin-top:26px">
       <details open>
         <summary>Does this replace our EMR or booking tool?</summary>
         <p>No. It works alongside your EMR and does not replace it. If you use an online booking tool, that keeps working the way it does now.</p>
-      </details>
-      <details>
-        <summary>Does it replace the tool that sorts our faxes?</summary>
-        <p>No. If your EMR or an add-on already sorts and labels your faxes, it starts after that. If nothing does, it can sort them as well, with your staff confirming the labels until you are comfortable letting it run.</p>
       </details>
       <details>
         <summary>Does it decide which referrals are urgent?</summary>
@@ -766,59 +671,19 @@
       </details>
       <details>
         <summary>How does a new referral get booked?</summary>
-        <p>If the patient has agreed to texts with your clinic, they are offered times your clinic allows, by text. If there is no consent to text on file, your staff get a task to make the first call instead. When a patient picks a time, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. The service checks the schedule itself before booking, because OSCAR does not stop double bookings. If anything is missing or unusual, it goes to your staff. Your clinic can also choose to confirm every booking.</p>
-      </details>
-      <details>
-        <summary>What happens when it is not sure?</summary>
-        <p>It stops and hands the referral to a person, with the reason: a missing phone number, two patients with the same name, a referral marked urgent by the sender, or anything outside your clinic's rules. It does not guess.</p>
-      </details>
-      <details>
-        <summary>Do physicians have to review each referral first?</summary>
-        <p>Only if your clinic wants that. Many clinics have a physician accept or prioritise new referrals. That step stays with the physician, and the automation waits for it. Where your clinic's rules allow a referral to be booked directly, it is.</p>
-      </details>
-      <details>
-        <summary>Do staff need to learn new software?</summary>
-        <p>No. Exceptions show up as tasks inside your EMR.</p>
+        <p>If the patient has agreed to texts with your clinic, they are offered times your clinic allows, by text. If there is no consent to text on file, your staff get a task to make the first call instead. When a patient picks a time, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. The service checks the schedule itself before booking, because OSCAR does not stop double bookings. On OSCAR, the original fax stays in the inbox after the copy is filed to the chart, for staff to clear with one click. If anything is missing or unusual, it goes to your staff. Your clinic can also choose to confirm every booking.</p>
       </details>
       <details>
         <summary>Do patients get messages from it?</summary>
         <p>Only patients who have agreed to texts with your clinic. For booking, they get a short form request, the offered times and the confirmation. The messages contain no health details.</p>
       </details>
       <details>
-        <summary>Do you text patients who have not agreed to texts?</summary>
-        <p>No. A patient who gave their number to the referring office has not agreed to texts from your clinic. Your clinic collects and records that consent. Until it is on file, the first contact is a call or a letter from your clinic, and we create the task for your staff. Once consent is recorded, texting can follow.</p>
-      </details>
-      <details>
-        <summary>Where is patient information stored?</summary>
-        <p>In Canada, and we store as little as possible.</p>
-      </details>
-      <details>
         <summary>What does it cost?</summary>
-        <p>Pricing is per physician per month, plus a one-time setup fee. Clinics start with 60 days at no charge.</p>
+        <p>Pricing is per physician per month, plus a one-time setup fee. Clinics start with 30 days at no charge, with free onboarding.</p>
       </details>
       <details>
         <summary>What if we want to stop?</summary>
         <p>Your clinic disables the one EMR account we use, and our access ends.</p>
-      </details>
-      <details>
-        <summary>How does it fill a cancelled appointment?</summary>
-        <p>When an appointment is cancelled in your EMR, patients on your own waitlist who fit that provider and time, and who have agreed to texts, get a text offering the slot. The first to reply YES is booked. Your front desk can approve each booking first.</p>
-      </details>
-      <details>
-        <summary>Which EMRs does it work with?</summary>
-        <p>It is made for OSCAR. Accuro and TELUS CHR are done on request. It connects through the EMR's official API, so each EMR is its own piece of work.</p>
-      </details>
-      <details>
-        <summary>How does it fit with privacy law in BC and Ontario?</summary>
-        <p>Your clinic stays in control of the patient record. We act as your service provider under BC's PIPA, or as your agent under Ontario's PHIPA, and we prepare a privacy impact assessment for your privacy officer before anything goes live.</p>
-      </details>
-      <details>
-        <summary>Do we still need our fax service or booking tool?</summary>
-        <p>Yes. Nothing changes there. Referrals still go out the way they do today, and your online booking tool keeps working the way it does now.</p>
-      </details>
-      <details>
-        <summary>Is this AI making decisions about patients?</summary>
-        <p>No. The automations follow rules that your clinic sets, and they only handle administrative follow-up. They do no triage, diagnosis or treatment. Clinical decisions stay with your physicians. Where it reads a fax to sort it, it uses a language model run in Canada under a no-retention agreement, and your clinic's data is never used to train it.</p>
       </details>
     </div>
   </div>
@@ -871,7 +736,7 @@
         </div>
       </fieldset>
       <label style="display:block; margin-top:16px">
-        <span class="lbl">What does your front desk keep chasing? <span class="opt">(optional)</span></span>
+        <span class="lbl">What would you like help with? <span class="opt">(optional)</span></span>
         <textarea id="c-msg" rows="4" class="fld" aria-describedby="c-note"></textarea>
       </label>
       <p id="c-note" style="margin-top:8px; font-size:14.5px; color:var(--ink-3)">Please do not include any patient information.</p>
@@ -887,17 +752,6 @@
     <div id="clinic-done" hidden class="done" style="margin-top:30px" tabindex="-1">
       <h3>Got it, thanks.</h3>
       <p style="margin-top:8px; color:var(--ink-2)">I will get back to you personally, usually the same day.</p>
-    </div>
-  </div>
-</section>
-
-<section class="close bt">
-  <div class="wrap">
-    <h2>Book a 15-minute call</h2>
-    <p>On the call we will ask which EMR you use and where your front desk spends time on follow-up. If we cannot help your clinic, we will say so.</p>
-    <div class="cta">
-      <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 15-minute call</a>
-      <a class="btn btn-ghost" href="mailto:hello@aevon.ca">hello@aevon.ca</a>
     </div>
   </div>
 </section>

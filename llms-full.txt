@@ -67,7 +67,7 @@ what is missing, booking patients who have agreed to texts and sending the
 confirmation. Where there is no text consent on file, staff get a task to make the
 first call. It can also sort and label incoming faxes where a clinic has no tool
 for it, and it fills cancelled appointments from the clinic's own waitlist.
-Clinics start with 60 days at no charge. The service never decides urgency or anything clinical.
+Clinics start with 30 days at no charge, with free onboarding. The service never decides urgency or anything clinical.
 
 ### Aevon Health questions, answered in full
 
@@ -113,7 +113,7 @@ In Canada, and we store as little as possible.
 
 **What does it cost?**
 
-Pricing is per physician per month, plus a one-time setup fee. Clinics start with 60 days at no charge.
+Pricing is per physician per month, plus a one-time setup fee. Clinics start with 30 days at no charge, with free onboarding.
 
 **What if we want to stop?**
 
@@ -150,7 +150,7 @@ No. The automations follow rules that your clinic sets, and they only handle adm
 - [ADP certification tracking](https://aevon.ca/adp-certification-tracking.html): Cadre keeps its staff list in sync with ADP and adds certification tracking on top. The ADP sync is in pilot and has not been tested against a live ADP account.
 - [Construction training matrix builder](https://aevon.ca/construction-training-matrix.html): free in-browser builder; add workers and tickets, colour-coded expiry dates, CSV export and print, no signup
 - [Live demo](https://cadre-demo.web.app/dashboard): the real product with a sample company loaded, no signup
-- [Aevon Health](https://aevon.ca/health.html): admin automation for medical clinics in BC and Ontario that connects to the clinic's EMR through its official API (OSCAR, with Accuro and TELUS CHR on request). Clinics start with 60 days at no charge
+- [Aevon Health](https://aevon.ca/health.html): admin automation for medical clinics in BC and Ontario that connects to the clinic's EMR through its official API (OSCAR, with Accuro and TELUS CHR on request). Clinics start with 30 days at no charge, with free onboarding
 - [How to fill a cancelled appointment in OSCAR EMR](https://aevon.ca/oscar-emr-fill-cancelled-appointments.html): step by step using OSCAR's Waiting List and make appt, the limits of the manual way, and the cancellation backfill Aevon Health is building
 - [How to track referrals with no response in OSCAR EMR](https://aevon.ca/oscar-emr-referral-follow-up.html): using OSCAR's Consultations screen, what each status means, when rows turn red, how to create a follow-up tickler, and the referral chase list Aevon Health is building
 - [Privacy](https://aevon.ca/privacy.html)
