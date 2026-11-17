@@ -320,7 +320,7 @@
       "name": "What does it cost?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Pricing is per physician per month, plus a one-time setup fee. Clinics start with 30 days at no charge, with free onboarding."
+        "text": "Pricing is per physician per month, plus a one-time setup fee. Clinics join the beta by request."
       }
     },
     {
@@ -346,7 +346,7 @@
     <div class="navr">
       <a href="#what">What it does</a>
       <a href="#privacy">Privacy</a>
-      <a href="#getting-started">Getting started</a>
+      <a href="#contact">Join the beta</a>
       <a href="#questions">Questions</a>
       <a class="btn btn-primary btn-sm" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a call</a>
     </div>
@@ -359,7 +359,7 @@
     <span class="lbl">Aevon Health</span>
     <h1>From fax to booked, inside your EMR.</h1>
     <p class="sub">
-      Aevon Health completes the work that follows a sorted fax: confirming the referral, requesting what is missing and booking the patient.
+      A faxed referral becomes a booked appointment. Your staff handle the exceptions.
     </p>
     <div class="cta">
       <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 15-minute call</a>
@@ -465,43 +465,6 @@
   </div>
 </section>
 
-<section id="how" class="bt">
-  <div class="wrap">
-    <div class="how">
-      <div>
-        <h2 class="h2" style="margin-top:0">How it works</h2>
-        <ol class="steps">
-          <li><div><h3>The fax gets sorted</h3><p>By your EMR's own tools, or by us if it has none. We connect through the EMR's official API, using one account your clinic controls.</p></div></li>
-          <li><div><h3>It checks the referral and asks for what is missing</h3><p>Patients who have agreed to texts are offered times you allow. With no consent on file, your staff get a task to call.</p></div></li>
-          <li><div><h3>Routine referrals get booked</h3><p>A referral that meets every rule your clinic sets is booked and confirmed. Anything else goes to a person with the reason. It never decides urgency.</p></div></li>
-        </ol>
-      </div>
-      <figure class="ill">
-        <div class="shot glow" role="img" aria-label="Illustration with fictional names of one referral handled by Aevon. A checklist shows patient name, date of birth, health number, phone number, reason for referral present and recent report attached, all ticked. Below is an audit log: a read of the referral for Tran, Olivia, a read of the clinic's required list, a write of the appointment for Tran, Olivia on Thursday at 10:40, and a write of a tickler for Okafor, Daniel, an exception handed to staff because no text consent is on file.">
-          <div class="shot-bar"><i></i><i></i><i></i><span>Referral checked · sample data</span></div>
-          <ul class="ck">
-            <li class="ok">Patient name</li>
-            <li class="ok">Date of birth</li>
-            <li class="ok">Health number</li>
-            <li class="ok">Phone number</li>
-            <li class="ok">Reason for referral present</li>
-            <li class="ok">Recent report attached</li>
-          </ul>
-          <p class="ck-rule">Clinic rule: new referrals to Dr. Hale, New consult</p>
-          <div class="log">
-            <span class="lbl">Audit log</span>
-            <div>09:41 <span>Read</span> referral, Tran, Olivia</div>
-            <div>09:41 <span>Read</span> required list, new referral</div>
-            <div>09:53 <span>Wrote</span> appointment, Tran, Olivia, Thu 10:40</div>
-            <div>09:53 <span>Wrote</span> tickler, Okafor, Daniel</div>
-          </div>
-        </div>
-        <figcaption class="vh">Illustration. All names are fictional.</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
 <section id="what" class="bt">
   <div class="wrap">
     <div class="sec-head">
@@ -522,7 +485,7 @@
       </div>
       <figure class="ill">
         <div class="shot glow" role="img" aria-label="Illustration with fictional names of one referral, start to booked. The referral for Tran, Olivia is checked against the clinic's list. An acknowledgement goes to the referring office and a short form to the patient. The missing details come back. The patient, who has agreed to texts, picks Thursday at 10:40 by text. The clinic rule is met, the appointment is booked into the schedule, and the confirmation and welcome email are sent.">
-          <div class="shot-bar"><i></i><i></i><i></i><span>Referral · sample data</span></div>
+          <div class="shot-bar"><i></i><i></i><i></i><span>Referral</span></div>
           <div class="slot-head"><div><b>Referral for Tran, Olivia</b><small>From Dr. Quinn's office</small></div><span class="tag">Booked</span></div>
           <ol class="trail">
             <li class="ok">Checked against your required list<small>One item missing</small></li>
@@ -533,7 +496,7 @@
             <li class="ok">Confirmation and welcome email sent</li>
           </ol>
         </div>
-        <figcaption class="vh">Illustration with sample data. All names are fictional.</figcaption>
+        <figcaption class="vh">Illustration. All names are fictional.</figcaption>
       </figure>
     </div>
 
@@ -554,12 +517,12 @@
       <figure class="ill">
         <div class="backfill" role="img" aria-label="Illustration with fictional names of one cancelled slot being filled. The slot on Thursday at 10:40 am opens after a cancellation. A text goes to three patients on the clinic's waitlist. Tran, Olivia replies YES first. The front desk approves, and the slot is booked into the schedule. Beside it, a phone shows the text Olivia receives from Your Clinic: an appointment has opened on Thursday at 10:40 am, reply YES to take it. She replies YES, the reply is marked Delivered, and she is told she is booked.">
           <div class="shot glow">
-            <div class="shot-bar"><i></i><i></i><i></i><span>Open slot · sample data</span></div>
+            <div class="shot-bar"><i></i><i></i><i></i><span>Open slot</span></div>
             <div class="slot-head"><div><b>Thursday, 10:40 am</b><small>Opened by a cancellation</small></div><span class="tag">Filled</span></div>
             <ol class="trail">
               <li class="ok">Text sent to 3 on your waitlist<small>No health details in the message</small></li>
               <li class="ok">Tran, Olivia replied YES first</li>
-              <li class="ok">Approved by the front desk<small>Optional step</small></li>
+              <li class="ok">Approved by the front desk</li>
               <li class="ok">Booked into the schedule</li>
             </ol>
           </div>
@@ -609,50 +572,14 @@
 <section id="privacy" class="bt">
   <div class="wrap two">
     <div>
-      <h2>Privacy and security: eight commitments.</h2>
+      <h2>Privacy and security</h2>
     </div>
     <ul class="commit">
-      <li><h3>Official EMR APIs only</h3></li>
-      <li><h3>Patient information hosted in Canada</h3></li>
       <li><h3>Minimal data stored</h3></li>
       <li><h3>Full audit log</h3><p>Every EMR read and write is logged.</p></li>
       <li><h3>Privacy impact assessment</h3><p>Prepared for your clinic.</p></li>
-      <li><h3>Administrative tasks only</h3><p>No triage, diagnosis or treatment.</p></li>
-      <li><h3>No AI training on clinic data</h3></li>
       <li><h3>Your clinic controls access</h3><p>Disable one EMR account and our access ends.</p></li>
     </ul>
-  </div>
-</section>
-
-<section id="getting-started" class="bt">
-  <div class="wrap">
-    <div class="price-grid" style="margin-top:0">
-      <div>
-        <h2 class="h2" style="margin-top:0">Getting started</h2>
-        <p style="margin-top:16px;color:var(--ink-2)">
-          Your clinic pays nothing for 30 days, and onboarding is free. We handle the EMR
-          connection, prepare the privacy impact assessment, and agree one measure of success with you.
-        </p>
-        <p class="about">
-          Aevon Health is a Canadian service from Aevon that builds administrative automation for medical clinics on top of the EMR they already use. It is led by Aidan Cox, whose background is medical clinic IT and privacy.
-        </p>
-      </div>
-      <div class="price-box">
-        <div class="price-num" style="margin-top:0">30 days</div>
-        <p style="color:var(--ink-2);margin-top:2px">at no charge</p>
-        <ul class="price-list">
-          <li>Free onboarding</li>
-          <li>We handle the EMR connection</li>
-          <li>We prepare the privacy impact assessment</li>
-          <li>One agreed measure of success</li>
-          <li>A 15-minute check-in every week</li>
-          <li>Pricing is per physician per month after the 30 days</li>
-        </ul>
-        <div style="margin-top:24px">
-          <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Ask about getting started</a>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -678,7 +605,7 @@
       </details>
       <details>
         <summary>What does it cost?</summary>
-        <p>Pricing is per physician per month, plus a one-time setup fee. Clinics start with 30 days at no charge, with free onboarding.</p>
+        <p>Pricing is per physician per month, plus a one-time setup fee. Clinics join the beta by request.</p>
       </details>
       <details>
         <summary>What if we want to stop?</summary>
@@ -691,8 +618,8 @@
 <section id="contact" class="bt">
   <div class="wrap" style="max-width:940px">
     <div class="sec-head">
-      <h2>Tell us about your clinic.</h2>
-      <p class="lede">A reply from a person, usually the same day. Or <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">book a 15-minute call</a>.</p>
+      <h2>Request to join the beta</h2>
+      <p class="lede">Aevon Health is in beta. Tell us about your clinic and which EMR you use, and we will work out the details with you. We reply personally, usually the same day. Or <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">book a 15-minute call</a>.</p>
     </div>
     <form id="clinic-form" style="margin-top:30px; max-width:640px" novalidate>
       <div class="fgrid">
@@ -744,7 +671,7 @@
         <label>Website <input id="c-website" type="text" tabindex="-1" autocomplete="off" /></label>
       </div>
       <div style="display:flex; align-items:center; gap:16px; margin-top:18px; flex-wrap:wrap">
-        <button class="btn btn-primary" id="c-send" type="submit">Send</button>
+        <button class="btn btn-primary" id="c-send" type="submit">Request to join</button>
         <span id="c-err" role="alert" style="color:var(--danger); font-size:14.5px"></span>
       </div>
     </form>
