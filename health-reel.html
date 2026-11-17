@@ -471,7 +471,7 @@ body.reduced { display: block; }
             <div class="s7x s7exc" id="s7exc">
               <p class="s7lbl">For your staff: 1 exception</p>
               <div class="emr tk exc">
-                <div class="e-title">OSCAR EMR<span class="r">Front desk</span></div>
+                <div class="e-title">EMR<span class="r">Front desk</span></div>
                 <div class="tk-body">
                   <table class="tktbl"><thead><tr><th>Demographic Name</th><th class="hn">Creator</th><th>Status</th><th>Message</th></tr></thead>
                   <tbody><tr><td>Okafor, Daniel</td><td class="hn">Aevon, Service</td><td>Active</td><td>Call to book: no text consent on file</td></tr></tbody></table>
@@ -552,7 +552,7 @@ body.reduced { display: block; }
     var axis = '';
     for (var i = 0; i < rows; i++) { var m = T0 + i * 10; axis += '<span class="' + (m % 60 === 0 ? 'h' : '') + '">' + fmt(m) + '</span>'; }
     var lane = function (x, c) { return '<div class="lane ' + (c || '') + '" style="--rows:' + rows + '">' + x + '</div>'; };
-    return '<div class="e-title">OSCAR EMR<span class="r">Front desk</span></div>' +
+    return '<div class="e-title">EMR<span class="r">Front desk</span></div>' +
       '<div class="e-link"><a class="l hv">Schedule</a><a>Caseload</a><a>Search</a><a>Report</a><a>Billing</a><a class="hn">Lab</a><a>Msg</a><a class="hn">Con</a><a class="hn">EDoc</a><a>Tickler</a><a>Administration</a></div>' +
       '<div class="e-ivory"><i class="arw lf"></i><b>2026-11-19</b><i class="arw rt"></i><span class="lk"><u>T</u>oday</span><span class="lk">Mo<u>n</u>th</span><span class="sp">View all providers</span></div>' +
       '<div class="sgrid"><div class="colh"><span class="wb">W</span><span class="wb">S</span>Hale, Dr.</div>' + (narrow ? '' : '<div class="colh alt q-col"><span class="wb">W</span><span class="wb">S</span>Quinn, Dr.</div>') +
@@ -571,7 +571,7 @@ body.reduced { display: block; }
       ['Form request', 'Whitfield, Grace', 'Fax', '2026-11-12']
     ];
     function tr(r, cls, id) { return '<tr' + (cls ? ' class="' + cls + '"' : '') + (id ? ' id="' + id + '"' : '') + '><td><span class="cb"></span></td><td class="ty">' + r[0] + '</td><td>' + r[1] + '</td><td class="hn">' + r[2] + '</td><td>' + r[3] + '</td></tr>'; }
-    var head = '<div class="e-title">OSCAR EMR<span class="r">Front desk</span></div>' +
+    var head = '<div class="e-title">EMR<span class="r">Front desk</span></div>' +
       '<div class="e-link"><a>Schedule</a><a class="hn">Caseload</a><a class="hn">Search</a><a class="hn">Report</a><a class="hn">Billing</a><a class="hn">Lab</a><a>Msg</a><a class="hn">Con</a><a class="hn">EDoc</a><a class="l hv">Inbox</a><a>Tickler</a><a class="hn">Administration</a></div>';
     var th = '<thead><tr><th></th><th>Type</th><th>Patient</th><th class="hn">From</th><th>Received</th></tr></thead>';
     if (mini) {
@@ -779,12 +779,12 @@ body.reduced { display: block; }
     var KEY = [1.6, 4.0, 5.2, 3.6, 4.6, 4.4, 10.4, 3.0];
     var DET = [
       'Title card: From fax to booked. The work after the fax is sorted.',
-      'An OSCAR-style Inbox, Incoming Docs, listing documents already labelled by type: Consult report, Lab result, Referral, Referral and Form request, each with a received date, some days or weeks old. A new Referral for Tran, Olivia from Dr. Quinn\u2019s office arrives at the top.',
+      'An EMR inbox, Incoming Docs, listing documents already labelled by type: Consult report, Lab result, Referral, Referral and Form request, each with a received date, some days or weeks old. A new Referral for Tran, Olivia from Dr. Quinn\u2019s office arrives at the top.',
       'A separate dark Aevon panel checks the referral against the clinic\u2019s own required list. Patient name, date of birth, health number, phone number and reason for referral present are ticked. One item is missing: Recent report attached. The clinic rule shown is: new referrals to Dr. Hale, New consult, 20 min.',
       'Two things go out at once. An acknowledgement to Dr. Quinn\u2019s office: Referral received. We will contact the patient to book. Still needed: the recent report. And, because her consent to text is on file with the clinic, a text to the patient: Hi Olivia, Your Clinic has received your referral. Please complete this short form before we book you, with a plain form button.',
-      'The short form shows Completed. A new document arrives in the OSCAR Inbox and is attached to the same referral, and the Aevon checklist is fully ticked.',
+      'The short form shows Completed. A new document arrives in the EMR inbox and is attached to the same referral, and the Aevon checklist is fully ticked.',
       'An Aevon chip reads Consent to text: on file. A phone shows the text: Dr. Hale has these times: Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am. Reply 1, 2 or 3. The patient replies 1, and it is marked Delivered.',
-      'An Aevon panel shows: Clinic rule met: complete referral, patient matched, time picked. The appointment appears on the OSCAR schedule day view on its own, with no tickler to tick. The patient\u2019s phone shows the confirmation and the line Welcome email sent. A list headed For your staff: 1 exception shows one OSCAR tickler from a different referral, Okafor, Daniel: Call to book: no text consent on file. Staff make the first call and record consent, and texting can follow.',
+      'An Aevon panel shows: Clinic rule met: complete referral, patient matched, time picked. The appointment appears on the EMR schedule day view on its own, with no tickler to tick. The patient\u2019s phone shows the confirmation and the line Welcome email sent. A list headed For your staff: 1 exception shows one tickler from a different referral, Okafor, Daniel: Call to book: no text consent on file. Staff make the first call and record consent, and texting can follow.',
       'One referral, from fax to booked. Routine referrals handled, exceptions to your staff. Illustration with fictional names.'
     ];
     var ol = q('#boardlist'), frames = [];
