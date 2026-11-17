@@ -1,0 +1,165 @@
+# Aevon — full version
+
+> Full-content companion to llms.txt. The complete text of the Aevon home page,
+> the Cadre page and the Aevon Health page, for LLM crawlers that want the whole
+> story without fetching each page. Last updated 16 November 2026.
+
+## Aevon
+
+Aevon is a Canadian software company. It builds operational software for businesses
+that have outgrown a spreadsheet but are too specific for the large platforms.
+Its product is Cadre: HR and certification tracking software for trades, transport
+and manufacturing employers. In development: Aevon Health, administrative automation
+for medical clinics in British Columbia and Ontario that connects to the clinic's
+EMR through its official API. Founded 2026. Founder: Aidan Cox.
+
+## Cadre
+
+HR and certification tracking software for trades, transport and manufacturing.
+Cadre keeps every certification on the employee record, next to onboarding,
+performance reviews and signed policies, so the renewal is already on the calendar
+when the course is done. It notifies the employee and then their supervisor by
+email and Microsoft Teams before a certificate expires. Pricing is one flat monthly
+fee per site with unlimited employees and every module included, month to month,
+quoted by email. Live demo, no signup: https://cadre-demo.web.app/dashboard
+
+### Cadre questions, answered in full
+
+**What is Cadre?**
+
+Cadre is HR and certification tracking software for trades, transport and manufacturing employers, made by Aevon in Canada. Every certification sits on the employee record, next to that person's onboarding, performance reviews and signed policies.
+
+**What does Cadre track for each certification?**
+
+An issue date, a renewal period and an expiry date, per person and per ticket, such as forklift, first aid, fall protection or a driver abstract. The training record and the certification are the same record, so completing the course closes the renewal.
+
+**How does Cadre warn about expiring certificates?**
+
+It notifies the employee and then their supervisor by email and Microsoft Teams before the expiry date, so there is still time to book the course.
+
+**What else is included besides certification tracking?**
+
+Onboarding, performance reviews, policy sign-off and the org chart are part of the same system, not a separate HR add-on.
+
+**How is Cadre priced?**
+
+One flat monthly fee per site, with unlimited employees at that site and every module included. It is month to month. A quote needs only headcount, number of sites and which tickets you track, and is sent by email without a discovery call.
+
+**Can we move from a spreadsheet?**
+
+Yes. Cadre imports from whatever you keep now, the spreadsheet included, and setup is done with you.
+
+**Can I see Cadre before talking to anyone?**
+
+Yes. The live demo at cadre-demo.web.app is the real product with a sample company loaded. No signup is needed.
+
+**Can Cadre show an auditor who is current?**
+
+Yes. You can export who is current as a CSV, filtered by site, by ticket or by status.
+
+## Aevon Health
+
+From fax to booked, inside your EMR. Aevon Health is in development: administrative
+automation for medical clinics in BC and Ontario that connects to the clinic's EMR
+through its official API (OSCAR first, Accuro and TELUS CHR planned). It completes
+the routine work after an incoming fax is sorted: confirming a referral, requesting
+what is missing, booking patients who have agreed to texts and sending the
+confirmation. Where there is no text consent on file, staff get a task to make the
+first call. It can also sort and label incoming faxes where a clinic has no tool
+for it, and it fills cancelled appointments from the clinic's own waitlist.
+Aevon has no clinic customers yet; founding clinics start with a 60-day pilot at
+no charge. The service never decides urgency or anything clinical.
+
+### Aevon Health questions, answered in full
+
+**Is it available now?**
+
+Not yet. Both automations are in development. We are looking for founding clinics to build them with, starting with clinics that use OSCAR.
+
+**Does this replace our EMR or booking tool?**
+
+No. It works alongside your EMR and does not replace it. If you use an online booking tool, that keeps working the way it does now.
+
+**Does it replace the tool that sorts our faxes?**
+
+No. If your EMR or an add-on already sorts and labels your faxes, it starts after that. If nothing does, it can sort them as well, with your staff confirming the labels until you are comfortable letting it run.
+
+**Does it decide which referrals are urgent?**
+
+No. It reads what the referring office wrote and follows the rules your clinic sets for provider and appointment type. Urgency is a clinical decision and stays with your physicians.
+
+**How does a new referral get booked?**
+
+If the patient has agreed to texts with your clinic, they are offered times your clinic allows, by text. If there is no consent to text on file, your staff get a task to make the first call instead. When a patient picks a time, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. The service checks the schedule itself before booking, because OSCAR does not stop double bookings. If anything is missing or unusual, it goes to your staff. Your clinic can also choose to confirm every booking.
+
+**What happens when it is not sure?**
+
+It stops and hands the referral to a person, with the reason: a missing phone number, two patients with the same name, a referral marked urgent by the sender, or anything outside your clinic's rules. It does not guess.
+
+**Do physicians have to review each referral first?**
+
+Only if your clinic wants that. Many clinics have a physician accept or prioritise new referrals. That step stays with the physician, and the automation waits for it. Where your clinic's rules allow a referral to be booked directly, it is.
+
+**Do staff need to learn new software?**
+
+No. Exceptions show up as tasks inside your EMR.
+
+**Do patients get messages from it?**
+
+Only patients who have agreed to texts with your clinic. For booking, they get a short form request, the offered times and the confirmation. The messages contain no health details.
+
+**Do you text patients who have not agreed to texts?**
+
+No. A patient who gave their number to the referring office has not agreed to texts from your clinic. Your clinic collects and records that consent. Until it is on file, the first contact is a call or a letter from your clinic, and we create the task for your staff. Once consent is recorded, texting can follow.
+
+**Where is patient information stored?**
+
+In Canada, and we store as little as possible.
+
+**What does it cost?**
+
+Pricing is per physician per month, plus a one-time setup fee. Founding clinics start with a 60-day pilot at no charge.
+
+**What if we want to stop?**
+
+Your clinic disables the one EMR account we use, and our access ends.
+
+**How does it fill a cancelled appointment?**
+
+When an appointment is cancelled in your EMR, patients on your own waitlist who fit that provider and time, and who have agreed to texts, get a text offering the slot. The first to reply YES is booked. Your front desk can approve each booking first.
+
+**Which EMRs does it work with?**
+
+We are building for OSCAR first. Accuro and TELUS CHR are planned. It connects through the EMR's official API, so each EMR is its own piece of work.
+
+**How does it fit with privacy law in BC and Ontario?**
+
+Your clinic stays in control of the patient record. We act as your service provider under BC's PIPA, or as your agent under Ontario's PHIPA, and we prepare a privacy impact assessment for your privacy officer before anything goes live.
+
+**Do we still need our fax service or booking tool?**
+
+Yes. Nothing changes there. Referrals still go out the way they do today, and your online booking tool keeps working the way it does now.
+
+**Is this AI making decisions about patients?**
+
+No. The automations follow rules that your clinic sets, and they only handle administrative follow-up. They do no triage, diagnosis or treatment. Clinical decisions stay with your physicians. Where it reads a fax to sort it, it uses a language model run in Canada under a no-retention agreement, and your clinic's data is never used to train it.
+
+## Pages
+
+- [Cadre](https://aevon.ca/cadre.html): what Cadre does, pricing model, and questions answered
+- [Training matrix template](https://aevon.ca/training-matrix-template.html): free Excel training matrix with expiry colours, and an in-browser checker for a filled-in file
+- [BC Skilled Trades Certification checker](https://aevon.ca/skilled-trades-certification-checker.html): free checker for BC contractors; upload a crew list to find workers not registered in a compulsory trade and crews over the 2:1 apprentice ratio
+- [COR certification tracking](https://aevon.ca/cor-certification-tracking.html): BC construction COR facts and a free readiness checklist for training and certification records
+- [Software to maintain COR certification](https://aevon.ca/cor-maintenance-software.html): what the records side of COR maintenance needs, plus a free certification expiry calculator
+- [BambooHR certification tracking](https://aevon.ca/bamboohr-certification-tracking.html): Cadre reads the BambooHR staff list (new hires, changes, leavers) and adds certification tracking on top
+- [ADP certification tracking](https://aevon.ca/adp-certification-tracking.html): Cadre keeps its staff list in sync with ADP and adds certification tracking on top. The ADP sync is in pilot and has not been tested against a live ADP account.
+- [Construction training matrix builder](https://aevon.ca/construction-training-matrix.html): free in-browser builder; add workers and tickets, colour-coded expiry dates, CSV export and print, no signup
+- [Live demo](https://cadre-demo.web.app/dashboard): the real product with a sample company loaded, no signup
+- [Aevon Health](https://aevon.ca/health.html): in development; admin automation for medical clinics in BC and Ontario that connects to the clinic's EMR through its official API (OSCAR first, Accuro and TELUS CHR planned). No clinic customers yet; founding clinics start with a 60-day pilot at no charge
+- [How to fill a cancelled appointment in OSCAR EMR](https://aevon.ca/oscar-emr-fill-cancelled-appointments.html): step by step using OSCAR's Waiting List and make appt, the limits of the manual way, and the cancellation backfill Aevon Health is building
+- [How to track referrals with no response in OSCAR EMR](https://aevon.ca/oscar-emr-referral-follow-up.html): using OSCAR's Consultations screen, what each status means, when rows turn red, how to create a follow-up tickler, and the referral chase list Aevon Health is building
+- [Privacy](https://aevon.ca/privacy.html)
+
+## Contact
+
+- hello@aevon.ca
