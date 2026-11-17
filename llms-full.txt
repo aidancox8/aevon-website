@@ -9,7 +9,7 @@
 Aevon is a Canadian software company. It builds operational software for businesses
 that have outgrown a spreadsheet but are too specific for the large platforms.
 Its product is Cadre: HR and certification tracking software for trades, transport
-and manufacturing employers. In development: Aevon Health, administrative automation
+and manufacturing employers. It also offers Aevon Health, administrative automation
 for medical clinics in British Columbia and Ontario that connects to the clinic's
 EMR through its official API. Founded 2026. Founder: Aidan Cox.
 
@@ -59,22 +59,17 @@ Yes. You can export who is current as a CSV, filtered by site, by ticket or by s
 
 ## Aevon Health
 
-From fax to booked, inside your EMR. Aevon Health is in development: administrative
+From fax to booked, inside your EMR. Aevon Health is administrative
 automation for medical clinics in BC and Ontario that connects to the clinic's EMR
-through its official API (OSCAR first, Accuro and TELUS CHR planned). It completes
+through its official API (OSCAR, with Accuro and TELUS CHR on request). It completes
 the routine work after an incoming fax is sorted: confirming a referral, requesting
 what is missing, booking patients who have agreed to texts and sending the
 confirmation. Where there is no text consent on file, staff get a task to make the
 first call. It can also sort and label incoming faxes where a clinic has no tool
 for it, and it fills cancelled appointments from the clinic's own waitlist.
-Aevon has no clinic customers yet; founding clinics start with a 60-day pilot at
-no charge. The service never decides urgency or anything clinical.
+Clinics start with 60 days at no charge. The service never decides urgency or anything clinical.
 
 ### Aevon Health questions, answered in full
-
-**Is it available now?**
-
-Not yet. Both automations are in development. We are looking for founding clinics to build them with, starting with clinics that use OSCAR.
 
 **Does this replace our EMR or booking tool?**
 
@@ -118,7 +113,7 @@ In Canada, and we store as little as possible.
 
 **What does it cost?**
 
-Pricing is per physician per month, plus a one-time setup fee. Founding clinics start with a 60-day pilot at no charge.
+Pricing is per physician per month, plus a one-time setup fee. Clinics start with 60 days at no charge.
 
 **What if we want to stop?**
 
@@ -130,7 +125,7 @@ When an appointment is cancelled in your EMR, patients on your own waitlist who 
 
 **Which EMRs does it work with?**
 
-We are building for OSCAR first. Accuro and TELUS CHR are planned. It connects through the EMR's official API, so each EMR is its own piece of work.
+It is made for OSCAR. Accuro and TELUS CHR are done on request. It connects through the EMR's official API, so each EMR is its own piece of work.
 
 **How does it fit with privacy law in BC and Ontario?**
 
@@ -155,7 +150,7 @@ No. The automations follow rules that your clinic sets, and they only handle adm
 - [ADP certification tracking](https://aevon.ca/adp-certification-tracking.html): Cadre keeps its staff list in sync with ADP and adds certification tracking on top. The ADP sync is in pilot and has not been tested against a live ADP account.
 - [Construction training matrix builder](https://aevon.ca/construction-training-matrix.html): free in-browser builder; add workers and tickets, colour-coded expiry dates, CSV export and print, no signup
 - [Live demo](https://cadre-demo.web.app/dashboard): the real product with a sample company loaded, no signup
-- [Aevon Health](https://aevon.ca/health.html): in development; admin automation for medical clinics in BC and Ontario that connects to the clinic's EMR through its official API (OSCAR first, Accuro and TELUS CHR planned). No clinic customers yet; founding clinics start with a 60-day pilot at no charge
+- [Aevon Health](https://aevon.ca/health.html): admin automation for medical clinics in BC and Ontario that connects to the clinic's EMR through its official API (OSCAR, with Accuro and TELUS CHR on request). Clinics start with 60 days at no charge
 - [How to fill a cancelled appointment in OSCAR EMR](https://aevon.ca/oscar-emr-fill-cancelled-appointments.html): step by step using OSCAR's Waiting List and make appt, the limits of the manual way, and the cancellation backfill Aevon Health is building
 - [How to track referrals with no response in OSCAR EMR](https://aevon.ca/oscar-emr-referral-follow-up.html): using OSCAR's Consultations screen, what each status means, when rows turn red, how to create a follow-up tickler, and the referral chase list Aevon Health is building
 - [Privacy](https://aevon.ca/privacy.html)
