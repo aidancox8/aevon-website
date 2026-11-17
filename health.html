@@ -62,6 +62,8 @@
     figure.hero-art { width: 100%; max-width: 1000px; margin: 20px auto 0; scroll-margin-top: 16px; padding: 0 28px; text-align: left; }
     .hero-stage { display: grid; grid-template-columns: minmax(0, 1fr) 252px; gap: 28px; align-items: center; }
     .hero-art figcaption { text-align: center; }
+    /* Read by screen readers, not shown. Used for the text version of the hero demo and its caption. */
+    .vh { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
 
     /* ---- illustration parts ---- */
     .ill { margin: 0; }
@@ -173,9 +175,9 @@
     .hero-stack.live .hero-static { visibility: hidden; }
     /* The player reserves its final height up front (stage plus the reel's fixed caption and controls),
        from its own width, so the iframe loads into a box that is already the right size. */
-    .rp-stage { position: relative; width: 100%; height: calc(56.25cqw + 180px); background: var(--bg); }
+    .rp-stage { position: relative; width: 100%; height: calc(56.25cqw + 126px); background: var(--bg); }
     .rp-stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; background: var(--bg); }
-    @container (max-width: 639px) { .rp-stage { height: calc(150cqw + 224px); } }
+    @container (max-width: 639px) { .rp-stage { height: calc(150cqw + 170px); } }
     @media (prefers-reduced-motion: reduce) { .reelplayer { display: none; } }
     .hero-art details { margin-top: 18px; border-bottom: 1px solid var(--line); }
     .hero-art details ol { padding: 0 0 20px 22px; color: var(--ink-2); font-size: 15.5px; display: grid; gap: 8px; max-width: 70ch; }
@@ -515,8 +517,8 @@
         <div class="rp-stage" id="rp-stage"></div>
       </div>
     </div>
-        <details>
-          <summary>Text version of the demo</summary>
+        <div class="vh">
+          <p>Text version of the demo</p>
           <ol>
             <li>Title card: From fax to booked. The work after the fax is sorted.</li>
             <li>An OSCAR-style Inbox, Incoming Docs, lists documents already labelled by type: Consult report, Lab result, Referral, Referral and Form request, each with a received date. A new Referral for Tran, Olivia from Dr. Quinn's office arrives.</li>
@@ -527,8 +529,8 @@
             <li>Clinic rule met: complete referral, patient matched, time picked. The appointment appears on the OSCAR schedule day view on its own, with no tickler to tick. The patient's phone shows the confirmation and Welcome email sent. A list headed For your staff: 1 exception shows one tickler from a different referral, Okafor, Daniel: Call to book, no text consent on file. Staff make the first call and record consent, and texting can follow.</li>
             <li>End card: One referral, from fax to booked. Routine referrals handled, exceptions to your staff. In development. Illustration with fictional names.</li>
           </ol>
-        </details>
-    <figcaption>Illustration of how it would look in OSCAR. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University. The product is in development, so this is not a screenshot.</figcaption>
+        </div>
+    <figcaption class="vh">Illustration of how it would look in OSCAR. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University. The product is in development, so this is not a screenshot.</figcaption>
   </figure>
 </header>
 
