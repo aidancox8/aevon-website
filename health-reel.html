@@ -408,7 +408,7 @@ body.reduced { display: block; }
 <body>
 
 <main class="reel" id="reel" role="region" aria-label="From fax to booked demo: a self-playing illustration with fictional names">
-  <div class="top"><span class="note">Illustration. All names are fictional.</span></div>
+  <div class="top"></div>
   <div class="stagewrap" id="stagewrap">
     <div class="stage" id="stage">
       <div class="inner" id="inner">
@@ -471,7 +471,7 @@ body.reduced { display: block; }
             <div class="s7x s7exc" id="s7exc">
               <p class="s7lbl">For your staff: 1 exception</p>
               <div class="emr tk exc">
-                <div class="e-title">OSCAR EMR (illustration)<span class="r">Front desk</span></div>
+                <div class="e-title">OSCAR EMR<span class="r">Front desk</span></div>
                 <div class="tk-body">
                   <table class="tktbl"><thead><tr><th>Demographic Name</th><th class="hn">Creator</th><th>Status</th><th>Message</th></tr></thead>
                   <tbody><tr><td>Okafor, Daniel</td><td class="hn">Aevon, Service</td><td>Active</td><td>Call to book: no text consent on file</td></tr></tbody></table>
@@ -497,7 +497,7 @@ body.reduced { display: block; }
           <p class="lbl acc a" style="--d:.1s">Aevon Health</p>
           <h2 class="a" style="--d:.3s">One referral, from fax to booked.</h2>
           <p class="sub a" style="--d:.7s">Routine referrals handled. Exceptions go to your staff.</p>
-          <p class="sub a sub2" style="--d:1.0s">Illustration with fictional names.</p>
+          
         </div></section>
 
         <div class="cur" id="cur"><svg viewBox="0 0 16 22" aria-hidden="true"><path d="M1 1 L1 17 L5 13 L8 20 L11 18.7 L8 12 L14 12 Z" fill="#ffffff" stroke="#10151b" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
@@ -505,7 +505,7 @@ body.reduced { display: block; }
       <div class="cta-layer" id="cta"><a class="cta" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 15-minute call</a></div>
     </div>
   </div>
-  <p class="caption" id="caption" aria-live="off">Everything shown uses fictional names.</p>
+  <p class="caption" id="caption" aria-live="off"></p>
   <div class="controls">
     <button class="cbtn" id="pp" type="button" aria-label="Pause the demo"><svg class="pp-pause" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3.4v12H2zM8.6 1H12v12H8.6z"/></svg><svg class="pp-play" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1l9 6-9 6z"/></svg><span id="pptext">Pause</span></button>
     <button class="cbtn" id="rp" type="button" aria-label="Replay the demo from the start"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.5a5.5 5.5 0 1 0 5.2 3.7l-1.5.5A4 4 0 1 1 7 3v2.2l3.3-2.7L7 .5z"/></svg><span>Replay</span></button>
@@ -516,7 +516,7 @@ body.reduced { display: block; }
 
 <section class="board" id="board" aria-label="From fax to booked, storyboard">
   <h1>From fax to booked, in eight steps</h1>
-  <p>Animation is turned off on this device, so here are the key frames. Illustration. All names are fictional.</p>
+  <p>Animation is turned off on this device, so here are the key frames.</p>
   <ol id="boardlist"></ol>
 </section>
 
@@ -552,7 +552,7 @@ body.reduced { display: block; }
     var axis = '';
     for (var i = 0; i < rows; i++) { var m = T0 + i * 10; axis += '<span class="' + (m % 60 === 0 ? 'h' : '') + '">' + fmt(m) + '</span>'; }
     var lane = function (x, c) { return '<div class="lane ' + (c || '') + '" style="--rows:' + rows + '">' + x + '</div>'; };
-    return '<div class="e-title">OSCAR EMR (illustration)<span class="r">Front desk</span></div>' +
+    return '<div class="e-title">OSCAR EMR<span class="r">Front desk</span></div>' +
       '<div class="e-link"><a class="l hv">Schedule</a><a>Caseload</a><a>Search</a><a>Report</a><a>Billing</a><a class="hn">Lab</a><a>Msg</a><a class="hn">Con</a><a class="hn">EDoc</a><a>Tickler</a><a>Administration</a></div>' +
       '<div class="e-ivory"><i class="arw lf"></i><b>2026-11-19</b><i class="arw rt"></i><span class="lk"><u>T</u>oday</span><span class="lk">Mo<u>n</u>th</span><span class="sp">View all providers</span></div>' +
       '<div class="sgrid"><div class="colh"><span class="wb">W</span><span class="wb">S</span>Hale, Dr.</div>' + (narrow ? '' : '<div class="colh alt q-col"><span class="wb">W</span><span class="wb">S</span>Quinn, Dr.</div>') +
@@ -571,7 +571,7 @@ body.reduced { display: block; }
       ['Form request', 'Whitfield, Grace', 'Fax', '2026-11-12']
     ];
     function tr(r, cls, id) { return '<tr' + (cls ? ' class="' + cls + '"' : '') + (id ? ' id="' + id + '"' : '') + '><td><span class="cb"></span></td><td class="ty">' + r[0] + '</td><td>' + r[1] + '</td><td class="hn">' + r[2] + '</td><td>' + r[3] + '</td></tr>'; }
-    var head = '<div class="e-title">OSCAR EMR (illustration)<span class="r">Front desk</span></div>' +
+    var head = '<div class="e-title">OSCAR EMR<span class="r">Front desk</span></div>' +
       '<div class="e-link"><a>Schedule</a><a class="hn">Caseload</a><a class="hn">Search</a><a class="hn">Report</a><a class="hn">Billing</a><a class="hn">Lab</a><a>Msg</a><a class="hn">Con</a><a class="hn">EDoc</a><a class="l hv">Inbox</a><a>Tickler</a><a class="hn">Administration</a></div>';
     var th = '<thead><tr><th></th><th>Type</th><th>Patient</th><th class="hn">From</th><th>Received</th></tr></thead>';
     if (mini) {
@@ -589,7 +589,7 @@ body.reduced { display: block; }
   var STATE = ['on', 'done', 'miss', 'press', 'pick'];
   var ST = [0, 3.2, 9.2, 14.8, 20.6, 26.0, 31.4, 42.4], TOTAL = 46.4;
   var CAP = [
-    'Everything shown uses fictional names.',
+    '',
     'The fax is sorted, by your EMR or by us. The work starts after that.',
     'It checks the referral against your own list.',
     'The referring office gets an acknowledgement. The patient, if they have agreed to texts, gets a short form.',

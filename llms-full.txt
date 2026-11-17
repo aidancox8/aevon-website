@@ -85,7 +85,7 @@ No. It reads what the referring office wrote and follows the rules your clinic s
 
 **How does a new referral get booked?**
 
-If the patient has agreed to texts with your clinic, they are offered times your clinic allows, by text. If there is no consent to text on file, your staff get a task to make the first call instead. When a patient picks a time, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. The service checks the schedule itself before booking, because OSCAR does not stop double bookings. If anything is missing or unusual, it goes to your staff. Your clinic can also choose to confirm every booking.
+If the patient has agreed to texts with your clinic, they are offered times your clinic allows, by text. If there is no consent to text on file, your staff get a task to make the first call instead. When a patient picks a time, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. The service checks the schedule before booking. If anything is missing or unusual, it goes to your staff. Your clinic can also choose to confirm every booking.
 
 **What happens when it is not sure?**
 
