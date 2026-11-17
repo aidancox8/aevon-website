@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fax to Booked: Referral Intake for Clinics | Aevon Health</title>
-  <meta name="description" content="Aevon Health builds automation for the work after a fax is sorted: confirm the referral, get what is missing, book the patient, send the welcome. BC, Ontario." />
+  <meta name="description" content="Aevon Health automates the work after a fax is sorted: confirm the referral, get what is missing, book the patient, send the welcome. BC, Ontario." />
   <link rel="canonical" href="https://aevon.ca/health.html" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0C0E0D" />
@@ -13,7 +13,7 @@
   <meta property="og:url" content="https://aevon.ca/health.html" />
   <meta property="og:site_name" content="Aevon" />
   <meta property="og:title" content="Fax to Booked: Referral Intake for Clinics | Aevon Health" />
-  <meta property="og:description" content="Aevon Health builds automation for the work after a fax is sorted: confirm the referral, get what is missing, book the patient, send the welcome. BC, Ontario." />
+  <meta property="og:description" content="Aevon Health automates the work after a fax is sorted: confirm the referral, get what is missing, book the patient, send the welcome. BC, Ontario." />
   <meta property="og:locale" content="en_CA" />
   <meta property="og:image" content="https://aevon.ca/img/og.png" />
   <meta property="og:image:width" content="1200" />
@@ -38,7 +38,7 @@
     /* Page-local pieces only. Everything else comes from site.css.
 
        Every product visual on this page is an HTML and CSS illustration with sample data, because
-       the product is in development and no real screenshot exists. Each one is labelled as an
+       no real screenshot is used. Each one is labelled as an
        illustration in its caption. Fictional names only, never real ones. */
 
     .skip { position: absolute; left: 12px; top: -60px; z-index: 10; background: var(--accent); color: var(--on-accent); font-weight: 600; font-size: 15px; padding: 10px 16px; border-radius: 999px; text-decoration: none; }
@@ -183,14 +183,7 @@
     .hero-art details ol { padding: 0 0 20px 22px; color: var(--ink-2); font-size: 15.5px; display: grid; gap: 8px; max-width: 70ch; }
     .reel-back { margin: 8px 0 0; font-size: 15.5px; }
 
-    /* roadmap: dashed, so it does not read as shipped */
-    .road { margin-top: 8px; padding-top: 48px; border-top: 1px solid var(--line); }
-    .road h3 { font-size: 22px; }
-    .road > p.after { margin-top: 20px; }
-    .road > p { margin-top: 8px; color: var(--ink-2); font-size: 16px; max-width: 64ch; }
-    .road ul { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
-    .road li { border: 1px dashed var(--line-2); border-radius: var(--radius-lg); padding: 16px 18px 18px; font-weight: 600; font-size: 16px; line-height: 1.35; color: var(--ink-2); }
-    .road li .lbl { display: block; margin-bottom: 10px; }
+    .after-custom { margin-top: 28px; color: var(--ink-2); font-size: 16px; max-width: 64ch; }
 
     .band { margin-top: 48px; padding: 28px 30px; border: 1px solid var(--line-2); border-radius: var(--radius-lg); background: var(--surface); display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; justify-content: space-between; }
     .band p { color: var(--ink); font-size: 19px; font-weight: 500; max-width: 46ch; }
@@ -212,9 +205,9 @@
     .commit h3::before { content: ""; position: absolute; left: 1px; top: 4px; width: 10px; height: 5px; border-left: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg); }
     .commit p { margin-top: 6px; padding-left: 22px; font-size: 15px; color: var(--ink-2); }
 
-    /* founding */
+    /* getting started */
     .price-box .lbl { display: block; }
-    .founder { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 16px; }
+    .about { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 16px; }
 
     .close { text-align: center; }
     .close h2 { font-size: clamp(28px, 3.6vw, 42px); max-width: 20ch; margin: 0 auto; }
@@ -224,7 +217,6 @@
     @media (max-width: 980px) {
       .feature, .feature.flip { grid-template-columns: 1fr; gap: 32px; padding: 44px 0; }
       .feature.flip > :first-child { order: 0; }
-      .road ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 760px) {
       figure.hero-art { margin-top: 24px; padding: 0 20px; }
@@ -245,9 +237,6 @@
       .band { padding: 22px 20px; }
       .band .btn, .close .cta .btn { flex: 1 1 100%; }
     }
-    @media (max-width: 420px) {
-      .road ul { grid-template-columns: 1fr; }
-    }
       /* Footer links: at least 44px tall so they are easy to tap on a phone. */
     footer a { display: inline-flex; align-items: center; min-height: 44px; }
   </style>
@@ -257,7 +246,7 @@
   "@type": "Service",
   "name": "Aevon Health",
   "serviceType": "Administrative automation for medical clinics",
-  "description": "In development. Automation that connects to a medical clinic's EMR through its official API and completes the routine work after an incoming fax is sorted: confirming a referral, requesting what is missing, booking patients who have agreed to texts and sending the confirmation, with exceptions, including patients with no text consent on file, handed to staff. Can also sort and label incoming faxes where the clinic has no tool for it. Administrative tasks only.",
+  "description": "Automation that connects to a medical clinic's EMR through its official API and completes the routine work after an incoming fax is sorted: confirming a referral, requesting what is missing, booking patients who have agreed to texts and sending the confirmation, with exceptions, including patients with no text consent on file, handed to staff. Can also sort and label incoming faxes where the clinic has no tool for it. Administrative tasks only.",
   "url": "https://aevon.ca/health.html",
   "areaServed": [
     {
@@ -287,14 +276,6 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Is it available now?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Not yet. Both automations are in development. We are looking for founding clinics to build them with, starting with clinics that use OSCAR."
-      }
-    },
     {
       "@type": "Question",
       "name": "Does this replace our EMR or booking tool?",
@@ -380,7 +361,7 @@
       "name": "What does it cost?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Pricing is per physician per month, plus a one-time setup fee. Founding clinics start with a 60-day pilot at no charge."
+        "text": "Pricing is per physician per month, plus a one-time setup fee. Clinics start with 60 days at no charge."
       }
     },
     {
@@ -404,7 +385,7 @@
       "name": "Which EMRs does it work with?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "We are building for OSCAR first. Accuro and TELUS CHR are planned. It connects through the EMR's official API, so each EMR is its own piece of work."
+        "text": "It works with OSCAR. Accuro and TELUS CHR are done on request. It connects through the EMR's official API, so each EMR is its own piece of work."
       }
     },
     {
@@ -444,9 +425,9 @@
   <div class="wrap">
     <a class="brand" href="/"><img src="logo.svg" alt="" />Aevon</a>
     <div class="navr">
-      <a href="#what">What we are building</a>
+      <a href="#what">What it does</a>
       <a href="#privacy">Privacy</a>
-      <a href="#founding">Founding clinics</a>
+      <a href="#getting-started">Getting started</a>
       <a href="#questions">Questions</a>
       <a class="btn btn-primary btn-sm" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a call</a>
     </div>
@@ -459,19 +440,19 @@
     <span class="lbl">Aevon Health</span>
     <h1>From fax to booked, inside your EMR.</h1>
     <p class="sub">
-      Sorting a fax is the easy part. Someone still has to confirm it, chase what is missing, book the patient and send the welcome. We are building the part that does all of that, so routine referrals reach the schedule without your staff touching them.
+      Sorting a fax is the easy part. Someone still has to confirm it, chase what is missing, book the patient and send the welcome. Aevon Health does all of that, so routine referrals reach the schedule without your staff touching them.
     </p>
     <div class="cta">
       <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 15-minute call</a>
       <a class="btn btn-ghost" href="#contact">Or send us a note</a>
     </div>
-    <p class="verify"><b>In development.</b> We are looking for founding clinics for a 60-day pilot at no charge.</p>
+    <p class="verify"><b>60 days at no charge.</b> We handle the EMR connection and prepare the privacy impact assessment.</p>
   </div>
 
   <figure class="hero-art ill" id="reel">
     <div class="hero-stack" id="hero-stack">
       <div class="hero-static" id="hero-static">
-      <div class="hero-stage" role="img" aria-label="Illustration of how it would look in OSCAR, with fictional names. On the left, an OSCAR Incoming Docs list of documents already labelled by type, with a new Referral for Tran, Olivia at the top, beside a separate Aevon panel that checks the referral against the clinic's required list: patient name, date of birth, health number, phone number and reason for referral present are ticked, and a recent report is missing. On the right, a phone showing a text from Your Clinic to a patient who has agreed to texts: Dr. Hale has these times, Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am, reply 1, 2 or 3. The patient replies 1 and it is marked Delivered.">
+      <div class="hero-stage" role="img" aria-label="Illustration with fictional names. On the left, an OSCAR Incoming Docs list of documents already labelled by type, with a new Referral for Tran, Olivia at the top, beside a separate Aevon panel that checks the referral against the clinic's required list: patient name, date of birth, health number, phone number and reason for referral present are ticked, and a recent report is missing. On the right, a phone showing a text from Your Clinic to a patient who has agreed to texts: Dr. Hale has these times, Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am, reply 1, 2 or 3. The patient replies 1 and it is marked Delivered.">
         <div class="hs-left">
           <div class="ow">
             <div class="ow-bar">OSCAR EMR (illustration)<span>Front desk</span></div>
@@ -527,17 +508,16 @@
             <li>The form shows Completed. A new document arrives in the OSCAR Inbox and is attached to the same referral, and the checklist is fully ticked.</li>
             <li>The patient, who has agreed to texts, is texted the times Dr. Hale has: Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am. They reply 1 and it is marked Delivered.</li>
             <li>Clinic rule met: complete referral, patient matched, time picked. The appointment appears on the OSCAR schedule day view on its own, with no tickler to tick. The patient's phone shows the confirmation and Welcome email sent. A list headed For your staff: 1 exception shows one tickler from a different referral, Okafor, Daniel: Call to book, no text consent on file. Staff make the first call and record consent, and texting can follow.</li>
-            <li>End card: One referral, from fax to booked. Routine referrals handled, exceptions to your staff. In development. Illustration with fictional names.</li>
+            <li>End card: One referral, from fax to booked. Routine referrals handled, exceptions to your staff. Illustration with fictional names.</li>
           </ol>
         </div>
-    <figcaption class="vh">Illustration of how it would look in OSCAR. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University. The product is in development, so this is not a screenshot.</figcaption>
+    <figcaption class="vh">Illustration. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University.</figcaption>
   </figure>
 </header>
 
 <main id="main">
 
-<!-- Where a template puts customer logos. There are no clinic customers yet, so this strip carries
-     four of the privacy commitments instead. The full list is in #privacy. -->
+<!-- This strip carries four of the privacy commitments. The full list is in #privacy. -->
 <div class="strip">
   <div class="wrap">
     <span class="lbl">How it is built</span>
@@ -600,7 +580,7 @@
             <div>09:53 <span>WRITE</span> tickler, Okafor, Daniel</div>
           </div>
         </div>
-        <figcaption>Illustration of how it would look in OSCAR. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University.</figcaption>
+        <figcaption>Illustration. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University.</figcaption>
       </figure>
     </div>
   </div>
@@ -610,7 +590,7 @@
   <div class="wrap">
     <div class="sec-head">
       <h2>Two jobs, done properly.</h2>
-      <p class="lede">Both of these are in development and neither is available yet.</p>
+      <p class="lede">Referral intake and cancellation backfill, both inside your EMR.</p>
     </div>
 
     <div class="feature">
@@ -642,7 +622,7 @@
             <li class="ok">Confirmation and welcome email sent</li>
           </ol>
         </div>
-        <figcaption>Illustration with sample data. All names are fictional. The product is in development.</figcaption>
+        <figcaption>Illustration with sample data. All names are fictional.</figcaption>
       </figure>
     </div>
 
@@ -689,21 +669,11 @@
         </div>
       </div>
         </div>
-        <figcaption>Illustration of how it would look in OSCAR. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University.</figcaption>
+        <figcaption>Illustration. All names are fictional. Aevon is not affiliated with OSCAR EMR or McMaster University.</figcaption>
       </figure>
     </div>
 
-    <div class="road">
-      <h3>Planned for later</h3>
-      <p>These are not built yet and are not available.</p>
-      <ul>
-        <li><span class="lbl">Not yet available</span>Closing the loop when a consult report or result comes back</li>
-        <li><span class="lbl">Not yet available</span>Records and form requests, with deadlines</li>
-        <li><span class="lbl">Not yet available</span>Alerts when an outgoing fax fails</li>
-        <li><span class="lbl">Not yet available</span><a href="oscar-emr-referral-follow-up.html">Referral follow-up</a> for family practices</li>
-      </ul>
-      <p class="after">If there is other admin work you would like automated, we also take on custom work. Email <a href="mailto:hello@aevon.ca">hello@aevon.ca</a> and describe it.</p>
-    </div>
+    <p class="after-custom">If there is other admin work you would like automated, we also take on custom work. Email <a href="mailto:hello@aevon.ca">hello@aevon.ca</a> and describe it.</p>
 
     <div class="band">
       <p>Book a 15-minute call to talk about either of these for your clinic.</p>
@@ -715,13 +685,13 @@
 <section id="emrs" class="tight bt">
   <div class="wrap">
     <div class="sec-head">
-      <h2>Works on your EMR: OSCAR first, Accuro and TELUS CHR planned.</h2>
+      <h2>Works inside your EMR: OSCAR, with Accuro and TELUS CHR on request.</h2>
       <p class="lede">We connect through each EMR's official API, so support is added one EMR at a time.</p>
     </div>
     <ul class="emr">
-      <li class="now"><b>OSCAR</b><span>Building for it now</span></li>
-      <li><b>Accuro</b><span>Planned</span></li>
-      <li><b>TELUS CHR</b><span>Planned</span></li>
+      <li class="now"><b>OSCAR</b><span>Supported first</span></li>
+      <li><b>Accuro</b><span>On request</span></li>
+      <li><b>TELUS CHR</b><span>On request</span></li>
     </ul>
     <p class="after">If your clinic uses a different EMR, email <a href="mailto:hello@aevon.ca">hello@aevon.ca</a> and tell us which one.</p>
   </div>
@@ -746,33 +716,32 @@
   </div>
 </section>
 
-<section id="founding" class="bt">
+<section id="getting-started" class="bt">
   <div class="wrap">
     <div class="price-grid" style="margin-top:0">
       <div>
-        <h2 class="h2" style="margin-top:0">Founding clinic program</h2>
+        <h2 class="h2" style="margin-top:0">Getting started</h2>
         <p style="margin-top:16px;color:var(--ink-2)">
-          We are looking for a small number of clinics to build these with. Founding clinics get
-          a 60-day pilot at no charge. In return, we ask for honest feedback, one staff member as
-          our contact, and permission to share the results if it works.
+          Your clinic pays nothing for 60 days. We handle the EMR connection, prepare the privacy
+          impact assessment, and agree one measure with you to judge it by.
         </p>
-        <p class="founder">
+        <p class="about">
           Aevon Health is a Canadian service from Aevon that builds administrative automation for medical clinics on top of the EMR they already use. It is led by Aidan Cox, whose background is medical clinic IT and privacy.
         </p>
       </div>
       <div class="price-box">
-        <span class="lbl">Founding clinics</span>
+        <span class="lbl">Getting started</span>
         <div class="price-num" style="margin-top:8px">60 days</div>
-        <p style="color:var(--ink-2);margin-top:2px">pilot at no charge</p>
+        <p style="color:var(--ink-2);margin-top:2px">at no charge</p>
         <ul class="price-list">
           <li>We handle the EMR connection</li>
           <li>We prepare the privacy impact assessment</li>
           <li>One agreed number to judge it by, such as how many days behind your fax inbox is</li>
           <li>A 15-minute check-in every week</li>
-          <li>Founding pricing after the pilot</li>
+          <li>Pricing is per physician per month after the 60 days</li>
         </ul>
         <div style="margin-top:24px">
-          <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Ask about the founding program</a>
+          <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Ask about getting started</a>
         </div>
       </div>
     </div>
@@ -784,10 +753,6 @@
     <h2 style="font-size:clamp(26px,3vw,34px)">Questions clinics ask</h2>
     <div style="margin-top:26px">
       <details open>
-        <summary>Is it available now?</summary>
-        <p>Not yet. Both automations are in development. We are looking for founding clinics to build them with, starting with clinics that use OSCAR.</p>
-      </details>
-      <details>
         <summary>Does this replace our EMR or booking tool?</summary>
         <p>No. It works alongside your EMR and does not replace it. If you use an online booking tool, that keeps working the way it does now.</p>
       </details>
@@ -829,7 +794,7 @@
       </details>
       <details>
         <summary>What does it cost?</summary>
-        <p>Pricing is per physician per month, plus a one-time setup fee. Founding clinics start with a 60-day pilot at no charge.</p>
+        <p>Pricing is per physician per month, plus a one-time setup fee. Clinics start with 60 days at no charge.</p>
       </details>
       <details>
         <summary>What if we want to stop?</summary>
@@ -841,7 +806,7 @@
       </details>
       <details>
         <summary>Which EMRs does it work with?</summary>
-        <p>We are building for OSCAR first. Accuro and TELUS CHR are planned. It connects through the EMR's official API, so each EMR is its own piece of work.</p>
+        <p>It works with OSCAR. Accuro and TELUS CHR are done on request. It connects through the EMR's official API, so each EMR is its own piece of work.</p>
       </details>
       <details>
         <summary>How does it fit with privacy law in BC and Ontario?</summary>
@@ -863,7 +828,7 @@
   <div class="wrap" style="max-width:940px">
     <div class="sec-head">
       <h2>Tell us about your clinic.</h2>
-      <p class="lede">A reply from the person building it, usually the same day. Or <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">book a 15-minute call</a>.</p>
+      <p class="lede">A reply from a person, usually the same day. Or <a href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">book a 15-minute call</a>.</p>
     </div>
     <form id="clinic-form" style="margin-top:30px; max-width:640px" novalidate>
       <div class="fgrid">
@@ -929,7 +894,7 @@
 <section class="close bt">
   <div class="wrap">
     <h2>Book a 15-minute call</h2>
-    <p>On the call we will ask which EMR you use and where your front desk spends time on follow-up. If we cannot help your clinic yet, we will say so.</p>
+    <p>On the call we will ask which EMR you use and where your front desk spends time on follow-up. If we cannot help your clinic, we will say so.</p>
     <div class="cta">
       <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 15-minute call</a>
       <a class="btn btn-ghost" href="mailto:hello@aevon.ca">hello@aevon.ca</a>
