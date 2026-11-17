@@ -403,6 +403,51 @@ body.embed .controls:focus-within { opacity: 1; pointer-events: auto; }
 body.reduced .reel { display: none; }
 body.reduced .board { display: block; }
 body.reduced { display: block; }
+
+/* ---------- motion layer: camera, cursor, arriving rows, typing, checks ---------- */
+/* each scene is its own camera: it eases in, then zooms and pans to what matters */
+.sc { transform-origin: 0 0; transform: translateY(18px) scale(.985); transition: opacity .5s ease, transform 1.1s cubic-bezier(.45,.05,.2,1); will-change: transform; }
+.sc.on { transform: none; }
+/* captions come in word by word */
+.caption .cl { display: block; }
+.caption .cw { display: inline-block; white-space: pre; animation: cwin .5s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes cwin { from { opacity: 0; transform: translateY(.35em); filter: blur(3px); } to { opacity: 1; transform: none; filter: none; } }
+/* inbox rows arrive one after another */
+.sc.on .itbl tbody tr:not(.nr) td { animation: rowin .45s ease both; }
+.sc.on .itbl tbody tr:nth-child(2) td { animation-delay: .15s; } .sc.on .itbl tbody tr:nth-child(3) td { animation-delay: .3s; }
+.sc.on .itbl tbody tr:nth-child(4) td { animation-delay: .45s; } .sc.on .itbl tbody tr:nth-child(5) td { animation-delay: .6s; }
+.sc.on .itbl tbody tr:nth-child(6) td { animation-delay: .75s; }
+@keyframes rowin { from { opacity: 0; } to { opacity: 1; } }
+/* a new document lands with a flash, and is selected when clicked */
+.itbl tr.nr.on td { animation: rowflash 1.8s ease both; }
+@keyframes rowflash { 0% { background: #ffd83d; box-shadow: inset 0 2px 0 #d49b00, inset 0 -2px 0 #d49b00; } 100% { background: #ffffaa; box-shadow: none; } }
+.itbl tr.nr.sel td { animation: none; background: #cfe0ff; box-shadow: inset 0 2px 0 #486ebd, inset 0 -2px 0 #486ebd; }
+.bump { display: inline-block; animation: bump .6s ease; }
+@keyframes bump { 0% { transform: scale(1); } 40% { transform: scale(1.7); color: #b8860b; } 100% { transform: scale(1); } }
+/* a check spins while it is being checked, then pops to a tick */
+.line.on:not(.done):not(.miss) .ic { border-color: var(--line-2); border-top-color: var(--accent); animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.line.done .ic { animation: tickpop .4s cubic-bezier(.3,1.6,.5,1); }
+@keyframes tickpop { 0% { transform: scale(.5); } 100% { transform: scale(1); } }
+.line.miss .ic { animation: shake .45s ease; }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+.live { animation: livep 1.6s ease-out infinite; }
+@keyframes livep { 0% { box-shadow: 0 0 0 0 rgba(157,191,161,.5); } 100% { box-shadow: 0 0 0 12px rgba(157,191,161,0); } }
+/* outgoing notices slide in, and their Sent mark pops */
+.ackc.rv { transform: translateX(32px); } .ackc.rv.on { transform: none; }
+.ackc.on .stx { animation: pop .45s .3s cubic-bezier(.3,1.6,.5,1) both; }
+@keyframes pop { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: scale(1); } }
+/* text bubbles pop from their corner, after typing dots */
+.b.rv { transform: translateY(10px) scale(.9); transform-origin: left bottom; transition: opacity .25s ease, transform .4s cubic-bezier(.3,1.5,.5,1); }
+.b.out.rv { transform-origin: right bottom; }
+.b.rv.on { transform: none; }
+.b.typ.tin { align-self: flex-start; margin: 0 0 0 6px; background: #e6e8eb; }
+.b.typ.tin i { background: rgba(60,66,74,.7); }
+.rcp.pick { animation: pickp .6s ease; }
+@keyframes pickp { 0% { transform: scale(1); } 45% { transform: scale(1.04); } 100% { transform: scale(1); } }
+/* the booked appointment drops into the schedule */
+.lane.on .ap.n.on { animation: apin .7s cubic-bezier(.3,1.5,.5,1) both; }
+@keyframes apin { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: scale(1); } }
 </style>
 </head>
 <body>
@@ -431,7 +476,7 @@ body.reduced { display: block; }
         </div></section>
 
         <section class="sc" id="s4"><div class="row">
-          <div class="phone s4p"><div class="pscreen"><div class="sbar"><span>9:41</span><span class="ico"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div><div class="phead"><span class="back"></span><span class="av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div><div class="thread"><div class="stamp">Today 9:41 am</div><div class="b in rv" id="m4">Hi Olivia, Your Clinic has received your referral. Please complete this short form before we book you.<span class="fbtn">Complete the form</span></div></div></div></div>
+          <div class="phone s4p"><div class="pscreen"><div class="sbar"><span>9:41</span><span class="ico"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div><div class="phead"><span class="back"></span><span class="av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div><div class="thread"><div class="stamp">Today 9:41 am</div><div class="b in typ tin" id="t4"><i></i><i></i><i></i></div><div class="b in rv" id="m4">Hi Olivia, Your Clinic has received your referral. Please complete this short form before we book you.<span class="fbtn">Complete the form</span></div></div></div></div>
           <div class="sendp a" style="--d:.4s">
             <p class="lbl acc">Two things go out at once</p>
             <div class="ackc rv" id="ack"><div class="ackh"><span>To the referring office</span><span class="stx">Sent</span></div><b>Dr. Quinn&rsquo;s office</b><p>Referral received. We will contact the patient to book. Still needed: the recent report.</p></div>
@@ -452,7 +497,7 @@ body.reduced { display: block; }
         </div></section>
 
         <section class="sc" id="s6"><div class="row">
-          <div class="phone s6p"><div class="pscreen"><div class="sbar"><span>9:52</span><span class="ico"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div><div class="phead"><span class="back"></span><span class="av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div><div class="thread"><div class="stamp">Today 9:52 am</div><div class="b in rv" id="m6">Dr. Hale has these times: Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am. Reply 1, 2 or 3.</div><div class="b out typ" id="typ"><i></i><i></i><i></i></div><div class="b out rv" id="y6">1</div><div class="dlv rv" id="dlv">Delivered</div></div></div></div>
+          <div class="phone s6p"><div class="pscreen"><div class="sbar"><span>9:52</span><span class="ico"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div><div class="phead"><span class="back"></span><span class="av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div><div class="thread"><div class="stamp">Today 9:52 am</div><div class="b in typ tin" id="t6"><i></i><i></i><i></i></div><div class="b in rv" id="m6">Dr. Hale has these times: Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am. Reply 1, 2 or 3.</div><div class="b out typ" id="typ"><i></i><i></i><i></i></div><div class="b out rv" id="y6">1</div><div class="dlv rv" id="dlv">Delivered</div></div></div></div>
           <div class="sendp a" style="--d:.4s">
             <p class="lbl acc hide-n">Clinic rule: new referrals to Dr. Hale, New consult</p>
             <span class="nohd">Consent to text: on file</span>
@@ -586,7 +631,7 @@ body.reduced { display: block; }
   function build() { q('#sb').innerHTML = sched(); q('#ia').innerHTML = inbox(false); q('#ib').innerHTML = inbox(true); }
 
   /* ---------- engine ---------- */
-  var STATE = ['on', 'done', 'miss', 'press', 'pick'];
+  var STATE = ['on', 'done', 'miss', 'press', 'pick', 'sel', 'bump'];
   var ST = [0, 3.2, 9.2, 14.8, 20.6, 26.0, 31.4, 42.4], TOTAL = 46.4;
   var CAP = [
     '',
@@ -610,10 +655,19 @@ body.reduced { display: block; }
     clearTimeout(capTimer);
     if (silent || reduced) { cap.textContent = s; cap.style.opacity = 1; return; }
     cap.style.opacity = 0;
-    capTimer = setTimeout(function () { cap.textContent = s; cap.style.opacity = 1; }, 200);
+    capTimer = setTimeout(function () {
+      cap.textContent = '';
+      var line = document.createElement('span'); line.className = 'cl';
+      s.split(' ').forEach(function (w, i) {
+        var sp = document.createElement('span'); sp.className = 'cw';
+        sp.style.animationDelay = (i * 45) + 'ms'; sp.textContent = w + ' ';
+        line.appendChild(sp);
+      });
+      cap.appendChild(line); cap.style.opacity = 1;
+    }, 220);
   }
   function go(n) {
-    qa('.sc', inner).forEach(function (e, i) { e.classList.toggle('on', i === n - 1); });
+    qa('.sc', inner).forEach(function (e, i) { e.style.transform = ''; e.style.transitionDuration = ''; e.classList.toggle('on', i === n - 1); });
     inner.setAttribute('data-scene', n);
     setCap(CAP[n - 1]);
     off('#cur'); ctaEl.classList.remove('on');
@@ -635,59 +689,114 @@ body.reduced { display: block; }
     if (silent) return;
     cur.classList.add('press'); setTimeout(function () { cur.classList.remove('press'); }, 520);
   }
+  /* camera: zoom the current scene toward an element (or its centre), and back out */
+  function lrect(e, root) {
+    var x = 0, y = 0, n = e;
+    while (n && n !== root) { x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent; }
+    return [x, y, e.offsetWidth, e.offsetHeight];
+  }
+  function cam(sel, z, fx, fy, ms) {
+    if (silent || reduced) return;
+    var sce = q('.sc.on', inner); if (!sce) return;
+    if (narrow) z = 1 + (z - 1) * .45;
+    var el = sel ? q(sel, sce) : null;
+    var r = el ? lrect(el, sce) : [0, 0, W, H];
+    var cx = r[0] + r[2] * (fx == null ? .5 : fx), cy = r[1] + r[3] * (fy == null ? .5 : fy);
+    var tx = W / 2 - cx * z, ty = H / 2 - cy * z;
+    sce.style.transitionDuration = '.5s, ' + (ms || 1100) + 'ms';
+    sce.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) scale(' + z + ')';
+  }
+  function camOut(ms) {
+    if (silent || reduced) return;
+    var sce = q('.sc.on', inner); if (!sce) return;
+    sce.style.transitionDuration = '.5s, ' + (ms || 1000) + 'ms';
+    sce.style.transform = 'translate(0px,0px) scale(1)';
+  }
   function startPos() { return [W * .86, H * .9]; }
   function apprStart() { var s = startPos(); curSet(s[0], s[1]); }
 
-  /* scene 1 */
+  /* scene 1: title, with a slow push in */
   sc(1, 0, function () { go(1); });
-  /* scene 2: the Inbox, already sorted by type; one new referral arrives */
+  sc(1, .2, function () { cam(null, 1.07, .5, .5, 3000); });
+  /* scene 2: the Inbox, already sorted by type; the camera moves in, one new referral lands, the cursor opens it */
   sc(2, 0, function () { go(2); });
-  sc(2, 2.8, function () { on('#newrow'); txt('#icnt', '6'); txt('#idoc', '5'); });
-  /* scene 3: checked against the clinic's own list */
+  sc(2, .7, function () { apprStart(); });
+  sc(2, .9, function () { curTo('#ia .i-h', 1300, .75, .5); });
+  sc(2, 1.9, function () { cam('#ia .itbl', 1.35, .42, .35); });
+  sc(2, 3.0, function () { on('#newrow'); txt('#icnt', '6'); txt('#idoc', '5'); on('#icnt', 'bump'); on('#idoc', 'bump'); });
+  sc(2, 3.7, function () { curTo('#newrow .ty', 800, .5, .5); });
+  sc(2, 4.7, function () { click(); on('#newrow', 'sel'); });
+  sc(2, 5.3, function () { camOut(700); });
+  /* scene 3: checked against the clinic's own list; the camera goes to the list, then to what is missing */
   sc(3, 0, function () { go(3); });
-  [[.8, 'c1'], [1.5, 'c2'], [2.2, 'c3'], [2.9, 'c4'], [3.6, 'c5']].forEach(function (x) {
+  sc(3, .5, function () { cam('#s3 .win', 1.22, .5, .45); });
+  [[.9, 'c1'], [1.5, 'c2'], [2.1, 'c3'], [2.7, 'c4'], [3.3, 'c5']].forEach(function (x) {
     sc(3, x[0], function () { on('#' + x[1]); });
-    sc(3, x[0] + .5, function () { on('#' + x[1], 'done'); });
+    sc(3, x[0] + .45, function () { on('#' + x[1], 'done'); });
   });
-  sc(3, 4.3, function () { on('#c6'); });
-  sc(3, 4.8, function () { on('#c6', 'miss'); });
-  /* scene 4: two things go out at once */
+  sc(3, 3.9, function () { on('#c6'); });
+  sc(3, 4.0, function () { cam('#c6', 1.5, .4, .5, 800); });
+  sc(3, 4.5, function () { on('#c6', 'miss'); });
+  sc(3, 5.1, function () { camOut(500); });
+  /* scene 4: close on the phone as the text arrives, then out to show both notices */
   sc(4, 0, function () { go(4); });
-  sc(4, .8, function () { on('#ack'); });
-  sc(4, 1.2, function () { on('#ptc'); on('#m4'); });
-  /* scene 5: the missing items come back */
+  sc(4, .3, function () { cam('#s4 .thread', 1.5, .5, .8); });
+  sc(4, .6, function () { on('#t4'); });
+  sc(4, 1.6, function () { off('#t4'); on('#m4'); });
+  sc(4, 2.6, function () { camOut(800); });
+  sc(4, 3.1, function () { on('#ack'); });
+  sc(4, 3.5, function () { on('#ptc'); });
+  /* scene 5: the missing items come back; the camera follows the activity, the inbox, then the checklist */
   sc(5, 0, function () { go(5); });
   for (var k = 1; k <= 5; k++) { (function (id) { sc(5, 0, function () { on('#' + id); on('#' + id, 'done'); }); })('d' + k); }
   sc(5, 0, function () { on('#d6'); on('#d6', 'miss'); });
-  sc(5, .7, function () { on('#f1'); });
-  sc(5, 1.2, function () { on('#f1', 'done'); });
-  sc(5, 1.9, function () { on('#ndoc'); });
-  sc(5, 2.3, function () { on('#f2'); });
-  sc(5, 2.8, function () { on('#f2', 'done'); });
-  sc(5, 3.6, function () { off('#d6', 'miss'); txt('#d6t', 'Recent report attached'); on('#d6', 'done'); });
-  /* scene 6: the patient picks a time by text */
+  sc(5, .4, function () { cam('#s5 .win', 1.2, .5, .3); });
+  sc(5, .8, function () { on('#f1'); });
+  sc(5, 1.3, function () { on('#f1', 'done'); });
+  sc(5, 1.7, function () { cam('#ib', 1.3, .5, .6); });
+  sc(5, 2.2, function () { on('#ndoc'); });
+  sc(5, 3.0, function () { cam('#s5 .win', 1.2, .5, .5); });
+  sc(5, 3.2, function () { on('#f2'); });
+  sc(5, 3.7, function () { on('#f2', 'done'); });
+  sc(5, 4.2, function () { off('#d6', 'miss'); txt('#d6t', 'Recent report attached'); on('#d6', 'done'); });
+  sc(5, 4.9, function () { camOut(500); });
+  /* scene 6: close on the phone while the patient replies, then out to the offered times */
   sc(6, 0, function () { go(6); });
-  sc(6, .6, function () { on('#m6'); on('#o1'); on('#o2'); on('#o3'); });
-  sc(6, 1.8, function () { on('#typ'); });
-  sc(6, 2.9, function () { off('#typ'); on('#y6'); });
-  sc(6, 3.4, function () { on('#dlv'); });
-  sc(6, 3.7, function () { on('#o1', 'pick'); txt('#o1 .stx', 'Picked'); });
-  /* scene 7: it books itself; only the exception reaches staff */
+  sc(6, .2, function () { cam('#s6 .thread', 1.5, .5, .78); });
+  sc(6, .4, function () { on('#t6'); });
+  sc(6, 1.1, function () { off('#t6'); on('#m6'); });
+  sc(6, 1.9, function () { on('#typ'); });
+  sc(6, 2.6, function () { off('#typ'); on('#y6'); });
+  sc(6, 2.9, function () { on('#dlv'); });
+  sc(6, 3.1, function () { camOut(700); });
+  sc(6, 3.5, function () { on('#o1'); });
+  sc(6, 3.7, function () { on('#o2'); });
+  sc(6, 3.9, function () { on('#o3'); });
+  sc(6, 4.3, function () { on('#o1', 'pick'); txt('#o1 .stx', 'Picked'); });
+  /* scene 7: it books itself; the camera goes to the rule, then to the appointment as it lands */
   sc(7, 0, function () { go(7); });
   sc(7, .2, function () { if (!narrow) { on('#s7sched'); on('#sb .lane'); } });
   sc(7, .4, function () { on('#s7rule'); });
+  sc(7, .7, function () { cam('#s7rule', 1.25, .5, .5); });
   [[1.0, 'r1'], [1.8, 'r2'], [2.6, 'r3']].forEach(function (x) {
     sc(7, x[0], function () { on('#' + x[1]); });
     sc(7, x[0] + .4, function () { on('#' + x[1], 'done'); });
   });
   sc(7, 3.4, function () { on('#r4'); on('#r4', 'done'); });
-  sc(7, 4.0, function () { if (narrow) { off('#s7rule'); on('#s7sched'); on('#sb .lane'); } });
-  sc(7, 4.7, function () { on('#sb .ap.n'); });
-  sc(7, 6.2, function () { if (narrow) off('#s7sched'); on('#s7ph'); });
-  sc(7, 7.4, function () { on('#wel'); });
-  sc(7, 8.2, function () { if (narrow) off('#s7ph'); on('#s7exc'); });
+  sc(7, 3.9, function () { if (narrow) { off('#s7rule'); on('#s7sched'); on('#sb .lane'); } });
+  sc(7, 4.0, function () { if (!narrow) cam('#sb .ap.n', 1.45, .5, .5); });
+  sc(7, 4.9, function () { on('#sb .ap.n'); });
+  sc(7, 5.3, function () { apprStart(); });
+  sc(7, 5.4, function () { curTo('#sb .ap.n', 700, .3, .6); });
+  sc(7, 6.2, function () { click(); });
+  sc(7, 6.6, function () { off('#cur'); camOut(900); if (narrow) off('#s7sched'); on('#s7ph'); });
+  sc(7, 7.6, function () { on('#wel'); });
+  sc(7, 8.4, function () { if (narrow) off('#s7ph'); on('#s7exc'); });
+  sc(7, 8.7, function () { cam('#s7exc', 1.2, .5, .5); });
+  sc(7, 10.3, function () { camOut(600); });
   /* scene 8: end card */
   sc(8, 0, function () { go(8); });
+  sc(8, .2, function () { cam(null, 1.05, .5, .5, 3500); });
   sc(8, 1.5, function () { ctaEl.classList.add('on'); });
   cues.sort(function (a, b) { return a.t - b.t || a.i - b.i; });
 
@@ -695,6 +804,7 @@ body.reduced { display: block; }
     clearTimeout(capTimer);
     qa('[class]', stage).forEach(function (e) { STATE.forEach(function (c) { e.classList.remove(c); }); });
     qa('[data-init]', inner).forEach(function (e) { e.textContent = e.getAttribute('data-init'); });
+    qa('.sc', inner).forEach(function (e) { e.style.transform = ''; e.style.transitionDuration = ''; });
     ctaEl.classList.remove('on');
     cur.style.transform = 'translate(' + W * .86 + 'px,' + H * .9 + 'px)';
   }
