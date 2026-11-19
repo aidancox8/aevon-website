@@ -48,7 +48,7 @@ p { text-wrap: pretty; }
 .lbl.accent { color: var(--accent); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 .skip { position: absolute; left: 12px; top: -60px; z-index: 10; background: var(--accent); color: var(--on-accent); font-weight: 600; font-size: 15px; padding: 10px 16px; border-radius: 999px; text-decoration: none; }
-.skip:focus { top: 12px; color: var(--on-accent); }
+.skip:focus, .skip:hover { top: 12px; color: var(--on-accent); }
 
 /* ---- nav: sits over the hero, no bar ---- */
 nav { position: absolute; top: 0; left: 0; right: 0; z-index: 5; }
