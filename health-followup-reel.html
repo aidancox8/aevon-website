@@ -524,7 +524,7 @@ body.reduced { display: block; }
             <h2>New task</h2>
             <div class="ff"><label>Patient</label><span class="fi ro">Nair, Priya</span></div>
             <div class="ff"><label>Message</label><span class="fi ta" id="msgf"><span id="ty" data-init=""></span><i class="caret"></i></span></div>
-            <div class="ff"><label>Assigned to</label><span class="ddw"><span class="fi dd" id="asg"><span id="asgt" data-init="Front desk">Front desk</span><i></i></span><span class="ddm" id="ddm"><span class="ddo now">Front desk</span><span class="ddo">Hale, Dr.</span><span class="ddo" id="dd3">Aevon</span></span></span></div>
+            <div class="ff"><label>Assigned to</label><span class="ddw"><span class="fi dd" id="asg"><span id="asgt" data-init="Front desk">Front desk</span><i></i></span><span class="ddm" id="ddm"><span class="ddo now">Front desk</span><span class="ddo">Hale, Dr.</span><span class="ddo" id="dd3">Aevon Agent</span></span></span></div>
             <div class="tk-act"><span class="btn3 pri" id="save">Save</span><span class="btn3">Cancel</span><span class="saved rvr" id="saved">Task saved</span></div>
           </div>
         </div></section>
@@ -561,14 +561,14 @@ body.reduced { display: block; }
             <h2>Tasks</h2>
             <table class="tktbl"><thead><tr><th>Patient</th><th class="hn">Created by</th><th>Assigned to</th><th>Status</th><th class="hn">Message</th></tr></thead>
             <tbody>
-              <tr id="trow"><td>Nair, Priya</td><td class="hn">Hale, Dr.</td><td>Aevon</td><td class="stt"><b><span class="s1">Active</span><span class="s2">Complete</span></b></td><td class="hn">Follow-up in 6 weeks, 15 min</td></tr>
+              <tr id="trow"><td>Nair, Priya</td><td class="hn">Hale, Dr.</td><td>Aevon Agent</td><td class="stt"><b><span class="s1">Active</span><span class="s2">Complete</span></b></td><td class="hn">Follow-up in 6 weeks, 15 min</td></tr>
               <tr><td>Bell, Marcus</td><td class="hn">Hale, Dr.</td><td>Front desk</td><td class="stt"><b>Active</b></td><td class="hn">Send requisition form</td></tr>
               <tr><td>Park, Helen</td><td class="hn">Hale, Dr.</td><td>Front desk</td><td class="stt"><b>Active</b></td><td class="hn">Update address on file</td></tr>
             </tbody></table>
             <div class="notes" id="notes">
               <div class="ah"><span>Time</span><span>By</span><span>Note for Nair, Priya</span></div>
-              <div class="ar"><span>10:01 am</span><span>Aevon</span><span>[Aevon] started</span></div>
-              <div class="ar hot" id="nrow"><span>10:06 am</span><span>Aevon</span><span>Booked Wed 30 Dec 13:15 by text</span></div>
+              <div class="ar"><span>10:01 am</span><span>Aevon Agent</span><span>[Aevon] started</span></div>
+              <div class="ar hot" id="nrow"><span>10:06 am</span><span>Aevon Agent</span><span>Booked Wed 30 Dec 13:15 by text</span></div>
             </div>
           </div>
         </div></section>
@@ -765,7 +765,7 @@ body.reduced { display: block; }
   sc(1, 4.9, function () { curTo('#dd3', 400, .25, .5); });
   sc(1, 5.3, function () { on('#dd3', 'sel'); });
   sc(1, 5.7, function () { click(); });
-  sc(1, 5.85, function () { off('#ddm'); off('#asg'); txt('#asgt', 'Aevon'); on('#asg', 'pick'); });
+  sc(1, 5.85, function () { off('#ddm'); off('#asg'); txt('#asgt', 'Aevon Agent'); on('#asg', 'pick'); });
   sc(1, 6.2, function () { curTo('#save', 450, .5, .5); });
   sc(1, 6.7, function () { click(); on('#save', 'press'); });
   sc(1, 6.9, function () { on('#saved'); });
@@ -915,7 +915,7 @@ body.reduced { display: block; }
   function buildBoard() {
     var KEY = [7.2, 6.0, 5.0, 4.2, 4.0, 4.6, 4.6, 3.0];
     var DET = [
-      'An EMR task window. The doctor types Follow-up in 6 weeks, 15 min, picks Aevon from the Assigned to list and saves.',
+      'An EMR task window. The doctor types Follow-up in 6 weeks, 15 min, picks Aevon Agent from the Assigned to list and saves.',
       'A phone. The text reads: Hi Priya, this is the automated assistant at Rosewood Clinic. Dr. Hale would like to see you for a follow-up visit. Reply 1 for Tue Dec 29 at 10:00am, 2 for Wed Dec 30 at 1:15pm, or 3 for Thu Dec 31 at 9:00am. Reply OTHER for different times, or STOP to opt out.',
       'The patient replies 2. The confirmation reads: Hi Priya, you are booked for a follow-up visit with Dr. Hale at Rosewood Clinic on Wed Dec 30 at 1:15pm. Reply to this message if you need to change it and the clinic will call you.',
       'The doctor’s day sheet for Wednesday December 30. A new appointment for Nair, Priya is at 1:15 pm.',

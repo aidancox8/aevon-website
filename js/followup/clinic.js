@@ -145,7 +145,7 @@ export function createClinic() {
     return {
       row, emrTask, patient: patient(row.patient_id),
       status: describeTask(row, s, clock.now(), { queued: stores.messages.hasQueued(taskId) }),
-      assignee: emrTask.assigneeId === s.agentUserId ? 'Aevon' : 'Front desk',
+      assignee: emrTask.assigneeId === s.agentUserId ? 'Aevon Agent' : 'Front desk',
     };
   }
 

@@ -133,11 +133,11 @@ function renderTask() {
     ['Patient', `${v.patient.lastName}, ${v.patient.firstName}`],
     ['Created by', DOCTOR.displayName],
     ['Message', v.emrTask.message],
-    ['Assigned to', h('b', { class: v.assignee === 'Aevon' ? '' : 'fd' }, v.assignee)],
+    ['Assigned to', h('b', { class: v.assignee === 'Aevon Agent' ? '' : 'fd' }, v.assignee)],
     ['Status', h('b', { class: done ? 'ok' : '' }, done ? 'Complete' : 'Active')],
   ];
   const notes = v.emrTask.comments.map((c) => h('tr', {},
-    h('td', { class: 'nt-t' }, stamp(Date.parse(c.at))), h('td', {}, 'Aevon'), h('td', { class: 'nt-x' }, c.text)));
+    h('td', { class: 'nt-t' }, stamp(Date.parse(c.at))), h('td', {}, 'Aevon Agent'), h('td', { class: 'nt-x' }, c.text)));
   box.replaceChildren(
     h('table', { class: 'kv' }, h('tbody', {}, rows.map(([k, val]) => h('tr', {}, h('th', { scope: 'row' }, k), h('td', {}, val))))),
     h('table', { class: 'nt' },
