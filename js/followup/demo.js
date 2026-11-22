@@ -75,10 +75,12 @@ function buildPresets() {
 /* ---------- the patient ---------- */
 function renderThread() {
   const p = patient();
-  $('ph-name').textContent = clinic.settings.get().clinicName;
   const mail = channelOf(p) === 'email';
+  $('ph-name').textContent = mail ? 'Inbox' : clinic.settings.get().clinicName;
   $('ph-who').textContent = mail ? `${p.firstName}'s email` : `${p.firstName}'s phone`;
-  $('ph-kind').textContent = mail ? 'Email' : 'Text message';
+  $('ph-kind').textContent = mail ? p.email : 'Text message';
+  $('thread').closest('.phone').classList.toggle('mail', mail);
+  $('reply').placeholder = mail ? 'Reply by email as the patient' : 'Reply as the patient';
   const all = clinic.thread(patientId);
   const n = Math.min(shown.get(patientId) ?? 0, all.length);
   const box = $('thread');
@@ -88,11 +90,20 @@ function renderThread() {
   drawn.set(patientId, n);
   for (const [i, m] of all.slice(0, n).entries()) {
     const at = m.sentAt ?? m.createdAt;
+    if (mail) {
+      // An email is drawn as an email: sender, time, subject line, then the body.
+      const fromClinic = m.direction === 'out';
+      kids.push(h('article', { class: `em${fromClinic ? '' : ' me'}${i >= before ? ' fresh' : ''}` },
+        h('header', {}, h('b', {}, fromClinic ? clinic.settings.get().clinicName : `${p.firstName} ${p.lastName}`), h('time', {}, stamp(at))),
+        h('p', { class: 'em-s' }, m.subject ?? `Re: ${all.slice(0, i).reverse().find((x) => x.subject)?.subject ?? 'Your follow-up visit'}`),
+        h('p', { class: 'em-b' }, m.body)));
+      continue;
+    }
     if (at - prev > 30 * 60000) kids.push(h('div', { class: 'stamp' }, stamp(at)));
     prev = at;
     kids.push(h('div', { class: `b ${m.direction === 'out' ? 'in' : 'out'}${i >= before ? ' fresh' : ''}` }, m.subject ? h('b', { class: 'subj' }, m.subject) : null, m.body));
   }
-  if (typing) kids.push(h('div', { class: 'b in typ', 'aria-hidden': 'true' }, h('i'), h('i'), h('i')));
+  if (typing && !mail) kids.push(h('div', { class: 'b in typ', 'aria-hidden': 'true' }, h('i'), h('i'), h('i')));
   if (!kids.length) {
     const v = current();
     const back = v && v.row.state === 'handed_back';
