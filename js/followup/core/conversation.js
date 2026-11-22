@@ -17,7 +17,7 @@ import { normalise } from './text.js';
 import { interpret, loose } from './interpret.js';
 import { isOptOut, findHandoffWord } from './guard.js';
 import { mergeConstraints, parseConstraints } from './constraints.js';
-import { daysBetween, localDate } from './time.js';
+import { daysBetween, friendly, localDate } from './time.js';
 import { buildNote, handBack } from './handback.js';
 import { sendOffers } from './offers.js';
 import { startBooking } from './booking.js';
@@ -113,7 +113,7 @@ async function optOut(svc, task, inbound) {
 async function replyToAwaiting(svc, task, inbound) {
   const s = svc.settings.get();
   const result = await interpret(inbound.body, {
-    offers: task.offers, today: localDate(svc.clock.now(), s.timeZone), llm: svc.llm,
+    offers: task.offers, today: localDate(svc.clock.now(), s.timeZone), llm: svc.llm, booked: task.prev_booked_start,
   });
   svc.audit.record({
     taskId: task.task_id, action: 'reply_interpreted',
@@ -124,12 +124,12 @@ async function replyToAwaiting(svc, task, inbound) {
 
   if (task.prev_appointment_id && !['optout', 'handoff', 'pick'].includes(result.intent)) {
     const n = loose(inbound.body);
-    if (KEEP.test(n)) return keepBooking(svc, task, channel, 'Patient chose to keep the booked time');
+    if (KEEP.test(n) || result.intent === 'keep') return keepBooking(svc, task, channel, 'Patient chose to keep the booked time');
     if (/\bcancel/.test(n)) return hand('Patient asked to cancel the visit');
   }
 
   const pending = task.pending_index !== null && task.pending_index !== undefined && task.offers[task.pending_index] ? task.pending_index : null;
-  if (pending !== null && ['yes', 'unknown'].includes(result.intent) && SAYS_YES.test(loose(inbound.body))) {
+  if (pending !== null && ((result.intent === 'yes' && result.source === 'llm') || (['yes', 'unknown'].includes(result.intent) && SAYS_YES.test(loose(inbound.body))))) {
     return startBooking(svc, task, pending, inbound.channel);
   }
 
@@ -152,6 +152,7 @@ async function replyToAwaiting(svc, task, inbound) {
       return startBooking(svc, task, result.pick - 1, inbound.channel);
     }
     case 'constraints':
+    case 'change': // already choosing new times: the same as asking for others
       return moreTimes(svc, task, result, channel, s, hand);
     case 'yes':
       return clarify(svc, task, channel, hand);
@@ -209,7 +210,14 @@ async function offerMove(svc, task, inbound, channel) {
   const n = loose(inbound.body);
   const canCancel = typeof svc.emr.cancelAppointment === 'function' && svc.emr.describe().capabilities?.cancelAppointment;
   if (!canCancel || !channel || !task.appointment_id || task.moves >= MAX_MOVES) return false;
-  if (!CHANGE.test(n) || /\bcancel/.test(n) || findHandoffWord(inbound.body)) return false;
+  if (/\bcancel/.test(n) || findHandoffWord(inbound.body)) return false;
+  if (!CHANGE.test(n)) {
+    // Not in the rules' words: let the model say whether this is a request to move the visit.
+    if (!svc.llm?.enabled) return false;
+    const read = await svc.llm.classify({ text: inbound.body, offers: [], raw: [], booked: friendly(task.booked_start) });
+    svc.audit.record({ taskId: task.task_id, action: 'reply_interpreted', after: { intent: read.intent, source: 'llm', state: 'booked' } });
+    if (read.intent !== 'change') return false;
+  }
   if (Date.parse(task.booked_start) <= svc.clock.now()) return false;
   const s = svc.settings.get();
   const { mode, ...wanted } = parseConstraints(inbound.body, { offers: [], today: localDate(svc.clock.now(), s.timeZone) });

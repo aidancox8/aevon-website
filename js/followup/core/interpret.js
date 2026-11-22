@@ -124,7 +124,7 @@ function rules(text, ctx) {
 export async function interpret(text, ctx) {
   const ruled = rules(text, ctx);
   if (ruled.intent !== 'unknown' || ruled.reason === 'empty' || !ctx.llm?.enabled) return { ...ruled, source: 'rules' };
-  const out = await ctx.llm.classify({ text: String(text), offers: ctx.offers.map((o) => friendly(o.start)) });
+  const out = await ctx.llm.classify({ text: String(text), offers: ctx.offers.map((o) => friendly(o.start)), raw: ctx.offers, booked: ctx.booked ? friendly(ctx.booked) : '' });
   if (out.intent === 'unknown') return { intent: 'unknown', source: 'rules' };
   return { ...out, source: 'llm' };
 }

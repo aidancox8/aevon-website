@@ -47,7 +47,8 @@ const SMS = {
   post_booking: (v) => `Thanks. Your visit is still booked for ${friendlyAt(v.booked)}. We have passed your message to ${v.clinic} and someone will call you${v.phone ? `, or you can call us at ${v.phone}` : ''}.`,
 };
 
-const SIGN = (clinic) => `\n\nThis message is from an automated assistant at ${clinic}.`;
+// Emails carry no sign-off line. The first email says in its opening sentence that an automated assistant is writing.
+const SIGN = () => '';
 const STOP_EMAIL = '\n\nReply STOP to opt out of these emails.';
 const EMAIL_PICK = 'Please reply with 1, 2 or 3 and we will book it. If none of these suit you, reply OTHER for different times, or tell us which days or times work.';
 

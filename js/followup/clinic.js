@@ -1,5 +1,6 @@
 // The pretend clinic behind the demo page: one doctor, four invented patients and a schedule that
 // already has other patients in it, wired to the same engine the product runs. Held in memory only.
+import { createRemoteClassifier } from './core/llm.js';
 import { openDb } from './db.js';
 import { createSettings } from './store/settings.js';
 import { createConsent, createAudit, createMessages, createTasks } from './store/memory.js';
@@ -29,6 +30,8 @@ const CLINIC = {
 };
 /** How a patient is reached: email for those who agreed to email only, otherwise text. */
 export const channelOf = (p) => (p.mail && !p.sms ? 'email' : 'sms');
+// Replies the rules cannot read go to a small model for a label. Empty string turns it off.
+const READER_URL = typeof window === 'undefined' ? '' : 'https://qzxtfgzpyptvriorfhxw.supabase.co/functions/v1/followup-classify';
 export const BLOCKS = [{ start: '09:00', end: '12:00' }, { start: '13:00', end: '16:30' }];
 const OTHERS = [
   'Adams, R', 'Baker, J', 'Chan, M', 'Dhillon, S', 'Evans, T', 'Fraser, L', 'Gill, K', 'Hughes, P', 'Ito, N', 'Jensen, A',
@@ -61,7 +64,7 @@ export function createClinic() {
     emr.addPatient({ id: p.id, firstName: p.firstName, lastName: p.lastName, mobile: p.mobile, email: p.email ?? null });
     stores.consent.set({ patientId: p.id, sms: p.sms, email: !!p.mail, recordedBy: 'front desk', sourceNote: p.sms ? 'Agreed to texts at check-in' : p.mail ? 'Agreed to email at check-in' : 'Nothing on file' });
   }
-  const engine = createEngine({ emr, db, stores, channels: { sms: createSimSms(), email: { name: 'email', async send() { return { delivery: 'simulated inbox' }; } } }, settings, clock, llm: null, logger: { error() {} } });
+  const engine = createEngine({ emr, db, stores, channels: { sms: createSimSms(), email: { name: 'email', async send() { return { delivery: 'simulated inbox' }; } } }, settings, clock, llm: READER_URL ? createRemoteClassifier(READER_URL) : null, logger: { error() {} } });
 
   // Other patients' appointments, filled in for each day the first time anything looks at it.
   const seeded = new Set();
