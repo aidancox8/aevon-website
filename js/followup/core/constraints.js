@@ -15,7 +15,7 @@ const DAY_FORMS = {
 };
 const DAY_OF = new Map(Object.entries(DAY_FORMS).flatMap(([d, forms]) => forms.map((f) => [f, Number(d)])));
 const NEGATORS = new Set(['not', 'no', 'except', 'but', 'cant', "can't", 'never', 'avoid', 'excluding', 'without', "don't", 'dont']);
-const CONNECTORS = new Set(['or', 'and', 'on', 'the', 'a', 'any', 'day', 'days', 'nor', 'neither']);
+const CONNECTORS = new Set(['or', 'and', 'on', 'the', 'a', 'any', 'day', 'days', 'nor', 'neither', 'do', 'make', 'come', 'in', 'be', 'there', 'it']);
 
 const MONTHS = {
   jan: 1, january: 1, feb: 2, february: 2, mar: 3, march: 3, apr: 4, april: 4, may: 5, jun: 6, june: 6,
@@ -79,10 +79,21 @@ function weekdays(tokens) {
   const included = new Set();
   const excluded = new Set();
   let neg = false;
-  for (const t of tokens) {
+  for (const [i, t] of tokens.entries()) {
     if (NEGATORS.has(t)) neg = true;
-    else if (DAY_OF.has(t)) (neg ? excluded : included).add(DAY_OF.get(t));
-    else if (!CONNECTORS.has(t)) neg = false;
+    else if (DAY_OF.has(t)) {
+      // "Mondays are bad", "Friday is no good", "Tuesday doesn't work": the bad news comes after the day.
+      const after = tokens.slice(i + 1, i + 5).join(' ');
+      const ruledOut = /^(?:(?:and|or) \w+ )?(?:(?:is|are|r|will be|would be|wont|won't|dont|don't|doesnt|doesn't|does not|do not|not|never|no|isnt|isn't|arent|aren't) )*(?:bad|out|terrible|awful|impossible|tough|hard|rough|busy|no good|not good|good for me not|work\b(?<=(?:nt|n't|not|never) work)|works\b(?<=(?:nt|n't|not|never) works))/.test(after)
+        || /^(?:is|are|r) (?:not|never|no)\b|^(?:isnt|isn't|arent|aren't|wont|won't|dont|don't|doesnt|doesn't|cant|can't)\b/.test(after);
+      (neg || ruledOut ? excluded : included).add(DAY_OF.get(t));
+    } else if (!CONNECTORS.has(t)) neg = false;
+  }
+  const n = tokens.join(' ');
+  if (!included.size) {
+    if (/\b(?:end|later part|second half|back half) of (?:the|that|this|next) week\b|\blater in the week\b/.test(n)) [4, 5].forEach((d) => included.add(d));
+    else if (/\b(?:start|beginning|first half|early part) of (?:the|that|this|next) week\b|\bearly in the week\b/.test(n)) [1, 2].forEach((d) => included.add(d));
+    else if (/\bmid ?week\b|\bmiddle of (?:the|that|this|next) week\b/.test(n)) [2, 3, 4].forEach((d) => included.add(d));
   }
   if (included.size) return [...included].filter((d) => !excluded.has(d)).sort();
   if (excluded.size) return [0, 1, 2, 3, 4, 5, 6].filter((d) => !excluded.has(d));
