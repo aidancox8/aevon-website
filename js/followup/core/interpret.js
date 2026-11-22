@@ -76,9 +76,27 @@ function describedPick(raw, n, offers) {
   return hits.length === 1 ? hits[0] : null;
 }
 
+// Typos. A word one slip away from a word the rules know is read as that word ("othr", "confrim", "tuseday").
+// Short words are too close to other real words for that, so they have a list of their own.
+const KNOWN = ['other', 'others', 'confirm', 'change', 'different', 'another', 'reschedule', 'morning', 'mornings', 'afternoon', 'afternoons',
+  'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'earlier', 'sooner', 'later', 'cancel', 'option', 'number', 'please', 'thanks'];
+const REAL_WORDS = new Set(['mother', 'bother', 'otter', 'ether', 'chance', 'charge', 'changed', 'changes', 'latter', 'layer', 'water', 'laser', 'hater', 'cater', 'eater', 'lager', 'laterz', 'conform', 'confirms', 'sunday', 'canceled', 'cancels', 'numbers', 'options', 'pleased', 'thank']);
+const SLIPS = new Map([
+  ['non', 'none'], ['noen', 'none'], ['nne', 'none'], ['nonee', 'none'], ['mroe', 'more'], ['moer', 'more'], ['mor', 'more'], ['moree', 'more'],
+  ['kep', 'keep'], ['kepe', 'keep'], ['keeep', 'keep'], ['eys', 'yes'], ['yse', 'yes'], ['yess', 'yes'], ['ys', 'yes'], ['yea', 'yes'],
+  ['otehr', 'other'], ['ohter', 'other'], ['oter', 'other'], ['confrm', 'confirm'], ['cnfirm', 'confirm'], ['conf', 'confirm'], ['tues', 'tuesday'], ['thurs', 'thursday'], ['tiems', 'times'], ['tmes', 'times'], ['timse', 'times'], ['tims', 'times'],
+]);
+const fixWord = (t) => {
+  if (SLIPS.has(t)) return SLIPS.get(t);
+  if (t.length < 4 || REAL_WORDS.has(t) || KNOWN.includes(t)) return t;
+  return KNOWN.find((k) => k.length >= 5 && nearOne(t, k)) ?? t;
+};
+/** Normalised text with likely typos corrected. */
+export const loose = (text) => normalise(text).split(' ').map(fixWord).join(' ');
+
 function rules(text, ctx) {
   const raw = String(text ?? '');
-  const n = normalise(raw);
+  const n = loose(raw);
   if (isOptOut(raw)) return { intent: 'optout' };
   if (raw.trim().length > LONG_REPLY_CHARS) return { intent: 'handoff', handoffWord: 'long message' };
   const word = findHandoffWord(raw);
@@ -90,7 +108,7 @@ function rules(text, ctx) {
   const described = describedPick(raw, n, ctx.offers);
   if (described) return { intent: 'pick', pick: described };
 
-  const constraints = parseConstraints(raw, ctx);
+  const constraints = parseConstraints(n, ctx);
   if (Object.keys(constraints).length) return { intent: 'constraints', constraints };
 
   const t = raw.trim().toLowerCase().replace(/[.!]+$/, '');

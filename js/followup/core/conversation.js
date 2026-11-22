@@ -14,7 +14,7 @@
 import { EmrError } from '../emr/adapter.js';
 import { parseTask, targetDate } from './parseTask.js';
 import { normalise } from './text.js';
-import { interpret } from './interpret.js';
+import { interpret, loose } from './interpret.js';
 import { isOptOut, findHandoffWord } from './guard.js';
 import { mergeConstraints, parseConstraints } from './constraints.js';
 import { daysBetween, localDate } from './time.js';
@@ -123,13 +123,13 @@ async function replyToAwaiting(svc, task, inbound) {
   const hand = (reason, reply = 'handoff_reply') => handBack(svc, task, { reason, quote: inbound.body, reply, replyChannel: channel });
 
   if (task.prev_appointment_id && !['optout', 'handoff', 'pick'].includes(result.intent)) {
-    const n = normalise(inbound.body);
+    const n = loose(inbound.body);
     if (KEEP.test(n)) return keepBooking(svc, task, channel, 'Patient chose to keep the booked time');
     if (/\bcancel/.test(n)) return hand('Patient asked to cancel the visit');
   }
 
   const pending = task.pending_index !== null && task.pending_index !== undefined && task.offers[task.pending_index] ? task.pending_index : null;
-  if (pending !== null && ['yes', 'unknown'].includes(result.intent) && SAYS_YES.test(normalise(inbound.body))) {
+  if (pending !== null && ['yes', 'unknown'].includes(result.intent) && SAYS_YES.test(loose(inbound.body))) {
     return startBooking(svc, task, pending, inbound.channel);
   }
 
@@ -206,7 +206,7 @@ async function keepBooking(svc, task, channel, detail) {
  * only after a new time is booked (booking.js). Returns false when the agent cannot do this and staff should.
  */
 async function offerMove(svc, task, inbound, channel) {
-  const n = normalise(inbound.body);
+  const n = loose(inbound.body);
   const canCancel = typeof svc.emr.cancelAppointment === 'function' && svc.emr.describe().capabilities?.cancelAppointment;
   if (!canCancel || !channel || !task.appointment_id || task.moves >= MAX_MOVES) return false;
   if (!CHANGE.test(n) || /\bcancel/.test(n) || findHandoffWord(inbound.body)) return false;
@@ -235,7 +235,7 @@ const THANKS = /^(?:thanks?|thank you|thx|ty|ok|okay|great|perfect|sounds good|g
  */
 async function replyAfterBooking(svc, task, inbound) {
   const channel = replyChannel(svc.consent, task, inbound.channel);
-  if (THANKS.test(normalise(inbound.body)) || THANKS.test(inbound.body.trim().toLowerCase())) {
+  if (THANKS.test(loose(inbound.body)) || THANKS.test(inbound.body.trim().toLowerCase())) {
     svc.audit.record({ taskId: task.task_id, action: 'inbound_ignored', detail: 'Reply after booking was a thank you' });
     return undefined;
   }
