@@ -1,6 +1,6 @@
 // The demo page: three panels over the pretend clinic in clinic.js. Everything the patient is sent
 // comes from the engine and its message templates; this file only draws it.
-import { createClinic, PATIENTS, DOCTOR, TZ, BLOCKS } from './clinic.js';
+import { createClinic, PATIENTS, DOCTOR, TZ, BLOCKS, channelOf } from './clinic.js';
 import { addDays, localDate, mondayOf, partsOf, weekdayOf } from './core/time.js';
 
 const PRESETS = ['Follow-up in 6 weeks, 15 min', 'f/u 2 wks', 'RTC 6/52', 'telephone f/u 1 month', 'follow up as needed', 'urgent follow-up this week'];
@@ -65,7 +65,7 @@ function renderDoctor() {
   list.replaceChildren(...PATIENTS.map((p) => h('label', { class: `pt${p.id === patientId ? ' sel' : ''}` },
     h('input', { type: 'radio', name: 'pt', value: p.id, checked: p.id === patientId, onchange: () => selectPatient(p.id) }),
     h('span', { class: 'pt-n' }, `${p.lastName}, ${p.firstName}`),
-    h('span', { class: `pt-c${p.sms ? '' : ' no'}` }, clinic.consent.allows(p.id, 'sms') ? 'Agreed to texts' : p.sms ? 'Opted out of texts' : 'No consent on file'),
+    h('span', { class: `pt-c${p.sms || p.mail ? '' : ' no'}` }, clinic.consent.allows(p.id, 'sms') ? 'Agreed to texts' : clinic.consent.allows(p.id, 'email') ? 'Agreed to email' : p.sms ? 'Opted out of texts' : p.mail ? 'Opted out of email' : 'No consent on file'),
   )));
 }
 function buildPresets() {
@@ -76,7 +76,9 @@ function buildPresets() {
 function renderThread() {
   const p = patient();
   $('ph-name').textContent = clinic.settings.get().clinicName;
-  $('ph-who').textContent = `${p.firstName}'s phone`;
+  const mail = channelOf(p) === 'email';
+  $('ph-who').textContent = mail ? `${p.firstName}'s email` : `${p.firstName}'s phone`;
+  $('ph-kind').textContent = mail ? 'Email' : 'Text message';
   const all = clinic.thread(patientId);
   const n = Math.min(shown.get(patientId) ?? 0, all.length);
   const box = $('thread');
@@ -88,10 +90,10 @@ function renderThread() {
     const at = m.sentAt ?? m.createdAt;
     if (at - prev > 30 * 60000) kids.push(h('div', { class: 'stamp' }, stamp(at)));
     prev = at;
-    kids.push(h('div', { class: `b ${m.direction === 'out' ? 'in' : 'out'}${i >= before ? ' fresh' : ''}` }, m.body));
+    kids.push(h('div', { class: `b ${m.direction === 'out' ? 'in' : 'out'}${i >= before ? ' fresh' : ''}` }, m.subject ? h('b', { class: 'subj' }, m.subject) : null, m.body));
   }
   if (typing) kids.push(h('div', { class: 'b in typ', 'aria-hidden': 'true' }, h('i'), h('i'), h('i')));
-  if (!kids.length) kids.push(h('p', { class: 'empty' }, clinic.consent.allows(patientId, 'sms') ? 'No messages yet. Assign a follow-up as the doctor.' : `${p.firstName} has not agreed to texts, so nothing is sent to this phone.`));
+  if (!kids.length) kids.push(h('p', { class: 'empty' }, clinic.consent.allows(patientId, channelOf(p)) ? 'No messages yet. Assign a follow-up as the doctor.' : `${p.firstName} has not agreed to texts or email, so nothing is sent.`));
   box.replaceChildren(...kids);
   box.scrollTop = box.scrollHeight;
 }
@@ -228,7 +230,7 @@ function assign() {
     await clinic.assign(patientId, text);
     weekDate = null;
     const v = current();
-    if (v.row.state === 'handed_back') { note = 'Aevon did not text the patient. The task went to the front desk with a note.'; showTab('clinic'); } else showTab('patient');
+    if (v.row.state === 'handed_back') { note = 'Aevon did not message the patient. The task went to the front desk with a note.'; showTab('clinic'); } else showTab('patient');
   });
 }
 

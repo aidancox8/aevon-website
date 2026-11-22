@@ -17,6 +17,7 @@ export const PATIENTS = [
   { id: 'p1', firstName: 'Priya', lastName: 'Nair', mobile: '604-555-0131', sms: true },
   { id: 'p2', firstName: 'Marcus', lastName: 'Bell', mobile: '604-555-0178', sms: true },
   { id: 'p3', firstName: 'Helen', lastName: 'Park', mobile: '604-555-0164', sms: true },
+  { id: 'p5', firstName: 'Daniel', lastName: 'Okafor', mobile: null, email: 'daniel.okafor@example.com', sms: false, mail: true },
   { id: 'p4', firstName: 'Tom', lastName: 'Reyes', mobile: '604-555-0109', sms: false },
 ];
 
@@ -26,6 +27,8 @@ const CLINIC = {
   nudgeHours1: 24, nudgeHours2: 72, giveUpHours: 120, frontDeskUserId: 'frontdesk', agentUserId: 'aevon',
   clinicPhone: '', province: 'BC', closures: [], minLeadDays: 3,
 };
+/** How a patient is reached: email for those who agreed to email only, otherwise text. */
+export const channelOf = (p) => (p.mail && !p.sms ? 'email' : 'sms');
 export const BLOCKS = [{ start: '09:00', end: '12:00' }, { start: '13:00', end: '16:30' }];
 const OTHERS = [
   'Adams, R', 'Baker, J', 'Chan, M', 'Dhillon, S', 'Evans, T', 'Fraser, L', 'Gill, K', 'Hughes, P', 'Ito, N', 'Jensen, A',
@@ -55,10 +58,10 @@ export function createClinic() {
   emr.setWeeklyTemplate(DOCTOR.id, { 1: BLOCKS, 2: BLOCKS, 3: BLOCKS, 4: BLOCKS, 5: BLOCKS });
   const names = new Map(); // appointment id -> name shown in the schedule
   for (const p of PATIENTS) {
-    emr.addPatient({ id: p.id, firstName: p.firstName, lastName: p.lastName, mobile: p.mobile, email: null });
-    stores.consent.set({ patientId: p.id, sms: p.sms, email: false, recordedBy: 'front desk', sourceNote: p.sms ? 'Agreed to texts at check-in' : 'Nothing on file' });
+    emr.addPatient({ id: p.id, firstName: p.firstName, lastName: p.lastName, mobile: p.mobile, email: p.email ?? null });
+    stores.consent.set({ patientId: p.id, sms: p.sms, email: !!p.mail, recordedBy: 'front desk', sourceNote: p.sms ? 'Agreed to texts at check-in' : p.mail ? 'Agreed to email at check-in' : 'Nothing on file' });
   }
-  const engine = createEngine({ emr, db, stores, channels: { sms: createSimSms() }, settings, clock, llm: null, logger: { error() {} } });
+  const engine = createEngine({ emr, db, stores, channels: { sms: createSimSms(), email: { name: 'email', async send() { return { delivery: 'simulated inbox' }; } } }, settings, clock, llm: null, logger: { error() {} } });
 
   // Other patients' appointments, filled in for each day the first time anything looks at it.
   const seeded = new Set();
@@ -102,10 +105,12 @@ export function createClinic() {
     return task.id;
   }
 
-  /** A text from the patient's phone. */
+  /** A text or an email from the patient. */
   async function reply(patientId, text) {
     clock.advance(60000);
-    const result = await engine.handleInbound({ channel: 'sms', address: patient(patientId).mobile, body: text });
+    const p = patient(patientId);
+    const channel = channelOf(p);
+    const result = await engine.handleInbound({ channel, address: channel === 'sms' ? p.mobile : p.email, body: text });
     await engine.poll();
     return result;
   }
@@ -174,7 +179,7 @@ export function createClinic() {
 
   return {
     today, clock, settings, emr, engine, ...stores, assign, reply, takeFirstOffer, waitForNext, view, week,
-    thread: (patientId) => stores.messages.thread(patientId, 'sms').filter((m) => m.direction === 'in' || m.status === 'sent'),
+    thread: (patientId) => stores.messages.thread(patientId, channelOf(patient(patientId))).filter((m) => m.direction === 'in' || m.status === 'sent'),
     latestTaskFor: (patientId) => stores.tasks.list().find((t) => t.patient_id === patientId)?.task_id ?? null,
   };
 }

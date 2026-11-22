@@ -135,6 +135,7 @@
     .thread > :first-child { margin-top: auto; }
     .stamp { align-self: center; font-size: 12.5px; color: #6a727c; margin: 4px 0 0; }
     .b { width: fit-content; max-width: 86%; padding: 8px 13px; border-radius: 18px; font-size: 15px; line-height: 1.38; overflow-wrap: anywhere; white-space: pre-wrap; }
+    .b .subj { display: block; margin-bottom: 5px; }
     .b.in { align-self: flex-start; background: #e6e8eb; border-bottom-left-radius: 5px; }
     .b.out { align-self: flex-end; background: #1c6dc0; color: #fff; font-weight: 600; border-bottom-right-radius: 5px; }
     .b.typ { display: flex; gap: 5px; padding: 13px 15px; }
@@ -272,8 +273,8 @@
         <p class="who" id="ph-who">Priya's phone</p>
         <div class="phone">
           <div class="pscreen">
-            <div class="phead"><span class="av">R</span><div><b id="ph-name">Rosewood Clinic</b><small>Text message</small></div></div>
-            <div class="thread" id="thread" role="log" aria-label="Text messages" tabindex="0"></div>
+            <div class="phead"><span class="av">R</span><div><b id="ph-name">Rosewood Clinic</b><small id="ph-kind">Text message</small></div></div>
+            <div class="thread" id="thread" role="log" aria-label="Messages" tabindex="0"></div>
             <form class="compose" id="reply-form">
               <input id="reply" type="text" maxlength="600" autocomplete="off" placeholder="Reply as the patient" aria-label="Reply as the patient" />
               <button id="reply-send" type="submit">Send</button>
