@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Try the follow-up booking demo | Aevon Health</title>
+  <meta name="description" content="Assign a follow-up as the doctor, reply as the patient, and watch the appointment get booked and the task close." />
+  <link rel="canonical" href="https://aevon.ca/health-demo.html" />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#0C0E0D" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aevon.ca/health-demo.html" />
+  <meta property="og:site_name" content="Aevon" />
+  <meta property="og:title" content="Try the follow-up booking demo | Aevon Health" />
+  <meta property="og:description" content="Assign a follow-up as the doctor, reply as the patient, and watch the appointment get booked and the task close." />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:image" content="https://aevon.ca/img/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary" />
+
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css?v=3" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9R5SHY2LD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-M9R5SHY2LD');
+  </script>
+  <style>
+    /* Page-local pieces. The page frame follows site.css. The doctor's task form, the task and the
+       schedule are drawn as a light, dense EMR; the phone is a plain phone; Aevon's own panel is dark. */
+    .lbl { font-family: var(--f-body); font-size: 13.5px; font-weight: 500; letter-spacing: 0; text-transform: none; }
+    nav { position: static; border-bottom: 1px solid var(--line); }
+    .wide { max-width: 1340px; margin: 0 auto; padding: 0 28px; }
+    .dhead { padding: 44px 0 26px; }
+    .dhead h1 { font-size: clamp(30px, 4vw, 44px); }
+    .dhead p { margin-top: 12px; color: var(--ink-2); max-width: 62ch; }
+
+    .whatif { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; padding: 14px 16px; border: 1px solid var(--line-2); border-radius: var(--radius-lg); background: var(--surface); }
+    .whatif b { font-weight: 600; font-size: 15px; margin-right: 4px; }
+    .wbtn { min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--raised); color: var(--ink); font: 600 14.5px/1 var(--f-body); cursor: pointer; }
+    .wbtn:hover:not(:disabled) { border-color: var(--ink-2); }
+    .wbtn:disabled { color: var(--ink-3); cursor: default; }
+    .wbtn.quiet { background: transparent; }
+    .whatif .sp { flex: 1; }
+    .note { min-height: 1.5em; margin-top: 10px; font-size: 15px; color: var(--accent); }
+
+    .dtabs { display: none; }
+    .cols { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 348px) minmax(0, 1fr); gap: 22px; align-items: start; margin-top: 14px; padding-bottom: 72px; }
+    .col { min-width: 0; padding: 0; border-radius: var(--radius-lg); }
+    .col > h2 { font-size: 19px; margin-bottom: 4px; }
+    .col > .who { font-size: 14.5px; color: var(--ink-3); margin-bottom: 12px; }
+    .tour-hi { outline: 2px solid var(--accent); outline-offset: 8px; }
+
+    /* ---- the light EMR ---- */
+    .emr { background: #fff; color: #15120B; border: 1px solid #5d6f99; font-family: Verdana, Tahoma, Arial, sans-serif; font-size: 12px; line-height: 1.35; box-shadow: 0 16px 44px rgba(0,0,0,.45); }
+    .emr + .emr, .aev + .emr { margin-top: 16px; }
+    .e-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 24px; padding: 3px 10px; background: #003399; color: #fff; font-weight: 700; }
+    .e-title span { font-weight: 400; }
+    .e-sub { display: flex; align-items: center; gap: 10px; padding: 5px 10px; background: whitesmoke; border-bottom: 1px solid #c0c0c0; color: #00283c; font-weight: 700; }
+    .e-body { padding: 10px; }
+    .e-lab { display: block; margin: 10px 0 4px; font-weight: 700; color: #00283c; }
+    .e-lab:first-child { margin-top: 0; }
+    .pt { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; min-height: 34px; padding: 4px 8px; border: 1px solid #e3e3e3; border-top: 0; cursor: pointer; }
+    .pt:first-child { border-top: 1px solid #e3e3e3; }
+    .pt:nth-child(even) { background: #f7f7f7; }
+    .pt.sel { background: #d9edf7; }
+    .pt input { margin: 0; width: 15px; height: 15px; accent-color: #003399; }
+    .pt-n { font-weight: 700; color: #00283c; }
+    .pt-c { color: #3b6d46; white-space: nowrap; }
+    .pt-c.no { color: #8a3a2a; }
+    .e-in { width: 100%; min-height: 36px; padding: 6px 8px; font: 400 16px/1.3 Verdana, Tahoma, Arial, sans-serif; color: #15120B; background: #fff; border: 1px solid #8a94a6; border-radius: 2px; }
+    .e-in:focus-visible, .pt:has(input:focus-visible) { outline: 2px solid #003399; outline-offset: 1px; }
+    .pres { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .pre { min-height: 30px; padding: 4px 9px; font: 400 12px/1.2 Verdana, Tahoma, Arial, sans-serif; color: #00283c; background: #eef2f8; border: 1px solid #b9c1cc; border-radius: 3px; cursor: pointer; text-align: left; }
+    .pre:hover { background: #dfe7f3; }
+    .e-sel { display: flex; align-items: center; justify-content: space-between; min-height: 32px; padding: 4px 8px; background: #F4EaD7; border: 1px solid #0097cf; border-radius: 2px; font-weight: 700; }
+    .e-sel i { width: 0; height: 0; border: 5px solid transparent; border-top: 6px solid #00283c; margin-top: 5px; }
+    .e-go { width: 100%; min-height: 44px; margin-top: 12px; font: 700 14px/1 Verdana, Tahoma, Arial, sans-serif; color: #fff; background: #2a6496; border: 1px solid #1d4a70; border-radius: 4px; cursor: pointer; }
+    .e-go:hover:not(:disabled) { background: #1f5179; }
+    .e-go:disabled { opacity: .6; cursor: default; }
+    .emr button:focus-visible { outline: 2px solid #003399; outline-offset: 2px; }
+    .empty { margin: auto; padding: 18px 14px; text-align: center; font-size: 14px; color: #5a626c; }
+    .empty.dark { text-align: left; padding: 4px 2px; font-size: 12px; margin: 0; }
+
+    table.kv, table.nt, table.sch { width: 100%; border-collapse: collapse; }
+    .kv th { width: 92px; text-align: left; vertical-align: top; padding: 4px 8px; background: #e6ecf5; border: 1px solid #fff; font-weight: 700; color: #00283c; white-space: nowrap; }
+    .kv td { padding: 4px 8px; background: #f7f7f7; border: 1px solid #fff; overflow-wrap: anywhere; }
+    .kv b.ok { color: #1c6b2c; } .kv b.fd { color: #a3261a; }
+    .nt { margin-top: 10px; }
+    .nt th { text-align: left; padding: 4px 8px; background: #6699cc; border: 1px solid #fff; font-weight: 700; }
+    .nt td { padding: 5px 8px; border: 1px solid #fff; background: #FDFEC7; vertical-align: top; }
+    .nt tr:nth-child(even) td { background: #F7F7F7; }
+    .nt-t { white-space: nowrap; } .nt-x { overflow-wrap: anywhere; }
+
+    .sch { table-layout: fixed; font-size: 11px; }
+    .sch th { padding: 4px 2px; background: #bfefff; border: 1px solid #486ebd; font-weight: 700; text-align: center; }
+    .sch th small { display: block; font-size: 10px; font-weight: 400; line-height: 1.2; }
+    .sch th.cl { background: silver; }
+    .sch th.tm, .sch td.tm { width: 40px; padding: 0; background: #00A488; color: #fff; font-weight: 700; text-align: center; text-overflow: clip; border: 1px solid #486ebd; }
+    .sch td { height: 18px; padding: 0 4px; border: 1px solid #b7c4e4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sch td.bk { background: #FDFEC7; color: #00283c; }
+    .sch td.cont { border-top-color: transparent; }
+    .sch td.cl { background: repeating-linear-gradient(135deg, #e9e9e9 0 6px, #f6f6f6 6px 12px); border-color: #d8d8d8; }
+    .sch td.off { background: #fff; outline: 2px dashed #1c6dc0; outline-offset: -2px; color: #0d4f95; font-weight: 700; }
+    .sch td.mine { background: #9DBFA1; color: #0C0E0D; font-weight: 700; outline: 2px solid #2f6b3a; outline-offset: -2px; }
+    .sch td.mine.new { animation: land 1.6s ease 2; }
+    @keyframes land { 0%, 100% { background: #9DBFA1; } 50% { background: #e9f7b0; } }
+    .sch tr.lunch td { height: 14px; background: #eef1f6; color: #5a626c; text-align: center; font-size: 10px; }
+    .wk { display: flex; align-items: center; gap: 6px; }
+    .wk button { width: 36px; height: 30px; font: 700 14px/1 Verdana, sans-serif; color: #00283c; background: #fff; border: 1px solid #8a94a6; border-radius: 2px; cursor: pointer; }
+    .e-foot { display: flex; flex-wrap: wrap; gap: 4px 14px; padding: 6px 10px; background: whitesmoke; border-top: 1px solid #c0c0c0; }
+    .sw { display: inline-block; width: 12px; height: 12px; vertical-align: -2px; margin-right: 5px; border: 1px solid #486ebd; }
+
+    /* ---- Aevon's own panel ---- */
+    .aev { border: 1px solid var(--line-2); border-radius: var(--radius-lg); background: var(--surface); padding: 14px 16px 15px; margin-top: 16px; }
+    .aev .hd { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+    .st-w { margin-top: 4px; font-size: 16.5px; font-weight: 600; line-height: 1.35; overflow-wrap: anywhere; }
+    .st-n { margin-top: 3px; font-size: 14.5px; color: var(--ink-2); line-height: 1.45; }
+
+    /* ---- the phone ---- */
+    .phone { width: 100%; max-width: 348px; margin: 0 auto; padding: 9px; border-radius: 42px; background: #20252b; border: 2px solid #3a424b; box-shadow: 0 24px 60px rgba(0,0,0,.5); }
+    .pscreen { display: flex; flex-direction: column; height: 560px; border-radius: 33px; background: #fff; color: #1a1d21; overflow: hidden; }
+    .phead { flex: none; display: flex; align-items: center; gap: 10px; padding: 14px 14px 10px; border-bottom: 1px solid #dfe2e6; background: #f6f7f8; }
+    .phead .av { width: 36px; height: 36px; border-radius: 50%; background: #1c6dc0; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; flex: none; }
+    .phead b { display: block; font-size: 15.5px; line-height: 1.2; } .phead small { display: block; font-size: 13px; color: #5a626c; }
+    .thread { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 7px; padding: 12px 14px; overflow-y: auto; overscroll-behavior: contain; }
+    .thread > :first-child { margin-top: auto; }
+    .stamp { align-self: center; font-size: 12.5px; color: #6a727c; margin: 4px 0 0; }
+    .b { width: fit-content; max-width: 86%; padding: 8px 13px; border-radius: 18px; font-size: 15px; line-height: 1.38; overflow-wrap: anywhere; white-space: pre-wrap; }
+    .b.in { align-self: flex-start; background: #e6e8eb; border-bottom-left-radius: 5px; }
+    .b.out { align-self: flex-end; background: #1c6dc0; color: #fff; font-weight: 600; border-bottom-right-radius: 5px; }
+    .b.typ { display: flex; gap: 5px; padding: 13px 15px; }
+    .b.typ i { width: 7px; height: 7px; border-radius: 50%; background: rgba(60,66,74,.7); animation: dot 1s infinite; }
+    .b.typ i:nth-child(2) { animation-delay: .15s; } .b.typ i:nth-child(3) { animation-delay: .3s; }
+    @keyframes dot { 0%, 60%, 100% { opacity: .35; } 30% { opacity: 1; } }
+    .compose { flex: none; display: flex; gap: 8px; padding: 8px 12px 14px; border-top: 1px solid #eceef0; background: #fff; }
+    .compose input { flex: 1; min-width: 0; height: 44px; padding: 0 14px; border: 1px solid #b4bcc6; border-radius: 22px; font: 400 16px/1 var(--f-body); color: #1a1d21; background: #fff; }
+    .compose button { flex: none; height: 44px; padding: 0 16px; border: 0; border-radius: 22px; background: #1c6dc0; color: #fff; font: 700 15px/1 var(--f-body); cursor: pointer; }
+    .compose button:disabled, .compose input:disabled { opacity: .5; cursor: default; }
+    .compose input:focus-visible, .compose button:focus-visible { outline: 2px solid #1c6dc0; outline-offset: 2px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .chips-l { margin-top: 16px; font-size: 14.5px; color: var(--ink-3); }
+    .chip { min-height: 40px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--surface); color: var(--ink); font: 500 14.5px/1.25 var(--f-body); cursor: pointer; text-align: left; }
+    .chip:hover:not(:disabled) { border-color: var(--accent); }
+    .chip:disabled { color: var(--ink-3); cursor: default; }
+
+    /* ---- guided tour ---- */
+    .tour { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; margin-top: 14px; padding: 14px 18px; border: 1px solid var(--accent); border-radius: var(--radius-lg); background: var(--raised); box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+    .tour[hidden] { display: none; }
+    .tour .n { font-size: 13.5px; font-weight: 600; color: var(--accent); }
+    .tour .n { flex: none; }
+    .tour p { flex: 1 1 320px; font-size: 16px; line-height: 1.45; }
+    .tour .row { display: flex; gap: 10px; justify-content: flex-end; margin-left: auto; }
+    .tour button { min-height: 44px; padding: 0 18px; border-radius: 999px; font: 600 15px/1 var(--f-body); cursor: pointer; }
+    .tour .skip-t { background: transparent; border: 1px solid var(--line-2); color: var(--ink-2); }
+    .tour .next-t { background: var(--accent); border: 1px solid var(--accent); color: var(--on-accent); }
+    .again { background: none; border: 0; padding: 0; color: var(--accent); font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+    .want { border-top: 1px solid var(--line); }
+
+    @media (max-width: 1039px) {
+      .wide { padding: 0 20px; }
+      .dhead { padding: 30px 0 20px; }
+      .dtabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 16px; border: 1px solid var(--line-2); border-radius: 999px; overflow: hidden; }
+      .dtab { position: relative; min-height: 46px; background: transparent; border: 0; color: var(--ink-2); font: 600 14.5px/1 var(--f-body); cursor: pointer; }
+      .dtab[aria-selected="true"] { background: var(--accent); color: var(--on-accent); }
+      .dtab.dot::after { content: ""; position: absolute; top: 9px; right: 12px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+      .cols { grid-template-columns: minmax(0, 1fr); max-width: 560px; margin-left: auto; margin-right: auto; }
+      .col { display: none; }
+      .cols[data-tab="doctor"] #col-doctor, .cols[data-tab="patient"] #col-patient, .cols[data-tab="clinic"] #col-clinic { display: block; }
+      .tour-hi { outline-offset: 4px; }
+      .tour { position: fixed; left: 50%; bottom: 12px; z-index: 20; transform: translateX(-50%); width: min(560px, calc(100vw - 24px)); margin: 0; }
+      body.touring .cols { padding-bottom: 230px; }
+      .pscreen { height: 470px; }
+      .whatif .sp { display: none; }
+      .wbtn { flex: 1 1 auto; }
+    }
+    @media (max-width: 420px) {
+      .sch { font-size: 10px; } .sch td { padding: 0 2px; } .sch th.tm, .sch td.tm { width: 34px; }
+      .kv th { width: 80px; }
+    }
+    footer a { display: inline-flex; align-items: center; min-height: 44px; }
+  </style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<nav aria-label="Main">
+  <div class="wrap wide">
+    <a class="brand" href="/"><img src="logo.svg" alt="" />Aevon</a>
+    <div class="navr">
+      <a href="health-followup.html">Aevon Health</a>
+      <a class="btn btn-primary btn-sm" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a call</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="wide">
+    <header class="dhead">
+      <h1>Try the follow-up agent</h1>
+      <p>Assign a follow-up as the doctor. Reply as the patient. Watch the schedule and the task. It never decides anything clinical and never books anything urgent. <button class="again" id="tour-again" type="button">Show the tour</button></p>
+    </header>
+
+    <div class="whatif" id="whatif">
+      <b>What if</b>
+      <button class="wbtn" id="btn-noreply" type="button">No reply</button>
+      <button class="wbtn" id="btn-taken" type="button">Someone else takes that slot</button>
+      <span class="sp"></span>
+      <button class="wbtn quiet" id="btn-reset" type="button">Reset</button>
+    </div>
+    <p class="note" id="note" role="status" aria-live="polite"></p>
+
+    <div class="tour" id="tour" role="region" aria-label="Guided tour" hidden>
+      <span class="n" id="tour-n"></span>
+      <p id="tour-t"></p>
+      <div class="row">
+        <button class="skip-t" id="tour-skip" type="button">Skip the tour</button>
+        <button class="next-t" id="tour-next" type="button">Next</button>
+      </div>
+    </div>
+    <div class="dtabs" role="tablist" aria-label="Demo panels">
+      <button class="dtab" role="tab" type="button" data-tab="doctor" aria-controls="col-doctor" aria-selected="true">The doctor</button>
+      <button class="dtab" role="tab" type="button" data-tab="patient" aria-controls="col-patient" aria-selected="false">The patient</button>
+      <button class="dtab" role="tab" type="button" data-tab="clinic" aria-controls="col-clinic" aria-selected="false">The clinic</button>
+    </div>
+
+    <div class="cols" id="cols" data-tab="doctor">
+      <section class="col" id="col-doctor" aria-labelledby="h-doctor">
+        <h2 id="h-doctor">The doctor</h2>
+        <p class="who">Assigns the follow-up in the EMR.</p>
+        <form class="emr" id="assign-form">
+          <div class="e-title">EMR<span>Dr. Hale</span></div>
+          <div class="e-sub">New task</div>
+          <div class="e-body">
+            <span class="e-lab" id="l-pt">Patient</span>
+            <div id="pt-list" role="radiogroup" aria-labelledby="l-pt"></div>
+            <label class="e-lab" for="instr">Message</label>
+            <input class="e-in" id="instr" type="text" maxlength="200" autocomplete="off" />
+            <div class="pres" id="presets"></div>
+            <span class="e-lab">Assigned to</span>
+            <div class="e-sel">Aevon<i></i></div>
+            <button class="e-go" id="btn-assign" type="submit">Assign to Aevon</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="col" id="col-patient" aria-labelledby="h-patient">
+        <h2 id="h-patient">The patient</h2>
+        <p class="who" id="ph-who">Priya's phone</p>
+        <div class="phone">
+          <div class="pscreen">
+            <div class="phead"><span class="av">R</span><div><b id="ph-name">Rosewood Clinic</b><small>Text message</small></div></div>
+            <div class="thread" id="thread" role="log" aria-label="Text messages" tabindex="0"></div>
+            <form class="compose" id="reply-form">
+              <input id="reply" type="text" maxlength="600" autocomplete="off" placeholder="Reply as the patient" aria-label="Reply as the patient" />
+              <button id="reply-send" type="submit">Send</button>
+            </form>
+          </div>
+        </div>
+        <div id="replybox">
+          <p class="chips-l">Or tap a reply</p>
+          <div class="chips" id="chips"></div>
+        </div>
+      </section>
+
+      <section class="col" id="col-clinic" aria-labelledby="h-clinic">
+        <h2 id="h-clinic">The clinic</h2>
+        <p class="who">The task and the doctor's schedule, as your staff see them.</p>
+        <div class="emr">
+          <div class="e-title">EMR<span>Front desk</span></div>
+          <div class="e-sub">Task</div>
+          <div class="e-body" id="task"></div>
+        </div>
+        <div class="aev" aria-live="polite">
+          <p class="hd">Aevon</p>
+          <div id="status"></div>
+        </div>
+        <div class="emr">
+          <div class="e-title">EMR<span>Dr. Hale</span></div>
+          <div class="e-sub"><span class="wk"><button id="wk-prev" type="button" aria-label="Previous week">&lsaquo;</button><button id="wk-next" type="button" aria-label="Next week">&rsaquo;</button></span><span id="wk-label"></span></div>
+          <table class="sch" id="sched"></table>
+          <div class="e-foot"><span><i class="sw" style="background:#FDFEC7"></i>Booked</span><span><i class="sw" style="background:#fff;border:2px dashed #1c6dc0"></i>Offered to the patient</span><span><i class="sw" style="background:#9DBFA1;border-color:#2f6b3a"></i>Booked by Aevon</span></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+
+  <section id="contact" class="want">
+    <div class="wrap" style="max-width:940px">
+      <div class="sec-head">
+        <h2>Want this at your clinic?</h2>
+        <p class="lede">Book a 15-minute call, or tell us which EMR you use and we will reply personally, usually the same day.</p>
+        <p style="margin-top:22px"><a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 15-minute call</a></p>
+      </div>
+    <form id="clinic-form" style="margin-top:30px; max-width:640px" novalidate>
+      <div class="fgrid">
+        <label>
+          <span class="lbl">Name</span>
+          <input id="c-name" type="text" required autocomplete="name" class="fld" />
+        </label>
+        <label>
+          <span class="lbl">Email</span>
+          <input id="c-email" type="email" required autocomplete="email" class="fld" />
+        </label>
+      </div>
+      <div class="fgrid" style="margin-top:16px">
+        <label>
+          <span class="lbl">Clinic <span class="opt">(optional)</span></span>
+          <input id="c-clinic" type="text" autocomplete="organization" class="fld" />
+        </label>
+        <label>
+          <span class="lbl">EMR</span>
+          <select id="c-emr" class="fld">
+            <option value="">Choose one</option>
+            <option>OSCAR</option>
+            <option>OSCAR Pro</option>
+            <option>Juno</option>
+            <option>Open OSP</option>
+            <option>Accuro</option>
+            <option>TELUS PS Suite</option>
+            <option>TELUS Med Access</option>
+            <option>TELUS CHR</option>
+            <option>Profile (Intrahealth)</option>
+            <option>Avaros</option>
+            <option>Cerebrum</option>
+            <option>EMR Advantage</option>
+            <option>MYLE</option>
+            <option>Other</option>
+            <option>Not sure</option>
+          </select>
+        </label>
+      </div>
+      <div id="c-emr-other-wrap" hidden>
+        <label style="display:block; margin-top:16px">
+          <span class="lbl">Which EMR do you use?</span>
+          <input id="c-emr-other" type="text" class="fld" autocomplete="off" />
+        </label>
+      </div>
+      <fieldset style="border:0;padding:0;margin:16px 0 0">
+        <legend class="lbl" style="margin-bottom:9px">What are you interested in? <span class="opt">(optional, pick any)</span></legend>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <label class="chk"><input type="checkbox" name="c-interest" value="Follow-up booking" checked><span>Follow-up booking</span></label>
+          <label class="chk"><input type="checkbox" name="c-interest" value="Referral intake"><span>Referral intake</span></label>
+          <label class="chk"><input type="checkbox" name="c-interest" value="Cancellation backfill"><span>Cancellation backfill</span></label>
+          <label class="chk"><input type="checkbox" name="c-interest" value="Something else" id="c-interest-else"><span>Something else</span></label>
+        </div>
+      </fieldset>
+      <div id="c-interest-other-wrap" hidden>
+        <label style="display:block; margin-top:12px">
+          <span class="lbl">What else are you interested in?</span>
+          <input id="c-interest-other" type="text" class="fld" autocomplete="off" />
+        </label>
+      </div>
+      <label style="display:block; margin-top:16px">
+        <span class="lbl">What would you like help with? <span class="opt">(optional)</span></span>
+        <textarea id="c-msg" rows="4" class="fld" aria-describedby="c-note"></textarea>
+      </label>
+      <p id="c-note" style="margin-top:8px; font-size:14.5px; color:var(--ink-3)">Please do not include any patient information.</p>
+      <!-- Left empty by people. Filled in by bots, whose submissions are dropped. -->
+      <div style="position:absolute; left:-9999px" aria-hidden="true">
+        <label>Website <input id="c-website" type="text" tabindex="-1" autocomplete="off" /></label>
+      </div>
+      <div style="display:flex; align-items:center; gap:16px; margin-top:18px; flex-wrap:wrap">
+        <button class="btn btn-primary" id="c-send" type="submit">Send</button>
+        <span id="c-err" role="alert" style="color:var(--danger); font-size:14.5px"></span>
+      </div>
+    </form>
+    <div id="clinic-done" hidden class="done" style="margin-top:30px" tabindex="-1">
+      <h3>Got it, thanks.</h3>
+      <p style="margin-top:8px; color:var(--ink-2)">I will get back to you personally, usually the same day.</p>
+    </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Aevon · Canada</div>
+    <div style="display:flex;gap:6px 22px;flex-wrap:wrap">
+      <a href="health-followup.html">Aevon Health</a>
+      <a href="mailto:hello@aevon.ca">hello@aevon.ca</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="js/followup/demo.js"></script>
+<script src="js/clinic-form.js"></script>
+</body>
+</html>
