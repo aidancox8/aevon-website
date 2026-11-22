@@ -60,7 +60,7 @@
     .tour-hi { outline: 2px solid var(--accent); outline-offset: 8px; }
 
     /* ---- the light EMR ---- */
-    .emr { background: #fff; color: #15120B; border: 1px solid #5d6f99; font-family: Verdana, Tahoma, Arial, sans-serif; font-size: 12px; line-height: 1.35; box-shadow: 0 16px 44px rgba(0,0,0,.45); }
+    .emr { background: #fff; color: #15120B; border: 1px solid #5d6f99; font-family: Verdana, Tahoma, Arial, sans-serif; font-size: 12px; line-height: 1.35; }
     .emr + .emr, .aev + .emr { margin-top: 16px; }
     .e-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 24px; padding: 3px 10px; background: #003399; color: #fff; font-weight: 700; }
     .e-title span { font-weight: 400; }
@@ -108,7 +108,7 @@
     .sch td { height: 18px; padding: 0 4px; border: 1px solid #b7c4e4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .sch td.bk { background: #FDFEC7; color: #00283c; }
     .sch td.cont { border-top-color: transparent; }
-    .sch td.cl { background: repeating-linear-gradient(135deg, #e9e9e9 0 6px, #f6f6f6 6px 12px); border-color: #d8d8d8; }
+    .sch td.cl { background: #e4e4e4; border-color: #d8d8d8; }
     .sch td.off { background: #fff; outline: 2px dashed #1c6dc0; outline-offset: -2px; color: #0d4f95; font-weight: 700; }
     .sch td.mine { background: #9DBFA1; color: #0C0E0D; font-weight: 700; outline: 2px solid #2f6b3a; outline-offset: -2px; }
     .sch td.mine.new { animation: land 1.6s ease 2; }
@@ -163,6 +163,19 @@
     .tour .skip-t { background: transparent; border: 1px solid var(--line-2); color: var(--ink-2); }
     .tour .next-t { background: var(--accent); border: 1px solid var(--accent); color: var(--on-accent); }
     .again { background: none; border: 0; padding: 0; color: var(--accent); font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+    /* press feedback on everything pressable; a new text settles in from its own corner */
+    .wbtn, .chip, .e-go, .pre, .compose button, .tour button, .dtab, .wk button { transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), border-color 160ms ease, background 160ms ease; }
+    .wbtn:active:not(:disabled), .chip:active:not(:disabled), .e-go:active:not(:disabled), .pre:active, .compose button:active:not(:disabled), .tour button:active, .wk button:active { transform: scale(0.97); }
+    .b.fresh { animation: bin 220ms cubic-bezier(0.23, 1, 0.32, 1) both; transform-origin: left bottom; }
+    .b.out.fresh { transform-origin: right bottom; }
+    @keyframes bin { from { opacity: 0; transform: translateY(6px) scale(0.96); } }
+    @media (prefers-reduced-motion: reduce) {
+      .b.fresh { animation: bfade 200ms ease both; }
+      @keyframes bfade { from { opacity: 0; } }
+      .b.typ i, .sch td.mine.new { animation: none; }
+      .wbtn, .chip, .e-go, .pre, .compose button, .tour button, .dtab, .wk button { transition: none; }
+    }
 
     .want { border-top: 1px solid var(--line); }
 

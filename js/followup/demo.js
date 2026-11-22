@@ -34,6 +34,7 @@ let busy = 0;
 let weekDate = null; // any date in the week the schedule shows
 let flash = null; // appointment start to highlight once
 let note = '';
+let drawn = new Map(); // patient id -> how many messages were on the phone at the last draw
 
 const taskId = () => clinic.latestTaskFor(patientId);
 const current = () => clinic.view(taskId());
@@ -81,11 +82,13 @@ function renderThread() {
   const box = $('thread');
   const kids = [];
   let prev = 0;
-  for (const m of all.slice(0, n)) {
+  const before = drawn.get(patientId) ?? n;
+  drawn.set(patientId, n);
+  for (const [i, m] of all.slice(0, n).entries()) {
     const at = m.sentAt ?? m.createdAt;
     if (at - prev > 30 * 60000) kids.push(h('div', { class: 'stamp' }, stamp(at)));
     prev = at;
-    kids.push(h('div', { class: `b ${m.direction === 'out' ? 'in' : 'out'}` }, m.body));
+    kids.push(h('div', { class: `b ${m.direction === 'out' ? 'in' : 'out'}${i >= before ? ' fresh' : ''}` }, m.body));
   }
   if (typing) kids.push(h('div', { class: 'b in typ', 'aria-hidden': 'true' }, h('i'), h('i'), h('i')));
   if (!kids.length) kids.push(h('p', { class: 'empty' }, clinic.consent.allows(patientId, 'sms') ? 'No messages yet. Assign a follow-up as the doctor.' : `${p.firstName} has not agreed to texts, so nothing is sent to this phone.`));
@@ -279,6 +282,7 @@ function reset() {
   clinic = createClinic();
   patientId = PATIENTS[0].id;
   shown = new Map();
+  drawn = new Map();
   weekDate = null;
   note = '';
   $('instr').value = PRESETS[0];
