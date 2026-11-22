@@ -4,7 +4,7 @@
 // so the engine falls back to asking the patient again and then handing the task to staff.
 import { addDays } from './time.js';
 
-const TIMEOUT_MS = 7000;
+const TIMEOUT_MS = 11000;
 
 /**
  * @param {string} url the classify function
