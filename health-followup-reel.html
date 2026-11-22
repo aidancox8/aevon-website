@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Assign the follow-up. It gets booked. | Aevon Health</title>
+<meta name="robots" content="noindex, follow" />
+<meta name="theme-color" content="#0C0E0D" />
+<link rel="icon" type="image/svg+xml" href="logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+
+:root {
+  --bg: #0C0E0D; --bg-2: #111413; --surface: #161A18; --raised: #1D2220;
+  --ink: #ECEEEA; --ink-2: #B7BDB5; --ink-3: #858C84;
+  --line: rgba(236,238,234,.09); --line-2: rgba(236,238,234,.16);
+  --accent: #9DBFA1; --accent-2: #7FA884; --on-accent: #0C0E0D; --danger: #E3968A;
+  --f-body: Manrope, system-ui, sans-serif; --f-mono: 'Martian Mono', ui-monospace, monospace;
+  /* EMR window */
+  --e-font: Tahoma, Verdana, "Segoe UI", Arial, sans-serif;
+  --e-band: #1f5b87; --e-tool: #e1e7ee; --e-bar: #f2f4f7; --e-line: #b9c1cc; --e-line2: #dde2e8;
+  --e-ink: #1b222c; --e-ink2: #465162; --e-sel: #cfe0f1;
+  color-scheme: dark;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { background: var(--bg); color: var(--ink); font-family: var(--f-body); -webkit-font-smoothing: antialiased; }
+body { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; padding: 12px 16px 14px; overflow-x: hidden; }
+body.embed { min-height: 0; padding: 0; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.reel { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 1400px; margin: 0 auto; }
+.top { display: flex; align-items: center; min-height: 26px; }
+.note { font-size: 13.5px; color: var(--ink-2); }
+.stagewrap { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+.stage { position: relative; overflow: hidden; border: 1px solid var(--line-2); border-radius: 12px; background: var(--bg); box-shadow: 0 24px 60px rgba(0,0,0,.45); flex: none; }
+.caption { min-height: 2.7em; display: flex; align-items: center; justify-content: center; text-align: center; font-size: clamp(17px, 2vw, 26px); font-weight: 600; letter-spacing: -.012em; line-height: 1.3; color: var(--ink); text-wrap: balance; transition: opacity .2s ease; padding: 0 4px; }
+.controls { display: flex; align-items: center; gap: 10px; }
+.cbtn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; min-width: 44px; padding: 0 14px; font: 600 14px/1 var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--line-2); border-radius: 999px; cursor: pointer; }
+.cbtn:hover { border-color: var(--ink-2); }
+.cbtn svg { width: 14px; height: 14px; fill: currentColor; flex: none; }
+.cbtn .pp-play { display: none; }
+.cbtn.paused .pp-play { display: block; }
+.cbtn.paused .pp-pause { display: none; }
+.bar { flex: 1; height: 4px; border-radius: 2px; background: var(--line-2); overflow: hidden; min-width: 40px; }
+.bar i { display: block; height: 100%; width: 0; background: var(--accent); }
+.time { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); white-space: nowrap; }
+@media (max-width: 639px) { .cbtn span { display: none; } .cbtn { padding: 0; width: 44px; } .time { display: none; } }
+
+/* Embedded in the page: fixed chrome heights, so the page can reserve the final height up front. */
+body.embed .reel { max-width: none; gap: 0; padding: 10px 0 12px; }
+body.embed .top { display: none; }
+body.embed .stagewrap { flex: none; display: block; }
+body.embed .stage { border: 0; border-radius: 0; box-shadow: none; }
+body.embed .caption { height: 58px; min-height: 0; margin-top: 10px; padding: 0 14px; }
+/* Embedded in the health page the player bar is not shown. It stays in the page for keyboard and
+   screen reader users, and appears over the bottom edge only while one of its buttons has focus. */
+body.embed .reel { position: relative; }
+body.embed .controls { position: absolute; left: 0; right: 0; bottom: 0; margin: 0; padding: 0 14px; height: 52px; background: var(--bg); opacity: 0; pointer-events: none; }
+body.embed .controls:focus-within { opacity: 1; pointer-events: auto; }
+@media (max-width: 639px) {
+  body.embed .top { height: 58px; align-items: flex-start; }
+  body.embed .top .note { line-height: 1.35; }
+  body.embed .caption { height: 70px; font-size: 17px; }
+}
+
+/* ---------- stage content: logical 1280x720 on wide screens, the real pixel size on narrow ones ---------- */
+.inner { position: absolute; left: 0; top: 0; transform-origin: 0 0; font-size: 22px; line-height: 1.3; overflow: hidden;
+  background: radial-gradient(70% 60% at 50% 38%, rgba(157,191,161,.07), transparent 70%), var(--bg); }
+.inner.nt, .inner.nt * { transition: none !important; animation: none !important; }
+.sc { position: absolute; inset: 0; padding: 40px; display: flex; flex-direction: column; justify-content: center; opacity: 0; transition: opacity .5s ease; pointer-events: none; }
+.sc.on { opacity: 1; }
+.narrow .sc { padding: 12px; }
+.a { opacity: 0; transform: translateY(10px); transition: opacity .6s ease, transform .6s ease; }
+.sc.on .a { opacity: 1; transform: none; transition-delay: var(--d, .25s); }
+.rv { opacity: 0; transform: translateY(8px); transition: opacity .45s ease, transform .45s ease; }
+.rv.on { opacity: 1; transform: none; }
+.rvr { opacity: 0; transition: opacity .45s ease; }
+.rvr.on { opacity: 1; }
+.lbl { font-family: var(--f-body); font-size: 15px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--ink-3); }
+.lbl.acc { color: var(--accent); }
+.narrow .lbl { font-size: 12px; }
+
+/* 1 title / 8 end */
+.t1, .end { text-align: center; margin: auto; }
+.t1 h2, .end h2 { font-weight: 600; letter-spacing: -.03em; line-height: 1.06; text-wrap: balance; }
+.t1 h2 { font-size: 78px; margin-top: 18px; }
+.t1 .sub { margin: 24px auto 0; font-size: 26px; color: var(--ink-2); max-width: 30em; }
+.t1 .rule { width: 76px; height: 2px; background: var(--accent); margin: 26px auto 0; }
+.end { padding-bottom: 120px; }
+.end h2 { font-size: 60px; max-width: 14em; margin: 18px auto 0; }
+.end .sub { margin-top: 20px; font-size: 23px; color: var(--ink-2); }
+.narrow .t1 h2 { font-size: 40px; } .narrow .t1 .sub { font-size: 18px; margin-top: 16px; } .narrow .t1 .rule { margin-top: 18px; }
+.narrow .end { padding-bottom: 90px; } .narrow .end h2 { font-size: 32px; } .narrow .end .sub { font-size: 16px; }
+.cta-layer { position: absolute; left: 0; right: 0; bottom: 11%; display: flex; justify-content: center; opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity .5s ease, transform .5s ease, visibility 0s linear .5s; }
+.cta-layer.on { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.cta { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 26px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font: 700 16px/1 var(--f-body); text-decoration: none; }
+.cta:hover { background: var(--ink); }
+
+
+.emr { display: flex; flex-direction: column; min-height: 0; background: #fff; color: #15120B; border: 1px solid #5d6f99; overflow: hidden; font-family: Verdana, Tahoma, Arial, sans-serif; font-size: 12px; line-height: 1.3; box-shadow: 0 16px 48px rgba(0,0,0,.55); }
+.emr * { font-family: inherit; }
+.e-title { flex: none; display: flex; align-items: center; height: 24px; padding: 0 10px; background: #003399; color: #fff; font-size: 12px; font-weight: 700; }
+.e-title .r { margin-left: auto; font-weight: 400; }
+.e-link { flex: none; display: flex; align-items: center; height: 26px; padding: 0 8px; background: #fff; border-bottom: 1px solid #c0c0c0; white-space: nowrap; overflow: hidden; }
+.e-link a, .e-link span.l { display: inline-block; padding: 5px 5px; font-weight: 700; color: #00283c; text-decoration: none; font-size: 12px; }
+.e-link .l.hv { color: #fff; background: #486ebd; }
+.e-link .r { margin-left: auto; font-size: 12px; color: #00283c; font-weight: 700; padding-left: 10px; }
+.e-ivory { flex: none; display: flex; align-items: center; gap: 8px; min-height: 26px; padding: 0 10px; background: whitesmoke; border-bottom: 1px solid #c0c0c0; font-size: 12px; white-space: nowrap; overflow: hidden; }
+.e-ivory b { font-size: 14px; color: #00283c; }
+.e-ivory .lk { font-weight: 700; color: #00283c; }
+.e-ivory .lk u { text-decoration: underline; }
+.e-ivory .sp { margin-left: auto; font-weight: 700; color: #00283c; }
+.arw { display: inline-block; width: 0; height: 0; border: 5px solid transparent; }
+.arw.lf { border-right: 8px solid #00283c; border-left: 0; } .arw.rt { border-left: 8px solid #00283c; border-right: 0; }
+.e-foot { flex: none; display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; padding: 5px 10px; background: whitesmoke; border-top: 1px solid #c0c0c0; font-size: 12px; color: #15120B; }
+.sw { display: inline-block; width: 12px; height: 12px; border: 1px solid #486ebd; vertical-align: -2px; margin-right: 5px; }
+
+/* provider schedule day view */
+.sched { flex: 1; min-height: 0; }
+.sgrid { flex: 1; min-height: 0; display: grid; grid-template-columns: 50px 1fr 50px 1fr; grid-template-rows: auto 1fr; background: #486ebd; gap: 0; }
+.colh { grid-column: span 2; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 4px 6px; font-weight: 700; font-size: 12px; text-align: center; color: #15120B; background: #bfefff; border: 1px solid #486ebd; }
+.colh.alt { background: silver; }
+.colh .wb { display: inline-block; padding: 0 4px; font-size: 12px; background: #f4ead7; border: 1px solid #0097cf; }
+.axis { display: flex; flex-direction: column; }
+.axis span { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; background: #00A488; border-bottom: 1px solid #486ebd; }
+.axis span.h { background: #3EA4E1; }
+.lane { position: relative; background: #fff;
+  background-image: linear-gradient(#486ebd 1px, transparent 1px); background-size: 100% calc(100% / var(--rows)); border-left: 2px solid #486ebd; border-right: 2px solid #486ebd; }
+.ap { position: absolute; left: 0; right: 0; display: flex; align-items: center; gap: 6px; padding: 2px 6px; border: 2px solid #486ebd; overflow: hidden; white-space: nowrap; opacity: 0; transition: opacity .45s ease, background .35s ease; }
+.lane.on .ap { opacity: 1; transition-delay: var(--d, 0s); }
+.ap .ic2 { flex: none; width: 17px; height: 17px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; line-height: 1; color: #fff; background: #00283c; border-radius: 2px; }
+.ap .nm { font-size: 12px; font-weight: 700; color: #00283c; }
+.ap .lks { margin-left: 6px; font-size: 12px; font-weight: 700; color: #00283c; letter-spacing: .02em; }
+.ap .lks i { font-style: normal; text-decoration: underline; margin-right: 5px; }
+.ap.td { background: #FDFEC7; } .ap.hr { background: #00ee00; } .ap.pk { background: #FFBBFF; } .ap.ns { background: #cccccc; } .ap.cx, .ap.cxs { background: #999999; } .ap.bd { background: #3ea4e1; }
+.ap.bd .nm, .ap.cx .nm, .ap.cxs .nm { color: #00283c; }
+.lane.on .ap.n { opacity: 0; outline: 3px solid #d9534f; outline-offset: -3px; transition-delay: 0s; }
+.lane.on .ap.n.on { opacity: 1; }
+.lane.on .ap.t.gone { opacity: 0; }
+.narrow .q-col { display: none; }
+.narrow .sgrid { grid-template-columns: 46px 1fr; }
+.narrow .colh { grid-column: span 2; }
+.narrow .legend { display: none; }
+.narrow .ap .lks { margin-left: 2px; } 
+
+/* tickler manager (Bootstrap 3 look) and waiting list */
+.tk { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+.tk * { font-family: inherit; }
+.tk-body { flex: 1; min-height: 0; padding: 10px 14px; background: #fff; display: flex; flex-direction: column; gap: 10px; }
+.tk h2 { font-size: 22px; font-weight: 500; line-height: 1.1; color: #333; }
+.tk-f { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font-size: 12px; color: #333; }
+.tk-f label { display: inline-flex; align-items: center; gap: 5px; }
+.tk-sel { display: inline-block; min-width: 70px; padding: 3px 8px; font-size: 12px; background: #F4EaD7; border: 1px solid #0097cf; border-radius: 2px; color: #333; }
+.btn3 { display: inline-flex; align-items: center; justify-content: center; padding: 4px 10px; font-size: 12px; line-height: 1.2; color: #333; background: #fff; border: 1px solid #ccc; border-radius: 4px; white-space: nowrap; transition: background .3s, color .3s; }
+.btn3.pri { color: #fff; background: #428bca; border-color: #357ebd; }
+.btn3.dng { color: #fff; background: #d9534f; border-color: #d43f3a; }
+.btn3.lnk { border-color: transparent; color: #428bca; background: transparent; }
+.btn3.dis { opacity: .65; }
+.btn3.go { opacity: 1; }
+.tktbl { width: 100%; border-collapse: collapse; font-size: 12px; color: #333; }
+.tktbl th { text-align: left; padding: 5px 8px; font-weight: 700; border-bottom: 2px solid #ddd; white-space: nowrap; }
+.tktbl td { padding: 5px 8px; border-top: 1px solid lightgrey; white-space: nowrap; transition: background .3s; }
+.tktbl tbody tr:nth-child(odd) td { background: #f9f9f9; }
+.tktbl tr.sel td { background: #d9edf7 !important; }
+.tktbl .cb { display: inline-block; width: 12px; height: 12px; border: 1px solid #777; background: #fff; vertical-align: -2px; position: relative; }
+.tktbl tr.sel .cb::after { content: ""; position: absolute; left: 3px; top: 0; width: 3px; height: 7px; border: solid #222; border-width: 0 2px 2px 0; transform: rotate(40deg); }
+.tktbl .pen { display: inline-block; width: 10px; height: 10px; border-bottom: 2px solid #555; transform: skew(-30deg); }
+.tktbl .s2 { display: none; } .tktbl tr.dn .s2 { display: inline; } .tktbl tr.dn .s1 { display: none; }
+.tktbl tr.rvr.on, .tktbl tr.rvr { }
+.tk-act { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.narrow .hn { display: none; }
+.tasks { height: 470px; }
+.narrow .tasks { height: auto; }
+.narrow .tktbl td { white-space: normal; padding: 5px 4px; } .narrow .tktbl th { padding: 5px 4px; } .narrow .tk h2 { font-size: 18px; } .narrow .tk-body { padding: 8px 8px; }
+
+.pnl { background: #fff; color: #15120B; border: 1px solid #5d6f99; overflow: hidden; font-family: Verdana, Tahoma, Arial, sans-serif; font-size: 12px; box-shadow: 0 12px 36px rgba(0,0,0,.5); }
+.pnl * { font-family: inherit; }
+.pnl-h { display: flex; align-items: center; justify-content: space-between; padding: 5px 10px; background: #6699cc; border-bottom: 1px solid #486ebd; color: #000; font-weight: 700; font-size: 12px; }
+.pnl-h span { font-weight: 400; }
+.wl { width: 100%; border-collapse: collapse; font-size: 12px; }
+.wl th { text-align: left; padding: 4px 8px; font-weight: 700; background: #6699cc; border: 1px solid #fff; white-space: nowrap; }
+.wl td { padding: 5px 8px; border: 1px solid #fff; white-space: nowrap; font-size: 12px; }
+.wl tr.o td { background: #F7F7F7; } .wl tr.e td { background: #FDFEC7; }
+.wl td.nt { color: #3366CC; }
+.wl tr.hl td { background: #b8f0b8 !important; }
+.wl tr.gone { display: none; } .wl tr.fade td { opacity: 0; transition: opacity .4s; }
+.wl .mk { color: #0000FF; text-decoration: underline; }
+.wl .mk.sl { }
+.audit { padding: 0; font-size: 12px; color: #15120B; }
+.audit .ah, .audit .ar { display: grid; grid-template-columns: 82px 62px minmax(0, 1fr); gap: 0; }
+.audit .ah { background: #6699cc; font-weight: 700; }
+.audit .ah span, .audit .ar span { padding: 5px 8px; border: 1px solid #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.audit .ar:nth-child(even) span { background: #F7F7F7; } .audit .ar:nth-child(odd) span { background: #FDFEC7; }
+.audit .rd { color: #1f5b87; font-weight: 700; } .audit .wr { color: #9a4a00; font-weight: 700; }
+
+/* 3 automation (Aevon's own panel, on the dark stage) */
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 36px; align-items: center; }
+.narrow .split { grid-template-columns: 1fr; gap: 14px; }
+.slotcard { border: 1px dashed var(--accent); border-radius: 14px; padding: 28px 30px; background: rgba(157,191,161,.06); }
+.slotcard .big { font-size: 56px; font-weight: 600; letter-spacing: -.02em; margin-top: 6px; line-height: 1.1; }
+.slotcard p { margin-top: 10px; color: var(--ink-2); font-size: 22px; }
+.narrow .slotcard { padding: 14px 16px; } .narrow .slotcard .big { font-size: 38px; } .narrow .slotcard p { font-size: 16px; }
+.win { border: 1px solid var(--line-2); border-radius: 12px; background: var(--surface); overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,.4); }
+.panel-h { display: flex; align-items: center; gap: 12px; padding: 14px 22px; border-bottom: 1px solid var(--line); background: var(--raised); font-weight: 600; font-size: 20px; }
+.live { width: 11px; height: 11px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px rgba(157,191,161,.2); }
+.lines { padding: 8px 22px 14px; display: grid; }
+.line { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-top: 1px solid var(--line); font-size: 22px; }
+.line:first-child { border-top: 0; }
+.narrow .panel-h { font-size: 16px; padding: 10px 14px; } .narrow .lines { padding: 4px 14px 8px; } .narrow .line { font-size: 16px; padding: 11px 0; gap: 12px; }
+.ic { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--ink-3); flex: none; position: relative; transition: background .3s, border-color .3s; }
+.narrow .ic { width: 22px; height: 22px; }
+.line.done .ic { background: var(--accent); border-color: var(--accent); }
+.line.done .ic::after { content: ""; position: absolute; left: 32%; top: 14%; width: 26%; height: 50%; border: solid var(--on-accent); border-width: 0 2px 2px 0; transform: rotate(40deg); }
+.line b { color: var(--accent); font-weight: 700; }
+
+/* 4, 5 phone and texts */
+.row { display: grid; grid-template-columns: auto minmax(0, 560px); gap: 80px; align-items: center; justify-content: center; }
+.narrow .row { grid-template-columns: 1fr; gap: 10px; justify-items: center; align-content: center; }
+.phone { position: relative; width: 340px; height: 636px; padding: 10px; border-radius: 48px; background: #20252b; border: 2px solid #3a424b; box-shadow: 0 30px 80px rgba(0,0,0,.6), inset 0 0 0 2px #0d0f11; }
+.pscreen { position: relative; height: 100%; border-radius: 38px; background: #fff; color: #1a1d21; overflow: hidden; display: flex; flex-direction: column; font-family: var(--f-body); }
+.sbar { flex: none; display: flex; align-items: center; justify-content: space-between; padding: 12px 24px 0; height: 36px; font-size: 14px; font-weight: 700; color: #1a1d21; }
+.sbar .ico { display: inline-flex; align-items: center; gap: 6px; }
+.sbar svg { display: block; }
+.phead { flex: none; display: flex; align-items: center; gap: 10px; padding: 6px 14px 10px 10px; border-bottom: 1px solid #dfe2e6; background: #f6f7f8; }
+.phead .back { width: 14px; height: 14px; border-left: 3px solid #1c6dc0; border-bottom: 3px solid #1c6dc0; transform: rotate(45deg); margin: 0 6px 0 8px; flex: none; }
+.phead .av { width: 38px; height: 38px; border-radius: 50%; background: #1c6dc0; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 17px; flex: none; }
+.phead b { display: block; font-size: 16px; font-weight: 700; line-height: 1.15; }
+.phead small { display: block; font-size: 13px; color: #5a626c; }
+.thread { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 7px; padding: 10px 16px 12px; overflow: hidden; background: #fff; }
+.stamp { align-self: center; font-size: 13px; color: #6a727c; margin: 2px 0; }
+.b { position: relative; width: fit-content; max-width: 84%; padding: 9px 14px; border-radius: 20px; font-size: 16px; line-height: 1.36; }
+.b.in { align-self: flex-start; background: #e6e8eb; color: #1a1d21; border-bottom-left-radius: 5px; margin-left: 6px; }
+.b.in::before { content: ""; position: absolute; left: -6px; bottom: 0; width: 14px; height: 14px; background: #e6e8eb; border-bottom-right-radius: 14px; }
+.b.in::after { content: ""; position: absolute; left: -9px; bottom: 0; width: 9px; height: 16px; background: #fff; border-bottom-right-radius: 9px; }
+.b.out { align-self: flex-end; background: #1c6dc0; color: #fff; font-weight: 700; border-bottom-right-radius: 5px; margin-right: 6px; }
+.b.out::before { content: ""; position: absolute; right: -6px; bottom: 0; width: 14px; height: 14px; background: #1c6dc0; border-bottom-left-radius: 14px; }
+.b.out::after { content: ""; position: absolute; right: -9px; bottom: 0; width: 9px; height: 16px; background: #fff; border-bottom-left-radius: 9px; }
+.b.typ { display: none; align-self: flex-end; gap: 5px; padding: 14px 16px; margin-right: 6px; background: #1c6dc0; }
+.b.typ.on { display: flex; opacity: 1; transform: none; }
+.b.typ i { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.9); animation: dot 1s infinite; }
+.b.typ i:nth-child(2) { animation-delay: .15s; } .b.typ i:nth-child(3) { animation-delay: .3s; }
+@keyframes dot { 0%, 60%, 100% { opacity: .35; } 30% { opacity: 1; } }
+.dlv { align-self: flex-end; margin-right: 8px; font-size: 13px; color: #6a727c; }
+.compose { flex: none; display: flex; align-items: center; gap: 8px; padding: 8px 14px 18px; background: #fff; border-top: 1px solid #eceef0; }
+.compose span { flex: 1; height: 34px; border: 1px solid #cfd4da; border-radius: 17px; padding: 0 14px; display: flex; align-items: center; font-size: 15px; color: #7b838d; }
+.compose i { width: 30px; height: 30px; border-radius: 50%; background: #d5dae0; flex: none; }
+.narrow .phone { width: 282px; height: 356px; padding: 8px; border-radius: 36px; }
+.narrow .pscreen { border-radius: 29px; }
+.narrow .sbar { height: 30px; padding: 9px 18px 0; font-size: 13px; }
+.narrow .phead { padding: 4px 12px 8px 6px; } .narrow .phead .av { width: 32px; height: 32px; font-size: 15px; }
+.narrow .phead b { font-size: 15px; } .narrow .phead small { font-size: 12px; }
+.narrow .thread { padding: 8px 12px 10px; gap: 6px; }
+.narrow .b { font-size: 15px; padding: 7px 12px; }
+.narrow .compose { display: none; }
+.narrow #s4 .phone { height: 286px; }
+.narrow .hide-n { display: none; }
+.sendp { display: grid; gap: 16px; align-content: center; }
+.counter { font-size: 26px; color: var(--ink-2); } .counter b { display: inline-block; vertical-align: -.1em; font-size: 78px; font-weight: 600; color: var(--ink); letter-spacing: -.03em; line-height: 1; margin: 0 .22em 0 .2em; }
+.narrow .counter { font-size: 15px; } .narrow .counter b { font-size: 26px; margin: 0 .2em; vertical-align: -.05em; }
+.rcps { display: grid; gap: 12px; }
+.rcp { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 22px; border: 1px solid var(--line-2); border-radius: 14px; background: var(--surface); font-size: 26px; font-weight: 600; transition: border-color .4s, background .4s; }
+.rcp .stx { font-size: 20px; font-weight: 600; color: var(--ink-2); border: 1px solid var(--line-2); border-radius: 6px; padding: 6px 14px; white-space: nowrap; transition: color .4s, border-color .4s, background .4s; }
+.rcp.yes { border-color: var(--accent); background: rgba(157,191,161,.1); }
+.rcp.yes .stx { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
+.rcp.told .stx { color: var(--ink-3); }
+.narrow .rcp { padding: 7px 12px; font-size: 15px; border-radius: 10px; gap: 8px; } .narrow .rcps { gap: 6px; width: 100%; }
+.narrow .rcp .stx { font-size: 12px; padding: 3px 10px; }
+.narrow .sendp { gap: 8px; width: 100%; }
+.nohd { display: inline-flex; width: fit-content; align-items: center; font-size: 20px; color: var(--accent); border: 1px solid var(--accent); border-radius: 6px; padding: 8px 16px; }
+.narrow .nohd { font-size: 13px; padding: 4px 12px; }
+
+/* 7 booked */
+.s7grid { position: relative; height: 100%; min-height: 0; display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(0, 1fr); gap: 24px; align-items: stretch; }
+.s7pane.sw7 { display: flex; flex-direction: column; min-height: 0; }
+.s7panel { display: flex; flex-direction: column; justify-content: center; gap: 18px; min-height: 0; }
+.narrow .s7grid { display: block; }
+.narrow .s7pane { position: absolute; inset: 0; }
+.narrow .s7panel { position: absolute; inset: 0; display: block; }
+.narrow .s7panel > .pnl { position: absolute; left: 0; right: 0; top: 50%; bottom: auto; transform: translateY(-50%); }
+.narrow #s7sched { opacity: 0; transition: opacity .4s; } .narrow #s7sched.on { opacity: 1; }
+.narrow .s7panel > .pnl.rv { transform: translateY(-46%); } .narrow .s7panel > .pnl.rv.on { transform: translateY(-50%); }
+.narrow .s7panel > .pnl.rv:not(.on) { pointer-events: none; }
+.narrow .audit { font-size: 12px; } .narrow .audit .ar span { white-space: normal; } .narrow .audit .ah, .narrow .audit .ar { grid-template-columns: 70px 54px minmax(0, 1fr); }
+
+
+.emr.inbox { height: 520px; }
+.inner:not(.narrow) .emr.inbox, .inner:not(.narrow) .emr.inbox * { font-size: 15px; }
+.inner:not(.narrow) .emr.inbox .e-title { height: 28px; } .inner:not(.narrow) .emr.inbox .e-link { height: 32px; } .inner:not(.narrow) .emr.inbox .i-h b { font-size: 18px; } .inner:not(.narrow) .emr.inbox .itbl td { padding: 9px 10px; }
+.emr.inbox.mini { height: auto; }
+.i-bar { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 30px; padding: 3px 8px; background: #486ebd; white-space: nowrap; overflow: hidden; }
+.i-bar .sb { display: inline-block; padding: 2px 8px; margin-right: 5px; font-size: 12px; color: #000; background: #e8e8e8; border: 1px solid #8a8a8a; border-radius: 2px; }
+.i-lnks span { margin-left: 12px; font-size: 12px; color: #fff; }
+.i-lnks span.hv { text-decoration: underline; font-weight: 700; }
+.i-main { flex: 1; min-height: 0; display: grid; grid-template-columns: 150px minmax(0, 1fr); background: #E0E1FF; }
+.i-cat { padding: 10px 10px; font-size: 12px; color: #00283c; line-height: 1.9; }
+.i-cat b { font-weight: 700; } .i-cat div { padding-left: 14px; }
+.i-list { padding: 8px 10px; background: #E0E1FF; min-width: 0; }
+.i-h { display: flex; align-items: baseline; justify-content: space-between; padding: 0 2px 6px; font-size: 12px; color: #00283c; }
+.i-h b { font-size: 14px; }
+.itbl { width: 100%; border-collapse: collapse; font-size: 12px; background: #fff; color: #15120B; }
+.itbl th { text-align: left; padding: 5px 8px; font-weight: 700; background: #b6c0e8; border: 1px solid #fff; white-space: nowrap; }
+.itbl td { padding: 6px 8px; border: 1px solid #e3e3e3; white-space: nowrap; }
+.itbl td.ty { font-weight: 700; color: #00283c; }
+.itbl tbody tr:nth-child(even) td { background: #f7f7f7; }
+.itbl tr.nr { display: none; }
+.itbl tr.nr.on { display: table-row; }
+.itbl tr.nr.on td { background: #ffffaa; }
+.itbl .cb { display: inline-block; width: 12px; height: 12px; border: 1px solid #777; background: #fff; vertical-align: -2px; }
+.narrow .emr.inbox { height: auto; }
+.narrow .i-main { grid-template-columns: 1fr; }
+.narrow .i-cat { display: none; }
+.narrow .itbl td, .narrow .itbl th { padding: 6px 4px; white-space: normal; }
+.narrow .i-bar { padding: 3px 6px; }
+.narrow .i-bar .sb { padding: 2px 5px; margin-right: 3px; }
+
+/* Aevon panels: checklist states, dense variant, cards */
+.line.miss .ic { border-color: var(--danger); }
+.line.miss .ic::after { content: "!"; position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: var(--danger); }
+.line.miss > span:last-child { color: var(--danger); }
+.slotcard .rule3 { font-size: 18px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line-2); }
+.narrow .slotcard .rule3 { font-size: 14px; margin-top: 8px; padding-top: 8px; }
+.split.s5 { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 28px; }
+.narrow .split.s5 { grid-template-columns: 1fr; gap: 10px; }
+.win.dense .line { font-size: 19px; padding: 9px 0; }
+.win.dense .line b { color: var(--accent); }
+.narrow .win.dense .line { font-size: 14px; padding: 5px 0; gap: 10px; }
+.narrow .win.dense .ic { width: 18px; height: 18px; }
+.narrow .win.dense .panel-h { padding: 8px 14px; font-size: 14px; }
+.narrow .win.dense .line.miss .ic::after { font-size: 12px; }
+.narrow #s3 .line { padding: 8px 0; font-size: 15px; }
+.fbtn { display: block; width: fit-content; margin-top: 8px; padding: 7px 14px; border-radius: 9px; background: #1c6dc0; color: #fff; font-weight: 700; font-size: 15px; }
+.ackc { border: 1px solid var(--line-2); border-radius: 14px; background: var(--surface); padding: 16px 22px; }
+.ackc .ackh { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-family: var(--f-body); font-size: 15px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--accent); }
+.ackc .stx { font-size: 13px; color: var(--on-accent); background: var(--accent); border-radius: 5px; padding: 3px 10px; font-family: var(--f-body); letter-spacing: 0; text-transform: none; font-weight: 600; }
+.ackc b { display: block; margin-top: 8px; font-size: 24px; font-weight: 600; }
+.ackc p { margin-top: 6px; font-size: 20px; color: var(--ink-2); line-height: 1.35; }
+.narrow .ackc { padding: 10px 14px; border-radius: 10px; width: 100%; } .narrow .ackc b { font-size: 16px; margin-top: 4px; } .narrow .ackc p { font-size: 14px; } .narrow .ackc .ackh { font-size: 12px; }
+.narrow #s4 .phone, .narrow #s6 .phone { height: 330px; }
+.sendp .lbl { line-height: 1.4; text-transform: none; font-size: 15px; letter-spacing: .02em; }
+.narrow .sendp .lbl { font-size: 12px; }
+.rcp.pick { border-color: var(--accent); background: rgba(157,191,161,.1); }
+.rcp.pick .stx { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
+.s5 .win { align-self: center; }
+
+/* scene 7: schedule, Aevon rule panel, patient phone, staff exception */
+.s7x { opacity: 0; transform: translateY(8px); transition: opacity .5s ease, transform .5s ease; }
+.s7x.on { opacity: 1; transform: none; }
+.s7grid { position: relative; height: 100%; min-height: 0; display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 24px; }
+.s7L, .s7R { display: flex; flex-direction: column; gap: 14px; min-height: 0; }
+.s7R { justify-content: center; }
+.s7sc { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.s7sc .emr { flex: 1; }
+.s7exc { flex: none; }
+.s7lbl { font-size: 17px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+.emr.tk.exc .tk-body { padding: 8px 12px; }
+.s7rule .panel-h { padding: 10px 20px; font-size: 19px; }
+.s7rule .lines { padding: 2px 20px 8px; }
+.s7rule .line { font-size: 19px; padding: 8px 0; gap: 14px; }
+.s7R .s7phw { align-self: center; }
+.s7R .phone.s7ph { width: 300px; height: 372px; padding: 9px; border-radius: 40px; }
+.s7ph .pscreen { border-radius: 31px; }
+.s7ph .compose { display: none; }
+.wel { font-weight: 600; color: #3b6d46; background: #e3f1e5; border-radius: 10px; padding: 4px 10px; font-size: 14px; }
+.narrow .s7grid { display: block; }
+.narrow .s7L, .narrow .s7R { display: block; position: absolute; inset: 0; }
+.narrow .s7sc { position: absolute; inset: 0; display: flex; }
+.narrow .s7exc, .narrow .s7rule, .narrow .s7phw { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-46%); }
+.narrow .s7phw { display: flex; justify-content: center; }
+.narrow .s7exc.on, .narrow .s7rule.on, .narrow .s7phw.on { transform: translateY(-50%); }
+.narrow .s7x:not(.on) { pointer-events: none; }
+.narrow .s7R .phone.s7ph { width: 282px; height: 356px; }
+.narrow .s7rule .panel-h { font-size: 16px; padding: 10px 14px; } .narrow .s7rule .lines { padding: 4px 14px 8px; } .narrow .s7rule .line { font-size: 16px; padding: 11px 0; }
+.narrow .s7lbl { font-size: 16px; }
+.end .sub2 { margin-top: 12px; font-size: 20px; color: var(--ink-3); }
+.narrow .end .sub2 { font-size: 14px; }
+
+/* cursor */
+.cur { position: absolute; left: 0; top: 0; z-index: 20; width: 26px; pointer-events: none; opacity: 0; transition: opacity .3s ease, transform 1s cubic-bezier(.45,.05,.25,1); filter: drop-shadow(0 2px 3px rgba(0,0,0,.45)); }
+.cur.on { opacity: 1; } .cur.jump { transition: opacity .3s ease; }
+.cur svg { display: block; width: 100%; height: auto; transition: transform .15s; transform-origin: 0 0; }
+.cur.press svg { transform: scale(.82); }
+.cur::after { content: ""; position: absolute; left: -10px; top: -10px; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #1f5b87; opacity: 0; transform: scale(.4); }
+.cur.press::after { animation: rip .5s ease-out; }
+@keyframes rip { 0% { opacity: .9; transform: scale(.4); } 100% { opacity: 0; transform: scale(1.6); } }
+
+/* reduced motion: static storyboard */
+.board { display: none; width: 100%; max-width: 1180px; margin: 0 auto; padding: 14px 14px 24px; }
+.board h1 { font-size: clamp(22px, 3vw, 30px); font-weight: 600; letter-spacing: -.02em; margin: 6px 0 4px; }
+.board > p { color: var(--ink-2); font-size: 15px; }
+.board ol { list-style: none; counter-reset: b; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 28px; margin-top: 20px; }
+.board li { counter-increment: b; display: grid; align-content: start; grid-template-columns: minmax(0, 1fr); gap: 10px; padding-top: 16px; border-top: 1px solid var(--line); }
+.board h3 { font-size: 18px; font-weight: 600; line-height: 1.3; }
+.board h3::before { content: counter(b) ". "; font-family: var(--f-mono); font-size: 13px; color: var(--accent); }
+.board li > p { color: var(--ink-2); font-size: 15px; }
+.frame { position: relative; overflow: hidden; border: 1px solid var(--line-2); border-radius: 10px; background: var(--bg); width: 100%; }
+.frame .inner { transform-origin: 0 0; }
+.board .cta { margin-top: 6px; width: fit-content; }
+@media (max-width: 760px) { .board ol { grid-template-columns: 1fr; } }
+body.reduced .reel { display: none; }
+body.reduced .board { display: block; }
+body.reduced { display: block; }
+
+/* ---------- motion layer: camera, cursor, arriving rows, typing, checks ---------- */
+/* each scene is its own camera: it eases in, then zooms and pans to what matters */
+.sc { transform-origin: 0 0; transform: translateY(18px) scale(.985); transition: opacity .5s ease, transform 1.1s cubic-bezier(.45,.05,.2,1); will-change: transform; }
+.sc.on { transform: none; }
+/* captions come in word by word */
+.caption .cl { display: block; }
+.caption .cw { display: inline-block; white-space: pre; animation: cwin .5s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes cwin { from { opacity: 0; transform: translateY(.35em); filter: blur(3px); } to { opacity: 1; transform: none; filter: none; } }
+/* inbox rows arrive one after another */
+.sc.on .itbl tbody tr:not(.nr) td { animation: rowin .45s ease both; }
+.sc.on .itbl tbody tr:nth-child(2) td { animation-delay: .15s; } .sc.on .itbl tbody tr:nth-child(3) td { animation-delay: .3s; }
+.sc.on .itbl tbody tr:nth-child(4) td { animation-delay: .45s; } .sc.on .itbl tbody tr:nth-child(5) td { animation-delay: .6s; }
+.sc.on .itbl tbody tr:nth-child(6) td { animation-delay: .75s; }
+@keyframes rowin { from { opacity: 0; } to { opacity: 1; } }
+/* a new document lands with a flash, and is selected when clicked */
+.itbl tr.nr.on td { animation: rowflash 1.8s ease both; }
+@keyframes rowflash { 0% { background: #ffd83d; box-shadow: inset 0 2px 0 #d49b00, inset 0 -2px 0 #d49b00; } 100% { background: #ffffaa; box-shadow: none; } }
+.itbl tr.nr.sel td { animation: none; background: #cfe0ff; box-shadow: inset 0 2px 0 #486ebd, inset 0 -2px 0 #486ebd; }
+.bump { display: inline-block; animation: bump .6s ease; }
+@keyframes bump { 0% { transform: scale(1); } 40% { transform: scale(1.7); color: #b8860b; } 100% { transform: scale(1); } }
+/* a check spins while it is being checked, then pops to a tick */
+.line.on:not(.done):not(.miss) .ic { border-color: var(--line-2); border-top-color: var(--accent); animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.line.done .ic { animation: tickpop .4s cubic-bezier(.22,1,.36,1); }
+@keyframes tickpop { 0% { transform: scale(.5); } 100% { transform: scale(1); } }
+.line.miss .ic { animation: shake .45s ease; }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+/* outgoing notices slide in, and their Sent mark pops */
+.ackc.rv { transform: translateX(32px); } .ackc.rv.on { transform: none; }
+.ackc.on .stx { animation: pop .45s .3s cubic-bezier(.22,1,.36,1) both; }
+@keyframes pop { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: scale(1); } }
+/* text bubbles pop from their corner, after typing dots */
+.b.rv { transform: translateY(10px) scale(.9); transform-origin: left bottom; transition: opacity .25s ease, transform .4s cubic-bezier(.22,1,.36,1); }
+.b.out.rv { transform-origin: right bottom; }
+.b.rv.on { transform: none; }
+.b.typ.tin { align-self: flex-start; margin: 0 0 0 6px; background: #e6e8eb; }
+.b.typ.tin i { background: rgba(60,66,74,.7); }
+.rcp.pick { animation: pickp .6s ease; }
+@keyframes pickp { 0% { transform: scale(1); } 45% { transform: scale(1.04); } 100% { transform: scale(1); } }
+/* the booked appointment drops into the schedule */
+.lane.on .ap.n.on { animation: apin .7s cubic-bezier(.22,1,.36,1) both; }
+@keyframes apin { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: scale(1); } }
+/* ---------- follow-up reel ---------- */
+/* one scene leaves before the next arrives, so no frame shows two scenes */
+.sc { transition: opacity .2s ease, transform 1.1s cubic-bezier(.45,.05,.2,1); }
+.sc.on { transition: opacity .45s ease .22s, transform 1.1s cubic-bezier(.45,.05,.2,1); }
+.emr.big { width: 860px; max-width: 100%; margin: 0 auto; }
+.inner:not(.narrow) .emr.big, .inner:not(.narrow) .emr.big * { font-size: 17px; }
+.inner:not(.narrow) .emr.big .e-title { height: 30px; } .inner:not(.narrow) .emr.big .e-link { height: 36px; }
+.inner:not(.narrow) .emr.big h2 { font-size: 26px; }
+.inner:not(.narrow) .emr.big .tk-body { padding: 16px 22px 20px; gap: 14px; }
+.inner:not(.narrow) .emr.big .tktbl td, .inner:not(.narrow) .emr.big .tktbl th { padding: 9px 10px; }
+.ff { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; align-items: center; }
+.ff label { font-weight: 700; color: #333; }
+.fi { display: flex; align-items: center; min-height: 40px; padding: 6px 10px; background: #fff; border: 1px solid #8a94a6; border-radius: 3px; color: #15120B; }
+.fi.ro { background: #f3f3f3; border-color: #ccc; }
+.fi.ta { min-height: 74px; align-items: flex-start; }
+.fi.on { border-color: #428bca; box-shadow: 0 0 0 3px rgba(66,139,202,.28); }
+.caret { display: none; width: 2px; height: 1.15em; margin-left: 1px; background: #15120B; animation: blink 1s steps(1) infinite; }
+.fi.on .caret { display: inline-block; }
+@keyframes blink { 50% { opacity: 0; } }
+.fi.dd { justify-content: space-between; background: #F4EaD7; border-color: #0097cf; font-weight: 700; }
+.fi.dd i { width: 0; height: 0; border: 6px solid transparent; border-top: 8px solid #00283c; margin-top: 7px; }
+.fi.dd.pick { animation: pickp .6s ease; background: #dff0d8; border-color: #3c763d; }
+.saved { color: #3c763d; font-weight: 700; margin-left: 6px; }
+.btn3.press { background: #2a6496; }
+.narrow .ff { grid-template-columns: 1fr; gap: 3px; }
+.narrow .fi { min-height: 34px; } .narrow .fi.ta { min-height: 52px; }
+.tktbl tr.dn td { background: #dff0d8 !important; }
+.tktbl td.stt b { font-weight: 700; } .tktbl tr.dn td.stt b { color: #2b6a2d; }
+.tktbl td.fd { color: #a3261a; font-weight: 700; }
+.tktbl td.wrap { white-space: normal; }
+.notes { border: 1px solid #5d6f99; }
+.notes .ah, .notes .ar { display: grid; grid-template-columns: 150px 110px minmax(0, 1fr); }
+.notes .ah { background: #6699cc; font-weight: 700; }
+.notes span { padding: 7px 10px; border: 1px solid #fff; }
+.notes .ar span { background: #FDFEC7; } .notes .ar:nth-child(odd) span { background: #F7F7F7; }
+.notes .ar.hot { opacity: 0; transition: opacity .45s ease; } .notes .ar.hot.on { opacity: 1; }
+.notes .ar.hot.on span { animation: rowflash 1.8s ease both; }
+.narrow .notes .ah, .narrow .notes .ar { grid-template-columns: 74px 52px minmax(0, 1fr); }
+.narrow .notes span { padding: 5px 5px; }
+.nocomp .compose { display: none; }
+.inner:not(.narrow) .s7r { width: 620px; }
+.inner:not(.narrow) .s7r .emr, .inner:not(.narrow) .s7r .emr * { font-size: 16px; }
+.inner:not(.narrow) .s7r .e-title { height: 30px; }
+.inner:not(.narrow) .s7r .tktbl td, .inner:not(.narrow) .s7r .tktbl th { padding: 9px 10px; }
+.inner:not(.narrow) #s7 .row { gap: 56px; }
+.inner:not(.narrow) #s7 .phone { height: 520px; }
+.s7r .tktbl td { white-space: normal; vertical-align: top; }
+.narrow #s2 .phone, .narrow #s3 .phone, .narrow #s6 .phone { height: calc(100% - 4px); max-height: 456px; }
+.narrow #s7 .phone { height: 322px; }
+.narrow .row { height: 100%; }
+.end .rule { width: 76px; height: 2px; background: var(--accent); margin: 22px auto 0; }
+</style>
+</head>
+<body>
+
+<main class="reel" id="reel" role="region" aria-label="Follow-up booking demo, self-playing">
+  <div class="top"></div>
+  <div class="stagewrap" id="stagewrap">
+    <div class="stage" id="stage">
+      <div class="inner" id="inner">
+
+        <section class="sc" id="s1"><div class="emr tk big a">
+          <div class="e-title">EMR<span class="r">Dr. Hale</span></div><div class="e-link"><a>Schedule</a><a class="hn">Caseload</a><a class="hn">Search</a><a class="hn">Report</a><a class="hn">Billing</a><a class="hn">Lab</a><a>Msg</a><a class="hn">Inbox</a><a class="l hv">Tasks</a><a class="hn">Administration</a></div>
+          <div class="tk-body">
+            <h2>New task</h2>
+            <div class="ff"><label>Patient</label><span class="fi ro">Nair, Priya</span></div>
+            <div class="ff"><label>Message</label><span class="fi ta" id="msgf"><span id="ty" data-init=""></span><i class="caret"></i></span></div>
+            <div class="ff"><label>Assigned to</label><span class="fi dd" id="asg"><span id="asgt" data-init="Front desk">Front desk</span><i></i></span></div>
+            <div class="tk-act"><span class="btn3 pri" id="save">Save</span><span class="btn3">Cancel</span><span class="saved rvr" id="saved">Task saved</span></div>
+          </div>
+        </div></section>
+
+        <section class="sc" id="s2"><div class="row">
+          <div class="phone p2"><div class="pscreen"><div class="sbar"><span>10:02</span><span class="ico"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div><div class="phead"><span class="back"></span><span class="av">R</span><div><b>Rosewood Clinic</b><small>Text message</small></div></div><div class="thread"><div class="stamp">Today 10:02 am</div><div class="b in tin typ" id="t2"><i></i><i></i><i></i></div><div class="b in rv" id="m2">Hi Priya, this is the automated assistant at Rosewood Clinic. Dr. Hale would like to see you for a follow-up visit. Reply 1 for Tue Dec 29 at 10:00am, 2 for Wed Dec 30 at 1:15pm, or 3 for Thu Dec 31 at 9:00am. Reply OTHER for different times, or STOP to opt out.</div></div><div class="compose"><span>Text message</span><i></i></div></div></div>
+          <div class="sendp hide-n a" style="--d:.4s">
+            <p class="lbl acc">Open times in Dr. Hale&rsquo;s schedule</p>
+            <div class="rcps">
+              <div class="rcp rv" id="o1"><span>1 &nbsp;Tue Dec 29, 10:00 am</span><span class="stx">Offered</span></div>
+              <div class="rcp rv" id="o2"><span>2 &nbsp;Wed Dec 30, 1:15 pm</span><span class="stx">Offered</span></div>
+              <div class="rcp rv" id="o3"><span>3 &nbsp;Thu Dec 31, 9:00 am</span><span class="stx">Offered</span></div>
+            </div>
+          </div>
+        </div></section>
+
+        <section class="sc" id="s3"><div class="row">
+          <div class="phone p3 nocomp"><div class="pscreen"><div class="sbar"><span>10:06</span><span class="ico"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div><div class="phead"><span class="back"></span><span class="av">R</span><div><b>Rosewood Clinic</b><small>Text message</small></div></div><div class="thread"><div class="stamp">Today 10:02 am</div><div class="b in">Hi Priya, this is the automated assistant at Rosewood Clinic. Dr. Hale would like to see you for a follow-up visit. Reply 1 for Tue Dec 29 at 10:00am, 2 for Wed Dec 30 at 1:15pm, or 3 for Thu Dec 31 at 9:00am. Reply OTHER for different times, or STOP to opt out.</div><div class="b out typ" id="typ3"><i></i><i></i><i></i></div><div class="b out rv" id="y3">2</div><div class="dlv rv" id="dlv3">Delivered</div><div class="b in tin typ" id="t3"><i></i><i></i><i></i></div><div class="b in rv" id="m3">Hi Priya, you are booked for a follow-up visit with Dr. Hale at Rosewood Clinic on Wed Dec 30 at 1:15pm. Reply to this message if you need to change it and the clinic will call you.</div></div><div class="compose"><span>Text message</span><i></i></div></div></div>
+          <div class="sendp hide-n a" style="--d:.4s">
+            <p class="lbl acc">Open times in Dr. Hale&rsquo;s schedule</p>
+            <div class="rcps">
+              <div class="rcp on"><span>1 &nbsp;Tue Dec 29, 10:00 am</span><span class="stx">Offered</span></div>
+              <div class="rcp on" id="p2"><span>2 &nbsp;Wed Dec 30, 1:15 pm</span><span class="stx" id="p2s" data-init="Offered">Offered</span></div>
+              <div class="rcp on"><span>3 &nbsp;Thu Dec 31, 9:00 am</span><span class="stx">Offered</span></div>
+            </div>
+          </div>
+        </div></section>
+
+        <section class="sc" id="s4"><div class="emr sched a" id="sb" style="flex:1"></div></section>
+
+        <section class="sc" id="s5"><div class="emr tk big a">
+          <div class="e-title">EMR<span class="r">Front desk</span></div><div class="e-link"><a>Schedule</a><a class="hn">Caseload</a><a class="hn">Search</a><a class="hn">Report</a><a class="hn">Billing</a><a class="hn">Lab</a><a>Msg</a><a class="hn">Inbox</a><a class="l hv">Tasks</a><a class="hn">Administration</a></div>
+          <div class="tk-body">
+            <h2>Tasks</h2>
+            <table class="tktbl"><thead><tr><th>Patient</th><th class="hn">Created by</th><th>Assigned to</th><th>Status</th><th class="hn">Message</th></tr></thead>
+            <tbody>
+              <tr id="trow"><td>Nair, Priya</td><td class="hn">Hale, Dr.</td><td>Aevon</td><td class="stt"><b><span class="s1">Active</span><span class="s2">Complete</span></b></td><td class="hn">Follow-up in 6 weeks, 15 min</td></tr>
+              <tr><td>Bell, Marcus</td><td class="hn">Hale, Dr.</td><td>Front desk</td><td class="stt"><b>Active</b></td><td class="hn">Send requisition form</td></tr>
+              <tr><td>Park, Helen</td><td class="hn">Hale, Dr.</td><td>Front desk</td><td class="stt"><b>Active</b></td><td class="hn">Update address on file</td></tr>
+            </tbody></table>
+            <div class="notes" id="notes">
+              <div class="ah"><span>Time</span><span>By</span><span>Note for Nair, Priya</span></div>
+              <div class="ar"><span>10:01 am</span><span>Aevon</span><span>[Aevon] started</span></div>
+              <div class="ar hot" id="nrow"><span>10:06 am</span><span>Aevon</span><span>Booked Wed 30 Dec 13:15 by text</span></div>
+            </div>
+          </div>
+        </div></section>
+
+        <section class="sc" id="s6"><div class="row">
+          <div class="phone p6 nocomp"><div class="pscreen"><div class="sbar"><span>10:06</span><span class="ico"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div><div class="phead"><span class="back"></span><span class="av">R</span><div><b>Rosewood Clinic</b><small>Text message</small></div></div><div class="thread"><div class="b in">Hi Priya, this is the automated assistant at Rosewood Clinic. Dr. Hale would like to see you for a follow-up visit. Reply 1 for Tue Dec 29 at 10:00am, 2 for Wed Dec 30 at 1:15pm, or 3 for Thu Dec 31 at 9:00am. Reply OTHER for different times, or STOP to opt out.</div><div class="b out rv" id="y6">mornings only</div><div class="b in tin typ" id="t6"><i></i><i></i><i></i></div><div class="b in rv" id="m6">Here are three different times with Dr. Hale. Reply 1 for Mon Dec 28 at 9:30am, 2 for Wed Dec 30 at 10:15am, or 3 for Mon Jan 4 at 9:00am. Reply OTHER for different times, or STOP to opt out.</div></div><div class="compose"><span>Text message</span><i></i></div></div></div>
+          <div class="sendp hide-n a" style="--d:.4s">
+            <p class="lbl acc">New times, mornings only</p>
+            <div class="rcps">
+              <div class="rcp rv" id="q1"><span>1 &nbsp;Mon Dec 28, 9:30 am</span><span class="stx">Offered</span></div>
+              <div class="rcp rv" id="q2"><span>2 &nbsp;Wed Dec 30, 10:15 am</span><span class="stx">Offered</span></div>
+              <div class="rcp rv" id="q3"><span>3 &nbsp;Mon Jan 4, 9:00 am</span><span class="stx">Offered</span></div>
+            </div>
+          </div>
+        </div></section>
+
+        <section class="sc" id="s7"><div class="row">
+          <div class="phone p7 nocomp"><div class="pscreen"><div class="sbar"><span>10:06</span><span class="ico"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div><div class="phead"><span class="back"></span><span class="av">R</span><div><b>Rosewood Clinic</b><small>Text message</small></div></div><div class="thread"><div class="b out rv" id="y7">I need to talk to the doctor about my results</div><div class="b in tin typ" id="t7"><i></i><i></i><i></i></div><div class="b in rv" id="m7">Thanks. We have passed your message to the team at Rosewood Clinic and someone will call you.</div></div><div class="compose"><span>Text message</span><i></i></div></div></div>
+          <div class="s7r rv" id="s7t">
+            <div class="emr tk">
+              <div class="e-title">EMR<span class="r">Front desk</span></div>
+              <div class="tk-body">
+                <table class="tktbl"><thead><tr><th>Patient</th><th>Assigned to</th><th>Note</th></tr></thead>
+                <tbody><tr><td>Nair, Priya</td><td class="fd">Front desk</td><td class="wrap">Patient message needs staff. Patient wrote: &quot;I need to talk to the doctor about my results&quot;</td></tr></tbody></table>
+              </div>
+            </div>
+          </div>
+        </div></section>
+
+        <section class="sc" id="s8"><div class="end">
+          <h2 class="a" style="--d:.2s">Assign the follow‑up.<br />It gets booked.</h2>
+          <div class="rule a" style="--d:.5s"></div>
+          <p class="sub a" style="--d:.7s">Your front desk handles only the exceptions.</p>
+        </div></section>
+
+        <div class="cur" id="cur"><svg viewBox="0 0 16 22" aria-hidden="true"><path d="M1 1 L1 17 L5 13 L8 20 L11 18.7 L8 12 L14 12 Z" fill="#ffffff" stroke="#10151b" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="cta-layer" id="cta"><a class="cta" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 15-minute call</a></div>
+    </div>
+  </div>
+  <p class="caption" id="caption" aria-live="off"></p>
+  <div class="controls">
+    <button class="cbtn" id="pp" type="button" aria-label="Pause the demo"><svg class="pp-pause" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3.4v12H2zM8.6 1H12v12H8.6z"/></svg><svg class="pp-play" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1l9 6-9 6z"/></svg><span id="pptext">Pause</span></button>
+    <button class="cbtn" id="rp" type="button" aria-label="Replay the demo from the start"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.5a5.5 5.5 0 1 0 5.2 3.7l-1.5.5A4 4 0 1 1 7 3v2.2l3.3-2.7L7 .5z"/></svg><span>Replay</span></button>
+    <div class="bar" id="bar" role="progressbar" aria-label="Demo progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="barfill"></i></div>
+    <span class="time" id="time">0:00 / 0:45</span>
+  </div>
+</main>
+
+<section class="board" id="board" aria-label="Follow-up booking, storyboard">
+  <h1>Assign the follow-up. It gets booked.</h1>
+  <p>Animation is turned off on this device, so here are the key frames.</p>
+  <ol id="boardlist"></ol>
+</section>
+
+<script>
+(function () {
+  'use strict';
+  var embed = window.top !== window;
+  if (embed) document.body.classList.add('embed');
+  var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function q(s, r) { return (r || document).querySelector(s); }
+  function qa(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+  var inner = q('#inner'), stage = q('#stage'), wrap = q('#stagewrap');
+
+
+  /* ---------- the day sheet (two doctors wide, Dr. Hale alone on narrow) ---------- */
+  var narrow = false, W = 1280, H = 720, scale = 1;
+  var SYM = { td: 't', hr: 'H', pk: 'P', ns: 'N', cx: 'C', bd: 'B' };
+  var HALE = [[780, 15, 'Chan, Mei', 'td'], [810, 15, 'Fraser, Liam', 'td'], [825, 30, 'Dhillon, Simran', 'td'], [870, 15, 'Evans, Tara', 'td']];
+  var VEGA = [[780, 30, 'Olsen, Britt', 'td'], [825, 15, 'Patel, Vik', 'td'], [855, 30, 'Turner, Faye', 'td']];
+  function fmt(m) { var mm = m % 60; return Math.floor(m / 60) + ':' + (mm < 10 ? '0' : '') + mm; }
+  function sched() {
+    var T0 = 780, P = narrow ? 105 : 120, rows = P / 15, d = 0;
+    function blk(a) {
+      var s = a[0], dur = a[1], who = a[2], st = a[3], cls = a[4] || '';
+      d += .1;
+      return '<div class="ap ' + st + ' ' + cls + '" style="top:' + ((s - T0) / P * 100) + '%;height:' + (dur / P * 100) + '%;--d:' + d.toFixed(2) + 's">' +
+        '<span class="ic2">' + SYM[st] + '</span><span class="nm">' + who.toUpperCase() + '</span><span class="lks"><i>E</i><i>B</i><i>M</i><i>Rx</i></span></div>';
+    }
+    var hale = HALE.map(blk).join('');
+    hale += blk([795, 15, 'Nair, Priya', 'td', 'n']);
+    var vega = VEGA.map(blk).join('');
+    var axis = '';
+    for (var i = 0; i < rows; i++) { var m = T0 + i * 15; axis += '<span class="' + (m % 60 === 0 ? 'h' : '') + '">' + fmt(m) + '</span>'; }
+    var lane = function (x, c) { return '<div class="lane ' + (c || '') + '" style="--rows:' + rows + '">' + x + '</div>'; };
+    return '<div class="e-title">EMR<span class="r">Front desk</span></div>' +
+      '<div class="e-link"><a class="l hv">Schedule</a><a>Caseload</a><a>Search</a><a>Report</a><a>Billing</a><a class="hn">Lab</a><a>Msg</a><a class="hn">Inbox</a><a>Tasks</a><a>Administration</a></div>' +
+      '<div class="e-ivory"><i class="arw lf"></i><b>Wed 2026-12-30</b><i class="arw rt"></i><span class="lk"><u>T</u>oday</span><span class="lk">Mo<u>n</u>th</span><span class="sp">View all providers</span></div>' +
+      '<div class="sgrid"><div class="colh"><span class="wb">W</span><span class="wb">S</span>Hale, Dr.</div>' + (narrow ? '' : '<div class="colh alt q-col"><span class="wb">W</span><span class="wb">S</span>Vega, Dr.</div>') +
+      '<div class="axis">' + axis + '</div>' + lane(hale) +
+      (narrow ? '' : '<div class="axis q-col">' + axis + '</div>' + lane(vega, 'q-col')) + '</div>' +
+      '<div class="e-foot legend"><span><i class="sw" style="background:#FDFEC7"></i>To Do</span><span><i class="sw" style="background:#00ee00"></i>Here</span><span><i class="sw" style="background:#cccccc"></i>No Show</span><span><i class="sw" style="background:#3ea4e1"></i>Billed</span></div>';
+  }
+  function build() { q('#sb').innerHTML = sched(); }
+
+  /* ---------- engine ---------- */
+  var STATE = ['on', 'done', 'miss', 'press', 'pick', 'sel', 'bump', 'dn'];
+  var ST = [0, 6.4, 13.6, 20.0, 25.6, 30.6, 35.8, 41.4], TOTAL = 45.6;
+  var CAP = [
+    'The doctor assigns the follow-up to Aevon.',
+    'The patient gets three real times.',
+    'They reply. It is booked.',
+    'It is on the doctor’s day sheet.',
+    'The task closes itself.',
+    'If they ask for mornings, they get mornings.',
+    'Anything clinical goes to your front desk.',
+    'Assign the follow-up. It gets booked.'
+  ];
+  var cues = [], silent = false, capTimer = null;
+  function at(t, fn) { cues.push({ t: t * 1000, fn: fn, i: cues.length }); }
+  function sc(n, off, fn) { at(ST[n - 1] + off, fn); }
+  function on(sel, c) { qa(sel, inner).forEach(function (e) { e.classList.add(c || 'on'); }); }
+  function off(sel, c) { qa(sel, inner).forEach(function (e) { e.classList.remove(c || 'on'); }); }
+  function txt(sel, s) { qa(sel, inner).forEach(function (e) { e.textContent = s; }); }
+  var cur = q('#cur'), cap = q('#caption'), ctaEl = q('#cta');
+
+  function setCap(s) {
+    clearTimeout(capTimer);
+    if (silent || reduced) { cap.textContent = s; cap.style.opacity = 1; return; }
+    cap.style.opacity = 0;
+    capTimer = setTimeout(function () {
+      cap.textContent = '';
+      var line = document.createElement('span'); line.className = 'cl';
+      s.split(' ').forEach(function (w, i) {
+        var sp = document.createElement('span'); sp.className = 'cw';
+        sp.style.animationDelay = (i * 45) + 'ms'; sp.textContent = w + ' ';
+        line.appendChild(sp);
+      });
+      cap.appendChild(line); cap.style.opacity = 1;
+    }, 220);
+  }
+  function go(n) {
+    qa('.sc', inner).forEach(function (e, i) { e.style.transform = ''; e.style.transitionDuration = ''; e.classList.toggle('on', i === n - 1); });
+    inner.setAttribute('data-scene', n);
+    setCap(CAP[n - 1]);
+    off('#cur'); ctaEl.classList.remove('on');
+  }
+  function pt(sel, fx, fy) {
+    var e = q(sel, inner), r = e.getBoundingClientRect(), ir = inner.getBoundingClientRect();
+    return [(r.left - ir.left + r.width * fx) / scale, (r.top - ir.top + r.height * fy) / scale];
+  }
+  function curSet(x, y) {
+    cur.classList.add('jump'); cur.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+    void cur.offsetWidth; cur.classList.remove('jump'); cur.classList.add('on');
+  }
+  function curTo(sel, ms, fx, fy) {
+    var p = pt(sel, fx == null ? .5 : fx, fy == null ? .5 : fy);
+    cur.style.transitionDuration = silent ? '0s' : '.3s, ' + ms + 'ms';
+    cur.style.transform = 'translate(' + p[0] + 'px,' + p[1] + 'px)';
+  }
+  function click() {
+    if (silent) return;
+    cur.classList.add('press'); setTimeout(function () { cur.classList.remove('press'); }, 520);
+  }
+  /* camera: zoom the current scene toward an element (or its centre), and back out */
+  function lrect(e, root) {
+    var x = 0, y = 0, n = e;
+    while (n && n !== root) { x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent; }
+    return [x, y, e.offsetWidth, e.offsetHeight];
+  }
+  function cam(sel, z, fx, fy, ms) {
+    if (silent || reduced) return;
+    var sce = q('.sc.on', inner); if (!sce) return;
+    if (narrow) z = 1 + (z - 1) * .45;
+    var el = sel ? q(sel, sce) : null;
+    var r = el ? lrect(el, sce) : [0, 0, W, H];
+    var cx = r[0] + r[2] * (fx == null ? .5 : fx), cy = r[1] + r[3] * (fy == null ? .5 : fy);
+    var tx = W / 2 - cx * z, ty = H / 2 - cy * z;
+    sce.style.transitionDuration = '.5s, ' + (ms || 1100) + 'ms';
+    sce.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) scale(' + z + ')';
+  }
+  function camOut(ms) {
+    if (silent || reduced) return;
+    var sce = q('.sc.on', inner); if (!sce) return;
+    sce.style.transitionDuration = '.5s, ' + (ms || 1000) + 'ms';
+    sce.style.transform = 'translate(0px,0px) scale(1)';
+  }
+  function startPos() { return [W * .86, H * .9]; }
+  function apprStart() { var s = startPos(); curSet(s[0], s[1]); }
+
+
+  /* scene 1: the doctor types the task, assigns it to Aevon and saves */
+  var TYPED = 'Follow-up in 6 weeks, 15 min';
+  sc(1, 0, function () { go(1); });
+  sc(1, .6, function () { apprStart(); });
+  sc(1, .7, function () { curTo('#msgf', 800, .2, .5); });
+  sc(1, 1.5, function () { click(); on('#msgf'); cam('#msgf', 1.25, .5, .5); });
+  for (var ci = 1; ci <= TYPED.length; ci++) { (function (n) { sc(1, 1.8 + n * .06, function () { txt('#ty', TYPED.slice(0, n)); }); })(ci); }
+  sc(1, 3.7, function () { off('#msgf'); curTo('#asg', 600, .8, .5); });
+  sc(1, 4.3, function () { click(); txt('#asgt', 'Aevon'); on('#asg', 'pick'); });
+  sc(1, 4.9, function () { curTo('#save', 500, .5, .5); camOut(700); });
+  sc(1, 5.4, function () { click(); on('#save', 'press'); });
+  sc(1, 5.6, function () { on('#saved'); });
+  /* scene 2: the text arrives; the camera is close on the phone, then out to the three times */
+  sc(2, 0, function () { go(2); });
+  sc(2, .3, function () { cam('#s2 .thread', 1.3, .5, .62); });
+  sc(2, .6, function () { on('#t2'); });
+  sc(2, 1.5, function () { off('#t2'); on('#m2'); });
+  sc(2, 4.6, function () { camOut(800); });
+  sc(2, 5.0, function () { on('#o1'); });
+  sc(2, 5.3, function () { on('#o2'); });
+  sc(2, 5.6, function () { on('#o3'); });
+  /* scene 3: the patient replies 2 and the confirmation arrives */
+  sc(3, 0, function () { go(3); });
+  sc(3, .5, function () { cam('#s3 .thread', 1.3, .5, .8); });
+  sc(3, .7, function () { on('#typ3'); });
+  sc(3, 1.5, function () { off('#typ3'); on('#y3'); });
+  sc(3, 1.8, function () { on('#dlv3'); on('#p2', 'pick'); txt('#p2s', 'Booked'); });
+  sc(3, 2.3, function () { on('#t3'); });
+  sc(3, 3.1, function () { off('#t3'); on('#m3'); });
+  sc(3, 5.2, function () { camOut(700); });
+  /* scene 4: the appointment lands on the day sheet at 1:15 */
+  sc(4, 0, function () { go(4); });
+  sc(4, .3, function () { on('#sb .lane'); });
+  sc(4, 1.0, function () { cam('#sb .ap.n', narrow ? 1.2 : 1.5, .5, .5); });
+  sc(4, 2.0, function () { on('#sb .ap.n'); });
+  sc(4, 2.6, function () { apprStart(); });
+  sc(4, 2.7, function () { curTo('#sb .ap.n', 700, .3, .6); });
+  sc(4, 3.5, function () { click(); });
+  sc(4, 4.4, function () { off('#cur'); camOut(800); });
+  /* scene 5: the task is Complete, with the note */
+  sc(5, 0, function () { go(5); });
+  sc(5, .8, function () { cam('#trow', 1.3, .5, .5); });
+  sc(5, 1.6, function () { on('#trow', 'dn'); });
+  sc(5, 2.4, function () { cam('#notes', 1.3, .5, .6); });
+  sc(5, 2.9, function () { on('#nrow'); });
+  sc(5, 4.3, function () { camOut(600); });
+  /* scene 6: mornings only */
+  sc(6, 0, function () { go(6); });
+  sc(6, .4, function () { cam('#s6 .thread', 1.3, .5, .8); });
+  sc(6, .7, function () { on('#y6'); });
+  sc(6, 1.3, function () { on('#t6'); });
+  sc(6, 2.0, function () { off('#t6'); on('#m6'); });
+  sc(6, 3.6, function () { camOut(700); });
+  sc(6, 3.9, function () { on('#q1'); });
+  sc(6, 4.1, function () { on('#q2'); });
+  sc(6, 4.3, function () { on('#q3'); });
+  /* scene 7: a question about results goes to the front desk */
+  sc(7, 0, function () { go(7); });
+  sc(7, .5, function () { on('#y7'); });
+  sc(7, 1.2, function () { on('#t7'); });
+  sc(7, 1.9, function () { off('#t7'); on('#m7'); });
+  sc(7, 2.6, function () { on('#s7t'); });
+  sc(7, 3.0, function () { if (!narrow) cam('#s7t', 1.25, .5, .5); });
+  sc(7, 5.0, function () { camOut(500); });
+  /* scene 8: end card */
+  sc(8, 0, function () { go(8); });
+  sc(8, .2, function () { cam(null, 1.05, .5, .5, 3500); });
+  sc(8, 1.4, function () { ctaEl.classList.add('on'); });
+  cues.sort(function (a, b) { return a.t - b.t || a.i - b.i; });
+
+  function reset() {
+    clearTimeout(capTimer);
+    qa('[class]', stage).forEach(function (e) { STATE.forEach(function (c) { e.classList.remove(c); }); });
+    qa('[data-init]', inner).forEach(function (e) { e.textContent = e.getAttribute('data-init'); });
+    qa('.sc', inner).forEach(function (e) { e.style.transform = ''; e.style.transitionDuration = ''; });
+    ctaEl.classList.remove('on');
+    cur.style.transform = 'translate(' + W * .86 + 'px,' + H * .9 + 'px)';
+  }
+  var idx = 0, t = 0;
+  function applyTo(ms) { while (idx < cues.length && cues[idx].t <= ms) cues[idx++].fn(); }
+  function jumpTo(ms) {
+    inner.classList.add('nt'); silent = true;
+    reset(); idx = 0; t = ms; applyTo(ms);
+    void inner.offsetWidth; silent = false;
+    if (!reduced) inner.classList.remove('nt');
+    paint();
+  }
+  function restart() {
+    inner.classList.add('nt'); silent = true; reset(); idx = 0; t = 0; void inner.offsetWidth; silent = false; inner.classList.remove('nt');
+    applyTo(0); paint();
+  }
+
+  /* ---------- sizing ---------- */
+  function setMode(n, sw) {
+    var changed = n !== narrow || !q('#sb .sgrid');
+    narrow = n;
+    inner.classList.toggle('narrow', n);
+    if (n) { W = sw; H = Math.round(sw * 1.5); } else { W = 1280; H = 720; }
+    inner.style.width = W + 'px'; inner.style.height = H + 'px';
+    if (changed) build();
+    return changed;
+  }
+  function layout() {
+    if (document.body.classList.contains('reduced')) return;
+    var avW = wrap.clientWidth, avH = embed ? 1e6 : wrap.clientHeight;
+    var isNarrow = avW < 640;
+    var sw = isNarrow ? Math.max(300, avW) : Math.max(300, Math.floor(Math.min(avW, avH * 16 / 9)));
+    var changed = setMode(isNarrow, sw);
+    scale = isNarrow ? 1 : sw / 1280;
+    inner.style.transform = scale === 1 ? 'none' : 'scale(' + scale + ')';
+    stage.style.width = sw + 'px'; stage.style.height = Math.round(H * scale) + 'px';
+    if (changed && started) jumpTo(t);
+  }
+
+  /* ---------- player ---------- */
+  var playing = false, last = 0, started = false, userPaused = false;
+  var pp = q('#pp'), ppText = q('#pptext'), fill = q('#barfill'), timeEl = q('#time'), barEl = q('#bar'), lastSec = -1;
+  function mmss(ms) { var s = Math.floor(ms / 1000); return Math.floor(s / 60) + ':' + (s % 60 < 10 ? '0' : '') + (s % 60); }
+  function paint() {
+    fill.style.width = Math.min(100, t / (TOTAL * 1000) * 100) + '%';
+    var s = Math.floor(t / 1000);
+    if (s !== lastSec) { lastSec = s; timeEl.textContent = mmss(t) + ' / ' + mmss(TOTAL * 1000); barEl.setAttribute('aria-valuenow', Math.round(t / (TOTAL * 1000) * 100)); }
+  }
+  function setPlaying(p) {
+    var was = playing;
+    playing = p; pp.classList.toggle('paused', !p);
+    ppText.textContent = p ? 'Pause' : 'Play';
+    pp.setAttribute('aria-label', p ? 'Pause the demo' : 'Play the demo');
+    if (p && !was) { last = 0; requestAnimationFrame(tick); }
+  }
+  function tick(now) {
+    if (!playing) return;
+    if (!last) last = now;
+    var dt = Math.min(100, now - last); last = now;
+    t += dt;
+    if (t >= TOTAL * 1000) { restart(); } else { applyTo(t); paint(); }
+    requestAnimationFrame(tick);
+  }
+  pp.addEventListener('click', function () { userPaused = playing; setPlaying(!playing); });
+  q('#rp').addEventListener('click', function () { userPaused = false; restart(); setPlaying(true); });
+  window.addEventListener('resize', layout);
+
+  /* the page tells the reel when it is on screen; played on its own, the reel plays at once */
+  window.addEventListener('message', function (e) {
+    if (e.origin !== location.origin || e.source !== window.parent || !e.data || e.data.aevonReel !== 'visible') return;
+    if (reduced || !started) return;
+    if (e.data.v) { if (!userPaused) setPlaying(true); } else setPlaying(false);
+  });
+  function post(o) { try { parent.postMessage(o, location.origin); } catch (err) {} }
+  function reportHeight() { if (embed) post({ aevonReel: 'height', h: Math.ceil(document.documentElement.scrollHeight) }); }
+
+  /* test and storyboard hook: jump to a time in seconds and hold */
+  window.aevonReel = { seek: function (s) { setPlaying(false); jumpTo(s * 1000); }, total: TOTAL, scenes: ST };
+
+  /* ---------- reduced motion: static storyboard ---------- */
+  function buildBoard() {
+    var KEY = [5.8, 6.0, 5.0, 4.2, 4.0, 4.6, 4.6, 3.0];
+    var DET = [
+      'An EMR task window. The doctor types Follow-up in 6 weeks, 15 min, sets Assigned to: Aevon and saves.',
+      'A phone. The text reads: Hi Priya, this is the automated assistant at Rosewood Clinic. Dr. Hale would like to see you for a follow-up visit. Reply 1 for Tue Dec 29 at 10:00am, 2 for Wed Dec 30 at 1:15pm, or 3 for Thu Dec 31 at 9:00am. Reply OTHER for different times, or STOP to opt out.',
+      'The patient replies 2. The confirmation reads: Hi Priya, you are booked for a follow-up visit with Dr. Hale at Rosewood Clinic on Wed Dec 30 at 1:15pm. Reply to this message if you need to change it and the clinic will call you.',
+      'The doctor’s day sheet for Wednesday December 30. A new appointment for Nair, Priya is at 1:15 pm.',
+      'The task list. The task for Nair, Priya is now Complete, with the note Booked Wed 30 Dec 13:15 by text.',
+      'The patient replies mornings only and gets three morning times: Mon Dec 28 at 9:30am, Wed Dec 30 at 10:15am and Mon Jan 4 at 9:00am.',
+      'The patient writes: I need to talk to the doctor about my results. The task goes to the front desk with those words quoted, and the patient is told the clinic will call.',
+      'Assign the follow-up. It gets booked. Your front desk handles only the exceptions.'
+    ];
+    var ol = q('#boardlist'), frames = [];
+    for (var i = 0; i < 8; i++) {
+      jumpTo((ST[i] + KEY[i]) * 1000);
+      var li = document.createElement('li');
+      var h = document.createElement('h3');
+      h.textContent = CAP[i];
+      li.appendChild(h);
+      var fr = document.createElement('div'); fr.className = 'frame'; fr.setAttribute('role', 'img'); fr.setAttribute('aria-label', 'Key frame ' + (i + 1) + ': ' + DET[i]);
+      var cl = inner.cloneNode(true); cl.removeAttribute('id'); qa('[id]', cl).forEach(function (e) { e.removeAttribute('id'); });
+      cl.classList.add('nt'); fr.appendChild(cl); li.appendChild(fr); frames.push([fr, cl]);
+      var p = document.createElement('p'); p.textContent = DET[i]; li.appendChild(p);
+      if (i === 7) { var a = document.createElement('a'); a.className = 'cta'; a.href = 'https://calendar.app.google/7R7srDKzWrvmLQg37'; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Book a 15-minute call'; li.appendChild(a); }
+      ol.appendChild(li);
+    }
+    function fit() {
+      frames.forEach(function (f) {
+        var s = f[0].clientWidth / W;
+        f[0].style.height = Math.round(H * s) + 'px';
+        f[1].style.transform = 'scale(' + s + ')';
+      });
+      reportHeight();
+    }
+    fit(); window.addEventListener('resize', fit);
+    document.fonts && document.fonts.ready && document.fonts.ready.then(fit);
+  }
+
+  if (reduced) {
+    document.body.classList.add('reduced');
+    var nar = window.innerWidth < 640;
+    var bw = nar ? Math.max(300, window.innerWidth - 28) : 560;
+    setMode(nar, nar ? bw : 1280);
+    scale = 1; inner.style.transform = 'none';
+    stage.style.width = W + 'px'; stage.style.height = H + 'px'; stage.style.position = 'absolute'; stage.style.left = '-9999px';
+    started = true;
+    buildBoard();
+    reportHeight();
+    post({ aevonReel: 'ready' });
+  } else {
+    layout();
+    // wait a beat so web fonts settle before the first frame
+    var begin = function () {
+      started = true; layout(); restart();
+      setPlaying(!embed);
+      post({ aevonReel: 'ready' });
+    };
+    if (document.fonts && document.fonts.ready) { Promise.race([document.fonts.ready, new Promise(function (r) { setTimeout(r, 900); })]).then(begin); } else begin();
+  }
+})();
+</script>
