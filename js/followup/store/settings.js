@@ -58,6 +58,7 @@ const FIELDS = {
     return p;
   },
   closures: (v) => parseClosures(v),
+  maxNewTimeRounds: (v) => intIn('Rounds of new times', 1, 6)(v === undefined || v === '' ? 2 : v),
   minLeadDays: (v) => intIn('Minimum lead time in days', 0, 60)(v === undefined || v === '' ? 3 : v),
 };
 

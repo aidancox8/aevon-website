@@ -6,7 +6,7 @@ import { checkOutbound } from './guard.js';
 import { localMinutes } from './time.js';
 
 /** Suffix for dedupe keys: a restarted task (attempt 2 or more) must not collide with the keys of its earlier attempts. */
-export const attemptKey = (task) => (task.attempt > 1 ? `:r${task.attempt}` : '');
+export const attemptKey = (task) => `${task.attempt > 1 ? `:r${task.attempt}` : ''}${task.moves ? `:m${task.moves}` : ''}`;
 
 const toMinutes = (hhmm) => Number(hhmm.slice(0, 2)) * 60 + Number(hhmm.slice(3));
 
@@ -24,7 +24,7 @@ export function createOutbound({ messages, audit, consent, tasks, channels, sett
     const s = settings.get();
     const firstName = String(task.patient_name ?? '').trim().split(/\s+/)[0] || '';
     const { subject, body } = compose(kind, channel, {
-      clinic: s.clinicName, doctor: task.provider_name || 'your doctor', mode: task.mode, firstName, phone: s.clinicPhone || '', offers: task.offers, ...vars,
+      clinic: s.clinicName, doctor: task.provider_name || 'your doctor', mode: task.mode, firstName, phone: s.clinicPhone || '', offers: task.offers, booked: task.prev_booked_start ?? task.booked_start, ...vars,
     });
     const unsafe = checkOutbound(`${subject ?? ''}\n${body}`, { taskText: task.task_text });
     if (unsafe) {

@@ -135,13 +135,13 @@ function relativeToOffers(n, offers, out) {
   const last = offers[offers.length - 1].date ?? offers[offers.length - 1].start.slice(0, 10);
   if (/\b(?:not that week|not those weeks?|different week|another week|other week)\b/.test(n)) {
     out.avoid = [{ from: mondayOf(first), to: addDays(mondayOf(last), 6) }];
-  } else if (/\bnext week\b/.test(n)) {
+  } else if (/\b(?:next week|week after|following week)\b/.test(n)) {
     const monday = addDays(mondayOf(first), 7);
     out.notBefore = monday;
     out.notAfter = addDays(monday, 6);
   }
-  if (/\b(?:sooner|earlier)\b(?! in the day)/.test(n)) out.notAfter = addDays(first, -1);
-  else if (/\b(?:further out|a bit later|later)\b(?! (?:that|in the) day)/.test(n)) out.notBefore = addDays(last, 1);
+  if (/\b(?:sooner|earlier)\b(?! in the day)|\btoo far\b/.test(n)) out.notAfter = addDays(first, -1);
+  else if (/\b(?:further out|a bit later|later)\b(?! (?:that|in the) day)|\btoo soon\b/.test(n)) out.notBefore = addDays(last, 1);
 }
 
 /**

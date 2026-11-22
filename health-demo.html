@@ -53,7 +53,7 @@
     .note { min-height: 1.5em; margin-top: 10px; font-size: 15px; color: var(--accent); }
 
     .dtabs { display: none; }
-    .cols { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 348px) minmax(0, 1fr); gap: 22px; align-items: start; margin-top: 14px; padding-bottom: 72px; }
+    .cols { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 348px) minmax(0, 1fr); gap: 22px; align-items: start; margin-top: 28px; padding-bottom: 72px; }
     .col { min-width: 0; padding: 0; border-radius: var(--radius-lg); }
     .col > h2 { font-size: 19px; margin-bottom: 4px; }
     .col > .who { font-size: 14.5px; color: var(--ink-3); margin-bottom: 12px; }
@@ -147,9 +147,9 @@
     .compose button { flex: none; height: 44px; padding: 0 16px; border: 0; border-radius: 22px; background: #1c6dc0; color: #fff; font: 700 15px/1 var(--f-body); cursor: pointer; }
     .compose button:disabled, .compose input:disabled { opacity: .5; cursor: default; }
     .compose input:focus-visible, .compose button:focus-visible { outline: 2px solid #1c6dc0; outline-offset: 2px; }
-    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-    .chips-l { margin-top: 16px; font-size: 14.5px; color: var(--ink-3); }
-    .chip { min-height: 40px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--surface); color: var(--ink); font: 500 14.5px/1.25 var(--f-body); cursor: pointer; text-align: left; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; max-width: 348px; margin-left: auto; margin-right: auto; }
+    .chips-l { max-width: 348px; margin: 16px auto 0; font-size: 14.5px; color: var(--ink-3); }
+    .chip { min-height: 36px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--surface); color: var(--ink); font: 500 14.5px/1.25 var(--f-body); cursor: pointer; text-align: left; }
     .chip:hover:not(:disabled) { border-color: var(--accent); }
     .chip:disabled { color: var(--ink-3); cursor: default; }
 

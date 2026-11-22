@@ -4,7 +4,7 @@ import { createClinic, PATIENTS, DOCTOR, TZ, BLOCKS, channelOf } from './clinic.
 import { addDays, localDate, mondayOf, partsOf, weekdayOf } from './core/time.js';
 
 const PRESETS = ['Follow-up in 6 weeks, 15 min', 'f/u 2 wks', 'RTC 6/52', 'telephone f/u 1 month', 'follow up as needed', 'urgent follow-up this week'];
-const CHIPS = ['1', '2', '3', 'OTHER', 'mornings only', 'not that week', 'Tuesdays or Thursdays', 'I need to talk to the doctor about my results', 'STOP'];
+const CHIPS = ['1', '2', '3', 'OTHER', 'None of these work. Give me more times', 'the Tuesday one', 'mornings only', 'not that week', 'Tuesdays or Thursdays', 'Can I change it?', 'KEEP', 'I need to talk to the doctor about my results', 'STOP'];
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -93,7 +93,14 @@ function renderThread() {
     kids.push(h('div', { class: `b ${m.direction === 'out' ? 'in' : 'out'}${i >= before ? ' fresh' : ''}` }, m.subject ? h('b', { class: 'subj' }, m.subject) : null, m.body));
   }
   if (typing) kids.push(h('div', { class: 'b in typ', 'aria-hidden': 'true' }, h('i'), h('i'), h('i')));
-  if (!kids.length) kids.push(h('p', { class: 'empty' }, clinic.consent.allows(patientId, channelOf(p)) ? 'No messages yet. Assign a follow-up as the doctor.' : `${p.firstName} has not agreed to texts or email, so nothing is sent.`));
+  if (!kids.length) {
+    const v = current();
+    const back = v && v.row.state === 'handed_back';
+    kids.push(h('p', { class: 'empty' }, back
+      ? `Aevon sent ${p.firstName} nothing. The task went back to the front desk with this note: "${v.row.handback_reason}". Staff call the patient instead.`
+      : clinic.consent.allows(patientId, channelOf(p)) ? 'No messages yet. Assign a follow-up as the doctor.'
+        : `${p.firstName} has not agreed to texts or email. Assign a follow-up to see Aevon send the task back to the front desk.`));
+  }
   box.replaceChildren(...kids);
   box.scrollTop = box.scrollHeight;
 }
@@ -245,9 +252,13 @@ function sendReply(text) {
     shown.set(patientId, Math.min(clinic.thread(patientId).length, (shown.get(patientId) ?? 0) + (sent.duplicate ? 0 : 1)));
     const v = current();
     note = sent.duplicate ? 'The same message sent twice in a row is read once.' : '';
+    if (v && v.row.state === before && before === 'handed_back') note = 'This task is with the front desk now, so Aevon stays quiet and staff call the patient. Assign a new follow-up or press Start over to keep going.';
+    if (v && v.row.state === before && before === 'booked') note = 'The visit is unchanged. That reply went to the front desk as a note. To move the visit, reply "Can I change it?"';
+    if (v && v.row.state !== before && v.row.state === 'handed_back') note = 'Aevon passed this one to the front desk with a note. See the clinic panel.';
     if (v && v.row.state !== before) {
       weekDate = null;
       if (v.row.state === 'booked') { flash = v.row.booked_start; markTab('clinic'); }
+      if (before === 'booked' && v.row.state === 'awaiting') note = 'The booked visit stays in the schedule until the patient picks a new time.';
       if (v.row.state === 'handed_back') markTab('clinic');
     }
   });
@@ -260,6 +271,7 @@ function noReply() {
     for (let i = 0; i < 3; i++) {
       const what = await clinic.waitForNext(id);
       if (!what) break;
+      if (what === 'kept') { note = 'One day with no reply: the visit stays as booked.'; render(); await pump(); break; }
       note = what === 'handed_back' ? 'No reply after two reminders. The task is with the front desk.' : what === 'reminder 1' ? 'One day later: first reminder.' : 'Three days later: second reminder.';
       render();
       await pump();
@@ -335,8 +347,21 @@ function tourShow(i) {
 async function tourNext() {
   if (busy > 0) return;
   const s = TOUR[step];
-  const next = step + 1;
-  if (s?.run) await s.run();
+  let next = step + 1;
+  // A patient picked part way through has no task yet: assign one before the phone and clinic steps.
+  if (step >= 1 && step < TOUR.length - 1 && !taskId()) await assign();
+  else if (s?.run) await s.run();
+  if (next < TOUR.length) {
+    const v = current();
+    if (!v) next = 0;
+    else if (v.row.state === 'handed_back' && !clinic.thread(patientId).length) {
+      // Nothing was sent (no consent, or an instruction Aevon will not act on): show that, then let them pick again.
+      tourShow(0);
+      showTab('clinic');
+      $('tour-t').textContent = `Aevon sent ${patient().firstName} nothing and gave the task to the front desk with a note: "${v.row.handback_reason}". Pick another patient or instruction, then press Next.`;
+      return;
+    }
+  }
   tourShow(next);
 }
 

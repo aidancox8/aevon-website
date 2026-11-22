@@ -31,6 +31,9 @@ export function describeTask(task, s, nowMs, { queued = false } = {}) {
     case 'claiming':
       return { words: 'Starting: reading the task', next: 'Will contact the patient on the next check' };
     case 'awaiting': {
+      if (task.prev_appointment_id) {
+        return { words: `Patient asked to move the visit booked for ${friendlyAt(task.prev_booked_start)}`, next: 'New times are out. The visit stays as booked unless the patient picks one' };
+      }
       if (!task.first_sent_at) {
         return queued
           ? { words: 'Ready to message the patient', next: `Message goes out when contact hours open (${when(nextContactTime(nowMs, s))})` }
@@ -46,7 +49,7 @@ export function describeTask(task, s, nowMs, { queued = false } = {}) {
     case 'booking':
       return { words: 'Booking the time the patient chose', next: 'Will confirm to the patient and close the task' };
     case 'booked':
-      return { words: `Booked for ${friendlyAt(task.booked_start)}`, next: 'Nothing more to do. A reply from the patient goes to front desk as a note' };
+      return { words: `Booked for ${friendlyAt(task.booked_start)}`, next: 'Nothing more to do. The patient can reply to ask for a different time; anything else goes to front desk as a note' };
     case 'handing_back':
       return { words: 'Passing the task back to front desk', next: 'Will finish on the next check' };
     case 'handed_back':

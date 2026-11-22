@@ -104,6 +104,23 @@ export async function continueBooking(svc, task) {
     current = svc.tasks.get(current.task_id);
   }
 
+  if (current.prev_appointment_id) {
+    // A move: the new time is in the schedule, so the earlier one can go. Order matters, the patient is never left with no visit.
+    const was = current.prev_booked_start;
+    const prevId = current.prev_appointment_id;
+    await svc.audit.around({ taskId: current.task_id, action: 'appointment_cancel', before: { appointmentId: prevId, slot: was }, detail: 'Patient moved the visit by message' }, async () => {
+      try {
+        await svc.emr.cancelAppointment(prevId);
+      } catch (err) {
+        if (!(err instanceof EmrError) || err.code !== 'NOT_FOUND') throw err; // already gone
+      }
+      return { appointmentId: prevId, status: 'cancelled' };
+    });
+    await svc.emr.addTaskComment(current.task_id, `Moved from ${noteStamp(was)} to ${noteStamp(offer.start)} by ${channelWord(current.booked_channel)}, at the patient's request`);
+    svc.tasks.update(current.task_id, { prev_appointment_id: null, prev_booked_start: null });
+    current = svc.tasks.get(current.task_id);
+  }
+
   const note = `Booked ${noteStamp(offer.start)} by ${channelWord(current.booked_channel)}`;
   const emrTask = await svc.emr.getTask(current.task_id);
   if (emrTask.status !== 'completed') {
@@ -116,7 +133,7 @@ export async function continueBooking(svc, task) {
   }
 
   const channel = replyChannel(svc.consent, current, current.booked_channel);
-  if (channel) svc.outbound.queue({ task: current, kind: 'confirm', channel, vars: { booked: offer.start }, dedupeKey: `confirm:${current.task_id}${attemptKey(current)}` });
+  if (channel) svc.outbound.queue({ task: current, kind: current.moves ? 'moved' : 'confirm', channel, vars: { booked: offer.start }, dedupeKey: `confirm:${current.task_id}${attemptKey(current)}` });
   svc.tasks.update(current.task_id, { state: 'booked', booked_at: svc.clock.now() });
 }
 

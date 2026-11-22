@@ -2,7 +2,7 @@
 //
 //   claiming -> awaiting -> booking -> booked
 //        \         |  \
-//         \        |   -> awaiting (new times, at most twice; or a taken slot)
+//         \        |   -> awaiting (new times, up to the clinic's limit; or a taken slot)
 //          -> handing_back -> handed_back   (reachable from claiming, awaiting and booking)
 //
 // 'claiming'     the task row exists; the "[Aevon] started" comment and the first offers are still to do
@@ -15,8 +15,8 @@ import { EmrError } from '../emr/adapter.js';
 import { parseTask, targetDate } from './parseTask.js';
 import { normalise } from './text.js';
 import { interpret } from './interpret.js';
-import { isOptOut } from './guard.js';
-import { mergeConstraints } from './constraints.js';
+import { isOptOut, findHandoffWord } from './guard.js';
+import { mergeConstraints, parseConstraints } from './constraints.js';
 import { daysBetween, localDate } from './time.js';
 import { buildNote, handBack } from './handback.js';
 import { sendOffers } from './offers.js';
@@ -26,8 +26,8 @@ import { normalisePhone, normaliseEmail } from '../channels/address.js';
 import { pickChannel, replyChannel } from './channelChoice.js';
 
 export const STARTED_COMMENT = '[Aevon] started';
-const MAX_NEW_TIME_ROUNDS = 2;
-const MAX_CLARIFICATIONS = 1;
+const MAX_CLARIFICATIONS = 2;
+const MAX_MOVES = 2;
 const MIN_GAP_MS = 60 * 60 * 1000;
 const HOUR_MS = 60 * 60 * 1000;
 
@@ -122,6 +122,12 @@ async function replyToAwaiting(svc, task, inbound) {
   const channel = replyChannel(svc.consent, task, inbound.channel);
   const hand = (reason, reply = 'handoff_reply') => handBack(svc, task, { reason, quote: inbound.body, reply, replyChannel: channel });
 
+  if (task.prev_appointment_id && !['optout', 'handoff', 'pick'].includes(result.intent)) {
+    const n = normalise(inbound.body);
+    if (KEEP.test(n)) return keepBooking(svc, task, channel, 'Patient chose to keep the booked time');
+    if (/\bcancel/.test(n)) return hand('Patient asked to cancel the visit');
+  }
+
   switch (result.intent) {
     case 'optout':
       return optOut(svc, task, inbound);
@@ -136,12 +142,13 @@ async function replyToAwaiting(svc, task, inbound) {
     case 'yes':
       return clarify(svc, task, channel, hand);
     default:
-      return hand('Could not understand the reply');
+      // Not understood: ask in plain words before giving the task to staff.
+      return clarify(svc, task, channel, hand);
   }
 }
 
 async function clarify(svc, task, channel, hand) {
-  if (task.clarifications >= MAX_CLARIFICATIONS || !channel) return hand('Reply was not clear after asking once');
+  if (task.clarifications >= MAX_CLARIFICATIONS || !channel) return hand('Reply was still not clear after asking');
   svc.tasks.update(task.task_id, { clarifications: task.clarifications + 1 });
   svc.outbound.queue({ task, kind: 'clarify', channel, dedupeKey: `clarify:${task.task_id}:${task.clarifications}${attemptKey(task)}` });
   return undefined;
@@ -150,7 +157,7 @@ async function clarify(svc, task, channel, hand) {
 async function moreTimes(svc, task, result, channel, s, hand) {
   const wanted = result.constraints;
   if (wanted.mode && !s.allowedModes.includes(wanted.mode)) return hand(`Patient asked for a ${wanted.mode} visit, which this clinic does not offer`);
-  if (task.rounds >= MAX_NEW_TIME_ROUNDS) return hand(`Patient asked for other times more than ${MAX_NEW_TIME_ROUNDS} times`);
+  if (task.rounds >= s.maxNewTimeRounds) return hand(`Patient asked for other times more than ${s.maxNewTimeRounds} times`);
   if (!channel) return hand('No consented channel to reply on');
   const { mode, ...rest } = wanted;
   // Counters change only once the new times are out: if the EMR is down the reply is retried and nothing is used up.
@@ -164,12 +171,52 @@ async function moreTimes(svc, task, result, channel, s, hand) {
   return undefined;
 }
 
+const KEEP = /^(?:keep|stay|same|original|never ?mind|nvm|leave it|forget it|no change)\b|\bkeep (?:it|the|my|that)\b|\bleave it\b|\bas it is\b|\bnever ?mind\b/;
+const CHANGE = /\b(?:change|reschedule|rebook|move|switch|postpone|push|different|another|other|later|earlier|sooner)\b|\b(?:cant|can't|cannot|wont|won't|unable to) (?:make|come|do|attend|be there)\b/;
+
+/** The patient keeps the visit they already had: put the task back to booked, untouched. */
+async function keepBooking(svc, task, channel, detail) {
+  svc.audit.record({ taskId: task.task_id, action: 'move_dropped', before: { state: task.state }, after: { state: 'booked', booked: task.prev_booked_start }, detail });
+  svc.tasks.update(task.task_id, {
+    state: 'booked', appointment_id: task.prev_appointment_id, booked_start: task.prev_booked_start,
+    prev_appointment_id: null, prev_booked_start: null, chosen_index: null,
+  });
+  const row = svc.tasks.get(task.task_id);
+  if (channel) svc.outbound.queue({ task: row, kind: 'kept', channel, vars: { booked: row.booked_start }, dedupeKey: `kept:${task.task_id}${attemptKey(task)}` });
+  return undefined;
+}
+
+/**
+ * The patient asks to move a booked visit. New times go out and the booked visit stays where it is; it is cancelled
+ * only after a new time is booked (booking.js). Returns false when the agent cannot do this and staff should.
+ */
+async function offerMove(svc, task, inbound, channel) {
+  const n = normalise(inbound.body);
+  const canCancel = typeof svc.emr.cancelAppointment === 'function' && svc.emr.describe().capabilities?.cancelAppointment;
+  if (!canCancel || !channel || !task.appointment_id || task.moves >= MAX_MOVES) return false;
+  if (!CHANGE.test(n) || /\bcancel/.test(n) || findHandoffWord(inbound.body)) return false;
+  if (Date.parse(task.booked_start) <= svc.clock.now()) return false;
+  const s = svc.settings.get();
+  const { mode, ...wanted } = parseConstraints(inbound.body, { offers: [], today: localDate(svc.clock.now(), s.timeZone) });
+  if (mode && !s.allowedModes.includes(mode)) return false;
+  const patch = {
+    prev_appointment_id: task.appointment_id, prev_booked_start: task.booked_start, appointment_id: null, booked_start: null,
+    chosen_index: null, booked_channel: null, rounds: 0, clarifications: 0, taken_count: 0, moves: task.moves + 1,
+    constraints: wanted, mode: mode ?? task.mode,
+  };
+  const exclude = [...new Set([...(task.offered ?? []), task.booked_start])];
+  const sent = await sendOffers(svc, { ...task, ...patch }, { kind: 'reschedule', channel, exclude, patch });
+  if (sent !== 'sent') return false;
+  svc.audit.record({ taskId: task.task_id, action: 'move_offered', before: { booked: task.booked_start }, detail: 'Patient asked to move the visit; it stays booked until a new time is picked' });
+  return true;
+}
+
 const THANKS = /^(?:thanks?|thank you|thx|ty|ok|okay|great|perfect|sounds good|got it|see you then|will do|cool|yes|yep|sure|\u{1F44D})(?: so much| very much| a lot)?$/u;
 
 /**
- * A reply after the appointment is booked never rebooks anything. It goes to front desk as a task note (the task is
- * reassigned to them with the patient's words), and the patient gets one short acknowledgement. A bare "thanks" or "ok"
- * is only logged.
+ * A reply after the appointment is booked. A request to move the visit gets new times (offerMove). Anything else goes to
+ * front desk as a task note (the task is reassigned to them with the patient's words), and the patient gets one short
+ * acknowledgement. A bare "thanks" or "ok" is only logged.
  */
 async function replyAfterBooking(svc, task, inbound) {
   const channel = replyChannel(svc.consent, task, inbound.channel);
@@ -177,6 +224,7 @@ async function replyAfterBooking(svc, task, inbound) {
     svc.audit.record({ taskId: task.task_id, action: 'inbound_ignored', detail: 'Reply after booking was a thank you' });
     return undefined;
   }
+  if (await offerMove(svc, task, inbound, channel)) return undefined;
   const { frontDeskUserId } = svc.settings.get();
   const note = buildNote('Patient replied after the appointment was booked. The appointment was not changed. Please call the patient if they need a change', inbound.body);
   await svc.audit.around({ taskId: task.task_id, action: 'staff_note', before: { assigneeId: null }, detail: 'Reply after booking sent to front desk' }, async () => {
@@ -208,6 +256,11 @@ export async function onTick(svc, task) {
   const s = svc.settings.get();
   const now = svc.clock.now();
   const hours = (now - task.first_sent_at) / HOUR_MS;
+  if (task.prev_appointment_id) {
+    // No answer to new times for a move: the visit simply stays as booked. No reminders.
+    if (hours >= s.nudgeHours1) await keepBooking(svc, task, pickChannel(svc.consent, task), 'No reply to the new times');
+    return;
+  }
   const last = svc.messages.lastOutbound(task.task_id);
   if (last?.sentAt && now - last.sentAt < MIN_GAP_MS) return;
 

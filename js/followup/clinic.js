@@ -25,7 +25,7 @@ const CLINIC = {
   clinicName: 'Rosewood Clinic', timeZone: TZ, contactStart: '08:00', contactEnd: '20:00',
   windowBeforeDays: 7, windowAfterDays: 14, defaultMinutes: 15, allowedModes: ['in-person', 'phone'],
   nudgeHours1: 24, nudgeHours2: 72, giveUpHours: 120, frontDeskUserId: 'frontdesk', agentUserId: 'aevon',
-  clinicPhone: '', province: 'BC', closures: [], minLeadDays: 3,
+  clinicPhone: '', province: 'BC', closures: [], minLeadDays: 3, maxNewTimeRounds: 4,
 };
 /** How a patient is reached: email for those who agreed to email only, otherwise text. */
 export const channelOf = (p) => (p.mail && !p.sms ? 'email' : 'sms');
@@ -138,6 +138,7 @@ export function createClinic() {
     if (due > clock.now()) clock.advance(due - clock.now());
     await engine.poll();
     const after = stores.tasks.get(taskId);
+    if (after.state === 'booked') return 'kept';
     return after.state === 'handed_back' ? 'handed_back' : after.nudges > row.nudges ? `reminder ${after.nudges}` : null;
   }
 

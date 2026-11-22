@@ -36,7 +36,10 @@ const SMS = {
     ? `Sorry, we only have ${newTimes(v.offers.length)} open with ${v.doctor}${phoneNote(v.mode)}. ${choices(v.offers)} If none of these work, reply OTHER and the clinic will call you, or reply STOP to opt out.`
     : `Here are three different times with ${v.doctor}${phoneNote(v.mode)}. ${choices(v.offers)} ${OTHER_SMS}`),
   taken: (v) => `Sorry, that time was just taken. ${v.offers.length < 3 ? `We only have ${many(v.offers.length)} left with ${v.doctor}${phoneNote(v.mode)}.` : `Here are new times with ${v.doctor}${phoneNote(v.mode)}.`} ${choices(v.offers)} ${OTHER_SMS}`,
-  confirm: (v) => `${greet(v.firstName)}you are booked for a follow-up visit${phoneNote(v.mode)} with ${v.doctor} at ${v.clinic} on ${friendlyAt(v.booked)}. Reply to this message if you need to change it and the clinic will call you.`,
+  confirm: (v) => `${greet(v.firstName)}you are booked for a follow-up visit${phoneNote(v.mode)} with ${v.doctor} at ${v.clinic} on ${friendlyAt(v.booked)}. Reply CHANGE if you need a different time.`,
+  reschedule: (v) => `No problem. Your visit on ${friendlyAt(v.booked)} stays booked until you pick a new time.${fewNote(v.offers)} ${choices(v.offers)} Reply KEEP to leave it as it is, or OTHER for different times.`,
+  moved: (v) => `Done. Your follow-up visit${phoneNote(v.mode)} with ${v.doctor} is now on ${friendlyAt(v.booked)}, and your earlier time is cancelled. Reply CHANGE if you need a different time.`,
+  kept: (v) => `Your follow-up visit with ${v.doctor} stays booked for ${friendlyAt(v.booked)}.`,
   optout_confirm: (v) => `You are opted out and will get no more messages from ${v.clinic}. If you need us, please call${v.phone ? ` ${v.phone}` : ' the clinic'}.`,
   handoff_reply: (v) => `Thanks. We have passed your message to the team at ${v.clinic} and someone will call you${v.phone ? `, or you can call us at ${v.phone}` : ''}.`,
   clarify: (v) => `Sorry, which time works for you? Reply ${numbers(v.offers?.length ?? 3)} to pick one, OTHER for different times, or tell us which days suit you.${callUs(v.phone)}`,
@@ -68,7 +71,19 @@ const EMAIL = {
   }),
   confirm: (v) => ({
     subject: 'Your follow-up visit is booked',
-    body: `${greetEmail(v.firstName)}\n\nYou are booked for a follow-up visit${phoneNote(v.mode)}:\n\nDate and time: ${friendlyAt(v.booked)}\nDoctor: ${v.doctor}\nClinic: ${v.clinic}\n\nReply to this message if you need to change it and the clinic will call you.${SIGN(v.clinic)}`,
+    body: `${greetEmail(v.firstName)}\n\nYou are booked for a follow-up visit${phoneNote(v.mode)}:\n\nDate and time: ${friendlyAt(v.booked)}\nDoctor: ${v.doctor}\nClinic: ${v.clinic}\n\nReply CHANGE if you need a different time.${SIGN(v.clinic)}`,
+  }),
+  reschedule: (v) => ({
+    subject: `New times for your follow-up visit with ${v.doctor}`,
+    body: `${greetEmail(v.firstName)}\n\nNo problem. Your visit on ${friendlyAt(v.booked)} stays booked until you pick a new time. ${v.offers.length < 3 ? `We only have ${many(v.offers.length)} open right now:` : 'These times are open:'}\n\n${stacked(v.offers)}\n\nReply with the number you would like, KEEP to leave your visit as it is, or OTHER for different times.${STOP_EMAIL}${SIGN(v.clinic)}`,
+  }),
+  moved: (v) => ({
+    subject: 'Your follow-up visit has moved',
+    body: `${greetEmail(v.firstName)}\n\nYour follow-up visit${phoneNote(v.mode)} has moved, and your earlier time is cancelled:\n\nDate and time: ${friendlyAt(v.booked)}\nDoctor: ${v.doctor}\nClinic: ${v.clinic}\n\nReply CHANGE if you need a different time.${SIGN(v.clinic)}`,
+  }),
+  kept: (v) => ({
+    subject: 'Your follow-up visit is unchanged',
+    body: `${greetEmail(v.firstName)}\n\nYour follow-up visit with ${v.doctor} stays booked for ${friendlyAt(v.booked)}.${SIGN(v.clinic)}`,
   }),
   optout_confirm: (v) => ({
     subject: 'You are opted out',
@@ -89,7 +104,7 @@ const EMAIL = {
 };
 
 export const MESSAGE_KINDS = Object.keys(SMS);
-export const OFFER_KINDS = ['offer', 'more', 'taken'];
+export const OFFER_KINDS = ['offer', 'more', 'taken', 'reschedule'];
 
 /**
  * @param {string} kind one of MESSAGE_KINDS

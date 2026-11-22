@@ -2,6 +2,7 @@
 // (state 'handing_back'), then the EMR is updated, then the state becomes 'handed_back'.
 import { clean } from './text.js';
 import { attemptKey } from './outbound.js';
+import { noteStamp } from './time.js';
 
 const QUOTE_CHARS = 300;
 
@@ -16,7 +17,13 @@ export function buildNote(reason, quote) {
  * @param {object} task the agent's task row
  * @param {{reason: string, quote?: string, reply?: 'handoff_reply'|'optout_confirm', replyChannel?: string}} o
  */
-export async function handBack(svc, task, { reason, quote = null, reply = null, replyChannel = null }) {
+export async function handBack(svc, task, { reason: why, quote = null, reply = null, replyChannel = null }) {
+  let reason = why;
+  if (task.prev_appointment_id) {
+    // The patient was part way through moving a booked visit. That visit was never touched.
+    reason = `${why}. The visit booked for ${noteStamp(task.prev_booked_start)} is unchanged`;
+    svc.tasks.update(task.task_id, { appointment_id: task.prev_appointment_id, booked_start: task.prev_booked_start, prev_appointment_id: null, prev_booked_start: null });
+  }
   const note = buildNote(reason, quote);
   svc.audit.record({
     taskId: task.task_id, action: 'handback_decided',
