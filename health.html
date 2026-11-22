@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fax to Booked: Referral Intake for Clinics | Aevon Health</title>
-  <meta name="description" content="Aevon Health automates the work after a fax is sorted: confirm the referral, get what is missing, book the patient, send the welcome. BC, Ontario." />
+  <title>Follow-up Booking for Clinics, by Text | Aevon Health</title>
+  <meta name="description" content="Doctors assign follow-ups to Aevon in the EMR. Patients pick a time by text. The visit is booked and the task closed. Your front desk handles the exceptions." />
   <link rel="canonical" href="https://aevon.ca/health.html" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0C0E0D" />
@@ -12,8 +12,8 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://aevon.ca/health.html" />
   <meta property="og:site_name" content="Aevon" />
-  <meta property="og:title" content="Fax to Booked: Referral Intake for Clinics | Aevon Health" />
-  <meta property="og:description" content="Aevon Health automates the work after a fax is sorted: confirm the referral, get what is missing, book the patient, send the welcome. BC, Ontario." />
+  <meta property="og:title" content="Follow-up Booking for Clinics, by Text | Aevon Health" />
+  <meta property="og:description" content="Doctors assign follow-ups to Aevon in the EMR. Patients pick a time by text. The visit is booked and the task closed. Your front desk handles the exceptions." />
   <meta property="og:locale" content="en_CA" />
   <meta property="og:image" content="https://aevon.ca/img/og.png" />
   <meta property="og:image:width" content="1200" />
@@ -35,11 +35,7 @@
     gtag('config', 'G-M9R5SHY2LD');
   </script>
   <style>
-    /* Page-local pieces only. Everything else comes from site.css.
-
-       Every product visual on this page is an HTML and CSS illustration with sample data, because
-       no real screenshot is used. Each one is labelled as an
-       illustration in its caption. Fictional names only, never real ones. */
+    /* Page-local pieces only. Everything else comes from site.css. */
 
     .skip { position: absolute; left: 12px; top: -60px; z-index: 10; background: var(--accent); color: var(--on-accent); font-weight: 600; font-size: 15px; padding: 10px 16px; border-radius: 999px; text-decoration: none; }
     .skip:focus, .skip:hover { top: 12px; color: var(--on-accent); }
@@ -60,6 +56,8 @@
     .hero .sub { max-width: 68ch; margin-top: 16px; }
     .hero .cta { margin-top: 22px; }
     .hero .verify { margin-top: 16px; }
+    .hero .try { margin-top: 16px; font-size: 16px; font-weight: 600; text-shadow: 0 1px 10px rgba(0,0,0,.6); }
+    .hero .try a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; }
     .hero h1 { font-size: clamp(36px, 5.4vw, 62px); margin-top: 14px; }
     .hero .verify { color: var(--ink-2); text-shadow: 0 1px 10px rgba(0,0,0,.6); }
     .hero .verify b { color: var(--ink); }
@@ -254,7 +252,7 @@
   "@type": "Service",
   "name": "Aevon Health",
   "serviceType": "Administrative automation for medical clinics",
-  "description": "Automation that connects to a medical clinic's EMR through its official API and completes the routine work after an incoming fax is sorted: confirming a referral, requesting what is missing, booking patients who have agreed to texts and sending the confirmation, with exceptions, including patients with no text consent on file, handed to staff. Can also sort and label incoming faxes where the clinic has no tool for it. Administrative tasks only.",
+  "description": "Automation that connects to a medical clinic's EMR through its official API. A doctor assigns a follow-up task to Aevon in place of the front desk. Aevon texts the patient three open times, books the one they pick, confirms it and closes the task with a note. No reply, or anything clinical, goes back to the front desk. Also referral intake and cancellation backfill. Text and email only. Administrative tasks only.",
   "url": "https://aevon.ca/health.html",
   "areaServed": [
     {
@@ -276,7 +274,7 @@
     "url": "https://aevon.ca/",
     "email": "hello@aevon.ca"
   },
-"dateModified": "2026-11-16"
+"dateModified": "2026-11-21"
 }
   </script>
   <script type="application/ld+json">
@@ -284,6 +282,54 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does a doctor assign a follow-up?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In the EMR, the doctor creates a task as usual and assigns it to Aevon in place of the front desk. For example: Follow-up in 6 weeks, 15 min. Nothing else changes for the doctor."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does the patient see?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A text from your clinic. It says it is from an automated assistant, names the doctor and offers three open times. The patient replies 1, 2 or 3, or asks for other times, and gets a confirmation. The messages contain no health details."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens when a patient does not reply?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "They get two reminders. After that the task goes back to your front desk with a note."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it call patients?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It uses text and email only. It does not make voice calls."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which patients does it contact?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Only patients who have agreed to texts or email with your clinic. If there is no consent on file, the task goes to your front desk."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it decide anything clinical?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It never decides anything clinical and never books anything urgent. A task marked urgent goes to your front desk without a text to the patient. If a patient writes about results, symptoms or medication, the task goes to your front desk with their words quoted."
+      }
+    },
     {
       "@type": "Question",
       "name": "Does this replace our EMR or booking tool?",
@@ -294,26 +340,10 @@
     },
     {
       "@type": "Question",
-      "name": "Does it decide which referrals are urgent?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No. It reads what the referring office wrote and follows the rules your clinic sets for provider and appointment type. Urgency is a clinical decision and stays with your physicians."
-      }
-    },
-    {
-      "@type": "Question",
       "name": "How does a new referral get booked?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "If the patient has agreed to texts with your clinic, they are offered times your clinic allows, by text. If there is no consent to text on file, your staff get a task to make the first call instead. When a patient picks a time, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. The service checks the schedule before booking. If anything is missing or unusual, it goes to your staff. Your clinic can also choose to confirm every booking."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do patients get messages from it?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Only patients who have agreed to texts with your clinic. For booking, they get a short form request, the offered times and the confirmation. The messages contain no health details."
+        "text": "If the patient has agreed to texts with your clinic, they are offered times your clinic allows, by text. If there is no consent to text on file, your staff get a task to make the first call instead. When a patient picks a time, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. If anything is missing or unusual, it goes to your staff."
       }
     },
     {
@@ -357,55 +387,41 @@
 <header class="hero">
   <div class="hero-bg" style="--hero-image:url(img/hero.jpg)" role="presentation"></div>
   <div class="wrap">
-    <h1>From fax to booked, inside your EMR.</h1>
+    <h1>Assign the follow‑up. It gets booked.</h1>
     <p class="sub">
-      A faxed referral becomes a booked appointment. Your staff handle the exceptions.
+      Your doctors assign follow-ups to Aevon in the EMR. Patients pick a time by text. Your front desk handles only the exceptions.
     </p>
     <div class="cta">
       <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 15-minute call</a>
       <a class="btn btn-ghost" href="#contact">Or send us a note</a>
     </div>
+    <p class="try"><a href="health-demo.html">Try the demo</a></p>
   </div>
 
   <figure class="hero-art ill" id="reel">
     <div class="hero-stack" id="hero-stack">
       <div class="hero-static" id="hero-static">
-      <div class="hero-stage" role="img" aria-label="Illustration with fictional names. On the left, an EMR incoming documents list of documents already labelled by type, with a new Referral for Tran, Olivia at the top, beside a separate Aevon panel that checks the referral against the clinic's required list: patient name, date of birth, health number, phone number and reason for referral present are ticked, and a recent report is missing. On the right, a phone showing a text from Your Clinic to a patient who has agreed to texts: Dr. Hale has these times, Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am, reply 1, 2 or 3. The patient replies 1 and it is marked Delivered.">
-        <div class="hs-left">
-          <div class="ow">
-            <div class="ow-bar">EMR<span>Front desk</span></div>
-            <div class="ow-h">Incoming Docs</div>
-            <table class="docs">
-              <thead><tr><th>Type</th><th>Patient</th><th>Received</th></tr></thead>
-              <tbody>
-                <tr class="new"><td class="ty">Referral</td><td>Tran, Olivia</td><td>2026-11-18</td></tr>
-                <tr><td class="ty">Consult report</td><td>Lindqvist, Mara</td><td>2026-10-26</td></tr>
-                <tr><td class="ty">Lab result</td><td>Moreau, Luc</td><td>2026-11-02</td></tr>
-                <tr><td class="ty">Referral</td><td>Bains, Harpreet</td><td>2026-11-04</td></tr>
-                <tr><td class="ty">Form request</td><td>Whitfield, Grace</td><td>2026-11-12</td></tr>
-              </tbody>
-            </table>
-            <div class="ow-act"><span>Reader View</span><span>Load All</span></div>
-          </div>
-          <div class="shot ab">
-            <div class="shot-bar"><i></i><i></i><i></i><span>Aevon · checks the list</span></div>
-            <ul class="ck">
-              <li class="ok">Patient name</li>
-              <li class="ok">Date of birth</li>
-              <li class="ok">Health number</li>
-              <li class="ok">Phone number</li>
-              <li class="ok">Reason for referral present</li>
-              <li class="no">Recent report attached: missing</li>
-            </ul>
-          </div>
+      <div class="hero-stage" role="img" aria-label="On the left, an EMR task list. The task for Nair, Priya, created by Dr. Hale with the message Follow-up in 6 weeks, 15 min, was assigned to Aevon and is Complete, with the note Booked Wed 30 Dec 13:15 by text. On the right, a phone showing the text from Rosewood Clinic that offers three times, and the patient's reply, 2.">
+        <div class="ow">
+          <div class="ow-bar">EMR<span>Front desk</span></div>
+          <div class="ow-h">Tasks</div>
+          <table class="docs">
+            <thead><tr><th>Patient</th><th>Assigned to</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr class="new"><td class="ty">Nair, Priya</td><td>Aevon</td><td>Complete</td></tr>
+              <tr><td class="ty">Bell, Marcus</td><td>Front desk</td><td>Active</td></tr>
+              <tr><td class="ty">Park, Helen</td><td>Front desk</td><td>Active</td></tr>
+            </tbody>
+          </table>
+          <div class="tl-sum" style="margin-top:12px"><span><b>Message</b> Follow-up in 6 weeks, 15 min</span><span><b>Note</b> Booked Wed 30 Dec 13:15 by text</span></div>
         </div>
         <div class="phone">
           <div class="sp">
-            <div class="sp-sb"><span>9:41</span><span><svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="23" height="11" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div>          <div class="sp-h"><span class="sp-bk"></span><span class="sp-av">Y</span><div><b>Your Clinic</b><small>555-0142</small></div></div>
+            <div class="sp-sb"><span>9:41</span><span><svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1a1d21"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#1a1d21"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#1a1d21"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#1a1d21"/></svg><svg width="23" height="11" viewBox="0 0 26 12" aria-hidden="true"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#1a1d21"/><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="#1a1d21"/><rect x="24" y="4" width="2" height="4" rx="1" fill="#1a1d21"/></svg></span></div>
+            <div class="sp-h"><span class="sp-bk"></span><span class="sp-av">R</span><div><b>Rosewood Clinic</b><small>Text message</small></div></div>
             <div class="sp-t">
-              <div class="sp-st">Today 9:52 am</div>
-              <div class="sp-b in">Dr. Hale has these times: Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am. Reply 1, 2 or 3.</div>
-              <div class="sp-b out">1</div>
+              <div class="sp-b in">Hi Priya, this is the automated assistant at Rosewood Clinic. Dr. Hale would like to see you for a follow-up visit. Reply 1 for Tue Dec 29 at 10:00am, 2 for Wed Dec 30 at 1:15pm, or 3 for Thu Dec 31 at 9:00am. Reply OTHER for different times, or STOP to opt out.</div>
+              <div class="sp-b out">2</div>
               <div class="sp-dl">Delivered</div>
             </div>
           </div>
@@ -419,17 +435,16 @@
         <div class="vh">
           <p>Text version of the demo</p>
           <ol>
-            <li>Title card: From fax to booked. The work after the fax is sorted.</li>
-            <li>An EMR inbox, Incoming Docs, lists documents already labelled by type: Consult report, Lab result, Referral, Referral and Form request, each with a received date. A new Referral for Tran, Olivia from Dr. Quinn's office arrives.</li>
-            <li>A separate Aevon panel checks the referral against the clinic's own required list. Patient name, date of birth, health number, phone number and reason for referral present are ticked. Recent report attached is missing.</li>
-            <li>Two things go out at once: an acknowledgement to Dr. Quinn's office, and, because the patient's consent to text is on file, a text to the patient with a link to a short form. The text contains no health details.</li>
-            <li>The form shows Completed. A new document arrives in the EMR inbox and is attached to the same referral, and the checklist is fully ticked.</li>
-            <li>The patient, who has agreed to texts, is texted the times Dr. Hale has: Thu 10:40 am, Fri 2:20 pm, Mon 9:00 am. They reply 1 and it is marked Delivered.</li>
-            <li>Clinic rule met: complete referral, patient matched, time picked. The appointment appears on the EMR schedule day view on its own, with no tickler to tick. The patient's phone shows the confirmation and Welcome email sent. A list headed For your staff: 1 exception shows one tickler from a different referral, Okafor, Daniel: Call to book, no text consent on file. Staff make the first call and record consent, and texting can follow.</li>
-            <li>End card: One referral, from fax to booked. Routine referrals handled, exceptions to your staff. Illustration with fictional names.</li>
+            <li>In the EMR, the doctor types the task Follow-up in 6 weeks, 15 min, sets Assigned to: Aevon and saves.</li>
+            <li>The patient's phone shows the text: Hi Priya, this is the automated assistant at Rosewood Clinic. Dr. Hale would like to see you for a follow-up visit. Reply 1 for Tue Dec 29 at 10:00am, 2 for Wed Dec 30 at 1:15pm, or 3 for Thu Dec 31 at 9:00am. Reply OTHER for different times, or STOP to opt out.</li>
+            <li>The patient replies 2. The confirmation reads: Hi Priya, you are booked for a follow-up visit with Dr. Hale at Rosewood Clinic on Wed Dec 30 at 1:15pm. Reply to this message if you need to change it and the clinic will call you.</li>
+            <li>On the doctor's day sheet for Wednesday December 30, the appointment appears at 1:15 pm.</li>
+            <li>The task is now Complete, with the note Booked Wed 30 Dec 13:15 by text.</li>
+            <li>If the patient replies mornings only, they get three morning times.</li>
+            <li>If the patient writes about test results, the task goes to the front desk with their words quoted, and the patient is told the clinic will call.</li>
+            <li>End card: Assign the follow-up. It gets booked. Your front desk handles only the exceptions.</li>
           </ol>
         </div>
-    <figcaption class="vh">Illustration. All names are fictional.</figcaption>
   </figure>
 </header>
 
@@ -446,20 +461,20 @@
 <section id="problem" class="tight">
   <div class="wrap">
     <div class="sec-head">
-      <h2>Where referral work stalls</h2>
+      <h2>Where the front desk loses time</h2>
     </div>
     <div class="grid3">
       <div>
-        <h3>After the fax is sorted</h3>
-        <p>Someone still has to confirm the referral, request what is missing and book the patient.</p>
+        <h3>Follow-ups to book</h3>
+        <p>Every follow-up a doctor asks for becomes a call someone at the front desk has to make.</p>
       </div>
       <div>
-        <h3>Referrals that arrive twice</h3>
-        <p>When one sits, the referring office sends it again and the patient calls to ask.</p>
+        <h3>Phone tag</h3>
+        <p>The patient misses the call, calls back during lunch, and the task stays open.</p>
       </div>
       <div>
-        <h3>Cancelled appointments</h3>
-        <p>Filling the slot means phoning down the waitlist, so it often goes unused.</p>
+        <h3>Referrals and cancellations</h3>
+        <p>New referrals wait to be booked, and a cancelled slot often goes unused.</p>
       </div>
     </div>
   </div>
@@ -473,6 +488,38 @@
 
     <div class="feature">
       <div>
+        <h3>Follow-up booking: assigned in the EMR, booked by text</h3>
+        <p>A doctor assigns the follow-up to Aevon in place of the front desk. The patient picks a time by text and the appointment is booked in the EMR.</p>
+        <ul class="price-list">
+          <li>Reads the doctor's own wording, such as RTC 6/52 or f/u 2 wks</li>
+          <li>Offers three open times from the doctor's schedule, never on a holiday or a day the clinic is closed</li>
+          <li>Offers new times when the patient asks, such as mornings only</li>
+          <li>Books the visit, confirms it and closes the task with a note</li>
+          <li>Sends two reminders, then returns the task to your front desk</li>
+          <li>Never decides anything clinical and never books anything urgent</li>
+        </ul>
+        <p style="font-size:15.5px"><a href="health-demo.html">Try the demo</a></p>
+      </div>
+      <figure class="ill">
+        <div class="shot glow" role="img" aria-label="One follow-up, start to booked. The task for Nair, Priya, assigned by Dr. Hale, is read as six weeks and fifteen minutes. Three open times go to the patient by text. The patient replies 2. The schedule is checked again and the visit is booked. The confirmation is sent and the task is closed with a note.">
+          <div class="shot-bar"><i></i><i></i><i></i><span>Follow-up</span></div>
+          <div class="slot-head"><div><b>Follow-up for Nair, Priya</b><small>Assigned by Dr. Hale</small></div><span class="tag">Booked</span></div>
+          <ol class="trail">
+            <li class="ok">Task read: 6 weeks, 15 minutes</li>
+            <li class="ok">Three open times sent by text<small>No health details in the message</small></li>
+            <li class="ok">Patient replied 2</li>
+            <li class="ok">Schedule checked again, then booked</li>
+            <li class="ok">Confirmation sent</li>
+            <li class="ok">Task closed with a note</li>
+          </ol>
+        </div>
+      </figure>
+    </div>
+
+    <p class="reel-back"><a href="#reel">Watch the demo at the top of the page</a></p>
+
+    <div class="feature flip">
+      <div>
         <h3>Referral intake: from fax to booked</h3>
         <p>A new referral goes from a sorted fax to a booked appointment. Exceptions go to your staff.</p>
         <ul class="price-list">
@@ -484,7 +531,7 @@
         </ul>
       </div>
       <figure class="ill">
-        <div class="shot glow" role="img" aria-label="Illustration with fictional names of one referral, start to booked. The referral for Tran, Olivia is checked against the clinic's list. An acknowledgement goes to the referring office and a short form to the patient. The missing details come back. The patient, who has agreed to texts, picks Thursday at 10:40 by text. The clinic rule is met, the appointment is booked into the schedule, and the confirmation and welcome email are sent.">
+        <div class="shot glow" role="img" aria-label="One referral, start to booked. The referral for Tran, Olivia is checked against the clinic's list. An acknowledgement goes to the referring office and a short form to the patient. The missing details come back. The patient, who has agreed to texts, picks Thursday at 10:40 by text. The clinic rule is met, the appointment is booked into the schedule, and the confirmation and welcome email are sent.">
           <div class="shot-bar"><i></i><i></i><i></i><span>Referral</span></div>
           <div class="slot-head"><div><b>Referral for Tran, Olivia</b><small>From Dr. Quinn's office</small></div><span class="tag">Booked</span></div>
           <ol class="trail">
@@ -496,14 +543,10 @@
             <li class="ok">Confirmation and welcome email sent</li>
           </ol>
         </div>
-        <figcaption class="vh">Illustration. All names are fictional.</figcaption>
       </figure>
     </div>
 
-    <p class="reel-back"><a href="#reel">Watch the demo at the top of the page</a></p>
-
-
-    <div class="feature flip">
+    <div class="feature">
       <div>
         <h3>Cancellation backfill: fill cancelled appointments from your waitlist</h3>
         <p>When a slot opens, patients on your own waitlist who have agreed to texts get a text. The first to reply yes is booked.</p>
@@ -515,7 +558,7 @@
         </ul>
       </div>
       <figure class="ill">
-        <div class="backfill" role="img" aria-label="Illustration with fictional names of one cancelled slot being filled. The slot on Thursday at 10:40 am opens after a cancellation. A text goes to three patients on the clinic's waitlist. Tran, Olivia replies YES first. The front desk approves, and the slot is booked into the schedule. Beside it, a phone shows the text Olivia receives from Your Clinic: an appointment has opened on Thursday at 10:40 am, reply YES to take it. She replies YES, the reply is marked Delivered, and she is told she is booked.">
+        <div class="backfill" role="img" aria-label="One cancelled slot being filled. The slot on Thursday at 10:40 am opens after a cancellation. A text goes to three patients on the clinic's waitlist. Tran, Olivia replies YES first. The front desk approves, and the slot is booked into the schedule. Beside it, a phone shows the text Olivia receives from Your Clinic: an appointment has opened on Thursday at 10:40 am, reply YES to take it. She replies YES, the reply is marked Delivered, and she is told she is booked.">
           <div class="shot glow">
             <div class="shot-bar"><i></i><i></i><i></i><span>Open slot</span></div>
             <div class="slot-head"><div><b>Thursday, 10:40 am</b><small>Opened by a cancellation</small></div><span class="tag">Filled</span></div>
@@ -541,14 +584,13 @@
         </div>
       </div>
         </div>
-        <figcaption class="vh">Illustration. All names are fictional.</figcaption>
       </figure>
     </div>
 
     <p class="after-custom">Custom administrative automation is available on request: <a href="mailto:hello@aevon.ca">hello@aevon.ca</a>.</p>
 
     <div class="band">
-      <p>Discuss either service for your clinic.</p>
+      <p>Discuss any of these for your clinic.</p>
       <a class="btn btn-primary" href="https://calendar.app.google/7R7srDKzWrvmLQg37" target="_blank" rel="noopener">Book a 15-minute call</a>
     </div>
   </div>
@@ -588,20 +630,36 @@
     <h2 style="font-size:clamp(26px,3vw,34px)">Questions</h2>
     <div style="margin-top:26px">
       <details open>
+        <summary>How does a doctor assign a follow-up?</summary>
+        <p>In the EMR, the doctor creates a task as usual and assigns it to Aevon in place of the front desk. For example: Follow-up in 6 weeks, 15 min. Nothing else changes for the doctor.</p>
+      </details>
+      <details>
+        <summary>What does the patient see?</summary>
+        <p>A text from your clinic. It says it is from an automated assistant, names the doctor and offers three open times. The patient replies 1, 2 or 3, or asks for other times, and gets a confirmation. The messages contain no health details.</p>
+      </details>
+      <details>
+        <summary>What happens when a patient does not reply?</summary>
+        <p>They get two reminders. After that the task goes back to your front desk with a note.</p>
+      </details>
+      <details>
+        <summary>Does it call patients?</summary>
+        <p>No. It uses text and email only. It does not make voice calls.</p>
+      </details>
+      <details>
+        <summary>Which patients does it contact?</summary>
+        <p>Only patients who have agreed to texts or email with your clinic. If there is no consent on file, the task goes to your front desk.</p>
+      </details>
+      <details>
+        <summary>Does it decide anything clinical?</summary>
+        <p>No. It never decides anything clinical and never books anything urgent. A task marked urgent goes to your front desk without a text to the patient. If a patient writes about results, symptoms or medication, the task goes to your front desk with their words quoted.</p>
+      </details>
+      <details>
         <summary>Does this replace our EMR or booking tool?</summary>
         <p>No. It works alongside your EMR and does not replace it. If you use an online booking tool, that keeps working the way it does now.</p>
       </details>
       <details>
-        <summary>Does it decide which referrals are urgent?</summary>
-        <p>No. It reads what the referring office wrote and follows the rules your clinic sets for provider and appointment type. Urgency is a clinical decision and stays with your physicians.</p>
-      </details>
-      <details>
         <summary>How does a new referral get booked?</summary>
-        <p>If the patient has agreed to texts with your clinic, they are offered times your clinic allows, by text. If there is no consent to text on file, your staff get a task to make the first call instead. When a patient picks a time, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. The service checks the schedule before booking. If anything is missing or unusual, it goes to your staff. Your clinic can also choose to confirm every booking.</p>
-      </details>
-      <details>
-        <summary>Do patients get messages from it?</summary>
-        <p>Only patients who have agreed to texts with your clinic. For booking, they get a short form request, the offered times and the confirmation. The messages contain no health details.</p>
+        <p>If the patient has agreed to texts with your clinic, they are offered times your clinic allows, by text. If there is no consent to text on file, your staff get a task to make the first call instead. When a patient picks a time, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. If anything is missing or unusual, it goes to your staff.</p>
       </details>
       <details>
         <summary>What does it cost?</summary>
@@ -668,6 +726,7 @@
       <fieldset style="border:0;padding:0;margin:16px 0 0">
         <legend class="lbl" style="margin-bottom:9px">What are you interested in? <span class="opt">(optional, pick any)</span></legend>
         <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <label class="chk"><input type="checkbox" name="c-interest" value="Follow-up booking"><span>Follow-up booking</span></label>
           <label class="chk"><input type="checkbox" name="c-interest" value="Referral intake"><span>Referral intake</span></label>
           <label class="chk"><input type="checkbox" name="c-interest" value="Cancellation backfill"><span>Cancellation backfill</span></label>
           <label class="chk"><input type="checkbox" name="c-interest" value="Something else" id="c-interest-else"><span>Something else</span></label>
@@ -737,8 +796,8 @@
     stack.classList.add('failed');
   }
   frame = document.createElement('iframe');
-  frame.title = 'From fax to booked demo: a self-playing illustration with fictional names';
-  frame.src = 'health-reel.html';
+  frame.title = 'Follow-up booking demo, self-playing';
+  frame.src = 'health-followup-reel.html';
   stage.appendChild(frame);
   timer = setTimeout(giveUp, 6000);
   /* Plays whenever the player is on screen or within about half a screen below it, so it is
@@ -761,66 +820,6 @@
 })();
 </script>
 
-<script>
-  // Same endpoint as the home page form. page: location.pathname says which form it came from.
-  (function () {
-    var form = document.getElementById('clinic-form');
-    if (!form) return;
-    var err = document.getElementById('c-err');
-    var btn = document.getElementById('c-send');
-    var ref = new URLSearchParams(location.search).get('ref') || '';
-    var EMAIL_RE = /^[^@\s]+@[^@\s.]+\.[^@\s]+$/;
-    function finish() {
-      form.hidden = true;
-      var done = document.getElementById('clinic-done'); done.hidden = false;
-      done.focus({ preventScroll: true });
-      done.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-    form.addEventListener('input', function () { err.textContent = ''; });
-    // A text box appears when "Other" or "Something else" is chosen.
-    var emrSel = document.getElementById('c-emr'), emrWrap = document.getElementById('c-emr-other-wrap');
-    var elseBox = document.getElementById('c-interest-else'), elseWrap = document.getElementById('c-interest-other-wrap');
-    function showOther(focus) {
-      var a = emrSel.value === 'Other', b = elseBox.checked;
-      if (focus && a && emrWrap.hidden) { emrWrap.hidden = false; document.getElementById('c-emr-other').focus(); }
-      if (focus && b && elseWrap.hidden) { elseWrap.hidden = false; document.getElementById('c-interest-other').focus(); }
-      emrWrap.hidden = !a; elseWrap.hidden = !b;
-    }
-    emrSel.addEventListener('change', function () { showOther(true); });
-    elseBox.addEventListener('change', function () { showOther(true); });
-    showOther(false);
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      err.textContent = '';
-      var name = document.getElementById('c-name').value.trim();
-      var email = document.getElementById('c-email').value.trim();
-      if (!name || !email || !EMAIL_RE.test(email)) { err.textContent = 'A name and a valid email, and I can reply.'; return; }
-      if (document.getElementById('c-website').value) { finish(); return; }
-      var clinic = document.getElementById('c-clinic').value.trim();
-      var emr = document.getElementById('c-emr').value;
-      var emrOther = document.getElementById('c-emr-other').value.trim();
-      if (emr === 'Other' && emrOther) emr = 'Other: ' + emrOther;
-      var elseText = document.getElementById('c-interest-other').value.trim();
-      var interest = Array.from(document.querySelectorAll('input[name=c-interest]:checked')).map(function (c) {
-        return c.value === 'Something else' && elseText ? 'Something else: ' + elseText : c.value;
-      }).join(', ');
-      var msg = document.getElementById('c-msg').value.trim();
-      btn.disabled = true; btn.textContent = 'Sending...';
-      fetch('https://qzxtfgzpyptvriorfhxw.supabase.co/functions/v1/interest', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name, email: email, phone: '',
-          message: ['Aevon Health enquiry', clinic ? 'Clinic: ' + clinic : '', emr ? 'EMR: ' + emr : '',
-            interest ? 'Interested in: ' + interest : '', msg].filter(Boolean).join('\n\n'),
-          page: location.pathname, ref: ref })
-      }).then(function (res) {
-        if (!res.ok) throw new Error('status ' + res.status);
-        finish();
-      }).catch(function () {
-        btn.disabled = false; btn.textContent = 'Send';
-        err.innerHTML = 'That did not send. Email <a href="mailto:hello@aevon.ca">hello@aevon.ca</a> and I will pick it up.';
-      });
-    });
-  })();
-</script>
+<script src="js/clinic-form.js"></script>
 </body>
 </html>

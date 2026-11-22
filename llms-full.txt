@@ -1,8 +1,8 @@
-# Aevon — full version
+# Aevon: full version
 
 > Full-content companion to llms.txt. The complete text of the Aevon home page,
 > the Cadre page and the Aevon Health page, for LLM crawlers that want the whole
-> story without fetching each page. Last updated 16 November 2026.
+> story without fetching each page. Last updated 22 November 2026.
 
 ## Aevon
 
@@ -59,57 +59,58 @@ Yes. You can export who is current as a CSV, filtered by site, by ticket or by s
 
 ## Aevon Health
 
-From fax to booked, inside your EMR. Aevon Health is administrative
+Assign the follow-up. It gets booked. Aevon Health is administrative
 automation for medical clinics in BC and Ontario that connects to the clinic's EMR
-through its official API (OSCAR, with Accuro and TELUS CHR on request). It completes
-the routine work after an incoming fax is sorted: confirming a referral, requesting
-what is missing, booking patients who have agreed to texts and sending the
-confirmation. Where there is no text consent on file, staff get a task to make the
-first call. It can also sort and label incoming faxes where a clinic has no tool
-for it, and it fills cancelled appointments from the clinic's own waitlist.
-Clinics start with 30 days at no charge, with free onboarding. The service never decides urgency or anything clinical.
+through its official API (OSCAR, with Accuro and TELUS CHR on request). A doctor
+assigns a follow-up task to Aevon in place of the front desk. Aevon reads the
+doctor's own wording, such as RTC 6/52 or f/u 2 wks, and texts the patient three
+open times from the doctor's schedule, never on a holiday or a day the clinic is
+closed. The patient picks one, or asks for other times, such as mornings only. The
+visit is booked in the EMR, the patient gets a confirmation and the task is closed
+with a note. If the patient does not reply, they get two reminders and then the task
+returns to the front desk. A task marked urgent, a patient with no consent on file,
+and any message about results, symptoms or medication go to the front desk. It uses
+text and email only and does not make voice calls. It never decides anything
+clinical and never books anything urgent.
+
+It also books new referrals: it acknowledges the referring office, asks for what is
+missing, offers times by text to patients who have agreed to texts and books the one
+they pick. And it fills cancelled appointments from the clinic's own waitlist.
+Clinics start with 30 days at no charge, with free onboarding.
 
 ### Aevon Health questions, answered in full
+
+**How does a doctor assign a follow-up?**
+
+In the EMR, the doctor creates a task as usual and assigns it to Aevon in place of the front desk. For example: Follow-up in 6 weeks, 15 min. Nothing else changes for the doctor.
+
+**What does the patient see?**
+
+A text from your clinic. It says it is from an automated assistant, names the doctor and offers three open times. The patient replies 1, 2 or 3, or asks for other times, and gets a confirmation. The messages contain no health details.
+
+**What happens when a patient does not reply?**
+
+They get two reminders. After that the task goes back to your front desk with a note.
+
+**Does it call patients?**
+
+No. It uses text and email only. It does not make voice calls.
+
+**Which patients does it contact?**
+
+Only patients who have agreed to texts or email with your clinic. If there is no consent on file, the task goes to your front desk.
+
+**Does it decide anything clinical?**
+
+No. It never decides anything clinical and never books anything urgent. A task marked urgent goes to your front desk without a text to the patient. If a patient writes about results, symptoms or medication, the task goes to your front desk with their words quoted.
 
 **Does this replace our EMR or booking tool?**
 
 No. It works alongside your EMR and does not replace it. If you use an online booking tool, that keeps working the way it does now.
 
-**Does it replace the tool that sorts our faxes?**
-
-No. If your EMR or an add-on already sorts and labels your faxes, it starts after that. If nothing does, it can sort them as well, with your staff confirming the labels until you are comfortable letting it run.
-
-**Does it decide which referrals are urgent?**
-
-No. It reads what the referring office wrote and follows the rules your clinic sets for provider and appointment type. Urgency is a clinical decision and stays with your physicians.
-
 **How does a new referral get booked?**
 
-If the patient has agreed to texts with your clinic, they are offered times your clinic allows, by text. If there is no consent to text on file, your staff get a task to make the first call instead. When a patient picks a time, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. The service checks the schedule before booking. If anything is missing or unusual, it goes to your staff. Your clinic can also choose to confirm every booking.
-
-**What happens when it is not sure?**
-
-It stops and hands the referral to a person, with the reason: a missing phone number, two patients with the same name, a referral marked urgent by the sender, or anything outside your clinic's rules. It does not guess.
-
-**Do physicians have to review each referral first?**
-
-Only if your clinic wants that. Many clinics have a physician accept or prioritise new referrals. That step stays with the physician, and the automation waits for it. Where your clinic's rules allow a referral to be booked directly, it is.
-
-**Do staff need to learn new software?**
-
-No. Exceptions show up as tasks inside your EMR.
-
-**Do patients get messages from it?**
-
-Only patients who have agreed to texts with your clinic. For booking, they get a short form request, the offered times and the confirmation. The messages contain no health details.
-
-**Do you text patients who have not agreed to texts?**
-
-No. A patient who gave their number to the referring office has not agreed to texts from your clinic. Your clinic collects and records that consent. Until it is on file, the first contact is a call or a letter from your clinic, and we create the task for your staff. Once consent is recorded, texting can follow.
-
-**Where is patient information stored?**
-
-In Canada, and we store as little as possible.
+If the patient has agreed to texts with your clinic, they are offered times your clinic allows, by text. If there is no consent to text on file, your staff get a task to make the first call instead. When a patient picks a time, a referral that meets all your clinic's rules is booked and the confirmation and welcome email go out. If anything is missing or unusual, it goes to your staff.
 
 **What does it cost?**
 
@@ -118,26 +119,6 @@ Pricing is per physician per month, plus a one-time setup fee. Clinics start wit
 **What if we want to stop?**
 
 Your clinic disables the one EMR account we use, and our access ends.
-
-**How does it fill a cancelled appointment?**
-
-When an appointment is cancelled in your EMR, patients on your own waitlist who fit that provider and time, and who have agreed to texts, get a text offering the slot. The first to reply YES is booked. Your front desk can approve each booking first.
-
-**Which EMRs does it work with?**
-
-It is made for OSCAR. Accuro and TELUS CHR are done on request. It connects through the EMR's official API, so each EMR is its own piece of work.
-
-**How does it fit with privacy law in BC and Ontario?**
-
-Your clinic stays in control of the patient record. We act as your service provider under BC's PIPA, or as your agent under Ontario's PHIPA, and we prepare a privacy impact assessment for your privacy officer before anything goes live.
-
-**Do we still need our fax service or booking tool?**
-
-Yes. Nothing changes there. Referrals still go out the way they do today, and your online booking tool keeps working the way it does now.
-
-**Is this AI making decisions about patients?**
-
-No. The automations follow rules that your clinic sets, and they only handle administrative follow-up. They do no triage, diagnosis or treatment. Clinical decisions stay with your physicians. Where it reads a fax to sort it, it uses a language model run in Canada under a no-retention agreement, and your clinic's data is never used to train it.
 
 ## Pages
 
@@ -150,7 +131,7 @@ No. The automations follow rules that your clinic sets, and they only handle adm
 - [ADP certification tracking](https://aevon.ca/adp-certification-tracking.html): Cadre keeps its staff list in sync with ADP and adds certification tracking on top. The ADP sync is in pilot and has not been tested against a live ADP account.
 - [Construction training matrix builder](https://aevon.ca/construction-training-matrix.html): free in-browser builder; add workers and tickets, colour-coded expiry dates, CSV export and print, no signup
 - [Live demo](https://cadre-demo.web.app/dashboard): the real product with a sample company loaded, no signup
-- [Aevon Health](https://aevon.ca/health.html): admin automation for medical clinics in BC and Ontario that connects to the clinic's EMR through its official API (OSCAR, with Accuro and TELUS CHR on request). Clinics start with 30 days at no charge, with free onboarding. 
+- [Aevon Health](https://aevon.ca/health.html): admin automation for medical clinics in BC and Ontario that connects to the clinic's EMR through its official API (OSCAR, with Accuro and TELUS CHR on request). A doctor assigns a follow-up task to Aevon in place of the front desk. Aevon texts the patient three open times, books the one they pick, confirms it and closes the task with a note. No reply, no consent on file, or anything clinical or urgent goes back to the front desk. Text and email only, no voice calls. Also books new referrals and fills cancelled appointments from the clinic's own waitlist. Clinics start with 30 days at no charge, with free onboarding.
 - [How to fill a cancelled appointment in OSCAR EMR](https://aevon.ca/oscar-emr-fill-cancelled-appointments.html): step by step using OSCAR's Waiting List and make appt, the limits of the manual way, and the cancellation backfill Aevon Health is building
 - [How to track referrals with no response in OSCAR EMR](https://aevon.ca/oscar-emr-referral-follow-up.html): using OSCAR's Consultations screen, what each status means, when rows turn red, how to create a follow-up tickler, and the referral chase list Aevon Health is building
 - [Privacy](https://aevon.ca/privacy.html)
