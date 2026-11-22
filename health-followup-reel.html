@@ -466,6 +466,15 @@ body.reduced { display: block; }
 .fi.dd { justify-content: space-between; background: #F4EaD7; border-color: #0097cf; font-weight: 700; }
 .fi.dd i { width: 0; height: 0; border: 6px solid transparent; border-top: 8px solid #00283c; margin-top: 7px; }
 .fi.dd.pick { animation: pickp .6s ease; background: #dff0d8; border-color: #3c763d; }
+/* the Assigned to list opens under its field; the pointer picks Aevon from it */
+.ddw { position: relative; display: block; min-width: 0; }
+#s1 .emr { overflow: visible; }
+.ddm { position: absolute; left: 0; right: 0; top: calc(100% + 2px); z-index: 5; display: flex; flex-direction: column; background: #fff; border: 1px solid #8a94a6; box-shadow: 0 10px 26px rgba(0,0,0,.3); opacity: 0; transform: scaleY(.96); transform-origin: top center; transition: opacity .14s ease, transform .16s cubic-bezier(.23,1,.32,1); }
+.ddm.on { opacity: 1; transform: none; }
+.ddo { padding: 9px 10px; color: #15120B; }
+.ddo.now { font-weight: 700; }
+.ddo.sel { background: #428bca; color: #fff; }
+.narrow .ddo { padding: 7px 10px; }
 .saved { color: #3c763d; font-weight: 700; margin-left: 6px; }
 .btn3.press { background: #2a6496; }
 .narrow .ff { grid-template-columns: 1fr; gap: 3px; }
@@ -515,7 +524,7 @@ body.reduced { display: block; }
             <h2>New task</h2>
             <div class="ff"><label>Patient</label><span class="fi ro">Nair, Priya</span></div>
             <div class="ff"><label>Message</label><span class="fi ta" id="msgf"><span id="ty" data-init=""></span><i class="caret"></i></span></div>
-            <div class="ff"><label>Assigned to</label><span class="fi dd" id="asg"><span id="asgt" data-init="Front desk">Front desk</span><i></i></span></div>
+            <div class="ff"><label>Assigned to</label><span class="ddw"><span class="fi dd" id="asg"><span id="asgt" data-init="Front desk">Front desk</span><i></i></span><span class="ddm" id="ddm"><span class="ddo now">Front desk</span><span class="ddo">Hale, Dr.</span><span class="ddo" id="dd3">Aevon</span></span></span></div>
             <div class="tk-act"><span class="btn3 pri" id="save">Save</span><span class="btn3">Cancel</span><span class="saved rvr" id="saved">Task saved</span></div>
           </div>
         </div></section>
@@ -605,7 +614,7 @@ body.reduced { display: block; }
     <button class="cbtn" id="pp" type="button" aria-label="Pause the demo"><svg class="pp-pause" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3.4v12H2zM8.6 1H12v12H8.6z"/></svg><svg class="pp-play" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1l9 6-9 6z"/></svg><span id="pptext">Pause</span></button>
     <button class="cbtn" id="rp" type="button" aria-label="Replay the demo from the start"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.5a5.5 5.5 0 1 0 5.2 3.7l-1.5.5A4 4 0 1 1 7 3v2.2l3.3-2.7L7 .5z"/></svg><span>Replay</span></button>
     <div class="bar" id="bar" role="progressbar" aria-label="Demo progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="barfill"></i></div>
-    <span class="time" id="time">0:00 / 0:45</span>
+    <span class="time" id="time">0:00 / 0:46</span>
   </div>
 </main>
 
@@ -659,7 +668,7 @@ body.reduced { display: block; }
 
   /* ---------- engine ---------- */
   var STATE = ['on', 'done', 'miss', 'press', 'pick', 'sel', 'bump', 'dn'];
-  var ST = [0, 6.4, 13.6, 20.0, 25.6, 30.6, 35.8, 41.4], TOTAL = 45.6;
+  var ST = [0, 7.6, 14.8, 21.2, 26.8, 31.8, 37.0, 42.6], TOTAL = 46.8;
   var CAP = [
     'The doctor assigns the follow-up to Aevon.',
     'The patient gets three real times.',
@@ -749,12 +758,17 @@ body.reduced { display: block; }
   sc(1, .6, function () { apprStart(); });
   sc(1, .7, function () { curTo('#msgf', 800, .2, .5); });
   sc(1, 1.5, function () { click(); on('#msgf'); cam('#msgf', 1.25, .5, .5); });
-  for (var ci = 1; ci <= TYPED.length; ci++) { (function (n) { sc(1, 1.8 + n * .06, function () { txt('#ty', TYPED.slice(0, n)); }); })(ci); }
-  sc(1, 3.7, function () { off('#msgf'); curTo('#asg', 600, .8, .5); });
-  sc(1, 4.3, function () { click(); txt('#asgt', 'Aevon'); on('#asg', 'pick'); });
-  sc(1, 4.9, function () { curTo('#save', 500, .5, .5); camOut(700); });
-  sc(1, 5.4, function () { click(); on('#save', 'press'); });
-  sc(1, 5.6, function () { on('#saved'); });
+  for (var ci = 1; ci <= TYPED.length; ci++) { (function (n) { sc(1, 1.8 + n * .05, function () { txt('#ty', TYPED.slice(0, n)); }); })(ci); }
+  sc(1, 3.4, function () { off('#msgf'); camOut(600); });
+  sc(1, 4.0, function () { curTo('#asg', 450, .8, .5); });
+  sc(1, 4.5, function () { click(); on('#asg'); on('#ddm'); });
+  sc(1, 4.9, function () { curTo('#dd3', 400, .25, .5); });
+  sc(1, 5.3, function () { on('#dd3', 'sel'); });
+  sc(1, 5.7, function () { click(); });
+  sc(1, 5.85, function () { off('#ddm'); off('#asg'); txt('#asgt', 'Aevon'); on('#asg', 'pick'); });
+  sc(1, 6.2, function () { curTo('#save', 450, .5, .5); });
+  sc(1, 6.7, function () { click(); on('#save', 'press'); });
+  sc(1, 6.9, function () { on('#saved'); });
   /* scene 2: the text arrives; the camera is close on the phone, then out to the three times */
   sc(2, 0, function () { go(2); });
   sc(2, .3, function () { cam('#s2 .thread', 1.3, .5, .62); });
@@ -899,9 +913,9 @@ body.reduced { display: block; }
 
   /* ---------- reduced motion: static storyboard ---------- */
   function buildBoard() {
-    var KEY = [5.8, 6.0, 5.0, 4.2, 4.0, 4.6, 4.6, 3.0];
+    var KEY = [7.2, 6.0, 5.0, 4.2, 4.0, 4.6, 4.6, 3.0];
     var DET = [
-      'An EMR task window. The doctor types Follow-up in 6 weeks, 15 min, sets Assigned to: Aevon and saves.',
+      'An EMR task window. The doctor types Follow-up in 6 weeks, 15 min, picks Aevon from the Assigned to list and saves.',
       'A phone. The text reads: Hi Priya, this is the automated assistant at Rosewood Clinic. Dr. Hale would like to see you for a follow-up visit. Reply 1 for Tue Dec 29 at 10:00am, 2 for Wed Dec 30 at 1:15pm, or 3 for Thu Dec 31 at 9:00am. Reply OTHER for different times, or STOP to opt out.',
       'The patient replies 2. The confirmation reads: Hi Priya, you are booked for a follow-up visit with Dr. Hale at Rosewood Clinic on Wed Dec 30 at 1:15pm. Reply to this message if you need to change it and the clinic will call you.',
       'The doctor’s day sheet for Wednesday December 30. A new appointment for Nair, Priya is at 1:15 pm.',
