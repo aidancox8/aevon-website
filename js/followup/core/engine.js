@@ -11,7 +11,7 @@ import { normalisePhone, normaliseEmail } from '../channels/address.js';
 import { trackHealth } from './health.js';
 
 const DUPLICATE_WINDOW_MS = 2 * 60 * 1000;
-const ASKS_FOR_ANSWER = ['offer', 'more', 'taken', 'nudge', 'clarify', 'reschedule'];
+const ASKS_FOR_ANSWER = ['offer', 'more', 'taken', 'nudge', 'clarify', 'reschedule', 'confirm_ask'];
 const lastDigits = (s) => String(s ?? '').replace(/\D/g, '').slice(-4);
 
 export function createEngine({ emr: rawEmr, db, stores, channels, settings, clock, llm = null, logger = console, lock, health }) {

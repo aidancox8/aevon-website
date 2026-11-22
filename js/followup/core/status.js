@@ -34,6 +34,9 @@ export function describeTask(task, s, nowMs, { queued = false } = {}) {
       if (task.prev_appointment_id) {
         return { words: `Patient asked to move the visit booked for ${friendlyAt(task.prev_booked_start)}`, next: 'New times are out. The visit stays as booked unless the patient picks one' };
       }
+      if (task.pending_index !== null && task.pending_index !== undefined && task.offers[task.pending_index]) {
+        return { words: `Patient picked ${friendlyAt(task.offers[task.pending_index].start)}`, next: 'Waiting for the patient to reply C to confirm' };
+      }
       if (!task.first_sent_at) {
         return queued
           ? { words: 'Ready to message the patient', next: `Message goes out when contact hours open (${when(nextContactTime(nowMs, s))})` }

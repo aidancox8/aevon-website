@@ -10,7 +10,7 @@ export const LONG_REPLY_CHARS = 500;
 const FILLER = new Set([
   'option', 'number', 'num', 'no', 'please', 'pls', 'plz', 'thanks', 'thank', 'you', 'ok', 'okay', 'the', 'i', "i'll", 'ill',
   'take', 'go', 'with', 'works', 'work', 'is', 'best', 'for', 'me', "let's", 'lets', 'choose', 'pick', 'would', 'like',
-  'prefer', 'want', 'will', 'time', 'slot', 'then', 'that', 'a', 'going', 'book', 'its', "it's",
+  'prefer', 'want', 'will', 'time', 'slot', 'then', 'that', 'a', 'going', 'book', 'its', "it's", 'actually', 'sorry', 'make', 'it', 'do', 'can', 'we', 'instead', 'maybe',
 ]);
 const PICK_WORD = new Map([
   ['1', 1], ['2', 2], ['3', 3], ['first', 1], ['second', 2], ['third', 3], ['1st', 1], ['2nd', 2], ['3rd', 3],

@@ -21,7 +21,7 @@ export async function sendOffers(svc, task, { kind, channel, exclude = [], patch
     });
     if (queued.status === 'blocked') return queued;
     const offered = [...new Set([...(task.offered ?? []), ...offers.map((o) => o.start)])];
-    svc.tasks.update(task.task_id, { ...patch, offers, offered, state: 'awaiting', channel, nudges: 0, first_sent_at: null });
+    svc.tasks.update(task.task_id, { ...patch, offers, offered, state: 'awaiting', channel, nudges: 0, first_sent_at: null, pending_index: null });
     return queued;
   });
   if (outcome.status === 'blocked') return 'blocked';

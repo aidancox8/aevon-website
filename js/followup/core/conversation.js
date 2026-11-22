@@ -128,6 +128,11 @@ async function replyToAwaiting(svc, task, inbound) {
     if (/\bcancel/.test(n)) return hand('Patient asked to cancel the visit');
   }
 
+  const pending = task.pending_index !== null && task.pending_index !== undefined && task.offers[task.pending_index] ? task.pending_index : null;
+  if (pending !== null && ['yes', 'unknown'].includes(result.intent) && SAYS_YES.test(normalise(inbound.body))) {
+    return startBooking(svc, task, pending, inbound.channel);
+  }
+
   switch (result.intent) {
     case 'optout':
       return optOut(svc, task, inbound);
@@ -135,6 +140,15 @@ async function replyToAwaiting(svc, task, inbound) {
       return hand('Patient message needs staff');
     case 'pick': {
       if (!task.offers[result.pick - 1]) return clarify(svc, task, channel, hand);
+      // Read the time back first. The same pick sent twice counts as the yes.
+      if (s.confirmBeforeBooking && channel && pending !== result.pick - 1) {
+        svc.tasks.update(task.task_id, { pending_index: result.pick - 1 });
+        svc.outbound.queue({
+          task, kind: 'confirm_ask', channel, vars: { pick: task.offers[result.pick - 1].start },
+          dedupeKey: `ask:${task.task_id}:${inbound.messageId}${attemptKey(task)}`,
+        });
+        return undefined;
+      }
       return startBooking(svc, task, result.pick - 1, inbound.channel);
     }
     case 'constraints':
@@ -171,6 +185,7 @@ async function moreTimes(svc, task, result, channel, s, hand) {
   return undefined;
 }
 
+const SAYS_YES = /^(?:c|yes|y|yep|yeah|yup|ok|okay|sure|confirm|confirmed|correct|right|book it|go ahead|please do|sounds good|perfect|great|that works|works|oui)\b/;
 const KEEP = /^(?:keep|stay|same|original|never ?mind|nvm|leave it|forget it|no change)\b|\bkeep (?:it|the|my|that)\b|\bleave it\b|\bas it is\b|\bnever ?mind\b/;
 const CHANGE = /\b(?:change|reschedule|rebook|move|switch|postpone|push|different|another|other|later|earlier|sooner)\b|\b(?:cant|can't|cannot|wont|won't|unable to) (?:make|come|do|attend|be there)\b/;
 

@@ -117,7 +117,7 @@ const COLUMNS = new Set([
   'patient_name', 'provider_name', 'task_text', 'state', 'channel', 'mobile', 'email', 'target_date', 'minutes', 'mode',
   'constraints', 'offers', 'rounds', 'nudges', 'clarifications', 'taken_count', 'first_sent_at', 'post_notice',
   'chosen_index', 'booked_channel', 'appointment_id', 'booked_start', 'handback_reason', 'handback_note',
-  'offered', 'attempt', 'booked_at', 'staff_note', 'prev_appointment_id', 'prev_booked_start', 'moves',
+  'offered', 'attempt', 'booked_at', 'staff_note', 'prev_appointment_id', 'prev_booked_start', 'moves', 'pending_index',
 ]);
 const ACTIVE_STATES = ['claiming', 'awaiting', 'booking', 'handing_back'];
 
@@ -140,7 +140,7 @@ export function createTasks(db, clock) {
         constraints: {}, offers: [], rounds: 0, nudges: 0, clarifications: 0, taken_count: 0, first_sent_at: null, post_notice: 0,
         chosen_index: null, booked_channel: null, appointment_id: null, booked_start: null, handback_reason: null, handback_note: null,
         created_at: now, updated_at: now, offered: [], attempt: 1, booked_at: null, staff_note: null,
-        prev_appointment_id: null, prev_booked_start: null, moves: 0, seq: ++seq,
+        prev_appointment_id: null, prev_booked_start: null, moves: 0, pending_index: null, seq: ++seq,
       });
       return true;
     },
@@ -158,7 +158,7 @@ export function createTasks(db, clock) {
         state: 'claiming', channel: null, constraints: {}, offers: [], offered: [], rounds: 0, nudges: 0, clarifications: 0,
         taken_count: 0, first_sent_at: null, post_notice: 0, chosen_index: null, booked_channel: null, appointment_id: null,
         booked_start: null, booked_at: null, handback_reason: null, handback_note: null, staff_note: null, attempt: row.attempt + 1,
-        prev_appointment_id: null, prev_booked_start: null, moves: 0,
+        prev_appointment_id: null, prev_booked_start: null, moves: 0, pending_index: null,
       });
       return this.get(taskId);
     },

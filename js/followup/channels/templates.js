@@ -37,6 +37,7 @@ const SMS = {
     : `Here are three different times with ${v.doctor}${phoneNote(v.mode)}. ${choices(v.offers)} ${OTHER_SMS}`),
   taken: (v) => `Sorry, that time was just taken. ${v.offers.length < 3 ? `We only have ${many(v.offers.length)} left with ${v.doctor}${phoneNote(v.mode)}.` : `Here are new times with ${v.doctor}${phoneNote(v.mode)}.`} ${choices(v.offers)} ${OTHER_SMS}`,
   confirm: (v) => `${greet(v.firstName)}you are booked for a follow-up visit${phoneNote(v.mode)} with ${v.doctor} at ${v.clinic} on ${friendlyAt(v.booked)}. Reply CHANGE if you need a different time.`,
+  confirm_ask: (v) => `Just to confirm: ${friendlyAt(v.pick)} with ${v.doctor}${phoneNote(v.mode)}. Reply C to confirm, or NO for other times.`,
   reschedule: (v) => `No problem. Your visit on ${friendlyAt(v.booked)} stays booked until you pick a new time.${fewNote(v.offers)} ${choices(v.offers)} Reply KEEP to leave it as it is, or OTHER for different times.`,
   moved: (v) => `Done. Your follow-up visit${phoneNote(v.mode)} with ${v.doctor} is now on ${friendlyAt(v.booked)}, and your earlier time is cancelled. Reply CHANGE if you need a different time.`,
   kept: (v) => `Your follow-up visit with ${v.doctor} stays booked for ${friendlyAt(v.booked)}.`,
@@ -72,6 +73,10 @@ const EMAIL = {
   confirm: (v) => ({
     subject: 'Your follow-up visit is booked',
     body: `${greetEmail(v.firstName)}\n\nYou are booked for a follow-up visit${phoneNote(v.mode)}:\n\nDate and time: ${friendlyAt(v.booked)}\nDoctor: ${v.doctor}\nClinic: ${v.clinic}\n\nReply CHANGE if you need a different time.${SIGN(v.clinic)}`,
+  }),
+  confirm_ask: (v) => ({
+    subject: 'Please confirm your time',
+    body: `Just to confirm: ${friendlyAt(v.pick)} with ${v.doctor}${phoneNote(v.mode)}. Reply C to confirm, or NO for other times.${SIGN(v.clinic)}`,
   }),
   reschedule: (v) => ({
     subject: `New times for your follow-up visit with ${v.doctor}`,
