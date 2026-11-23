@@ -4,7 +4,7 @@ import { createClinic, PATIENTS, DOCTOR, TZ, BLOCKS, channelOf } from './clinic.
 import { addDays, localDate, mondayOf, partsOf, weekdayOf } from './core/time.js';
 
 const PRESETS = ['Follow-up in 6 weeks, 15 min', 'f/u 2 wks', 'RTC 6/52', 'telephone f/u 1 month', 'follow up as needed', 'urgent follow-up this week'];
-const CHIPS = ['1', '2', '3', 'C', 'OTHER', 'None of these work. Give me more times', 'the Tuesday one', 'mornings only', 'not that week', 'Tuesdays or Thursdays', 'Can I change it?', 'KEEP', 'I need to talk to the doctor about my results', 'STOP'];
+const CHIPS = ['1', '2', '3', 'OTHER', 'None of these work. Give me more times', 'the Tuesday one', 'mornings only', 'not that week', 'Tuesdays or Thursdays', 'Can I change it?', 'KEEP', 'I need to talk to the doctor about my results', 'STOP'];
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -335,7 +335,7 @@ function markTab(name) {
 const TOUR = [
   { tab: 'doctor', target: 'col-doctor', text: 'You are the doctor. Pick a patient and an instruction, then press Assign to Aevon.', run: () => (taskId() ? null : assign()) },
   { tab: 'patient', target: 'col-patient', text: 'This is the patient’s phone. The text has three open times taken from the doctor’s schedule.' },
-  { tab: 'patient', target: 'replybox', text: 'Reply as the patient. Tap 2, then C to confirm when Aevon reads the time back. Or type anything a patient might say.', run: async () => { if (current()?.row.state === 'awaiting' && current().row.pending_index == null) await sendReply('2'); if (current()?.row.state === 'awaiting') await sendReply('C'); } },
+  { tab: 'patient', target: 'replybox', text: 'Reply as the patient. Tap 2 to pick that time. Or type anything a patient might say.', run: async () => { if (current()?.row.state === 'awaiting' && current().row.pending_index == null) await sendReply('2'); if (current()?.row.state === 'awaiting') await sendReply('C'); } },
   { tab: 'clinic', target: 'col-clinic', text: 'This is what the clinic sees. The appointment is in the schedule and the task is closed with a note.' },
   { tab: 'clinic', target: 'whatif', text: 'Now try the harder cases: a patient who does not reply, a time that gets taken, or a question about results.' },
 ];

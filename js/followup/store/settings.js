@@ -59,8 +59,9 @@ const FIELDS = {
   },
   closures: (v) => parseClosures(v),
   maxNewTimeRounds: (v) => intIn('Rounds of new times', 1, 6)(v === undefined || v === '' ? 2 : v),
-  // Repeat the chosen time back and book only after the patient says yes.
-  confirmBeforeBooking: (v) => (v === undefined || v === '' ? true : v === true || v === 'true' || v === 'on' || v === 1),
+  // Repeat the chosen time back and book only after the patient says yes. Off unless a clinic turns it on:
+  // the confirmation already says "Reply CHANGE if you need a different time".
+  confirmBeforeBooking: (v) => (v === undefined || v === '' ? false : v === true || v === 'true' || v === 'on' || v === 1),
   minLeadDays: (v) => intIn('Minimum lead time in days', 0, 60)(v === undefined || v === '' ? 3 : v),
 };
 

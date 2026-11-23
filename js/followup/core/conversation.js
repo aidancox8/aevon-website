@@ -234,7 +234,7 @@ async function offerMove(svc, task, inbound, channel) {
   return true;
 }
 
-const THANKS = /^(?:thanks?|thank you|thx|ty|ok|okay|great|perfect|sounds good|got it|see you then|will do|cool|yes|yep|sure|\u{1F44D})(?: so much| very much| a lot)?$/u;
+const THANKS = /^(?:thanks?|thank you|thx|ty|ok|okay|great|perfect|sounds good|got it|see you then|will do|cool|yes|y|yep|yeah|yup|sure|c|confirm|confirmed|\u{1F44D})(?: so much| very much| a lot)?$/u;
 
 /**
  * A reply after the appointment is booked. A request to move the visit gets new times (offerMove). Anything else goes to

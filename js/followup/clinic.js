@@ -26,7 +26,7 @@ const CLINIC = {
   clinicName: 'Rosewood Clinic', timeZone: TZ, contactStart: '08:00', contactEnd: '20:00',
   windowBeforeDays: 7, windowAfterDays: 14, defaultMinutes: 15, allowedModes: ['in-person', 'phone'],
   nudgeHours1: 24, nudgeHours2: 72, giveUpHours: 120, frontDeskUserId: 'frontdesk', agentUserId: 'aevon',
-  clinicPhone: '', province: 'BC', closures: [], minLeadDays: 3, maxNewTimeRounds: 4, confirmBeforeBooking: true,
+  clinicPhone: '', province: 'BC', closures: [], minLeadDays: 3, maxNewTimeRounds: 4, confirmBeforeBooking: false,
 };
 /** How a patient is reached: email for those who agreed to email only, otherwise text. */
 export const channelOf = (p) => (p.mail && !p.sms ? 'email' : 'sms');
